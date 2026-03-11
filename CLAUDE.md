@@ -6,7 +6,7 @@ This file provides guidance to AI assistants (Claude and others) working in this
 
 ## Repository Overview
 
-This repository is currently in its initialization phase. No source files, framework, or project structure have been committed yet. This CLAUDE.md serves as a foundational guide for AI-assisted development as the project grows.
+This repository contains a persistent workspace for AI-assisted work. It includes a memory system, agent definitions, prompt library, and research/task tracking infrastructure. Pre-existing legacy files (`claude.md`, `PROMPT_AUDIT.md`, `00-09 *.md`) are catalogued in `background/legacy_context.md` but are not active guidelines — ask the user before applying anything from them.
 
 ---
 
@@ -80,6 +80,50 @@ Always confirm with the user before:
 - Running destructive resets (`git reset --hard`)
 - Modifying CI/CD pipelines
 - Pushing to branches other than the designated feature branch
+
+---
+
+## Workspace Memory System
+
+### Legacy Files
+
+Pre-existing files (`claude.md`, `PROMPT_AUDIT.md`, `00-09 *.md`) are catalogued in `background/legacy_context.md`. They are **NOT** active guidelines. Before applying any approach from those files, ask the user: "I found a legacy [X] — would you like to use it, adapt it, or start fresh?"
+
+### Before Starting Any Task
+
+1. Read `memory/decisions.md` and `memory/patterns.md` for relevant prior context
+2. Check `tasks/task_log.md` for related past work
+3. Check `memory/open_questions.md` for pending questions that may apply
+
+### After Completing Any Task
+
+1. Append to `tasks/task_log.md`: date, task, outcome, files changed
+2. Append to `memory/learnings.md` if a new insight emerged
+3. Append to `memory/decisions.md` if a decision was made
+4. Append to `memory/patterns.md` if a pattern was observed
+5. Append to `memory/open_questions.md` if a question remains open
+
+### Workspace Structure
+
+```
+background/     ← unconfirmed legacy reference files
+memory/         ← append-only insight logs
+notes/          ← freeform scratch space
+research/       ← research and analysis outputs
+tasks/          ← task planning and history
+prompts/        ← reusable generic workflow prompts
+.claude/agents/ ← sub-agent definitions
+```
+
+### Agent Workflow
+
+Main thread coordinates. Delegate to agents for heavy lifting:
+
+1. **planner** → decompose the task
+2. **researcher** → gather information
+3. **analyst** → process and interpret
+4. **summarizer** → condense output
+5. **reviewer** → validate before delivery
 
 ---
 
