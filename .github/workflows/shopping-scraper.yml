@@ -1,0 +1,73 @@
+name: Google Shopping Carousel Scraper
+
+on:
+  workflow_dispatch:
+    inputs:
+      keywords:
+        description: "Comma-separated keywords to scrape (leave blank for defaults)"
+        required: false
+        default: ""
+  schedule:
+    # Every Monday at 07:00 UTC — remove if you only want manual runs
+    - cron: "0 7 * * 1"
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install Playwright browsers
+        run: playwright install chromium --with-deps
+
+      - name: Override keywords (if provided)
+        if: ${{ github.event.inputs.keywords != '' }}
+        run: |
+          python - <<'EOF'
+          import re, pathlib
+
+          new_kws = [k.strip() for k in "${{ github.event.inputs.keywords }}".split(",") if k.strip()]
+          path = pathlib.Path("shopping_scraper.py")
+          src = path.read_text()
+
+          # Replace the KEYWORDS list
+          new_list = "[\n" + "".join(f'    "{k}",\n' for k in new_kws) + "]"
+          src = re.sub(r"KEYWORDS\s*=\s*\[.*?\]", f"KEYWORDS = {new_list}", src, flags=re.DOTALL)
+          path.write_text(src)
+          print(f"Keywords set to: {new_kws}")
+          EOF
+
+      - name: Run scraper
+        run: python shopping_scraper.py
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: shopping-results-${{ github.run_id }}
+          path: |
+            results/
+            screenshots/
+          retention-days: 30
+
+      - name: Print summary
+        run: |
+          echo "## Shopping Carousel Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f results/all_results.csv ]; then
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            cat results/all_results.csv >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No results file found." >> $GITHUB_STEP_SUMMARY
+          fi

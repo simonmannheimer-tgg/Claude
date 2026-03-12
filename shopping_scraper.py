@@ -260,11 +260,8 @@ async def main() -> None:
     all_rows: list[dict] = []
 
     async with async_playwright() as pw:
-        # Use the locally available chromium binary (version 1194)
-        chromium_path = "/root/.cache/ms-playwright/chromium-1194/chrome-linux/chrome"
         browser = await pw.chromium.launch(
             headless=True,
-            executable_path=chromium_path,
             args=["--no-sandbox", "--disable-blink-features=AutomationControlled"],
         )
         context = await browser.new_context(
