@@ -121,6 +121,60 @@ def _grade(score) -> str:
     return "🔴"
 
 
+# ---------------------------------------------------------------------------
+# Page-type classification (used to group results in the summary)
+# ---------------------------------------------------------------------------
+_CATEGORY_ORDER = ["Home", "Category", "Product", "Guide", "Blog", "Other"]
+
+
+def _classify(url: str) -> str:
+    from urllib.parse import urlparse
+    path = urlparse(url).path.rstrip("/")
+    if path == "":
+        return "Home"
+    parts = [p for p in path.split("/") if p]
+    if not parts:
+        return "Home"
+    top = parts[0].lower()
+    if top in ("buying-guide", "buying-guides"):
+        return "Guide"
+    if top in ("whats-new", "blog", "news", "articles"):
+        return "Blog"
+    # On The Good Guys (and many retailers): single slug = product, multi-segment = category
+    if len(parts) == 1:
+        return "Product"
+    return "Category"
+
+
+def _section_table(results: list[dict]) -> list[str]:
+    """Build the markdown summary grouped by page type."""
+    from collections import defaultdict
+    groups: dict[str, list[dict]] = defaultdict(list)
+    for r in results:
+        groups[_classify(r.get("url", ""))].append(r)
+
+    lines = []
+    for cat in _CATEGORY_ORDER:
+        if cat not in groups:
+            continue
+        lines.append(f"\n## {cat}\n")
+        lines.append("| URL | Perf | Structure | LCP | TBT | CLS |")
+        lines.append("|-----|:----:|:---------:|----:|----:|----:|")
+        for r in groups[cat]:
+            if "error" in r:
+                lines.append(f"| {r['url']} | ❌ | ❌ | — | — | — |")
+            else:
+                lines.append(
+                    f"| {r['url']} "
+                    f"| {_grade(r['performance_score'])} {r['performance_score']} "
+                    f"| {_grade(r['structure_score'])} {r['structure_score']} "
+                    f"| {r.get('lcp_ms')} ms "
+                    f"| {r.get('tbt_ms')} ms "
+                    f"| {r.get('cls')} |"
+                )
+    return lines
+
+
 async def main():
     api_key = os.environ["GTMETRIX_API_KEY"]
     location_id = int(os.getenv("GTMETRIX_LOCATION_ID", "4"))
@@ -135,39 +189,25 @@ async def main():
     print(f"GTMetrix audit: {len(urls)} URL(s), location {location_id}, adblock={adblock}")
 
     results = []
-    table_rows = []
-
     for i, url in enumerate(urls, 1):
         print(f"[{i}/{len(urls)}] {url}")
         try:
             r = await run_test(api_key, url, location_id, adblock)
             results.append(r)
-            table_rows.append(
-                f"| {url} "
-                f"| {_grade(r['performance_score'])} {r['performance_score']} "
-                f"| {_grade(r['structure_score'])} {r['structure_score']} "
-                f"| {r['lcp_ms']} ms "
-                f"| {r['tbt_ms']} ms "
-                f"| {r['cls']} |"
-            )
             print(f"  ✓ Perf {r['performance_score']} | LCP {r['lcp_ms']}ms | TBT {r['tbt_ms']}ms")
         except Exception as e:
             results.append({"url": url, "error": str(e)})
-            table_rows.append(f"| {url} | ❌ | ❌ | — | — | — |")
             print(f"  ✗ {e}", file=sys.stderr)
 
-    # Write GitHub step summary
+    # Write GitHub step summary (grouped by page type)
     summary_path = os.getenv("GITHUB_STEP_SUMMARY")
     if summary_path:
         ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-        summary = "\n".join([
+        header = [
             "# GTMetrix Audit Results\n",
             f"**{len(urls)} URL(s)** | Location `{location_id}` | {ts}\n",
-            "| URL | Perf | Structure | LCP | TBT | CLS |",
-            "|-----|:----:|:---------:|----:|----:|----:|",
-            *table_rows,
-        ])
-        Path(summary_path).write_text(summary)
+        ]
+        Path(summary_path).write_text("\n".join(header + _section_table(results)))
 
     # Write artifact
     out = Path("gtmetrix_results.json")

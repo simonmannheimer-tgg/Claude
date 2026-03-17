@@ -125,27 +125,58 @@ def _grade(score) -> str:
     return "🟢" if score >= 90 else "🟡" if score >= 50 else "🔴"
 
 
+def _classify(url: str) -> str:
+    from urllib.parse import urlparse
+    path = urlparse(url).path.rstrip("/")
+    if path == "":
+        return "Home"
+    parts = [p for p in path.split("/") if p]
+    if not parts:
+        return "Home"
+    top = parts[0].lower()
+    if top in ("buying-guide", "buying-guides"):
+        return "Guide"
+    if top in ("whats-new", "blog", "news", "articles"):
+        return "Blog"
+    if len(parts) == 1:
+        return "Product"
+    return "Category"
+
+
+_CATEGORY_ORDER = ["Home", "Category", "Product", "Guide", "Blog", "Other"]
+
+
 def print_results(results: list[dict]) -> None:
+    from collections import defaultdict
+    groups: dict[str, list[dict]] = defaultdict(list)
+    for r in results:
+        groups[_classify(r.get("url", ""))].append(r)
+
     sep = "─" * 72
     print(f"\n{sep}")
     print("  GTMetrix Audit Results")
     print(sep)
-    for r in results:
-        if "error" in r:
-            print(f"\n  ❌  {r['url']}")
-            print(f"      Error: {r['error']}")
+
+    for cat in _CATEGORY_ORDER:
+        if cat not in groups:
             continue
-        g = _grade(r.get("performance_score"))
-        print(f"\n  {g}  {r['url']}")
-        print(
-            f"      Perf: {r.get('performance_score')}   "
-            f"Structure: {r.get('structure_score')}   "
-            f"LCP: {r.get('lcp_ms')} ms   "
-            f"TBT: {r.get('tbt_ms')} ms   "
-            f"CLS: {r.get('cls')}"
-        )
-        for audit in r.get("failing_audits", [])[:3]:
-            print(f"      ⚠  {audit['title']}  {audit.get('displayValue', '')}")
+        print(f"\n  ── {cat} ──")
+        for r in groups[cat]:
+            if "error" in r:
+                print(f"\n  ❌  {r['url']}")
+                print(f"      Error: {r['error']}")
+                continue
+            g = _grade(r.get("performance_score"))
+            print(f"\n  {g}  {r['url']}")
+            print(
+                f"      Perf: {r.get('performance_score')}   "
+                f"Structure: {r.get('structure_score')}   "
+                f"LCP: {r.get('lcp_ms')} ms   "
+                f"TBT: {r.get('tbt_ms')} ms   "
+                f"CLS: {r.get('cls')}"
+            )
+            for audit in r.get("failing_audits", [])[:3]:
+                print(f"      ⚠  {audit['title']}  {audit.get('displayValue', '')}")
     print(f"\n{sep}\n")
 
 
