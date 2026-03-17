@@ -88,43 +88,32 @@ async def run_test(api_key: str, url: str, location_id: int, adblock: bool) -> d
 
 
 def _parse(data: dict, url: str, location_id: int) -> dict:
-    attrs = data.get("attributes", {})
-    # Test endpoint: attrs.report.scores / Report endpoint: attrs.scores directly
-    report = attrs.get("report") or attrs
-    metrics = report.get("metrics", {})
+    """Parse a GTMetrix /reports/{id} response.
 
-    def pct(v):
-        if v is None:
-            return None
-        return round(float(v) * 100) if float(v) <= 1 else int(v)
+    Scores and metrics are flat under attributes:
+      performance_score, structure_score  (int 0-100)
+      largest_contentful_paint, total_blocking_time  (ms)
+      cumulative_layout_shift  (float)
+    """
+    attrs = data.get("attributes", {})
 
     def ms(v):
         return int(float(v)) if v is not None else None
 
-    audits = report.get("audits", {})
-    failing = sorted(
-        [
-            {
-                "title": v.get("title", k),
-                "score": v.get("score"),
-                "displayValue": v.get("displayValue", ""),
-            }
-            for k, v in audits.items()
-            if isinstance(v, dict) and v.get("score") is not None and v.get("score") < 0.9
-        ],
-        key=lambda a: (a["score"] or 1),
-    )
-
     return {
         "url": url,
-        "performance_score": pct(report.get("scores", {}).get("performance")),
-        "structure_score": pct(report.get("scores", {}).get("structure")),
-        "lcp_ms": ms(metrics.get("largestContentfulPaint")),
-        "tbt_ms": ms(metrics.get("totalBlockingTime")),
-        "cls": metrics.get("cumulativeLayoutShift"),
+        "performance_score": attrs.get("performance_score"),
+        "structure_score": attrs.get("structure_score"),
+        "gtmetrix_grade": attrs.get("gtmetrix_grade"),
+        "lcp_ms": ms(attrs.get("largest_contentful_paint")),
+        "tbt_ms": ms(attrs.get("total_blocking_time")),
+        "cls": attrs.get("cumulative_layout_shift"),
+        "ttfb_ms": ms(attrs.get("time_to_first_byte")),
+        "fully_loaded_ms": ms(attrs.get("fully_loaded_time")),
+        "speed_index_ms": ms(attrs.get("speed_index")),
         "location_id": location_id,
         "test_date": datetime.now(timezone.utc).isoformat(),
-        "failing_audits": failing[:5],
+        "failing_audits": [],
     }
 
 
@@ -175,19 +164,21 @@ def _section_table(results: list[dict]) -> list[str]:
         if cat not in groups:
             continue
         lines.append(f"\n## {cat}\n")
-        lines.append("| URL | Perf | Structure | LCP | TBT | CLS |")
-        lines.append("|-----|:----:|:---------:|----:|----:|----:|")
+        lines.append("| URL | Grade | Perf | Structure | LCP | TBT | CLS | TTFB |")
+        lines.append("|-----|:-----:|:----:|:---------:|----:|----:|----:|-----:|")
         for r in groups[cat]:
             if "error" in r:
-                lines.append(f"| {r['url']} | ❌ | ❌ | — | — | — |")
+                lines.append(f"| {r['url']} | ❌ | — | — | — | — | — | — |")
             else:
                 lines.append(
                     f"| {r['url']} "
+                    f"| **{r.get('gtmetrix_grade', '?')}** "
                     f"| {_grade(r['performance_score'])} {r['performance_score']} "
                     f"| {_grade(r['structure_score'])} {r['structure_score']} "
                     f"| {r.get('lcp_ms')} ms "
                     f"| {r.get('tbt_ms')} ms "
-                    f"| {r.get('cls')} |"
+                    f"| {r.get('cls', 'n/a')} "
+                    f"| {r.get('ttfb_ms')} ms |"
                 )
     return lines
 
