@@ -214,8 +214,49 @@ async def main():
     out.write_text(json.dumps(results, indent=2))
     print(f"\nSaved {out}")
 
+    # Push results back to repo via GitHub Contents API so they can be
+    # fetched by trigger_audit.py without hitting blob storage redirects.
+    _push_results_to_repo(results)
+
     if any("error" in r for r in results):
         sys.exit(1)
+
+
+def _push_results_to_repo(results: list[dict]) -> None:
+    import base64
+    token = os.getenv("GITHUB_TOKEN")
+    repo = os.getenv("GITHUB_REPOSITORY")
+    ref = os.getenv("GITHUB_REF_NAME")
+    run_number = os.getenv("GITHUB_RUN_NUMBER", "?")
+    if not (token and repo and ref):
+        return
+
+    path = "gtmetrix_results/latest.json"
+    content_b64 = base64.b64encode(json.dumps(results, indent=2).encode()).decode()
+    api = "https://api.github.com"
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+    }
+
+    # Fetch existing SHA so we can update rather than create
+    existing = httpx.get(f"{api}/repos/{repo}/contents/{path}?ref={ref}", headers=headers)
+    sha = existing.json().get("sha") if existing.status_code == 200 else None
+
+    payload = {
+        "message": f"GTMetrix results run #{run_number}",
+        "content": content_b64,
+        "branch": ref,
+    }
+    if sha:
+        payload["sha"] = sha
+
+    r = httpx.put(f"{api}/repos/{repo}/contents/{path}", headers=headers, json=payload)
+    if r.status_code in (200, 201):
+        print(f"Results committed to repo: {path} on {ref}")
+    else:
+        print(f"Warning: could not commit results to repo ({r.status_code})", file=sys.stderr)
 
 
 if __name__ == "__main__":
