@@ -46,7 +46,6 @@ async def run_test(api_key: str, url: str, location_id: int, adblock: bool) -> d
         base_url=GTMETRIX_API_BASE,
         timeout=30,
         headers={"Content-Type": "application/vnd.api+json"},
-        follow_redirects=True,
     ) as client:
         resp = await client.post("/tests", content=json.dumps(payload))
         if resp.status_code not in (200, 201, 202):
@@ -62,6 +61,14 @@ async def run_test(api_key: str, url: str, location_id: int, adblock: bool) -> d
             elapsed += poll_interval
 
             poll = await client.get(f"/tests/{test_id}")
+
+            # GTMetrix returns 303 → /reports/{id} when the test is complete
+            if poll.status_code == 303:
+                report_url = poll.headers["location"]
+                report_resp = await client.get(report_url)
+                report_resp.raise_for_status()
+                return _parse(report_resp.json().get("data", {}), url, location_id)
+
             poll.raise_for_status()
             data = poll.json().get("data", {})
             state = data.get("attributes", {}).get("state", "")
@@ -77,7 +84,9 @@ async def run_test(api_key: str, url: str, location_id: int, adblock: bool) -> d
 
 
 def _parse(data: dict, url: str, location_id: int) -> dict:
-    report = data.get("attributes", {}).get("report", {})
+    attrs = data.get("attributes", {})
+    # Test endpoint: attrs.report.scores / Report endpoint: attrs.scores directly
+    report = attrs.get("report") or attrs
     metrics = report.get("metrics", {})
 
     def pct(v):
