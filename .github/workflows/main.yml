@@ -23,4 +23,4 @@ jobs:
       - name: Check imports
         env:
           GTMETRIX_API_KEY: ci-test-key
-        run: python -c "import server_http; import main"
+        run: python -c "import server_http; import main; import run_audit_ci; import trigger_audit"

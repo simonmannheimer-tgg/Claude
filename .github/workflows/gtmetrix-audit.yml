@@ -1,0 +1,56 @@
+name: GTMetrix Audit
+
+on:
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: 'JSON array of URLs to test, e.g. ["https://example.com"]'
+        required: true
+        type: string
+      location_id:
+        description: 'GTMetrix location ID (4=San Antonio, 1=Vancouver, 7=Sydney)'
+        required: false
+        default: '4'
+        type: string
+      adblock:
+        description: 'Enable adblock during tests'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+      - name: Install dependencies
+        run: pip install httpx
+
+      - name: Run GTMetrix audit
+        env:
+          GTMETRIX_API_KEY: ${{ secrets.GTMETRIX_API_KEY }}
+          GTMETRIX_URLS: ${{ inputs.urls }}
+          GTMETRIX_LOCATION_ID: ${{ inputs.location_id }}
+          GTMETRIX_ADBLOCK: ${{ inputs.adblock }}
+        run: python run_audit_ci.py
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gtmetrix-results
+          path: gtmetrix_results.json
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
