@@ -67,7 +67,11 @@ async def run_test(api_key: str, url: str, location_id: int, adblock: bool) -> d
                 report_url = poll.headers["location"]
                 report_resp = await client.get(report_url)
                 report_resp.raise_for_status()
-                return _parse(report_resp.json().get("data", {}), url, location_id)
+                raw = report_resp.json()
+                # Debug: store raw for first URL so we can inspect the structure
+                if not Path("gtmetrix_raw_sample.json").exists():
+                    Path("gtmetrix_raw_sample.json").write_text(json.dumps(raw, indent=2))
+                return _parse(raw.get("data", {}), url, location_id)
 
             poll.raise_for_status()
             data = poll.json().get("data", {})
@@ -230,9 +234,29 @@ async def main():
     # Push results back to repo via GitHub Contents API so they can be
     # fetched by trigger_audit.py without hitting blob storage redirects.
     _push_results_to_repo(results)
+    _push_file_to_repo("gtmetrix_results/raw_sample.json", Path("gtmetrix_raw_sample.json").read_text() if Path("gtmetrix_raw_sample.json").exists() else "{}")
 
     if any("error" in r for r in results):
         sys.exit(1)
+
+
+def _push_file_to_repo(path: str, content: str) -> None:
+    import base64
+    token = os.getenv("GITHUB_TOKEN")
+    repo = os.getenv("GITHUB_REPOSITORY")
+    ref = os.getenv("GITHUB_REF_NAME")
+    run_number = os.getenv("GITHUB_RUN_NUMBER", "?")
+    if not (token and repo and ref):
+        return
+    content_b64 = base64.b64encode(content.encode()).decode()
+    api = "https://api.github.com"
+    headers = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
+    existing = httpx.get(f"{api}/repos/{repo}/contents/{path}?ref={ref}", headers=headers)
+    sha = existing.json().get("sha") if existing.status_code == 200 else None
+    payload = {"message": f"Debug raw sample #{run_number}", "content": content_b64, "branch": ref}
+    if sha:
+        payload["sha"] = sha
+    httpx.put(f"{api}/repos/{repo}/contents/{path}", headers=headers, json=payload)
 
 
 def _push_results_to_repo(results: list[dict]) -> None:
