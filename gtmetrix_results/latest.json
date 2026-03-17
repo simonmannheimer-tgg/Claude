@@ -1,38 +1,38 @@
 [
   {
     "url": "https://www.thegoodguys.com.au/",
-    "error": "Submission failed (415): {\"errors\":[{\"title\":\"Unsupported media type\",\"detail\":\"Request must use Content-Type: application/vnd.api+json\",\"code\":\"E41500\",\"status\":\"415\"}]}"
+    "error": "Submission failed (202): {\"data\":{\"type\":\"test\",\"id\":\"Shjnjv1n\",\"attributes\":{\"browser\":\"3\",\"location\":\"4\",\"source\":\"api\",\"created\":1773713769,\"state\":\"queued\"},\"links\":{\"browser\":\"https://gtmetrix.com/api/2.0/browsers/3\",\"lo"
   },
   {
     "url": "https://www.thegoodguys.com.au/cooking-and-dishwashers/dishwashers/built-in-dishwashers",
-    "error": "Submission failed (415): {\"errors\":[{\"title\":\"Unsupported media type\",\"detail\":\"Request must use Content-Type: application/vnd.api+json\",\"code\":\"E41500\",\"status\":\"415\"}]}"
+    "error": "Submission failed (202): {\"data\":{\"type\":\"test\",\"id\":\"ByGRcXbW\",\"attributes\":{\"browser\":\"3\",\"location\":\"4\",\"source\":\"api\",\"created\":1773713769,\"state\":\"queued\"},\"links\":{\"browser\":\"https://gtmetrix.com/api/2.0/browsers/3\",\"lo"
   },
   {
     "url": "https://www.thegoodguys.com.au/westinghouse/cooking-and-dishwashers/ovens",
-    "error": "Submission failed (415): {\"errors\":[{\"title\":\"Unsupported media type\",\"detail\":\"Request must use Content-Type: application/vnd.api+json\",\"code\":\"E41500\",\"status\":\"415\"}]}"
+    "error": "Submission failed (202): {\"data\":{\"type\":\"test\",\"id\":\"AQh1aNTW\",\"attributes\":{\"browser\":\"3\",\"location\":\"4\",\"source\":\"api\",\"created\":1773713769,\"state\":\"queued\"},\"links\":{\"browser\":\"https://gtmetrix.com/api/2.0/browsers/3\",\"lo"
   },
   {
     "url": "https://www.thegoodguys.com.au/dyson-handstick-stubborn-dirt-brush-971429-01",
-    "error": "Submission failed (415): {\"errors\":[{\"title\":\"Unsupported media type\",\"detail\":\"Request must use Content-Type: application/vnd.api+json\",\"code\":\"E41500\",\"status\":\"415\"}]}"
+    "error": "Submission failed (202): {\"data\":{\"type\":\"test\",\"id\":\"sDFgQQVe\",\"attributes\":{\"browser\":\"3\",\"location\":\"4\",\"source\":\"api\",\"created\":1773713769,\"state\":\"queued\"},\"links\":{\"browser\":\"https://gtmetrix.com/api/2.0/browsers/3\",\"lo"
   },
   {
     "url": "https://www.thegoodguys.com.au/husqvarna-aspire-p5-kit-p5-kit",
-    "error": "Submission failed (415): {\"errors\":[{\"title\":\"Unsupported media type\",\"detail\":\"Request must use Content-Type: application/vnd.api+json\",\"code\":\"E41500\",\"status\":\"415\"}]}"
+    "error": "Submission failed (202): {\"data\":{\"type\":\"test\",\"id\":\"IxosHrI0\",\"attributes\":{\"browser\":\"3\",\"location\":\"4\",\"source\":\"api\",\"created\":1773713769,\"state\":\"queued\"},\"links\":{\"browser\":\"https://gtmetrix.com/api/2.0/browsers/3\",\"lo"
   },
   {
     "url": "https://www.thegoodguys.com.au/miele-guard-s1-bagged-vacuum-nordic-blue-12697050",
-    "error": "Submission failed (415): {\"errors\":[{\"title\":\"Unsupported media type\",\"detail\":\"Request must use Content-Type: application/vnd.api+json\",\"code\":\"E41500\",\"status\":\"415\"}]}"
+    "error": "Submission failed (202): {\"data\":{\"type\":\"test\",\"id\":\"IMXFbDob\",\"attributes\":{\"browser\":\"3\",\"location\":\"4\",\"source\":\"api\",\"created\":1773713770,\"state\":\"queued\"},\"links\":{\"browser\":\"https://gtmetrix.com/api/2.0/browsers/3\",\"lo"
   },
   {
     "url": "https://www.thegoodguys.com.au/bartesian-8-pack-old-fashioned-capsules-168768",
-    "error": "Submission failed (415): {\"errors\":[{\"title\":\"Unsupported media type\",\"detail\":\"Request must use Content-Type: application/vnd.api+json\",\"code\":\"E41500\",\"status\":\"415\"}]}"
+    "error": "Submission failed (202): {\"data\":{\"type\":\"test\",\"id\":\"LSMwIB20\",\"attributes\":{\"browser\":\"3\",\"location\":\"4\",\"source\":\"api\",\"created\":1773713770,\"state\":\"queued\"},\"links\":{\"browser\":\"https://gtmetrix.com/api/2.0/browsers/3\",\"lo"
   },
   {
     "url": "https://www.thegoodguys.com.au/buying-guide/television-buying-guide",
-    "error": "Submission failed (415): {\"errors\":[{\"title\":\"Unsupported media type\",\"detail\":\"Request must use Content-Type: application/vnd.api+json\",\"code\":\"E41500\",\"status\":\"415\"}]}"
+    "error": "Submission failed (202): {\"data\":{\"type\":\"test\",\"id\":\"xa81j06m\",\"attributes\":{\"browser\":\"3\",\"location\":\"4\",\"source\":\"api\",\"created\":1773713770,\"state\":\"queued\"},\"links\":{\"browser\":\"https://gtmetrix.com/api/2.0/browsers/3\",\"lo"
   },
   {
     "url": "https://www.thegoodguys.com.au/whats-new/what-temperature-should-my-fridge-be",
-    "error": "Submission failed (415): {\"errors\":[{\"title\":\"Unsupported media type\",\"detail\":\"Request must use Content-Type: application/vnd.api+json\",\"code\":\"E41500\",\"status\":\"415\"}]}"
+    "error": "Submission failed (202): {\"data\":{\"type\":\"test\",\"id\":\"UoUieyl0\",\"attributes\":{\"browser\":\"3\",\"location\":\"4\",\"source\":\"api\",\"created\":1773713770,\"state\":\"queued\"},\"links\":{\"browser\":\"https://gtmetrix.com/api/2.0/browsers/3\",\"lo"
   }
 ]
