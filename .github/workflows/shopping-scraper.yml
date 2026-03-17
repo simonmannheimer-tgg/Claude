@@ -69,15 +69,15 @@ jobs:
           SCREENSHOTS_DIR = Path("screenshots")
           HEADERS = ["keyword","position","title","price","rating","reviews","store","store_domain","mode","scraped_at"]
 
-          MOBILE_UA = "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Mobile Safari/537.36"
+          MOBILE_UA  = "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Mobile Safari/537.36"
           DESKTOP_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
-          MOBILE_VIEWPORT = {"width": 390, "height": 844}
-          DESKTOP_VIEWPORT = {"width": 1280, "height": 900}
+          MOBILE_VP  = {"width": 390,  "height": 844}
+          DESKTOP_VP = {"width": 1280, "height": 900}
 
-          def clean_text(s): return re.sub(r"\s+", " ", s or "").strip()
-          def clean_reviews(s):
-              m = re.search(r"[\d,]+", s); return m.group(0) if m else clean_text(s)
-          def extract_domain(url):
+          PRICE_RE = re.compile(r'A?\$[\d,]+(?:\.\d{2})?')
+
+          def clean(s): return re.sub(r"\s+", " ", s or "").strip()
+          def domain(url):
               m = re.search(r"https?://(?:www\.)?([^/?#]+)", url or "")
               return m.group(1) if m else ""
 
@@ -89,102 +89,196 @@ jobs:
                           await btn.first.click(); await page.wait_for_timeout(800); return
                   except: pass
 
-          async def extract(page, keyword):
-              raw = await page.evaluate(r"""() => {
-                  const results=[], priceRe=/A?\$[\d,]+(?:\.\d{2})?/;
-                  const s1=document.querySelectorAll('.sh-dlr__list-result,.mnr-c');
-                  const s2=document.querySelectorAll('.g .kp-wholepage .sg-product,.comercial-unit .sg-product');
-                  let s3=[];
-                  for(const h of document.querySelectorAll('h3,h2,[role="heading"]')){
-                      if(/popular products|shopping results/i.test(h.textContent||'')){
-                          const sec=h.closest('div[data-hveid],div[jsname],section');
-                          if(sec) s3=Array.from(sec.querySelectorAll('[data-hveid],[jsname],li,.sh-dlr__list-result'));
-                          break;
-                      }
-                  }
-                  const s4=[];
-                  document.querySelectorAll('div[data-hveid]').forEach(b=>{
-                      const t=b.innerText||'';
-                      if(priceRe.test(t)&&t.length<600) s4.push(b);
+          async def slow_scroll(page):
+              """Scroll gradually to trigger lazy-loaded carousels."""
+              height = await page.evaluate("document.body.scrollHeight")
+              step = 600
+              for y in range(0, height, step):
+                  await page.evaluate(f"window.scrollTo(0, {y})")
+                  await page.wait_for_timeout(300)
+              await page.evaluate("window.scrollTo(0, 0)")
+              await page.wait_for_timeout(500)
+
+          EXTRACT_JS = r"""
+          () => {
+              const priceRe  = /A?\$[\d,]+(?:\.\d{2})?/;
+              const ratingRe = /^(\d\.\d)\b/;
+              const results  = [];
+
+              // ── find candidate product card containers ────────────────────
+              const CARD_SELS = [
+                  '.sh-dlr__list-result',
+                  '.mnr-c',
+                  '[data-docid]',
+                  '.sh-dgr__content',
+                  '.KZmu8e',
+                  '.Irmie',
+              ];
+              let cards = [];
+              for (const sel of CARD_SELS) {
+                  const found = Array.from(document.querySelectorAll(sel));
+                  cards.push(...found);
+              }
+
+              // Fallback: any small-ish block with a price and multiple lines
+              if (cards.length === 0) {
+                  document.querySelectorAll('div,li').forEach(el => {
+                      const t = el.innerText || '';
+                      if (priceRe.test(t) && t.length < 500 && t.split('\n').filter(Boolean).length >= 2)
+                          cards.push(el);
                   });
-                  const cands=s1.length?s1:s2.length?s2:s3.length?s3:s4;
-                  const seen=new Set(); let pos=0;
-                  for(const el of cands){
-                      if(seen.has(el)) continue; seen.add(el);
-                      const txt=el.innerText||el.textContent||'';
-                      if(!priceRe.test(txt)) continue;
-                      const te=el.querySelector('h3,[role="heading"],.Xjkr3b');
-                      const title=(te?.innerText||te?.textContent||'').trim();
-                      const pe=el.querySelector('[aria-label*="$"],.a8Pemb,.OFFNJ,.T14wmb,.HRLxBb');
-                      const pm=(((pe?.getAttribute('aria-label')||pe?.innerText||'')+txt).match(/A?\$[\d,]+(?:\.\d{2})?/));
-                      const re2=el.querySelector('[aria-label*="star"],[aria-label*="rating"],.Rsc7Yb,.yi40Hd,[role="img"][aria-label]');
-                      const rm=(re2?.getAttribute('aria-label')||re2?.innerText||'').match(/[\d.]+/);
-                      const rve=el.querySelector('[aria-label*="review"],.HiT7Id,.NzHeef,.rGl5ye');
-                      const rvm=(rve?.getAttribute('aria-label')||rve?.innerText||'').match(/[\d,]+/);
-                      // store: try multiple selectors then fall back to outbound link domain
-                      const se=el.querySelector('[data-merchant-name],[aria-label*="from "],.aULzUe,.E5ocAb,.LbUacb,.IuHnof,.zPEcBd,.NJMzre,.Lq5OHe');
-                      let store=(se?.getAttribute('data-merchant-name')||se?.getAttribute('aria-label')||se?.innerText||'').replace(/^from\s+/i,'').trim();
-                      // outbound link as domain fallback
-                      let storeUrl='';
-                      if(!store){
-                          const links=Array.from(el.querySelectorAll('a[href]'));
-                          for(const a of links){
-                              const h=a.href||'';
-                              if(h&&!h.includes('google.')&&!h.startsWith('/')){storeUrl=h;break;}
-                          }
-                          // also try google redirect URLs which embed the merchant URL
-                          if(!storeUrl){
-                              for(const a of links){
-                                  const h=a.href||a.getAttribute('href')||'';
-                                  const m=h.match(/[?&]q=(https?[^&]+)/);
-                                  if(m){storeUrl=decodeURIComponent(m[1]);break;}
-                              }
-                          }
+              }
+
+              // ── deduplicate cards: prefer deepest element for each rect ──
+              const rectKey = el => {
+                  try { const r = el.getBoundingClientRect(); return `${Math.round(r.top)},${Math.round(r.left)}`; }
+                  catch { return null; }
+              };
+              const byRect = new Map();
+              for (const el of cards) {
+                  const k = rectKey(el);
+                  if (!k) continue;
+                  // keep the deepest (most-specific) element at this position
+                  const existing = byRect.get(k);
+                  if (!existing || el.contains(existing)) byRect.set(k, el);
+              }
+              cards = Array.from(byRect.values());
+
+              // ── extract data from each card ───────────────────────────────
+              const seenKey = new Set();
+              let pos = 0;
+
+              for (const el of cards) {
+                  const lines = (el.innerText || '')
+                      .split('\n')
+                      .map(l => l.trim())
+                      .filter(Boolean);
+
+                  if (lines.length < 2) continue;
+
+                  // price
+                  const priceLine = lines.find(l => priceRe.test(l));
+                  if (!priceLine) continue;
+                  const price = priceLine.match(priceRe)[0];
+
+                  // title: longest line before the price that isn't a price itself
+                  const priceIdx = lines.indexOf(priceLine);
+                  const beforePrice = lines.slice(0, priceIdx).filter(l => !priceRe.test(l));
+                  const title = beforePrice.sort((a,b) => b.length - a.length)[0] || '';
+                  if (!title) continue;
+
+                  // deduplicate by title+price
+                  const key = title + '||' + price;
+                  if (seenKey.has(key)) continue;
+                  seenKey.add(key);
+
+                  // rating: first line matching x.x pattern
+                  let rating = '', reviews = '';
+                  for (const l of lines) {
+                      if (!rating && ratingRe.test(l)) { rating = l.match(ratingRe)[1]; continue; }
+                      // reviews: parenthesised number like (1,234) or plain number after rating found
+                      if (rating && !reviews && /^\(?([\d,]+)\)?$/.test(l)) {
+                          reviews = l.replace(/[(),]/g, '');
                       }
-                      pos++;
-                      results.push({pos,title,price:pm?pm[0]:'',rating:rm?rm[0]:'',reviews:rvm?rvm[0]:'',store,storeUrl});
                   }
-                  return results;
-              }""")
+
+                  // store: DOM selectors first, then text heuristic
+                  const storeEl = el.querySelector(
+                      '[data-merchant-name],.aULzUe,.E5ocAb,.LbUacb,.IuHnof,.NJMzre,.zPEcBd,.Lq5OHe'
+                  );
+                  let store = (
+                      storeEl?.getAttribute('data-merchant-name') ||
+                      storeEl?.innerText || ''
+                  ).replace(/^from\s+/i,'').trim();
+
+                  if (!store) {
+                      // last line after price that isn't a number or price
+                      const after = lines.slice(priceIdx + 1);
+                      store = after.find(l =>
+                          !priceRe.test(l) &&
+                          !/^[\d.,()]+$/.test(l) &&
+                          l.length > 1
+                      ) || '';
+                  }
+
+                  // store domain from outbound link
+                  let storeUrl = '';
+                  for (const a of el.querySelectorAll('a[href]')) {
+                      const h = a.href || '';
+                      if (h && !h.includes('google.') && h.startsWith('http')) { storeUrl = h; break; }
+                  }
+                  // also try redirect URLs like /url?q=https://...
+                  if (!storeUrl) {
+                      for (const a of el.querySelectorAll('a[href]')) {
+                          const m = (a.getAttribute('href')||'').match(/[?&]q=(https?[^&]+)/);
+                          if (m) { storeUrl = decodeURIComponent(m[1]); break; }
+                      }
+                  }
+
+                  pos++;
+                  results.push({ pos, title, price, rating, reviews, store, storeUrl });
+              }
+
+              return results;
+          }
+          """
+
+          async def extract(page, keyword):
+              raw = await page.evaluate(EXTRACT_JS)
               now = datetime.now().isoformat(timespec="seconds")
               rows = []
               for r in raw:
-                  store = clean_text(r.get("store",""))
-                  store_domain = extract_domain(r.get("storeUrl","")) if not store else ""
-                  rows.append({"keyword":keyword,"position":r["pos"],"title":clean_text(r["title"]),"price":clean_text(r["price"]),"rating":clean_text(r["rating"]),"reviews":clean_reviews(r["reviews"]),"store":store or store_domain,"store_domain":extract_domain(r.get("storeUrl","")),"mode":MODE,"scraped_at":now})
+                  store = clean(r.get("store",""))
+                  sd = domain(r.get("storeUrl",""))
+                  rows.append({
+                      "keyword": keyword,
+                      "position": r["pos"],
+                      "title": clean(r["title"]),
+                      "price": clean(r["price"]),
+                      "rating": r["rating"],
+                      "reviews": r["reviews"],
+                      "store": store or sd,
+                      "store_domain": sd,
+                      "mode": MODE,
+                      "scraped_at": now,
+                  })
               return rows
 
           def save_csv(rows, path):
               path.parent.mkdir(exist_ok=True)
               with open(path,"w",newline="",encoding="utf-8") as f:
-                  w=csv.DictWriter(f,fieldnames=HEADERS); w.writeheader(); w.writerows(rows)
+                  w = csv.DictWriter(f, fieldnames=HEADERS)
+                  w.writeheader(); w.writerows(rows)
 
           async def main():
-              all_rows=[]
+              all_rows = []
               is_mobile = MODE == "mobile"
               async with async_playwright() as pw:
-                  browser=await pw.chromium.launch(headless=True,args=["--no-sandbox","--disable-blink-features=AutomationControlled"])
-                  ctx=await browser.new_context(
-                      viewport=MOBILE_VIEWPORT if is_mobile else DESKTOP_VIEWPORT,
+                  browser = await pw.chromium.launch(headless=True, args=["--no-sandbox","--disable-blink-features=AutomationControlled"])
+                  ctx = await browser.new_context(
+                      viewport=MOBILE_VP if is_mobile else DESKTOP_VP,
                       user_agent=MOBILE_UA if is_mobile else DESKTOP_UA,
-                      locale="en-AU",
-                      is_mobile=is_mobile,
-                      has_touch=is_mobile,
+                      locale="en-AU", is_mobile=is_mobile, has_touch=is_mobile,
                   )
                   await ctx.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>undefined})")
                   for kw in KEYWORDS:
-                      page=await ctx.new_page()
-                      slug=kw.replace(" ","_")
+                      page = await ctx.new_page()
+                      slug = kw.replace(" ","_")
                       try:
-                          url = f"https://www.google.com.au/search?q={kw.replace(' ','+')}&gl=au&hl=en-AU&num=10"
-                          await page.goto(url, wait_until="domcontentloaded", timeout=30000)
-                          await dismiss_consent(page); await page.wait_for_timeout(2500)
+                          await page.goto(
+                              f"https://www.google.com.au/search?q={kw.replace(' ','+')}&gl=au&hl=en-AU&num=10",
+                              wait_until="domcontentloaded", timeout=30000
+                          )
+                          await dismiss_consent(page)
+                          await page.wait_for_timeout(2000)
+                          await slow_scroll(page)
                           SCREENSHOTS_DIR.mkdir(exist_ok=True)
                           await page.screenshot(path=str(SCREENSHOTS_DIR/f"{MODE}_{slug}.png"), full_page=True)
-                          rows=await extract(page,kw)
+                          rows = await extract(page, kw)
                           all_rows.extend(rows)
                           save_csv(rows, RESULTS_DIR/f"{slug}.csv")
                           print(f"carousel [{MODE}] {kw!r}: {len(rows)} products")
+                          for r in rows: print(f"  #{r['position']} {r['title'][:50]} | {r['price']} | {r['store']}")
                       except Exception as e: print(f"ERROR {kw}: {e}")
                       finally: await page.close()
                       await asyncio.sleep(2)
@@ -219,15 +313,13 @@ jobs:
           SCREENSHOTS_DIR = Path("screenshots")
           HEADERS = ["keyword","position","title","price","rating","reviews","store","store_domain","url","mode","scraped_at"]
 
-          MOBILE_UA = "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Mobile Safari/537.36"
+          MOBILE_UA  = "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Mobile Safari/537.36"
           DESKTOP_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
-          MOBILE_VIEWPORT = {"width": 390, "height": 844}
-          DESKTOP_VIEWPORT = {"width": 1280, "height": 900}
+          MOBILE_VP  = {"width": 390,  "height": 844}
+          DESKTOP_VP = {"width": 1280, "height": 900}
 
-          def clean_text(s): return re.sub(r"\s+", " ", s or "").strip()
-          def clean_reviews(s):
-              m = re.search(r"[\d,]+", s); return m.group(0) if m else clean_text(s)
-          def extract_domain(url):
+          def clean(s): return re.sub(r"\s+", " ", s or "").strip()
+          def domain(url):
               m = re.search(r"https?://(?:www\.)?([^/?#]+)", url or "")
               return m.group(1) if m else ""
 
@@ -239,91 +331,182 @@ jobs:
                           await btn.first.click(); await page.wait_for_timeout(800); return
                   except: pass
 
-          async def extract(page, keyword):
-              raw = await page.evaluate(r"""() => {
-                  const results=[], priceRe=/A?\$[\d,]+(?:\.\d{2})?/;
-                  const cards=Array.from(document.querySelectorAll('.sh-dgr__content,.sh-pr__product-results-grid .KZmu8e,.sh-dlr__list-result,[data-docid]'));
-                  const cands=cards.length?cards:Array.from(document.querySelectorAll('li.sh-osd__offer-row,.sh-np__click-target'));
-                  const seen=new Set(); let pos=0;
-                  for(const el of cands){
-                      if(seen.has(el)) continue; seen.add(el);
-                      const txt=el.innerText||el.textContent||'';
-                      const sponsored=el.querySelector('[aria-label*="Sponsored"],.nNzjpf-cS4Vcb-PvZLI-S,.Krfl3e,[data-dtld]')!==null||/^sponsored$/im.test((txt.split('\n')[0]||''));
-                      if(sponsored||!priceRe.test(txt)) continue;
-                      const te=el.querySelector('h3,h4,[role="heading"],.Xjkr3b,.BvQan');
-                      const title=(te?.innerText||te?.textContent||'').trim();
-                      if(!title) continue;
-                      const pe=el.querySelector('.a8Pemb,.HRLxBb,.T14wmb,[data-price],[aria-label*="$"]');
-                      const pm=(((pe?.getAttribute('aria-label')||pe?.innerText||'')+txt).match(/A?\$[\d,]+(?:\.\d{2})?/));
-                      const re2=el.querySelector('[aria-label*="star"],[aria-label*="rating"],.Rsc7Yb,.yi40Hd,[role="img"][aria-label]');
-                      const rm=(re2?.getAttribute('aria-label')||re2?.innerText||'').match(/[\d.]+/);
-                      const rve=el.querySelector('[aria-label*="review"],.HiT7Id,.NzHeef,.QIrs8,.rGl5ye');
-                      const rvm=(rve?.getAttribute('aria-label')||rve?.innerText||'').match(/[\d,]+/);
-                      // store: try named selectors then outbound link domain
-                      const se=el.querySelector('[data-merchant-name],[aria-label*="from "],.aULzUe,.E5ocAb,.LbUacb,.IuHnof,.NJMzre,.zPEcBd,.Lq5OHe');
-                      let store=(se?.getAttribute('data-merchant-name')||se?.getAttribute('aria-label')||se?.innerText||'').replace(/^from\s+/i,'').trim();
-                      let storeUrl='';
-                      const le=el.querySelector('a[href*="/shopping/product/"],a.shntl');
-                      const href=le?.getAttribute('href')||'';
-                      const url=href.startsWith('http')?href:(href?'https://www.google.com'+href:'');
-                      if(!store){
-                          const links=Array.from(el.querySelectorAll('a[href]'));
-                          for(const a of links){
-                              const h=a.href||'';
-                              if(h&&!h.includes('google.')&&!h.startsWith('/')){storeUrl=h;break;}
-                          }
-                          if(!storeUrl){
-                              for(const a of links){
-                                  const h=a.getAttribute('href')||'';
-                                  const m=h.match(/[?&]q=(https?[^&]+)/);
-                                  if(m){storeUrl=decodeURIComponent(m[1]);break;}
-                              }
-                          }
+          async def slow_scroll(page):
+              height = await page.evaluate("document.body.scrollHeight")
+              for y in range(0, height, 600):
+                  await page.evaluate(f"window.scrollTo(0, {y})")
+                  await page.wait_for_timeout(300)
+              await page.evaluate("window.scrollTo(0, 0)")
+              await page.wait_for_timeout(500)
+
+          EXTRACT_JS = r"""
+          () => {
+              const priceRe  = /A?\$[\d,]+(?:\.\d{2})?/;
+              const ratingRe = /^(\d\.\d)\b/;
+              const results  = [];
+
+              const CARD_SELS = [
+                  '.sh-dgr__content',
+                  '.sh-pr__product-results-grid .KZmu8e',
+                  '.sh-dlr__list-result',
+                  '[data-docid]',
+                  'li.sh-osd__offer-row',
+                  '.Irmie',
+              ];
+              let cards = [];
+              for (const sel of CARD_SELS) {
+                  cards.push(...Array.from(document.querySelectorAll(sel)));
+              }
+              if (cards.length === 0) {
+                  document.querySelectorAll('div,li').forEach(el => {
+                      const t = el.innerText || '';
+                      if (priceRe.test(t) && t.length < 500 && t.split('\n').filter(Boolean).length >= 2)
+                          cards.push(el);
+                  });
+              }
+
+              // deduplicate by position rect, keeping deepest element
+              const byRect = new Map();
+              for (const el of cards) {
+                  try {
+                      const r = el.getBoundingClientRect();
+                      const k = `${Math.round(r.top)},${Math.round(r.left)}`;
+                      const existing = byRect.get(k);
+                      if (!existing || el.contains(existing)) byRect.set(k, el);
+                  } catch {}
+              }
+              cards = Array.from(byRect.values());
+
+              const seenKey = new Set();
+              let pos = 0;
+
+              for (const el of cards) {
+                  // skip sponsored
+                  const sponsored =
+                      el.querySelector('[aria-label*="Sponsored"],.nNzjpf-cS4Vcb-PvZLI-S,.Krfl3e,[data-dtld]') !== null ||
+                      /^sponsored$/im.test(((el.innerText||'').split('\n')[0]||''));
+                  if (sponsored) continue;
+
+                  const lines = (el.innerText || '')
+                      .split('\n').map(l => l.trim()).filter(Boolean);
+                  if (lines.length < 2) continue;
+
+                  const priceLine = lines.find(l => priceRe.test(l));
+                  if (!priceLine) continue;
+                  const price = priceLine.match(priceRe)[0];
+
+                  const priceIdx = lines.indexOf(priceLine);
+                  const beforePrice = lines.slice(0, priceIdx).filter(l => !priceRe.test(l));
+                  const title = beforePrice.sort((a,b) => b.length - a.length)[0] || '';
+                  if (!title) continue;
+
+                  const key = title + '||' + price;
+                  if (seenKey.has(key)) continue;
+                  seenKey.add(key);
+
+                  let rating = '', reviews = '';
+                  for (const l of lines) {
+                      if (!rating && ratingRe.test(l)) { rating = l.match(ratingRe)[1]; continue; }
+                      if (rating && !reviews && /^\(?([\d,]+)\)?$/.test(l)) {
+                          reviews = l.replace(/[(),]/g,'');
                       }
-                      pos++;
-                      results.push({pos,title,price:pm?pm[0]:'',rating:rm?rm[0]:'',reviews:rvm?rvm[0]:'',store,storeUrl,url});
                   }
-                  return results;
-              }""")
+
+                  const storeEl = el.querySelector(
+                      '[data-merchant-name],.aULzUe,.E5ocAb,.LbUacb,.IuHnof,.NJMzre,.zPEcBd,.Lq5OHe'
+                  );
+                  let store = (
+                      storeEl?.getAttribute('data-merchant-name') ||
+                      storeEl?.innerText || ''
+                  ).replace(/^from\s+/i,'').trim();
+                  if (!store) {
+                      const after = lines.slice(priceIdx + 1);
+                      store = after.find(l => !priceRe.test(l) && !/^[\d.,()]+$/.test(l) && l.length > 1) || '';
+                  }
+
+                  // product URL
+                  const linkEl = el.querySelector('a[href*="/shopping/product/"],a.shntl,a[href]');
+                  const href = linkEl?.getAttribute('href') || '';
+                  const url = href.startsWith('http') ? href : (href ? 'https://www.google.com' + href : '');
+
+                  // store domain
+                  let storeUrl = '';
+                  for (const a of el.querySelectorAll('a[href]')) {
+                      const h = a.href || '';
+                      if (h && !h.includes('google.') && h.startsWith('http')) { storeUrl = h; break; }
+                  }
+                  if (!storeUrl) {
+                      for (const a of el.querySelectorAll('a[href]')) {
+                          const m = (a.getAttribute('href')||'').match(/[?&]q=(https?[^&]+)/);
+                          if (m) { storeUrl = decodeURIComponent(m[1]); break; }
+                      }
+                  }
+
+                  pos++;
+                  results.push({ pos, title, price, rating, reviews, store, storeUrl, url });
+              }
+
+              return results;
+          }
+          """
+
+          async def extract(page, keyword):
+              raw = await page.evaluate(EXTRACT_JS)
               now = datetime.now().isoformat(timespec="seconds")
               rows = []
               for r in raw:
-                  store = clean_text(r.get("store",""))
-                  store_domain = extract_domain(r.get("storeUrl",""))
-                  rows.append({"keyword":keyword,"position":r["pos"],"title":clean_text(r["title"]),"price":clean_text(r["price"]),"rating":clean_text(r["rating"]),"reviews":clean_reviews(r["reviews"]),"store":store or store_domain,"store_domain":store_domain,"url":r.get("url",""),"mode":MODE,"scraped_at":now})
+                  store = clean(r.get("store",""))
+                  sd = domain(r.get("storeUrl",""))
+                  rows.append({
+                      "keyword": keyword,
+                      "position": r["pos"],
+                      "title": clean(r["title"]),
+                      "price": clean(r["price"]),
+                      "rating": r["rating"],
+                      "reviews": r["reviews"],
+                      "store": store or sd,
+                      "store_domain": sd,
+                      "url": r.get("url",""),
+                      "mode": MODE,
+                      "scraped_at": now,
+                  })
               return rows
 
           def save_csv(rows, path):
               path.parent.mkdir(exist_ok=True)
               with open(path,"w",newline="",encoding="utf-8") as f:
-                  w=csv.DictWriter(f,fieldnames=HEADERS); w.writeheader(); w.writerows(rows)
+                  w = csv.DictWriter(f, fieldnames=HEADERS)
+                  w.writeheader(); w.writerows(rows)
 
           async def main():
-              all_rows=[]
+              all_rows = []
               is_mobile = MODE == "mobile"
               async with async_playwright() as pw:
-                  browser=await pw.chromium.launch(headless=True,args=["--no-sandbox","--disable-blink-features=AutomationControlled"])
-                  ctx=await browser.new_context(
-                      viewport=MOBILE_VIEWPORT if is_mobile else DESKTOP_VIEWPORT,
+                  browser = await pw.chromium.launch(headless=True, args=["--no-sandbox","--disable-blink-features=AutomationControlled"])
+                  ctx = await browser.new_context(
+                      viewport=MOBILE_VP if is_mobile else DESKTOP_VP,
                       user_agent=MOBILE_UA if is_mobile else DESKTOP_UA,
-                      locale="en-AU",
-                      is_mobile=is_mobile,
-                      has_touch=is_mobile,
+                      locale="en-AU", is_mobile=is_mobile, has_touch=is_mobile,
                   )
                   await ctx.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>undefined})")
                   for kw in KEYWORDS:
-                      page=await ctx.new_page()
-                      slug=kw.replace(" ","_")
+                      page = await ctx.new_page()
+                      slug = kw.replace(" ","_")
                       try:
-                          url = f"https://www.google.com.au/search?q={kw.replace(' ','+')}&tbm=shop&gl=au&hl=en-AU&num=40"
-                          await page.goto(url, wait_until="domcontentloaded", timeout=30000)
-                          await dismiss_consent(page); await page.wait_for_timeout(2500)
+                          await page.goto(
+                              f"https://www.google.com.au/search?q={kw.replace(' ','+')}&tbm=shop&gl=au&hl=en-AU&num=40",
+                              wait_until="domcontentloaded", timeout=30000
+                          )
+                          await dismiss_consent(page)
+                          await page.wait_for_timeout(2000)
+                          await slow_scroll(page)
                           SCREENSHOTS_DIR.mkdir(exist_ok=True)
                           await page.screenshot(path=str(SCREENSHOTS_DIR/f"organic_{MODE}_{slug}.png"), full_page=True)
-                          rows=await extract(page,kw)
+                          rows = await extract(page, kw)
                           all_rows.extend(rows)
                           save_csv(rows, RESULTS_DIR/f"organic_{slug}.csv")
                           print(f"organic [{MODE}] {kw!r}: {len(rows)} products")
+                          for r in rows: print(f"  #{r['position']} {r['title'][:50]} | {r['price']} | {r['store']}")
                       except Exception as e: print(f"ERROR {kw}: {e}")
                       finally: await page.close()
                       await asyncio.sleep(2)
@@ -355,7 +538,7 @@ jobs:
             if [ -f "$f" ]; then
               echo "### $f" >> $GITHUB_STEP_SUMMARY
               echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-              cat "$f" >> $GITHUB_STEP_SUMMARY
+              head -50 "$f" >> $GITHUB_STEP_SUMMARY
               echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
               echo "" >> $GITHUB_STEP_SUMMARY
             fi
