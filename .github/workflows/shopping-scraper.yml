@@ -1,20 +1,29 @@
-name: Google Shopping Carousel Scraper
+name: Google Shopping Scraper
 
 on:
   workflow_dispatch:
     inputs:
+      scraper:
+        description: "Which scraper to run"
+        required: true
+        default: "both"
+        type: choice
+        options:
+          - both
+          - organic
+          - carousel
       keywords:
-        description: "Comma-separated keywords to scrape (leave blank for defaults)"
+        description: "Comma-separated keywords (leave blank for defaults)"
         required: false
         default: ""
   schedule:
-    # Every Monday at 07:00 UTC — remove if you only want manual runs
+    # Every Monday at 07:00 UTC
     - cron: "0 7 * * 1"
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
 
     steps:
       - name: Checkout
@@ -38,18 +47,24 @@ jobs:
           import re, pathlib
 
           new_kws = [k.strip() for k in "${{ github.event.inputs.keywords }}".split(",") if k.strip()]
-          path = pathlib.Path("shopping_scraper.py")
-          src = path.read_text()
-
-          # Replace the KEYWORDS list
           new_list = "[\n" + "".join(f'    "{k}",\n' for k in new_kws) + "]"
-          src = re.sub(r"KEYWORDS\s*=\s*\[.*?\]", f"KEYWORDS = {new_list}", src, flags=re.DOTALL)
-          path.write_text(src)
+
+          for fname in ["shopping_scraper.py", "organic_shopping_scraper.py"]:
+              path = pathlib.Path(fname)
+              src = path.read_text()
+              src = re.sub(r"KEYWORDS\s*=\s*\[.*?\]", f"KEYWORDS = {new_list}", src, flags=re.DOTALL)
+              path.write_text(src)
+
           print(f"Keywords set to: {new_kws}")
           EOF
 
-      - name: Run scraper
+      - name: Run carousel scraper
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.scraper == 'carousel' || github.event.inputs.scraper == 'both' }}
         run: python shopping_scraper.py
+
+      - name: Run organic scraper
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.scraper == 'organic' || github.event.inputs.scraper == 'both' }}
+        run: python organic_shopping_scraper.py
 
       - name: Upload results
         uses: actions/upload-artifact@v4
@@ -62,12 +77,14 @@ jobs:
 
       - name: Print summary
         run: |
-          echo "## Shopping Carousel Results" >> $GITHUB_STEP_SUMMARY
+          echo "## Shopping Scraper Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          if [ -f results/all_results.csv ]; then
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-            cat results/all_results.csv >> $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "No results file found." >> $GITHUB_STEP_SUMMARY
-          fi
+          for f in results/all_results.csv results/organic_all.csv; do
+            if [ -f "$f" ]; then
+              echo "### $f" >> $GITHUB_STEP_SUMMARY
+              echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+              cat "$f" >> $GITHUB_STEP_SUMMARY
+              echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
