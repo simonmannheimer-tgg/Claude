@@ -67,7 +67,11 @@ async def run_test(api_key: str, url: str, location_id: int, adblock: bool) -> d
                 report_url = poll.headers["location"]
                 report_resp = await client.get(report_url)
                 report_resp.raise_for_status()
-                return _parse(report_resp.json().get("data", {}), url, location_id)
+                raw = report_resp.json()
+                # Debug: store raw for first URL so we can inspect the structure
+                if not Path("gtmetrix_raw_sample.json").exists():
+                    Path("gtmetrix_raw_sample.json").write_text(json.dumps(raw, indent=2))
+                return _parse(raw.get("data", {}), url, location_id)
 
             poll.raise_for_status()
             data = poll.json().get("data", {})
@@ -84,43 +88,32 @@ async def run_test(api_key: str, url: str, location_id: int, adblock: bool) -> d
 
 
 def _parse(data: dict, url: str, location_id: int) -> dict:
-    attrs = data.get("attributes", {})
-    # Test endpoint: attrs.report.scores / Report endpoint: attrs.scores directly
-    report = attrs.get("report") or attrs
-    metrics = report.get("metrics", {})
+    """Parse a GTMetrix /reports/{id} response.
 
-    def pct(v):
-        if v is None:
-            return None
-        return round(float(v) * 100) if float(v) <= 1 else int(v)
+    Scores and metrics are flat under attributes:
+      performance_score, structure_score  (int 0-100)
+      largest_contentful_paint, total_blocking_time  (ms)
+      cumulative_layout_shift  (float)
+    """
+    attrs = data.get("attributes", {})
 
     def ms(v):
         return int(float(v)) if v is not None else None
 
-    audits = report.get("audits", {})
-    failing = sorted(
-        [
-            {
-                "title": v.get("title", k),
-                "score": v.get("score"),
-                "displayValue": v.get("displayValue", ""),
-            }
-            for k, v in audits.items()
-            if isinstance(v, dict) and v.get("score") is not None and v.get("score") < 0.9
-        ],
-        key=lambda a: (a["score"] or 1),
-    )
-
     return {
         "url": url,
-        "performance_score": pct(report.get("scores", {}).get("performance")),
-        "structure_score": pct(report.get("scores", {}).get("structure")),
-        "lcp_ms": ms(metrics.get("largestContentfulPaint")),
-        "tbt_ms": ms(metrics.get("totalBlockingTime")),
-        "cls": metrics.get("cumulativeLayoutShift"),
+        "performance_score": attrs.get("performance_score"),
+        "structure_score": attrs.get("structure_score"),
+        "gtmetrix_grade": attrs.get("gtmetrix_grade"),
+        "lcp_ms": ms(attrs.get("largest_contentful_paint")),
+        "tbt_ms": ms(attrs.get("total_blocking_time")),
+        "cls": attrs.get("cumulative_layout_shift"),
+        "ttfb_ms": ms(attrs.get("time_to_first_byte")),
+        "fully_loaded_ms": ms(attrs.get("fully_loaded_time")),
+        "speed_index_ms": ms(attrs.get("speed_index")),
         "location_id": location_id,
         "test_date": datetime.now(timezone.utc).isoformat(),
-        "failing_audits": failing[:5],
+        "failing_audits": [],
     }
 
 
@@ -171,19 +164,21 @@ def _section_table(results: list[dict]) -> list[str]:
         if cat not in groups:
             continue
         lines.append(f"\n## {cat}\n")
-        lines.append("| URL | Perf | Structure | LCP | TBT | CLS |")
-        lines.append("|-----|:----:|:---------:|----:|----:|----:|")
+        lines.append("| URL | Grade | Perf | Structure | LCP | TBT | CLS | TTFB |")
+        lines.append("|-----|:-----:|:----:|:---------:|----:|----:|----:|-----:|")
         for r in groups[cat]:
             if "error" in r:
-                lines.append(f"| {r['url']} | ❌ | ❌ | — | — | — |")
+                lines.append(f"| {r['url']} | ❌ | — | — | — | — | — | — |")
             else:
                 lines.append(
                     f"| {r['url']} "
+                    f"| **{r.get('gtmetrix_grade', '?')}** "
                     f"| {_grade(r['performance_score'])} {r['performance_score']} "
                     f"| {_grade(r['structure_score'])} {r['structure_score']} "
                     f"| {r.get('lcp_ms')} ms "
                     f"| {r.get('tbt_ms')} ms "
-                    f"| {r.get('cls')} |"
+                    f"| {r.get('cls', 'n/a')} "
+                    f"| {r.get('ttfb_ms')} ms |"
                 )
     return lines
 
@@ -230,9 +225,29 @@ async def main():
     # Push results back to repo via GitHub Contents API so they can be
     # fetched by trigger_audit.py without hitting blob storage redirects.
     _push_results_to_repo(results)
+    _push_file_to_repo("gtmetrix_results/raw_sample.json", Path("gtmetrix_raw_sample.json").read_text() if Path("gtmetrix_raw_sample.json").exists() else "{}")
 
     if any("error" in r for r in results):
         sys.exit(1)
+
+
+def _push_file_to_repo(path: str, content: str) -> None:
+    import base64
+    token = os.getenv("GITHUB_TOKEN")
+    repo = os.getenv("GITHUB_REPOSITORY")
+    ref = os.getenv("GITHUB_REF_NAME")
+    run_number = os.getenv("GITHUB_RUN_NUMBER", "?")
+    if not (token and repo and ref):
+        return
+    content_b64 = base64.b64encode(content.encode()).decode()
+    api = "https://api.github.com"
+    headers = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
+    existing = httpx.get(f"{api}/repos/{repo}/contents/{path}?ref={ref}", headers=headers)
+    sha = existing.json().get("sha") if existing.status_code == 200 else None
+    payload = {"message": f"Debug raw sample #{run_number}", "content": content_b64, "branch": ref}
+    if sha:
+        payload["sha"] = sha
+    httpx.put(f"{api}/repos/{repo}/contents/{path}", headers=headers, json=payload)
 
 
 def _push_results_to_repo(results: list[dict]) -> None:

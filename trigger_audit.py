@@ -162,7 +162,8 @@ def print_results(results: list[dict]) -> None:
                 print(f"      Error: {r['error']}")
                 continue
             g = _grade(r.get("performance_score"))
-            print(f"\n  {g}  {r['url']}")
+            grade = r.get("gtmetrix_grade", "?")
+            print(f"\n  {g}  [{grade}]  {r['url']}")
             print(
                 f"      Perf: {r.get('performance_score')}   "
                 f"Structure: {r.get('structure_score')}   "
@@ -170,8 +171,11 @@ def print_results(results: list[dict]) -> None:
                 f"TBT: {r.get('tbt_ms')} ms   "
                 f"CLS: {r.get('cls')}"
             )
-            for audit in r.get("failing_audits", [])[:3]:
-                print(f"      ⚠  {audit['title']}  {audit.get('displayValue', '')}")
+            print(
+                f"      TTFB: {r.get('ttfb_ms')} ms   "
+                f"Speed Index: {r.get('speed_index_ms')} ms   "
+                f"Fully Loaded: {r.get('fully_loaded_ms')} ms"
+            )
     print(f"\n{sep}\n")
 
 
