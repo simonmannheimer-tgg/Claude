@@ -105,6 +105,14 @@ class GTMetrixClient:
                 elapsed += settings.poll_interval
 
                 poll = await client.get(f"/tests/{test_id}")
+
+                # GTMetrix returns 303 → /reports/{id} when complete
+                if poll.status_code == 303:
+                    report_url = poll.headers["location"]
+                    report_resp = await client.get(report_url)
+                    report_resp.raise_for_status()
+                    return _parse_result(report_resp.json().get("data", {}), url, location_id)
+
                 poll.raise_for_status()
                 poll_data = poll.json().get("data", {})
                 state = poll_data.get("attributes", {}).get("state", "")
@@ -124,7 +132,8 @@ class GTMetrixClient:
 # ---------------------------------------------------------------------------
 def _parse_result(data: dict, url: str, location_id: int) -> dict:
     attrs = data.get("attributes", {})
-    report = attrs.get("report", {})
+    # Test endpoint nests data under attrs.report; report endpoint puts it directly in attrs
+    report = attrs.get("report") or attrs
 
     # Core Web Vitals live under report.metrics
     metrics = report.get("metrics", {})
