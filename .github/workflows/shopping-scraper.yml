@@ -76,9 +76,6 @@ jobs:
           DESKTOP_VP = {"width": 1280, "height": 900}
 
           def clean(s): return re.sub(r"\s+", " ", s or "").strip()
-          def domain_from_url(url):
-              m = re.search(r"https?://(?:www\.)?([^/?#]+)", url or "")
-              return m.group(1) if m else ""
 
           async def dismiss_consent(page):
               for sel in ["button#L2AGLb","button:has-text('Accept all')","button:has-text('I agree')"]:
@@ -204,22 +201,67 @@ jobs:
                   // reject obvious non-store strings
                   if (/^\d+%|^free\s*delivery|^save\s*\$/i.test(store)) store = '';
 
-                  // store domain: look for redirect hrefs like /url?url=https://store.com
-                  let storeUrl = '';
+                  // ── store domain: 3-tier resolution ──────────────────────
+                  const KNOWN = {
+                      'harvey norman':'harveynorman.com.au','harvey norman australia':'harveynorman.com.au',
+                      'jb hi-fi':'jbhifi.com.au','jb hifi':'jbhifi.com.au','jb hi fi':'jbhifi.com.au',
+                      'the good guys':'thegoodguys.com.au','good guys':'thegoodguys.com.au',
+                      'big w':'bigw.com.au','kmart':'kmart.com.au','target':'target.com.au',
+                      'woolworths':'woolworths.com.au','amazon au':'amazon.com.au','amazon':'amazon.com.au',
+                      'bunnings':'bunnings.com.au','bunnings warehouse':'bunnings.com.au',
+                      'kogan':'kogan.com','kogan.com':'kogan.com','myer':'myer.com.au',
+                      'david jones':'davidjones.com','officeworks':'officeworks.com.au',
+                      'bing lee':'binglee.com.au','appliances online':'appliancesonline.com.au',
+                      'catch':'catch.com.au','ebay':'ebay.com.au','ebay au':'ebay.com.au',
+                      'costco':'costco.com.au','ikea':'ikea.com',
+                      'winning appliances':'winningappliances.com.au',
+                      'e&s':'eands.com.au','domayne':'domayne.com.au',
+                      'betta home living':'betta.com.au',
+                      'lg electronics australia':'lg.com','lg electronics':'lg.com',
+                      'samsung':'samsung.com/au','apple':'apple.com/au',
+                      'appliance giant':'appliancegiant.com.au',
+                      'appliances warehouse':'applianceswarehouse.com.au',
+                      'appliances deals':'appliancesdeals.com.au',
+                      'billy guyatts':'billyguyatts.com.au','stan cash':'stancash.com.au',
+                      'buysmarte':'buysmarte.com.au','buy smarte':'buysmarte.com.au',
+                      'road tech marine':'rtm.com.au','crowdshop':'crowdshop.com.au',
+                      'whybuy':'whybuy.com.au','temple & webster':'templeandwebster.com.au',
+                      'freedom':'freedom.com.au','nick scali':'nickscali.com.au',
+                  };
+                  let storeDomain = '';
+                  // Tier 1: decode from Google redirect href (e.g. /url?url=https://store.com)
                   for (const a of el.querySelectorAll('a[href]')) {
                       const raw = a.getAttribute('href') || '';
-                      // Google redirect patterns
-                      const m = raw.match(/[?&](?:url|q|dest)=(https?[^&]+)/i);
-                      if (m) { storeUrl = decodeURIComponent(m[1]); break; }
-                      // direct external link
+                      const m = raw.match(/[?&](?:url|q|dest|adurl)=(https?[^&]+)/i);
+                      if (m) {
+                          const dm = decodeURIComponent(m[1]).match(/https?:\/\/(?:www\.)?([^/?#]+)/);
+                          if (dm) { storeDomain = dm[1]; break; }
+                      }
                       const abs = a.href || '';
                       if (abs && !abs.includes('google.') && abs.startsWith('http')) {
-                          storeUrl = abs; break;
+                          const dm = abs.match(/https?:\/\/(?:www\.)?([^/?#]+)/);
+                          if (dm) { storeDomain = dm[1]; break; }
                       }
+                  }
+                  // Tier 2: known AU retailer lookup
+                  if (!storeDomain && store) {
+                      const key = store.toLowerCase().trim();
+                      storeDomain = KNOWN[key] || '';
+                      if (!storeDomain) {
+                          for (const [k, v] of Object.entries(KNOWN)) {
+                              if (key.includes(k) || k.includes(key)) { storeDomain = v; break; }
+                          }
+                      }
+                  }
+                  // Tier 3: normalise store name → best-guess .com.au
+                  if (!storeDomain && store && store.length > 2) {
+                      storeDomain = store.toLowerCase()
+                          .replace(/\s+(australia|au)\s*$/i, '')
+                          .replace(/[^a-z0-9]/g, '') + '.com.au';
                   }
 
                   pos++;
-                  results.push({ pos, title, price, rating, reviews, store, storeUrl, sponsored: isSponsored });
+                  results.push({ pos, title, price, rating, reviews, store, storeDomain, sponsored: isSponsored });
               }
 
               return results;
@@ -232,7 +274,7 @@ jobs:
               rows = []
               for r in raw:
                   store = clean(r.get("store", ""))
-                  sd = domain_from_url(r.get("storeUrl", ""))
+                  sd = r.get("storeDomain", "")
                   rows.append({
                       "keyword":     keyword,
                       "position":    r["pos"],
@@ -341,9 +383,6 @@ jobs:
           DESKTOP_VP = {"width": 1280, "height": 900}
 
           def clean(s): return re.sub(r"\s+", " ", s or "").strip()
-          def domain_from_url(url):
-              m = re.search(r"https?://(?:www\.)?([^/?#]+)", url or "")
-              return m.group(1) if m else ""
 
           async def dismiss_consent(page):
               for sel in ["button#L2AGLb","button:has-text('Accept all')","button:has-text('I agree')"]:
@@ -481,16 +520,63 @@ jobs:
                   }
                   if (/^\d+%|^free\s*(delivery|ship)/i.test(store)) store = '';
 
-                  // store domain from redirect href
-                  let storeUrl = '';
+                  // ── store domain: 3-tier resolution (same as carousel) ───
+                  const KNOWN2 = {
+                      'harvey norman':'harveynorman.com.au','harvey norman australia':'harveynorman.com.au',
+                      'jb hi-fi':'jbhifi.com.au','jb hifi':'jbhifi.com.au','jb hi fi':'jbhifi.com.au',
+                      'the good guys':'thegoodguys.com.au','good guys':'thegoodguys.com.au',
+                      'big w':'bigw.com.au','kmart':'kmart.com.au','target':'target.com.au',
+                      'woolworths':'woolworths.com.au','amazon au':'amazon.com.au','amazon':'amazon.com.au',
+                      'bunnings':'bunnings.com.au','bunnings warehouse':'bunnings.com.au',
+                      'kogan':'kogan.com','kogan.com':'kogan.com','myer':'myer.com.au',
+                      'david jones':'davidjones.com','officeworks':'officeworks.com.au',
+                      'bing lee':'binglee.com.au','appliances online':'appliancesonline.com.au',
+                      'catch':'catch.com.au','ebay':'ebay.com.au','ebay au':'ebay.com.au',
+                      'costco':'costco.com.au','ikea':'ikea.com',
+                      'winning appliances':'winningappliances.com.au',
+                      'e&s':'eands.com.au','domayne':'domayne.com.au',
+                      'betta home living':'betta.com.au',
+                      'lg electronics australia':'lg.com','lg electronics':'lg.com',
+                      'samsung':'samsung.com/au','apple':'apple.com/au',
+                      'appliance giant':'appliancegiant.com.au',
+                      'appliances warehouse':'applianceswarehouse.com.au',
+                      'appliances deals':'appliancesdeals.com.au',
+                      'billy guyatts':'billyguyatts.com.au','stan cash':'stancash.com.au',
+                      'buysmarte':'buysmarte.com.au','buy smarte':'buysmarte.com.au',
+                      'road tech marine':'rtm.com.au','crowdshop':'crowdshop.com.au',
+                      'whybuy':'whybuy.com.au','temple & webster':'templeandwebster.com.au',
+                      'freedom':'freedom.com.au','nick scali':'nickscali.com.au',
+                  };
+                  let storeDomain = '';
+                  // Tier 1: decode from redirect href
                   for (const a of el.querySelectorAll('a[href]')) {
                       const raw = a.getAttribute('href') || '';
-                      const m = raw.match(/[?&](?:url|q|dest)=(https?[^&]+)/i);
-                      if (m) { storeUrl = decodeURIComponent(m[1]); break; }
+                      const m = raw.match(/[?&](?:url|q|dest|adurl)=(https?[^&]+)/i);
+                      if (m) {
+                          const dm = decodeURIComponent(m[1]).match(/https?:\/\/(?:www\.)?([^/?#]+)/);
+                          if (dm) { storeDomain = dm[1]; break; }
+                      }
                       const abs = a.href || '';
                       if (abs && !abs.includes(googleHost) && abs.startsWith('http')) {
-                          storeUrl = abs; break;
+                          const dm = abs.match(/https?:\/\/(?:www\.)?([^/?#]+)/);
+                          if (dm) { storeDomain = dm[1]; break; }
                       }
+                  }
+                  // Tier 2: known AU retailer lookup
+                  if (!storeDomain && store) {
+                      const key = store.toLowerCase().trim();
+                      storeDomain = KNOWN2[key] || '';
+                      if (!storeDomain) {
+                          for (const [k, v] of Object.entries(KNOWN2)) {
+                              if (key.includes(k) || k.includes(key)) { storeDomain = v; break; }
+                          }
+                      }
+                  }
+                  // Tier 3: normalise store name → best-guess .com.au
+                  if (!storeDomain && store && store.length > 2) {
+                      storeDomain = store.toLowerCase()
+                          .replace(/\s+(australia|au)\s*$/i, '')
+                          .replace(/[^a-z0-9]/g, '') + '.com.au';
                   }
 
                   // Google Shopping product page URL (for position tracking)
@@ -500,14 +586,13 @@ jobs:
                       if (h.includes('/shopping/product/')) { productUrl = 'https://' + googleHost + h; break; }
                       if (h.startsWith('/shopping/')) { productUrl = 'https://' + googleHost + h; break; }
                   }
-                  // filter out privacy/support links
                   if (productUrl.includes('support.google.com')) productUrl = '';
 
                   pos++;
                   results.push({
                       pos, title, price,
                       originalPrice: originalPrice === price ? '' : originalPrice,
-                      rating, reviews, store, storeUrl,
+                      rating, reviews, store, storeDomain,
                       sponsored: isSponsored,
                       productUrl
                   });
@@ -523,7 +608,7 @@ jobs:
               rows = []
               for r in raw:
                   store = clean(r.get("store", ""))
-                  sd = domain_from_url(r.get("storeUrl", ""))
+                  sd = r.get("storeDomain", "")
                   rows.append({
                       "keyword":        keyword,
                       "position":       r["pos"] + page_offset,
