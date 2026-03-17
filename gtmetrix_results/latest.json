@@ -1,38 +1,101 @@
 [
   {
     "url": "https://www.thegoodguys.com.au/",
-    "error": "Test for https://www.thegoodguys.com.au/ timed out after 300s"
+    "performance_score": null,
+    "structure_score": null,
+    "lcp_ms": null,
+    "tbt_ms": null,
+    "cls": null,
+    "location_id": 4,
+    "test_date": "2026-03-17T03:19:58.152586+00:00",
+    "failing_audits": []
   },
   {
     "url": "https://www.thegoodguys.com.au/cooking-and-dishwashers/dishwashers/built-in-dishwashers",
-    "error": "Test for https://www.thegoodguys.com.au/cooking-and-dishwashers/dishwashers/built-in-dishwashers timed out after 300s"
+    "performance_score": null,
+    "structure_score": null,
+    "lcp_ms": null,
+    "tbt_ms": null,
+    "cls": null,
+    "location_id": 4,
+    "test_date": "2026-03-17T03:20:50.179097+00:00",
+    "failing_audits": []
   },
   {
     "url": "https://www.thegoodguys.com.au/westinghouse/cooking-and-dishwashers/ovens",
-    "error": "Test for https://www.thegoodguys.com.au/westinghouse/cooking-and-dishwashers/ovens timed out after 300s"
+    "performance_score": null,
+    "structure_score": null,
+    "lcp_ms": null,
+    "tbt_ms": null,
+    "cls": null,
+    "location_id": 4,
+    "test_date": "2026-03-17T03:21:42.259525+00:00",
+    "failing_audits": []
   },
   {
     "url": "https://www.thegoodguys.com.au/dyson-handstick-stubborn-dirt-brush-971429-01",
-    "error": "Test for https://www.thegoodguys.com.au/dyson-handstick-stubborn-dirt-brush-971429-01 timed out after 300s"
+    "performance_score": null,
+    "structure_score": null,
+    "lcp_ms": null,
+    "tbt_ms": null,
+    "cls": null,
+    "location_id": 4,
+    "test_date": "2026-03-17T03:22:34.331481+00:00",
+    "failing_audits": []
   },
   {
     "url": "https://www.thegoodguys.com.au/husqvarna-aspire-p5-kit-p5-kit",
-    "error": "Test for https://www.thegoodguys.com.au/husqvarna-aspire-p5-kit-p5-kit timed out after 300s"
+    "performance_score": null,
+    "structure_score": null,
+    "lcp_ms": null,
+    "tbt_ms": null,
+    "cls": null,
+    "location_id": 4,
+    "test_date": "2026-03-17T03:23:26.444680+00:00",
+    "failing_audits": []
   },
   {
     "url": "https://www.thegoodguys.com.au/miele-guard-s1-bagged-vacuum-nordic-blue-12697050",
-    "error": "Test for https://www.thegoodguys.com.au/miele-guard-s1-bagged-vacuum-nordic-blue-12697050 timed out after 300s"
+    "performance_score": null,
+    "structure_score": null,
+    "lcp_ms": null,
+    "tbt_ms": null,
+    "cls": null,
+    "location_id": 4,
+    "test_date": "2026-03-17T03:24:24.240823+00:00",
+    "failing_audits": []
   },
   {
     "url": "https://www.thegoodguys.com.au/bartesian-8-pack-old-fashioned-capsules-168768",
-    "error": "Test for https://www.thegoodguys.com.au/bartesian-8-pack-old-fashioned-capsules-168768 timed out after 300s"
+    "performance_score": null,
+    "structure_score": null,
+    "lcp_ms": null,
+    "tbt_ms": null,
+    "cls": null,
+    "location_id": 4,
+    "test_date": "2026-03-17T03:25:16.728516+00:00",
+    "failing_audits": []
   },
   {
     "url": "https://www.thegoodguys.com.au/buying-guide/television-buying-guide",
-    "error": "Test for https://www.thegoodguys.com.au/buying-guide/television-buying-guide timed out after 300s"
+    "performance_score": null,
+    "structure_score": null,
+    "lcp_ms": null,
+    "tbt_ms": null,
+    "cls": null,
+    "location_id": 4,
+    "test_date": "2026-03-17T03:26:08.817995+00:00",
+    "failing_audits": []
   },
   {
     "url": "https://www.thegoodguys.com.au/whats-new/what-temperature-should-my-fridge-be",
-    "error": "Test for https://www.thegoodguys.com.au/whats-new/what-temperature-should-my-fridge-be timed out after 300s"
+    "performance_score": null,
+    "structure_score": null,
+    "lcp_ms": null,
+    "tbt_ms": null,
+    "cls": null,
+    "location_id": 4,
+    "test_date": "2026-03-17T03:26:55.714177+00:00",
+    "failing_audits": []
   }
 ]
