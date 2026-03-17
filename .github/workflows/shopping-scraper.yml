@@ -1,0 +1,271 @@
+name: Google Shopping Scraper
+
+on:
+  workflow_dispatch:
+    inputs:
+      scraper:
+        description: "Which scraper to run"
+        required: true
+        default: "both"
+        type: choice
+        options:
+          - both
+          - organic
+          - carousel
+      keywords:
+        description: "Comma-separated keywords (leave blank for defaults)"
+        required: false
+        default: ""
+
+  schedule:
+    - cron: "0 7 * * 1"  # Every Monday 07:00 UTC
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install playwright
+
+      - name: Install Playwright browsers
+        run: playwright install chromium --with-deps
+
+      # ──────────────────────────────────────────────────────────────────────
+      # CAROUSEL SCRAPER
+      # ──────────────────────────────────────────────────────────────────────
+      - name: Run carousel scraper
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.scraper == 'carousel' || github.event.inputs.scraper == 'both' }}
+        env:
+          KEYWORDS: ${{ github.event.inputs.keywords }}
+        run: |
+          python - <<'PYEOF'
+          import asyncio, csv, re, os
+          from datetime import datetime
+          from pathlib import Path
+          from playwright.async_api import async_playwright
+
+          raw_kw = os.environ.get("KEYWORDS", "")
+          KEYWORDS = [k.strip() for k in raw_kw.split(",") if k.strip()] or [
+              "fridge", "vacuum", "television", "tv", "washer", "washing machine"
+          ]
+          RESULTS_DIR = Path("results")
+          SCREENSHOTS_DIR = Path("screenshots")
+          HEADERS = ["keyword","position","title","price","rating","reviews","store","scraped_at"]
+
+          def clean_text(s): return re.sub(r"\s+", " ", s or "").strip()
+          def clean_reviews(s):
+              m = re.search(r"[\d,]+", s); return m.group(0) if m else clean_text(s)
+
+          async def dismiss_consent(page):
+              for sel in ["button#L2AGLb","button:has-text('Accept all')","button:has-text('I agree')"]:
+                  try:
+                      btn = page.locator(sel)
+                      if await btn.count() > 0:
+                          await btn.first.click(); await page.wait_for_timeout(800); return
+                  except: pass
+
+          async def extract(page, keyword):
+              raw = await page.evaluate(r"""() => {
+                  const results=[], priceRe=/[\$\u00a3\u20ac][\d,]+(?:\.\d{2})?/;
+                  const s1=document.querySelectorAll('.sh-dlr__list-result,.mnr-c');
+                  const s2=document.querySelectorAll('.g .kp-wholepage .sg-product,.comercial-unit .sg-product');
+                  let s3=[];
+                  for(const h of document.querySelectorAll('h3,h2,[role="heading"]')){
+                      if(/popular products|shopping results/i.test(h.textContent||'')){
+                          const sec=h.closest('div[data-hveid],div[jsname],section');
+                          if(sec) s3=Array.from(sec.querySelectorAll('[data-hveid],[jsname],li,.sh-dlr__list-result'));
+                          break;
+                      }
+                  }
+                  const s4=[];
+                  document.querySelectorAll('div[data-hveid]').forEach(b=>{
+                      const t=b.innerText||'';
+                      if(priceRe.test(t)&&t.length<600) s4.push(b);
+                  });
+                  const cands=s1.length?s1:s2.length?s2:s3.length?s3:s4;
+                  const seen=new Set(); let pos=0;
+                  for(const el of cands){
+                      if(seen.has(el)) continue; seen.add(el);
+                      const txt=el.innerText||el.textContent||'';
+                      if(!priceRe.test(txt)) continue;
+                      const te=el.querySelector('h3,[role="heading"],.Xjkr3b');
+                      const title=(te?.innerText||te?.textContent||'').trim();
+                      const pe=el.querySelector('[aria-label*="$"],[aria-label*="\u00a3"],.a8Pemb,.OFFNJ,.T14wmb');
+                      const pm=(((pe?.getAttribute('aria-label')||pe?.innerText||'')+txt).match(/[\$\u00a3\u20ac][\d,]+(?:\.\d{2})?/));
+                      const re2=el.querySelector('[aria-label*="star"],[aria-label*="rating"],.Rsc7Yb,.yi40Hd');
+                      const rm=(re2?.getAttribute('aria-label')||re2?.innerText||'').match(/[\d.]+/);
+                      const rve=el.querySelector('[aria-label*="review"],.HiT7Id,.NzHeef');
+                      const rvm=(rve?.getAttribute('aria-label')||rve?.innerText||'').match(/[\d,]+/);
+                      const se=el.querySelector('.aULzUe,.E5ocAb,.LbUacb,.IuHnof');
+                      pos++;
+                      results.push({pos,title,price:pm?pm[0]:'',rating:rm?rm[0]:'',reviews:rvm?rvm[0]:'',store:(se?.innerText||'').trim()});
+                  }
+                  return results;
+              }""")
+              now = datetime.now().isoformat(timespec="seconds")
+              return [{"keyword":keyword,"position":r["pos"],"title":clean_text(r["title"]),"price":clean_text(r["price"]),"rating":clean_text(r["rating"]),"reviews":clean_reviews(r["reviews"]),"store":clean_text(r["store"]),"scraped_at":now} for r in raw]
+
+          def save_csv(rows, path):
+              path.parent.mkdir(exist_ok=True)
+              with open(path,"w",newline="",encoding="utf-8") as f:
+                  w=csv.DictWriter(f,fieldnames=HEADERS); w.writeheader(); w.writerows(rows)
+
+          async def main():
+              all_rows=[]
+              async with async_playwright() as pw:
+                  browser=await pw.chromium.launch(headless=True,args=["--no-sandbox","--disable-blink-features=AutomationControlled"])
+                  ctx=await browser.new_context(viewport={"width":1280,"height":900},user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",locale="en-US")
+                  await ctx.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>undefined})")
+                  for kw in KEYWORDS:
+                      page=await ctx.new_page()
+                      slug=kw.replace(" ","_")
+                      try:
+                          await page.goto(f"https://www.google.com/search?q={kw.replace(' ','+')}&gl=us&hl=en&num=10",wait_until="domcontentloaded",timeout=30000)
+                          await dismiss_consent(page); await page.wait_for_timeout(2000)
+                          SCREENSHOTS_DIR.mkdir(exist_ok=True)
+                          await page.screenshot(path=str(SCREENSHOTS_DIR/f"{slug}.png"),full_page=False)
+                          rows=await extract(page,kw)
+                          all_rows.extend(rows)
+                          save_csv(rows, RESULTS_DIR/f"{slug}.csv")
+                          print(f"carousel {kw!r}: {len(rows)} products")
+                      except Exception as e: print(f"ERROR {kw}: {e}")
+                      finally: await page.close()
+                      await asyncio.sleep(2)
+                  await browser.close()
+              save_csv(all_rows, RESULTS_DIR/"all_results.csv")
+              print(f"\nCarousel total: {len(all_rows)} products")
+
+          asyncio.run(main())
+          PYEOF
+
+      # ──────────────────────────────────────────────────────────────────────
+      # ORGANIC SCRAPER
+      # ──────────────────────────────────────────────────────────────────────
+      - name: Run organic scraper
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.scraper == 'organic' || github.event.inputs.scraper == 'both' }}
+        env:
+          KEYWORDS: ${{ github.event.inputs.keywords }}
+        run: |
+          python - <<'PYEOF'
+          import asyncio, csv, re, os
+          from datetime import datetime
+          from pathlib import Path
+          from playwright.async_api import async_playwright
+
+          raw_kw = os.environ.get("KEYWORDS", "")
+          KEYWORDS = [k.strip() for k in raw_kw.split(",") if k.strip()] or [
+              "fridge", "vacuum", "television", "tv", "washer", "washing machine"
+          ]
+          RESULTS_DIR = Path("results")
+          SCREENSHOTS_DIR = Path("screenshots")
+          HEADERS = ["keyword","position","title","price","rating","reviews","store","url","scraped_at"]
+
+          def clean_text(s): return re.sub(r"\s+", " ", s or "").strip()
+          def clean_reviews(s):
+              m = re.search(r"[\d,]+", s); return m.group(0) if m else clean_text(s)
+
+          async def dismiss_consent(page):
+              for sel in ["button#L2AGLb","button:has-text('Accept all')","button:has-text('I agree')"]:
+                  try:
+                      btn = page.locator(sel)
+                      if await btn.count() > 0:
+                          await btn.first.click(); await page.wait_for_timeout(800); return
+                  except: pass
+
+          async def extract(page, keyword):
+              raw = await page.evaluate(r"""() => {
+                  const results=[], priceRe=/[\$\u00a3\u20ac][\d,]+(?:\.\d{2})?/;
+                  const cards=Array.from(document.querySelectorAll('.sh-dgr__content,.sh-pr__product-results-grid .KZmu8e,.sh-dlr__list-result,[data-docid]'));
+                  const cands=cards.length?cards:Array.from(document.querySelectorAll('li.sh-osd__offer-row,.sh-np__click-target'));
+                  const seen=new Set(); let pos=0;
+                  for(const el of cands){
+                      if(seen.has(el)) continue; seen.add(el);
+                      const txt=el.innerText||el.textContent||'';
+                      const sponsored=el.querySelector('[aria-label*="Sponsored"],.nNzjpf-cS4Vcb-PvZLI-S,.Krfl3e,[data-dtld]')!==null||/^sponsored$/im.test((txt.split('\n')[0]||''));
+                      if(sponsored||!priceRe.test(txt)) continue;
+                      const te=el.querySelector('h3,h4,[role="heading"],.Xjkr3b,.BvQan');
+                      const title=(te?.innerText||te?.textContent||'').trim();
+                      if(!title) continue;
+                      const pe=el.querySelector('.a8Pemb,.HRLxBb,.T14wmb,[data-price],[aria-label*="$"]');
+                      const pm=(((pe?.getAttribute('aria-label')||pe?.innerText||'')+txt).match(/[\$\u00a3\u20ac][\d,]+(?:\.\d{2})?/));
+                      const re2=el.querySelector('[aria-label*="star"],[aria-label*="rating"],.Rsc7Yb,.yi40Hd');
+                      const rm=(re2?.getAttribute('aria-label')||re2?.innerText||'').match(/[\d.]+/);
+                      const rve=el.querySelector('[aria-label*="review"],.HiT7Id,.NzHeef,.QIrs8');
+                      const rvm=(rve?.getAttribute('aria-label')||rve?.innerText||'').match(/[\d,]+/);
+                      const se=el.querySelector('.aULzUe,.E5ocAb,.LbUacb,.IuHnof,.NJMzre');
+                      const le=el.querySelector('a[href*="/shopping/product/"],a.shntl,a[href]');
+                      const href=le?.getAttribute('href')||'';
+                      const url=href.startsWith('http')?href:(href?'https://www.google.com'+href:'');
+                      pos++;
+                      results.push({pos,title,price:pm?pm[0]:'',rating:rm?rm[0]:'',reviews:rvm?rvm[0]:'',store:(se?.innerText||'').trim(),url});
+                  }
+                  return results;
+              }""")
+              now = datetime.now().isoformat(timespec="seconds")
+              return [{"keyword":keyword,"position":r["pos"],"title":clean_text(r["title"]),"price":clean_text(r["price"]),"rating":clean_text(r["rating"]),"reviews":clean_reviews(r["reviews"]),"store":clean_text(r["store"]),"url":r["url"],"scraped_at":now} for r in raw]
+
+          def save_csv(rows, path):
+              path.parent.mkdir(exist_ok=True)
+              with open(path,"w",newline="",encoding="utf-8") as f:
+                  w=csv.DictWriter(f,fieldnames=HEADERS); w.writeheader(); w.writerows(rows)
+
+          async def main():
+              all_rows=[]
+              async with async_playwright() as pw:
+                  browser=await pw.chromium.launch(headless=True,args=["--no-sandbox","--disable-blink-features=AutomationControlled"])
+                  ctx=await browser.new_context(viewport={"width":1280,"height":900},user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",locale="en-US")
+                  await ctx.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>undefined})")
+                  for kw in KEYWORDS:
+                      page=await ctx.new_page()
+                      slug=kw.replace(" ","_")
+                      try:
+                          await page.goto(f"https://www.google.com/search?q={kw.replace(' ','+')}&tbm=shop&gl=us&hl=en&num=40",wait_until="domcontentloaded",timeout=30000)
+                          await dismiss_consent(page); await page.wait_for_timeout(2000)
+                          SCREENSHOTS_DIR.mkdir(exist_ok=True)
+                          await page.screenshot(path=str(SCREENSHOTS_DIR/f"organic_{slug}.png"),full_page=False)
+                          rows=await extract(page,kw)
+                          all_rows.extend(rows)
+                          save_csv(rows, RESULTS_DIR/f"organic_{slug}.csv")
+                          print(f"organic {kw!r}: {len(rows)} products")
+                      except Exception as e: print(f"ERROR {kw}: {e}")
+                      finally: await page.close()
+                      await asyncio.sleep(2)
+                  await browser.close()
+              save_csv(all_rows, RESULTS_DIR/"organic_all.csv")
+              print(f"\nOrganic total: {len(all_rows)} products")
+
+          asyncio.run(main())
+          PYEOF
+
+      # ──────────────────────────────────────────────────────────────────────
+      # UPLOAD & SUMMARY
+      # ──────────────────────────────────────────────────────────────────────
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: shopping-results-${{ github.run_id }}
+          path: |
+            results/
+            screenshots/
+          retention-days: 30
+
+      - name: Print summary
+        run: |
+          echo "## Shopping Scraper Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          for f in results/all_results.csv results/organic_all.csv; do
+            if [ -f "$f" ]; then
+              echo "### $f" >> $GITHUB_STEP_SUMMARY
+              echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+              cat "$f" >> $GITHUB_STEP_SUMMARY
+              echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
