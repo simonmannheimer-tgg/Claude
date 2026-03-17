@@ -23,9 +23,7 @@ import os
 import subprocess
 import sys
 import time
-import zipfile
 from datetime import datetime, timezone
-from io import BytesIO
 
 import httpx
 
@@ -103,20 +101,17 @@ def poll_until_done(client: httpx.Client, run_id: int, run_url: str) -> str:
         time.sleep(10)
 
 
-def fetch_results(client: httpx.Client, run_id: int) -> list[dict] | None:
-    resp = client.get(f"/repos/{REPO}/actions/runs/{run_id}/artifacts")
-    resp.raise_for_status()
-    artifacts = resp.json().get("artifacts", [])
-    target = next((a for a in artifacts if a["name"] == "gtmetrix-results"), None)
-    if not target:
+def fetch_results(client: httpx.Client, ref: str) -> list[dict] | None:
+    """Read results committed back to the repo by run_audit_ci.py."""
+    import base64
+    resp = client.get(
+        f"/repos/{REPO}/contents/gtmetrix_results/latest.json",
+        params={"ref": ref},
+    )
+    if resp.status_code != 200:
         return None
-
-    dl = client.get(f"/repos/{REPO}/actions/artifacts/{target['id']}/zip")
-    dl.raise_for_status()
-
-    with zipfile.ZipFile(BytesIO(dl.content)) as z:
-        with z.open("gtmetrix_results.json") as f:
-            return json.load(f)
+    content = base64.b64decode(resp.json()["content"]).decode()
+    return json.loads(content)
 
 
 def _grade(score) -> str:
@@ -226,7 +221,7 @@ def main():
         conclusion = poll_until_done(client, run_id, run["html_url"])
         print(f"\nWorkflow finished: {conclusion}")
 
-        results = fetch_results(client, run_id)
+        results = fetch_results(client, ref)
         if results:
             print_results(results)
         else:
