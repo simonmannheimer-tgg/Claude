@@ -1,0 +1,14 @@
+# Never commit the API key
+.env
+
+# Reports contain URLs and performance data — keep local
+reports/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+dist/
+.uv/
+uv.lock
