@@ -200,7 +200,7 @@ def main():
         print("Error: set GITHUB_TOKEN env var (needs actions: write permission)", file=sys.stderr)
         sys.exit(1)
 
-    ref = args.ref or _current_branch()
+    ref = args.ref or os.getenv("GITHUB_DEFAULT_BRANCH") or _current_branch()
     trigger_ts = time.time() - 2  # small buffer for clock skew
 
     with _client(token) as client:

@@ -10,6 +10,7 @@ Privacy guarantee:
 """
 
 import asyncio
+import json
 import logging
 from datetime import datetime, timezone
 
@@ -38,6 +39,7 @@ class GTMetrixClient:
             auth=(self._api_key.get_secret_value(), ""),
             base_url=GTMETRIX_API_BASE,
             timeout=30,
+            headers={"Content-Type": "application/vnd.api+json"},
             event_hooks={"request": [_redact_auth]},
         )
 
@@ -87,7 +89,7 @@ class GTMetrixClient:
 
         async with self._make_client() as client:
             # Submit
-            resp = await client.post("/tests", json=payload)
+            resp = await client.post("/tests", content=json.dumps(payload))
             if resp.status_code not in (200, 201):
                 raise RuntimeError(f"Test submission failed ({resp.status_code}): {resp.text[:200]}")
 

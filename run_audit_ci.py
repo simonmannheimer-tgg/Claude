@@ -42,9 +42,12 @@ async def run_test(api_key: str, url: str, location_id: int, adblock: bool) -> d
     }
 
     async with httpx.AsyncClient(
-        auth=(api_key, ""), base_url=GTMETRIX_API_BASE, timeout=30
+        auth=(api_key, ""),
+        base_url=GTMETRIX_API_BASE,
+        timeout=30,
+        headers={"Content-Type": "application/vnd.api+json"},
     ) as client:
-        resp = await client.post("/tests", json=payload)
+        resp = await client.post("/tests", content=json.dumps(payload))
         if resp.status_code not in (200, 201):
             raise RuntimeError(
                 f"Submission failed ({resp.status_code}): {resp.text[:200]}"
