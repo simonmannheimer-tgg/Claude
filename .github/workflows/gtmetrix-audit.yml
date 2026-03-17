@@ -40,15 +40,6 @@ jobs:
       - name: Install dependencies
         run: pip install httpx
 
-      - name: Debug environment
-        run: |
-          echo "GITHUB_REF_NAME: $GITHUB_REF_NAME"
-          echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
-          echo "GTMETRIX_API_KEY set: $( [ -n "$GTMETRIX_API_KEY" ] && echo YES || echo NO )"
-          echo "URL count: $(echo '${{ inputs.urls }}' | python3 -c 'import json,sys; print(len(json.load(sys.stdin)))')"
-        env:
-          GTMETRIX_API_KEY: ${{ secrets.GTMETRIX_API_KEY }}
-
       - name: Run GTMetrix audit
         continue-on-error: true
         env:
@@ -59,22 +50,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python run_audit_ci.py 2>&1
 
-      - name: Check results committed
+      - name: Show results
+        if: always()
         run: |
           if [ -f gtmetrix_results.json ]; then
-            echo "gtmetrix_results.json exists locally"
-            cat gtmetrix_results.json | python3 -c "
-import json,sys
-results = json.load(sys.stdin)
-print(f'Total results: {len(results)}')
-for r in results:
-    if 'error' in r:
-        print(f'  ERROR {r[\"url\"]}: {r[\"error\"]}')
-    else:
-        print(f'  OK    {r[\"url\"]}: perf={r.get(\"performance_score\")}')
-"
+            echo "Results file found:"
+            python3 -c "import json,sys; r=json.load(open('gtmetrix_results.json')); [print(x.get('url','?'), '|', x.get('performance_score','ERR'), '|', x.get('error','')) for x in r]"
           else
-            echo "gtmetrix_results.json NOT FOUND — script crashed before writing"
+            echo "ERROR: gtmetrix_results.json not found - script likely crashed"
           fi
 
       - name: Upload results
