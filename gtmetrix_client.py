@@ -90,7 +90,7 @@ class GTMetrixClient:
         async with self._make_client() as client:
             # Submit
             resp = await client.post("/tests", content=json.dumps(payload))
-            if resp.status_code not in (200, 201):
+            if resp.status_code not in (200, 201, 202):
                 raise RuntimeError(f"Test submission failed ({resp.status_code}): {resp.text[:200]}")
 
             body = resp.json()
