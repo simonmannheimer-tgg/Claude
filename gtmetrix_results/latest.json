@@ -1,0 +1,38 @@
+[
+  {
+    "url": "https://www.thegoodguys.com.au/",
+    "error": "Submission failed (415): {\"errors\":[{\"title\":\"Unsupported media type\",\"detail\":\"Request must use Content-Type: application/vnd.api+json\",\"code\":\"E41500\",\"status\":\"415\"}]}"
+  },
+  {
+    "url": "https://www.thegoodguys.com.au/cooking-and-dishwashers/dishwashers/built-in-dishwashers",
+    "error": "Submission failed (415): {\"errors\":[{\"title\":\"Unsupported media type\",\"detail\":\"Request must use Content-Type: application/vnd.api+json\",\"code\":\"E41500\",\"status\":\"415\"}]}"
+  },
+  {
+    "url": "https://www.thegoodguys.com.au/westinghouse/cooking-and-dishwashers/ovens",
+    "error": "Submission failed (415): {\"errors\":[{\"title\":\"Unsupported media type\",\"detail\":\"Request must use Content-Type: application/vnd.api+json\",\"code\":\"E41500\",\"status\":\"415\"}]}"
+  },
+  {
+    "url": "https://www.thegoodguys.com.au/dyson-handstick-stubborn-dirt-brush-971429-01",
+    "error": "Submission failed (415): {\"errors\":[{\"title\":\"Unsupported media type\",\"detail\":\"Request must use Content-Type: application/vnd.api+json\",\"code\":\"E41500\",\"status\":\"415\"}]}"
+  },
+  {
+    "url": "https://www.thegoodguys.com.au/husqvarna-aspire-p5-kit-p5-kit",
+    "error": "Submission failed (415): {\"errors\":[{\"title\":\"Unsupported media type\",\"detail\":\"Request must use Content-Type: application/vnd.api+json\",\"code\":\"E41500\",\"status\":\"415\"}]}"
+  },
+  {
+    "url": "https://www.thegoodguys.com.au/miele-guard-s1-bagged-vacuum-nordic-blue-12697050",
+    "error": "Submission failed (415): {\"errors\":[{\"title\":\"Unsupported media type\",\"detail\":\"Request must use Content-Type: application/vnd.api+json\",\"code\":\"E41500\",\"status\":\"415\"}]}"
+  },
+  {
+    "url": "https://www.thegoodguys.com.au/bartesian-8-pack-old-fashioned-capsules-168768",
+    "error": "Submission failed (415): {\"errors\":[{\"title\":\"Unsupported media type\",\"detail\":\"Request must use Content-Type: application/vnd.api+json\",\"code\":\"E41500\",\"status\":\"415\"}]}"
+  },
+  {
+    "url": "https://www.thegoodguys.com.au/buying-guide/television-buying-guide",
+    "error": "Submission failed (415): {\"errors\":[{\"title\":\"Unsupported media type\",\"detail\":\"Request must use Content-Type: application/vnd.api+json\",\"code\":\"E41500\",\"status\":\"415\"}]}"
+  },
+  {
+    "url": "https://www.thegoodguys.com.au/whats-new/what-temperature-should-my-fridge-be",
+    "error": "Submission failed (415): {\"errors\":[{\"title\":\"Unsupported media type\",\"detail\":\"Request must use Content-Type: application/vnd.api+json\",\"code\":\"E41500\",\"status\":\"415\"}]}"
+  }
+]
