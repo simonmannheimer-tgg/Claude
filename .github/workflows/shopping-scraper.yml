@@ -12,13 +12,21 @@ on:
           - both
           - organic
           - carousel
+      mode:
+        description: "Browser mode"
+        required: true
+        default: "desktop"
+        type: choice
+        options:
+          - desktop
+          - mobile
       keywords:
         description: "Comma-separated keywords (leave blank for defaults)"
         required: false
         default: ""
 
   schedule:
-    - cron: "0 7 * * 1"  # Every Monday 07:00 UTC
+    - cron: "0 7 * * 1"  # Every Monday 07:00 UTC (17:00 AEST)
 
 jobs:
   scrape:
@@ -44,6 +52,7 @@ jobs:
         if: ${{ github.event_name == 'schedule' || github.event.inputs.scraper == 'carousel' || github.event.inputs.scraper == 'both' }}
         env:
           KEYWORDS: ${{ github.event.inputs.keywords }}
+          MODE: ${{ github.event.inputs.mode || 'desktop' }}
         run: |
           python - <<'PYEOF'
           import asyncio, csv, re, os
@@ -55,16 +64,25 @@ jobs:
           KEYWORDS = [k.strip() for k in raw_kw.split(",") if k.strip()] or [
               "fridge", "vacuum", "television", "tv", "washer", "washing machine"
           ]
+          MODE = os.environ.get("MODE", "desktop")
           RESULTS_DIR = Path("results")
           SCREENSHOTS_DIR = Path("screenshots")
-          HEADERS = ["keyword","position","title","price","rating","reviews","store","scraped_at"]
+          HEADERS = ["keyword","position","title","price","rating","reviews","store","store_domain","mode","scraped_at"]
+
+          MOBILE_UA = "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Mobile Safari/537.36"
+          DESKTOP_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+          MOBILE_VIEWPORT = {"width": 390, "height": 844}
+          DESKTOP_VIEWPORT = {"width": 1280, "height": 900}
 
           def clean_text(s): return re.sub(r"\s+", " ", s or "").strip()
           def clean_reviews(s):
               m = re.search(r"[\d,]+", s); return m.group(0) if m else clean_text(s)
+          def extract_domain(url):
+              m = re.search(r"https?://(?:www\.)?([^/?#]+)", url or "")
+              return m.group(1) if m else ""
 
           async def dismiss_consent(page):
-              for sel in ["button#L2AGLb","button:has-text('Accept all')","button:has-text('I agree')"]:
+              for sel in ["button#L2AGLb","button:has-text('Accept all')","button:has-text('I agree')","button:has-text('Agree')"]:
                   try:
                       btn = page.locator(sel)
                       if await btn.count() > 0:
@@ -73,7 +91,7 @@ jobs:
 
           async def extract(page, keyword):
               raw = await page.evaluate(r"""() => {
-                  const results=[], priceRe=/[\$\u00a3\u20ac][\d,]+(?:\.\d{2})?/;
+                  const results=[], priceRe=/A?\$[\d,]+(?:\.\d{2})?/;
                   const s1=document.querySelectorAll('.sh-dlr__list-result,.mnr-c');
                   const s2=document.querySelectorAll('.g .kp-wholepage .sg-product,.comercial-unit .sg-product');
                   let s3=[];
@@ -97,20 +115,44 @@ jobs:
                       if(!priceRe.test(txt)) continue;
                       const te=el.querySelector('h3,[role="heading"],.Xjkr3b');
                       const title=(te?.innerText||te?.textContent||'').trim();
-                      const pe=el.querySelector('[aria-label*="$"],[aria-label*="\u00a3"],.a8Pemb,.OFFNJ,.T14wmb');
-                      const pm=(((pe?.getAttribute('aria-label')||pe?.innerText||'')+txt).match(/[\$\u00a3\u20ac][\d,]+(?:\.\d{2})?/));
-                      const re2=el.querySelector('[aria-label*="star"],[aria-label*="rating"],.Rsc7Yb,.yi40Hd');
+                      const pe=el.querySelector('[aria-label*="$"],.a8Pemb,.OFFNJ,.T14wmb,.HRLxBb');
+                      const pm=(((pe?.getAttribute('aria-label')||pe?.innerText||'')+txt).match(/A?\$[\d,]+(?:\.\d{2})?/));
+                      const re2=el.querySelector('[aria-label*="star"],[aria-label*="rating"],.Rsc7Yb,.yi40Hd,[role="img"][aria-label]');
                       const rm=(re2?.getAttribute('aria-label')||re2?.innerText||'').match(/[\d.]+/);
-                      const rve=el.querySelector('[aria-label*="review"],.HiT7Id,.NzHeef');
+                      const rve=el.querySelector('[aria-label*="review"],.HiT7Id,.NzHeef,.rGl5ye');
                       const rvm=(rve?.getAttribute('aria-label')||rve?.innerText||'').match(/[\d,]+/);
-                      const se=el.querySelector('.aULzUe,.E5ocAb,.LbUacb,.IuHnof');
+                      // store: try multiple selectors then fall back to outbound link domain
+                      const se=el.querySelector('[data-merchant-name],[aria-label*="from "],.aULzUe,.E5ocAb,.LbUacb,.IuHnof,.zPEcBd,.NJMzre,.Lq5OHe');
+                      let store=(se?.getAttribute('data-merchant-name')||se?.getAttribute('aria-label')||se?.innerText||'').replace(/^from\s+/i,'').trim();
+                      // outbound link as domain fallback
+                      let storeUrl='';
+                      if(!store){
+                          const links=Array.from(el.querySelectorAll('a[href]'));
+                          for(const a of links){
+                              const h=a.href||'';
+                              if(h&&!h.includes('google.')&&!h.startsWith('/')){storeUrl=h;break;}
+                          }
+                          // also try google redirect URLs which embed the merchant URL
+                          if(!storeUrl){
+                              for(const a of links){
+                                  const h=a.href||a.getAttribute('href')||'';
+                                  const m=h.match(/[?&]q=(https?[^&]+)/);
+                                  if(m){storeUrl=decodeURIComponent(m[1]);break;}
+                              }
+                          }
+                      }
                       pos++;
-                      results.push({pos,title,price:pm?pm[0]:'',rating:rm?rm[0]:'',reviews:rvm?rvm[0]:'',store:(se?.innerText||'').trim()});
+                      results.push({pos,title,price:pm?pm[0]:'',rating:rm?rm[0]:'',reviews:rvm?rvm[0]:'',store,storeUrl});
                   }
                   return results;
               }""")
               now = datetime.now().isoformat(timespec="seconds")
-              return [{"keyword":keyword,"position":r["pos"],"title":clean_text(r["title"]),"price":clean_text(r["price"]),"rating":clean_text(r["rating"]),"reviews":clean_reviews(r["reviews"]),"store":clean_text(r["store"]),"scraped_at":now} for r in raw]
+              rows = []
+              for r in raw:
+                  store = clean_text(r.get("store",""))
+                  store_domain = extract_domain(r.get("storeUrl","")) if not store else ""
+                  rows.append({"keyword":keyword,"position":r["pos"],"title":clean_text(r["title"]),"price":clean_text(r["price"]),"rating":clean_text(r["rating"]),"reviews":clean_reviews(r["reviews"]),"store":store or store_domain,"store_domain":extract_domain(r.get("storeUrl","")),"mode":MODE,"scraped_at":now})
+              return rows
 
           def save_csv(rows, path):
               path.parent.mkdir(exist_ok=True)
@@ -119,22 +161,30 @@ jobs:
 
           async def main():
               all_rows=[]
+              is_mobile = MODE == "mobile"
               async with async_playwright() as pw:
                   browser=await pw.chromium.launch(headless=True,args=["--no-sandbox","--disable-blink-features=AutomationControlled"])
-                  ctx=await browser.new_context(viewport={"width":1280,"height":900},user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",locale="en-US")
+                  ctx=await browser.new_context(
+                      viewport=MOBILE_VIEWPORT if is_mobile else DESKTOP_VIEWPORT,
+                      user_agent=MOBILE_UA if is_mobile else DESKTOP_UA,
+                      locale="en-AU",
+                      is_mobile=is_mobile,
+                      has_touch=is_mobile,
+                  )
                   await ctx.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>undefined})")
                   for kw in KEYWORDS:
                       page=await ctx.new_page()
                       slug=kw.replace(" ","_")
                       try:
-                          await page.goto(f"https://www.google.com/search?q={kw.replace(' ','+')}&gl=us&hl=en&num=10",wait_until="domcontentloaded",timeout=30000)
-                          await dismiss_consent(page); await page.wait_for_timeout(2000)
+                          url = f"https://www.google.com.au/search?q={kw.replace(' ','+')}&gl=au&hl=en-AU&num=10"
+                          await page.goto(url, wait_until="domcontentloaded", timeout=30000)
+                          await dismiss_consent(page); await page.wait_for_timeout(2500)
                           SCREENSHOTS_DIR.mkdir(exist_ok=True)
-                          await page.screenshot(path=str(SCREENSHOTS_DIR/f"{slug}.png"),full_page=False)
+                          await page.screenshot(path=str(SCREENSHOTS_DIR/f"{MODE}_{slug}.png"), full_page=True)
                           rows=await extract(page,kw)
                           all_rows.extend(rows)
                           save_csv(rows, RESULTS_DIR/f"{slug}.csv")
-                          print(f"carousel {kw!r}: {len(rows)} products")
+                          print(f"carousel [{MODE}] {kw!r}: {len(rows)} products")
                       except Exception as e: print(f"ERROR {kw}: {e}")
                       finally: await page.close()
                       await asyncio.sleep(2)
@@ -152,6 +202,7 @@ jobs:
         if: ${{ github.event_name == 'schedule' || github.event.inputs.scraper == 'organic' || github.event.inputs.scraper == 'both' }}
         env:
           KEYWORDS: ${{ github.event.inputs.keywords }}
+          MODE: ${{ github.event.inputs.mode || 'desktop' }}
         run: |
           python - <<'PYEOF'
           import asyncio, csv, re, os
@@ -163,16 +214,25 @@ jobs:
           KEYWORDS = [k.strip() for k in raw_kw.split(",") if k.strip()] or [
               "fridge", "vacuum", "television", "tv", "washer", "washing machine"
           ]
+          MODE = os.environ.get("MODE", "desktop")
           RESULTS_DIR = Path("results")
           SCREENSHOTS_DIR = Path("screenshots")
-          HEADERS = ["keyword","position","title","price","rating","reviews","store","url","scraped_at"]
+          HEADERS = ["keyword","position","title","price","rating","reviews","store","store_domain","url","mode","scraped_at"]
+
+          MOBILE_UA = "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Mobile Safari/537.36"
+          DESKTOP_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+          MOBILE_VIEWPORT = {"width": 390, "height": 844}
+          DESKTOP_VIEWPORT = {"width": 1280, "height": 900}
 
           def clean_text(s): return re.sub(r"\s+", " ", s or "").strip()
           def clean_reviews(s):
               m = re.search(r"[\d,]+", s); return m.group(0) if m else clean_text(s)
+          def extract_domain(url):
+              m = re.search(r"https?://(?:www\.)?([^/?#]+)", url or "")
+              return m.group(1) if m else ""
 
           async def dismiss_consent(page):
-              for sel in ["button#L2AGLb","button:has-text('Accept all')","button:has-text('I agree')"]:
+              for sel in ["button#L2AGLb","button:has-text('Accept all')","button:has-text('I agree')","button:has-text('Agree')"]:
                   try:
                       btn = page.locator(sel)
                       if await btn.count() > 0:
@@ -181,7 +241,7 @@ jobs:
 
           async def extract(page, keyword):
               raw = await page.evaluate(r"""() => {
-                  const results=[], priceRe=/[\$\u00a3\u20ac][\d,]+(?:\.\d{2})?/;
+                  const results=[], priceRe=/A?\$[\d,]+(?:\.\d{2})?/;
                   const cards=Array.from(document.querySelectorAll('.sh-dgr__content,.sh-pr__product-results-grid .KZmu8e,.sh-dlr__list-result,[data-docid]'));
                   const cands=cards.length?cards:Array.from(document.querySelectorAll('li.sh-osd__offer-row,.sh-np__click-target'));
                   const seen=new Set(); let pos=0;
@@ -194,22 +254,44 @@ jobs:
                       const title=(te?.innerText||te?.textContent||'').trim();
                       if(!title) continue;
                       const pe=el.querySelector('.a8Pemb,.HRLxBb,.T14wmb,[data-price],[aria-label*="$"]');
-                      const pm=(((pe?.getAttribute('aria-label')||pe?.innerText||'')+txt).match(/[\$\u00a3\u20ac][\d,]+(?:\.\d{2})?/));
-                      const re2=el.querySelector('[aria-label*="star"],[aria-label*="rating"],.Rsc7Yb,.yi40Hd');
+                      const pm=(((pe?.getAttribute('aria-label')||pe?.innerText||'')+txt).match(/A?\$[\d,]+(?:\.\d{2})?/));
+                      const re2=el.querySelector('[aria-label*="star"],[aria-label*="rating"],.Rsc7Yb,.yi40Hd,[role="img"][aria-label]');
                       const rm=(re2?.getAttribute('aria-label')||re2?.innerText||'').match(/[\d.]+/);
-                      const rve=el.querySelector('[aria-label*="review"],.HiT7Id,.NzHeef,.QIrs8');
+                      const rve=el.querySelector('[aria-label*="review"],.HiT7Id,.NzHeef,.QIrs8,.rGl5ye');
                       const rvm=(rve?.getAttribute('aria-label')||rve?.innerText||'').match(/[\d,]+/);
-                      const se=el.querySelector('.aULzUe,.E5ocAb,.LbUacb,.IuHnof,.NJMzre');
-                      const le=el.querySelector('a[href*="/shopping/product/"],a.shntl,a[href]');
+                      // store: try named selectors then outbound link domain
+                      const se=el.querySelector('[data-merchant-name],[aria-label*="from "],.aULzUe,.E5ocAb,.LbUacb,.IuHnof,.NJMzre,.zPEcBd,.Lq5OHe');
+                      let store=(se?.getAttribute('data-merchant-name')||se?.getAttribute('aria-label')||se?.innerText||'').replace(/^from\s+/i,'').trim();
+                      let storeUrl='';
+                      const le=el.querySelector('a[href*="/shopping/product/"],a.shntl');
                       const href=le?.getAttribute('href')||'';
                       const url=href.startsWith('http')?href:(href?'https://www.google.com'+href:'');
+                      if(!store){
+                          const links=Array.from(el.querySelectorAll('a[href]'));
+                          for(const a of links){
+                              const h=a.href||'';
+                              if(h&&!h.includes('google.')&&!h.startsWith('/')){storeUrl=h;break;}
+                          }
+                          if(!storeUrl){
+                              for(const a of links){
+                                  const h=a.getAttribute('href')||'';
+                                  const m=h.match(/[?&]q=(https?[^&]+)/);
+                                  if(m){storeUrl=decodeURIComponent(m[1]);break;}
+                              }
+                          }
+                      }
                       pos++;
-                      results.push({pos,title,price:pm?pm[0]:'',rating:rm?rm[0]:'',reviews:rvm?rvm[0]:'',store:(se?.innerText||'').trim(),url});
+                      results.push({pos,title,price:pm?pm[0]:'',rating:rm?rm[0]:'',reviews:rvm?rvm[0]:'',store,storeUrl,url});
                   }
                   return results;
               }""")
               now = datetime.now().isoformat(timespec="seconds")
-              return [{"keyword":keyword,"position":r["pos"],"title":clean_text(r["title"]),"price":clean_text(r["price"]),"rating":clean_text(r["rating"]),"reviews":clean_reviews(r["reviews"]),"store":clean_text(r["store"]),"url":r["url"],"scraped_at":now} for r in raw]
+              rows = []
+              for r in raw:
+                  store = clean_text(r.get("store",""))
+                  store_domain = extract_domain(r.get("storeUrl",""))
+                  rows.append({"keyword":keyword,"position":r["pos"],"title":clean_text(r["title"]),"price":clean_text(r["price"]),"rating":clean_text(r["rating"]),"reviews":clean_reviews(r["reviews"]),"store":store or store_domain,"store_domain":store_domain,"url":r.get("url",""),"mode":MODE,"scraped_at":now})
+              return rows
 
           def save_csv(rows, path):
               path.parent.mkdir(exist_ok=True)
@@ -218,22 +300,30 @@ jobs:
 
           async def main():
               all_rows=[]
+              is_mobile = MODE == "mobile"
               async with async_playwright() as pw:
                   browser=await pw.chromium.launch(headless=True,args=["--no-sandbox","--disable-blink-features=AutomationControlled"])
-                  ctx=await browser.new_context(viewport={"width":1280,"height":900},user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",locale="en-US")
+                  ctx=await browser.new_context(
+                      viewport=MOBILE_VIEWPORT if is_mobile else DESKTOP_VIEWPORT,
+                      user_agent=MOBILE_UA if is_mobile else DESKTOP_UA,
+                      locale="en-AU",
+                      is_mobile=is_mobile,
+                      has_touch=is_mobile,
+                  )
                   await ctx.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>undefined})")
                   for kw in KEYWORDS:
                       page=await ctx.new_page()
                       slug=kw.replace(" ","_")
                       try:
-                          await page.goto(f"https://www.google.com/search?q={kw.replace(' ','+')}&tbm=shop&gl=us&hl=en&num=40",wait_until="domcontentloaded",timeout=30000)
-                          await dismiss_consent(page); await page.wait_for_timeout(2000)
+                          url = f"https://www.google.com.au/search?q={kw.replace(' ','+')}&tbm=shop&gl=au&hl=en-AU&num=40"
+                          await page.goto(url, wait_until="domcontentloaded", timeout=30000)
+                          await dismiss_consent(page); await page.wait_for_timeout(2500)
                           SCREENSHOTS_DIR.mkdir(exist_ok=True)
-                          await page.screenshot(path=str(SCREENSHOTS_DIR/f"organic_{slug}.png"),full_page=False)
+                          await page.screenshot(path=str(SCREENSHOTS_DIR/f"organic_{MODE}_{slug}.png"), full_page=True)
                           rows=await extract(page,kw)
                           all_rows.extend(rows)
                           save_csv(rows, RESULTS_DIR/f"organic_{slug}.csv")
-                          print(f"organic {kw!r}: {len(rows)} products")
+                          print(f"organic [{MODE}] {kw!r}: {len(rows)} products")
                       except Exception as e: print(f"ERROR {kw}: {e}")
                       finally: await page.close()
                       await asyncio.sleep(2)
@@ -259,6 +349,7 @@ jobs:
       - name: Print summary
         run: |
           echo "## Shopping Scraper Results" >> $GITHUB_STEP_SUMMARY
+          echo "**Mode:** ${{ github.event.inputs.mode || 'desktop' }} | **Region:** Australia (google.com.au)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           for f in results/all_results.csv results/organic_all.csv; do
             if [ -f "$f" ]; then
