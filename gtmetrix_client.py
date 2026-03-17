@@ -40,6 +40,7 @@ class GTMetrixClient:
             base_url=GTMETRIX_API_BASE,
             timeout=30,
             headers={"Content-Type": "application/vnd.api+json"},
+            follow_redirects=True,
             event_hooks={"request": [_redact_auth]},
         )
 
