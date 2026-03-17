@@ -1,38 +1,38 @@
 [
   {
     "url": "https://www.thegoodguys.com.au/",
-    "error": "Redirect response '303 See Other' for url 'https://gtmetrix.com/api/2.0/tests/lVXxS68U'\nRedirect location: 'https://gtmetrix.com/api/2.0/reports/tu9wrYUt'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/303"
+    "error": "Test for https://www.thegoodguys.com.au/ timed out after 300s"
   },
   {
     "url": "https://www.thegoodguys.com.au/cooking-and-dishwashers/dishwashers/built-in-dishwashers",
-    "error": "Redirect response '303 See Other' for url 'https://gtmetrix.com/api/2.0/tests/3I24ozmB'\nRedirect location: 'https://gtmetrix.com/api/2.0/reports/hkga9EOe'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/303"
+    "error": "Test for https://www.thegoodguys.com.au/cooking-and-dishwashers/dishwashers/built-in-dishwashers timed out after 300s"
   },
   {
     "url": "https://www.thegoodguys.com.au/westinghouse/cooking-and-dishwashers/ovens",
-    "error": "Redirect response '303 See Other' for url 'https://gtmetrix.com/api/2.0/tests/Ad8n8Dk0'\nRedirect location: 'https://gtmetrix.com/api/2.0/reports/ryx3FHPW'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/303"
+    "error": "Test for https://www.thegoodguys.com.au/westinghouse/cooking-and-dishwashers/ovens timed out after 300s"
   },
   {
     "url": "https://www.thegoodguys.com.au/dyson-handstick-stubborn-dirt-brush-971429-01",
-    "error": "Redirect response '303 See Other' for url 'https://gtmetrix.com/api/2.0/tests/1tR8iumZ'\nRedirect location: 'https://gtmetrix.com/api/2.0/reports/5Hxq2dwM'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/303"
+    "error": "Test for https://www.thegoodguys.com.au/dyson-handstick-stubborn-dirt-brush-971429-01 timed out after 300s"
   },
   {
     "url": "https://www.thegoodguys.com.au/husqvarna-aspire-p5-kit-p5-kit",
-    "error": "Redirect response '303 See Other' for url 'https://gtmetrix.com/api/2.0/tests/z8DM9Gf0'\nRedirect location: 'https://gtmetrix.com/api/2.0/reports/kUCkTFSl'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/303"
+    "error": "Test for https://www.thegoodguys.com.au/husqvarna-aspire-p5-kit-p5-kit timed out after 300s"
   },
   {
     "url": "https://www.thegoodguys.com.au/miele-guard-s1-bagged-vacuum-nordic-blue-12697050",
-    "error": "Redirect response '303 See Other' for url 'https://gtmetrix.com/api/2.0/tests/jN8ETzdt'\nRedirect location: 'https://gtmetrix.com/api/2.0/reports/v0kZaHqs'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/303"
+    "error": "Test for https://www.thegoodguys.com.au/miele-guard-s1-bagged-vacuum-nordic-blue-12697050 timed out after 300s"
   },
   {
     "url": "https://www.thegoodguys.com.au/bartesian-8-pack-old-fashioned-capsules-168768",
-    "error": "Redirect response '303 See Other' for url 'https://gtmetrix.com/api/2.0/tests/0hXANr82'\nRedirect location: 'https://gtmetrix.com/api/2.0/reports/HKhvYvf7'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/303"
+    "error": "Test for https://www.thegoodguys.com.au/bartesian-8-pack-old-fashioned-capsules-168768 timed out after 300s"
   },
   {
     "url": "https://www.thegoodguys.com.au/buying-guide/television-buying-guide",
-    "error": "Redirect response '303 See Other' for url 'https://gtmetrix.com/api/2.0/tests/n3otTKlH'\nRedirect location: 'https://gtmetrix.com/api/2.0/reports/4Jv8Dnoe'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/303"
+    "error": "Test for https://www.thegoodguys.com.au/buying-guide/television-buying-guide timed out after 300s"
   },
   {
     "url": "https://www.thegoodguys.com.au/whats-new/what-temperature-should-my-fridge-be",
-    "error": "Redirect response '303 See Other' for url 'https://gtmetrix.com/api/2.0/tests/LWMvq8jd'\nRedirect location: 'https://gtmetrix.com/api/2.0/reports/ZoSE1RmZ'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/303"
+    "error": "Test for https://www.thegoodguys.com.au/whats-new/what-temperature-should-my-fridge-be timed out after 300s"
   }
 ]
