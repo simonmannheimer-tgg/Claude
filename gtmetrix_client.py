@@ -21,7 +21,7 @@ log = logging.getLogger("gtmetrix-mcp.client")
 GTMETRIX_API_BASE = "https://gtmetrix.com/api/2.0"
 
 
-def _redact_auth(request: httpx.Request) -> None:
+async def _redact_auth(request: httpx.Request) -> None:
     """Strip Authorization header before any logging touches the request."""
     if "authorization" in request.headers:
         request.headers["authorization"] = "[REDACTED]"

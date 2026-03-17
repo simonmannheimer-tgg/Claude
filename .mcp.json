@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "gtmetrix": {
+      "command": "python",
+      "args": ["/home/user/Claude/main.py"],
+      "cwd": "/home/user/Claude"
+    }
+  }
+}
