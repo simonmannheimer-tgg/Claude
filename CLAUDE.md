@@ -132,50 +132,83 @@ All MCP servers are registered in `.claude/settings.json` and start automaticall
 |--------|-------------|---------|
 | `context-mode` | `context_mode/server.py` | Token-efficient context indexing |
 | `gtmetrix` | `main.py` | GTMetrix performance audits |
-| `semrush` | `npx @semrush/mcp` | Semrush keyword, competitor, backlink data |
+| `semrush` | `npx semrush-mcp` | Semrush keyword, competitor, backlink data |
 
 The context index database is stored at `context_mode/context_index.db` (git-ignored).
 
-Semrush requires `SEMRUSH_API_KEY` in the environment. Set it in your shell profile or `.env`.
+**Semrush authentication:**
+- In browser Claude Code sessions: Semrush OAuth is already active via the Claude.ai connector — no API key needed.
+- For GitHub Actions / headless use: requires `SEMRUSH_API_KEY` from the Semrush API portal. Set as a GitHub secret.
+- The npm package is `semrush-mcp` (unscoped). Official remote endpoint: `https://mcp.semrush.com/v1/mcp`
 
 ---
 
 ## SEO Agent Team
 
-This repo contains a team of specialised SEO subagents. See `seo/README.md` for full documentation.
+This repo contains a full SEO agent team for The Good Guys (thegoodguys.com.au). See `seo/README.md` for full documentation.
 
-### Default SEO targets (update these for your project)
+### Project defaults
 
 ```
-TARGET_DOMAIN=your-domain.com
-COMPETITORS=competitor1.com,competitor2.com,competitor3.com
-DEFAULT_TOPICS=your main product/content topics here
-DEFAULT_DATABASE=uk
+TARGET_DOMAIN=thegoodguys.com.au
+COMPETITORS_PRIMARY=jbhifi.com.au,harveynorman.com.au,officeworks.com.au
+COMPETITORS_SECONDARY=kogan.com,appliancesonline.com.au
+DEFAULT_TOPICS=TVs, washing machines, fridges, air conditioners, vacuum cleaners, coffee machines, air fryers, laptops, headphones, kitchen appliances
+DEFAULT_DATABASE=au
+SEMRUSH_DATABASE=au
 ```
 
-### Subagents
+### Chain of command
 
-| Agent | Model | Purpose |
-|-------|-------|---------|
-| `seo-keyword-researcher` | Haiku | Semrush keyword & organic data |
-| `seo-competitor-analyst` | Haiku | Backlink & competitor gap analysis |
-| `seo-content-auditor` | Haiku | On-page audit of repo content files |
-| `seo-reporter` | Sonnet | Synthesises findings into actionable reports |
+```
+seo-team-lead  (Sonnet — Orchestrator)
+├── RESEARCH
+│   ├── eav-researcher         (Haiku) — category entity/attribute mapping
+│   ├── content-analyst        (Haiku) — query, entity, keyword extraction
+│   ├── seo-keyword-researcher (Haiku) — Semrush keyword + organic data
+│   └── seo-competitor-analyst (Haiku) — Semrush competitor + backlink data
+├── CONTENT
+│   ├── plp-copywriter         (Sonnet) — Process 01: 2-sentence PLP intros
+│   ├── metadata-writer        (Haiku)  — Process 02: meta titles + descriptions
+│   ├── inlink-migrator        (Sonnet) — Process 03: top→bottom copy migration
+│   ├── faq-writer             (Sonnet) — Process 05: FAQs + category copy
+│   └── aeo-optimizer          (Sonnet) — Process 07: AI answer optimisation
+├── LINKING
+│   └── internal-linking-agent (Haiku)  — Process 06: find, validate, insert links
+├── VISIBILITY
+│   └── ai-visibility-analyst  (Haiku)  — Process 09: AI visibility → poll questions
+└── REPORTING
+    ├── seo-content-auditor    (Haiku)  — on-page audit of repo content files
+    └── seo-reporter           (Sonnet) — synthesise findings into reports
+```
 
-### Token efficiency rules for SEO tasks
+### How to invoke
 
-1. **Always use subagents** for Semrush data gathering — never query Semrush in the main conversation.
-2. **Index large results immediately** with `ctx_index("kw:<topic>", data)` before summarising.
-3. Pass only JSON summaries between agents — not raw API responses.
-4. Use `--max-turns 8` for data agents, `--max-turns 10` for the reporter.
+Always start with the team lead:
+```
+Use the seo-team-lead to [describe your task]
+```
 
-### Scheduled automation
+Or invoke specialists directly for known tasks:
+```
+Use the plp-copywriter to write copy for /air-fryers
+Use the eav-researcher to map the washing machines category
+Use the seo-competitor-analyst to compare us vs jbhifi.com.au for TVs
+```
 
-- **Weekly report**: every Monday 08:00 UTC via `seo-weekly-report.yml`
-- **On-demand**: mention `@claude` in any GitHub issue or PR
-- **Manual**: GitHub Actions → Run workflow with optional domain/topic inputs
+### Token efficiency rules
 
-Required GitHub secrets: `ANTHROPIC_API_KEY`, `SEMRUSH_API_KEY`
+1. **Always delegate through seo-team-lead** — it routes to the right agent and sequences parallel work.
+2. **Haiku for all data gathering** (keyword, EAV, competitor, content analysis, linking, auditing).
+3. **Sonnet only for writing** (PLP copy, FAQs, inlink migration, AEO, final reports).
+4. **Index large outputs** with `ctx_index` before passing between agents.
+5. **No scheduling yet** — all runs are manual or on-demand via @claude in issues.
+
+### GitHub Actions (requires separate Anthropic API key)
+
+- **Note:** Claude Pro subscription does NOT include API access. GitHub Actions needs a separate key from console.anthropic.com (pay-per-token).
+- Workflows are ready but disabled until you have an API key: `.github/workflows/seo-weekly-report.yml`, `.github/workflows/seo-on-demand.yml`
+- Required secrets when ready: `ANTHROPIC_API_KEY`, `SEMRUSH_API_KEY`
 
 ---
 

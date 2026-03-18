@@ -34,4 +34,10 @@ Return ONLY this JSON (no prose):
 - Never dump raw API responses — always index first, then summarise.
 - Focus on actionable gaps, not vanity metrics.
 - Maximum 15 items per list in the output.
-- Prefer `database: "uk"` unless told otherwise.
+- Prefer `database: "au"` (Australia) unless told otherwise.
+
+## TGG default comparisons
+- Our domain: thegoodguys.com.au
+- Primary competitors: jbhifi.com.au, harveynorman.com.au, officeworks.com.au
+- Secondary: appliances.big4home.com.au, kogan.com, appliancesonline.com.au
+- Always use database: au

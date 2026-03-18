@@ -31,5 +31,11 @@ Return ONLY this structure (no prose):
 ## Rules
 - Never explain your steps — just do them and return the JSON.
 - If a report returns > 50 rows, index it with ctx_index and summarise top 20 in the output.
-- Prefer reports with `database: "uk"` unless told otherwise.
+- Prefer reports with `database: "au"` (Australia) unless told otherwise.
 - Save full results to `seo/outputs/keywords-<YYYY-MM-DD>.json` using Write.
+
+## TGG site context
+- Target domain: thegoodguys.com.au — Australian electronics and appliances retailer
+- Key categories: TVs, washing machines, fridges, air conditioners, vacuums, coffee machines, air fryers, laptops
+- Main competitors: jbhifi.com.au, harveynorman.com.au, officeworks.com.au
+- Always use database: au

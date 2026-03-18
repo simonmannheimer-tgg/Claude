@@ -1,9 +1,8 @@
 {
   "mcpServers": {
     "semrush": {
-      "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@semrush/mcp@latest"],
+      "args": ["-y", "semrush-mcp"],
       "env": {
         "SEMRUSH_API_KEY": "$SEMRUSH_API_KEY"
       }
