@@ -15,7 +15,7 @@ fi
 echo $$ > "$LOCK"
 trap 'rm -f "$LOCK"' EXIT
 
-export GITHUB_TOKEN="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"
+export GITHUB_TOKEN="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"
 export GITHUB_REPO="simonmannheimer-tgg/Claude"
 
 echo "[$(date)] Loop daemon started (PID $$)" >> "$LOG"
@@ -31,5 +31,5 @@ while true; do
     echo "$POLL" | python3 scripts/process-tasks.py >> "$LOG" 2>&1
   fi
 
-  sleep 300  # poll every 5 minutes
+  sleep 30  # poll every 30 seconds
 done
