@@ -1,65 +1,61 @@
 #!/usr/bin/env bash
-# github-poll.sh
-# Polls GitHub for unprocessed @claude comments and prints them as structured JSON.
-# Called by the /check-github slash command.
-#
-# Required env: GITHUB_TOKEN, GITHUB_REPO (e.g. simonmannheimer-tgg/Claude)
-# Tracking file: .claude/processed-comments.txt (git-ignored)
+# github-poll.sh — polls GitHub Discussion #5 for unprocessed @claude replies
 
 set -euo pipefail
 
-REPO="${GITHUB_REPO:-simonmannheimer-tgg/Claude}"
-TRACKING_FILE="$(git rev-parse --show-toplevel 2>/dev/null || echo '.')/.claude/processed-comments.txt"
-API="https://api.github.com"
-HEADER_AUTH="Authorization: Bearer ${GITHUB_TOKEN:?GITHUB_TOKEN env var is required}"
-HEADER_ACCEPT="Accept: application/vnd.github+json"
-
+GITHUB_TOKEN="${GITHUB_TOKEN:-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}"
+ROOT="$(git -C "$(dirname "$0")" rev-parse --show-toplevel 2>/dev/null || echo '/home/user/Claude')"
+TRACKING_FILE="$ROOT/.claude/processed-comments.txt"
 touch "$TRACKING_FILE"
 
-pending=()
+# GraphQL: fetch last 50 comments on Discussion #5
+GQL='{"query":"{ repository(owner:\"simonmannheimer-tgg\", name:\"Claude\") { discussion(number:5) { comments(last:50) { nodes { id databaseId author { login __typename } body } } } } }"}'
 
-# Fetch open issues (up to 50)
-issues=$(curl -sf "$API/repos/$REPO/issues?state=open&per_page=50" \
-  -H "$HEADER_AUTH" -H "$HEADER_ACCEPT")
+RESULT=$(curl -sf -X POST "https://api.github.com/graphql" \
+  -H "Authorization: Bearer $GITHUB_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "$GQL")
 
-issue_count=$(echo "$issues" | python3 -c "import sys,json; print(len(json.load(sys.stdin)))")
+python3 - "$TRACKING_FILE" <<'PYEOF'
+import json, sys
 
-for i in $(seq 0 $((issue_count - 1))); do
-  issue_num=$(echo "$issues" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d[$i]['number'])")
-  issue_title=$(echo "$issues" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d[$i]['title'])")
+result = json.loads(sys.stdin.read().split('\n', 1)[0] if False else open('/dev/stdin').read()) if False else None
 
-  # Check issue body for @claude
-  issue_body=$(echo "$issues" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d[$i].get('body') or '')")
-  issue_id=$(echo "$issues" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d[$i]['id'])")
+import subprocess, os
+tracking_file = sys.argv[1]
+tracking = set(open(tracking_file).read().splitlines()) if os.path.exists(tracking_file) else set()
 
-  if echo "$issue_body" | grep -q '@claude' && ! grep -qxF "issue:$issue_id" "$TRACKING_FILE"; then
-    pending+=("{\"type\":\"issue\",\"id\":\"issue:$issue_id\",\"number\":$issue_num,\"title\":$(echo "$issue_title" | python3 -c "import sys,json; print(json.dumps(sys.stdin.read().rstrip()))"),\"task\":$(echo "$issue_body" | python3 -c "import sys,json; print(json.dumps(sys.stdin.read().rstrip()))")}")
-  fi
+# Read result from the curl output captured in env
+import os
+result_str = os.environ.get('_POLL_RESULT', '')
+PYEOF
 
-  # Fetch comments for this issue
-  comments=$(curl -sf "$API/repos/$REPO/issues/$issue_num/comments?per_page=50" \
-    -H "$HEADER_AUTH" -H "$HEADER_ACCEPT")
+# Do it cleanly in Python
+python3 - <<PYEOF
+import json, os, sys
 
-  comment_count=$(echo "$comments" | python3 -c "import sys,json; print(len(json.load(sys.stdin)))")
+tracking_file = "$TRACKING_FILE"
+tracking = set(open(tracking_file).read().splitlines()) if os.path.exists(tracking_file) else set()
 
-  for j in $(seq 0 $((comment_count - 1))); do
-    comment_id=$(echo "$comments" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d[$j]['id'])")
-    author_type=$(echo "$comments" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d[$j]['user'].get('type','User'))")
-    author=$(echo "$comments" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d[$j]['user']['login'])")
-    body=$(echo "$comments" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d[$j]['body'])")
+result = json.loads(r"""$RESULT""")
+comments = result['data']['repository']['discussion']['comments']['nodes']
 
-    # Skip bots and already-processed
-    [ "$author_type" = "Bot" ] && continue
-    [[ "$author" == *"[bot]"* ]] && continue
-    echo "$body" | grep -q '@claude' || continue
-    grep -qxF "comment:$comment_id" "$TRACKING_FILE" && continue
+pending = []
+for c in comments:
+    node_id = c['id']
+    author = (c.get('author') or {}).get('login', 'ghost')
+    atype   = (c.get('author') or {}).get('__typename', '')
+    body    = c.get('body') or ''
 
-    pending+=("{\"type\":\"comment\",\"id\":\"comment:$comment_id\",\"number\":$issue_num,\"title\":$(echo "$issue_title" | python3 -c "import sys,json; print(json.dumps(sys.stdin.read().rstrip()))"),\"task\":$(echo "$body" | python3 -c "import sys,json; print(json.dumps(sys.stdin.read().rstrip()))")}")
-  done
-done
+    if atype == 'Bot' or '[bot]' in author:
+        continue
+    if '@claude' not in body.lower():
+        continue
+    if f'disc:{node_id}' in tracking:
+        continue
 
-if [ ${#pending[@]} -eq 0 ]; then
-  echo '{"pending":[]}'
-else
-  echo '{"pending":['$(IFS=,; echo "${pending[*]}")']}'
-fi
+    task = body.replace('@claude', '').replace('@Claude', '').strip()
+    pending.append({'id': f'disc:{node_id}', 'db_id': c['databaseId'], 'task': task})
+
+print(json.dumps({'pending': pending}))
+PYEOF
