@@ -109,6 +109,19 @@ All SEO processes live in `processes/` as numbered markdown files. Each is self-
 
 ---
 
+## Context Mode
+
+Context Mode is always active. It prevents token burn from large file dumps.
+
+**Default behaviour:**
+- Files > 50 lines → use `ctx_read_file` (returns section map, not raw content)
+- Large outputs → use `ctx_index` then `ctx_search` to retrieve what's needed
+- Session start → run `ctx_list` to reuse already-indexed content
+
+This is non-negotiable for keeping sessions efficient and long-running.
+
+---
+
 ## Core Principles
 
 - **Context is king**: Always check what we already know before asking or assuming

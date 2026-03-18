@@ -6,7 +6,14 @@ This file provides guidance to AI assistants (Claude and others) working in this
 
 ## Repository Overview
 
-This repository is currently in its initialization phase. No source files, framework, or project structure have been committed yet. This CLAUDE.md serves as a foundational guide for AI-assisted development as the project grows.
+This repository contains a GTMetrix MCP server (Python/uv) and a Context Mode MCP server for token-efficient Claude Code sessions.
+
+**Project Setup:**
+- **Language / Runtime**: Python 3.11
+- **Package manager**: uv
+- **Install dependencies**: `uv sync` (auto-runs on first `uv run`)
+- **Run GTMetrix MCP**: `uv run python3 main.py`
+- **Run Context Mode MCP**: `uv run python3 context_mode/server.py`
 
 ---
 
@@ -54,6 +61,40 @@ Apply the same exponential backoff retry strategy on network failures.
 
 ---
 
+## Context Mode (Token Efficiency — MANDATORY)
+
+A Context Mode MCP server is registered at `.claude/settings.json`. It indexes large content into SQLite and returns compact summaries, reducing context usage by up to 98%.
+
+### Rules — follow these in every session
+
+1. **Files over 50 lines**: Use `ctx_read_file` instead of the Read tool.
+   - `ctx_read_file` returns a section map (~10–15 lines) rather than the raw file.
+   - Then use `ctx_search(key, query)` to pull only the sections you need.
+
+2. **Large tool outputs / API responses**: If a tool returns more than ~100 lines, pipe the content through `ctx_index(key, content)` immediately and work from the summary.
+
+3. **Session start**: Run `ctx_list` to see what is already indexed from prior work. Avoid re-indexing content that is already present.
+
+4. **Workflow pattern**:
+   ```
+   ctx_read_file("main.py")          → get structural summary
+   ctx_search("main.py", "bulk_audit handler")  → get only that function
+   ```
+
+5. **Never dump raw files into context** when the Context Mode tools are available. Every raw Read of a large file is a context budget violation.
+
+### Available context tools
+
+| Tool | Purpose |
+|------|---------|
+| `ctx_read_file(path)` | Index a file; return section map |
+| `ctx_index(key, content)` | Index arbitrary large text |
+| `ctx_search(key, query)` | Retrieve matching sections only |
+| `ctx_list()` | Show all indexed keys |
+| `ctx_drop(key?)` | Remove from index |
+
+---
+
 ## AI Assistant Guidelines
 
 ### General Principles
@@ -83,40 +124,16 @@ Always confirm with the user before:
 
 ---
 
-## Project Setup (To Be Updated)
+## MCP Servers
 
-Once project files are added, this section should be updated with:
+Both MCP servers are registered in `.claude/settings.json` and start automatically with Claude Code.
 
-- **Language / Runtime**: e.g., Python 3.12, Node.js 20, Rust 1.x
-- **Package manager**: e.g., pip/uv, npm/pnpm, cargo
-- **Install dependencies**: e.g., `npm install` or `pip install -e .`
-- **Run development server**: e.g., `npm run dev`
-- **Run tests**: e.g., `pytest` or `npm test`
-- **Lint / format**: e.g., `ruff check .` or `eslint .`
-- **Build**: e.g., `npm run build`
+| Server | Entry point | Purpose |
+|--------|-------------|---------|
+| `context-mode` | `context_mode/server.py` | Token-efficient context indexing |
+| `gtmetrix` | `main.py` | GTMetrix performance audits |
 
----
-
-## Testing (To Be Updated)
-
-Once a testing framework is established, document:
-
-- Test directory location
-- How to run the full test suite
-- How to run a single test
-- Any required environment variables or test fixtures
-
----
-
-## Code Conventions (To Be Updated)
-
-Once source code exists, document observed conventions:
-
-- Naming conventions (snake_case, camelCase, etc.)
-- File/module organization patterns
-- Error handling patterns
-- Logging approach
-- Environment configuration method (dotenv, config files, etc.)
+The context index database is stored at `context_mode/context_index.db` (git-ignored).
 
 ---
 
