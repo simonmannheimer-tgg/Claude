@@ -3,7 +3,7 @@
 
 set -euo pipefail
 
-GITHUB_TOKEN="${GITHUB_TOKEN:-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}"
+GITHUB_TOKEN="${GITHUB_TOKEN:-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}"
 ROOT="$(git -C "$(dirname "$0")" rev-parse --show-toplevel 2>/dev/null || echo '/home/user/Claude')"
 TRACKING_FILE="$ROOT/.claude/processed-comments.txt"
 touch "$TRACKING_FILE"
