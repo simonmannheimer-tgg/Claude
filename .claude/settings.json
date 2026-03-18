@@ -30,6 +30,22 @@
     }
   },
   "env": {
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "GITHUB_TOKEN": "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",
+    "GITHUB_REPO": "simonmannheimer-tgg/Claude"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /home/user/Claude/scripts/loop-daemon.sh >> /tmp/claude-loop.log 2>&1",
+            "async": true,
+            "statusMessage": "Starting GitHub discussion loop..."
+          }
+        ]
+      }
+    ]
   }
 }
