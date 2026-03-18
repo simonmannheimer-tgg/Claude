@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "context-mode": {
+      "command": "uv",
+      "args": ["run", "python3", "context_mode/server.py"]
+    },
+    "semrush": {
+      "command": "npx",
+      "args": ["-y", "semrush-mcp"],
+      "env": {
+        "SEMRUSH_API_KEY": "$SEMRUSH_API_KEY"
+      }
+    }
+  }
+}

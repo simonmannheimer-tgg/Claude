@@ -20,6 +20,16 @@
         "python3",
         "/home/user/Claude/main.py"
       ]
+    },
+    "semrush": {
+      "command": "npx",
+      "args": ["-y", "semrush-mcp"],
+      "env": {
+        "SEMRUSH_API_KEY": "${SEMRUSH_API_KEY}"
+      }
     }
+  },
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   }
 }
