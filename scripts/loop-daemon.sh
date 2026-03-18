@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# loop-daemon.sh — background daemon that polls GitHub Discussion #5
+# loop-daemon.sh — background daemon that polls open GitHub Issues
 # and processes @claude messages using the claude CLI.
 # Started automatically by the SessionStart hook.
 # Uses a lock file to prevent multiple instances.
@@ -15,8 +15,8 @@ fi
 echo $$ > "$LOCK"
 trap 'rm -f "$LOCK"' EXIT
 
-export GITHUB_TOKEN="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"
-export GITHUB_REPO="simonmannheimer-tgg/Claude"
+: "${PAT_TOKEN_GH:?PAT_TOKEN_GH is not set}"
+export PAT_TOKEN_GH
 
 echo "[$(date)] Loop daemon started (PID $$)" >> "$LOG"
 
