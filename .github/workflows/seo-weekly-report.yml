@@ -1,0 +1,87 @@
+name: SEO Weekly Report
+
+# Runs every Monday at 08:00 UTC — generates keyword + competitor + content brief
+# Also triggerable manually from the Actions tab
+on:
+  schedule:
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+    inputs:
+      domain:
+        description: 'Target domain to analyse (e.g. example.com)'
+        required: false
+        default: ''
+      topics:
+        description: 'Comma-separated keyword topics to research'
+        required: false
+        default: ''
+      competitors:
+        description: 'Comma-separated competitor domains'
+        required: false
+        default: ''
+
+jobs:
+  seo-report:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Build the orchestration prompt — uses inputs if provided, else defaults from CLAUDE.md
+      - name: Build prompt
+        id: prompt
+        run: |
+          DOMAIN="${{ github.event.inputs.domain }}"
+          TOPICS="${{ github.event.inputs.topics }}"
+          COMPETITORS="${{ github.event.inputs.competitors }}"
+          DATE=$(date +%Y-%m-%d)
+
+          PROMPT="You are the SEO team leader for this project. Today is ${DATE}.
+
+          Run a full weekly SEO workflow in this order:
+
+          1. Use the @seo-keyword-researcher agent to research keywords for: ${TOPICS:-the main topics in this project's content files}. Target database: uk.
+
+          2. Use the @seo-competitor-analyst agent to analyse: ${COMPETITORS:-the top 3 organic competitors for our main keywords}. Target domain: ${DOMAIN:-see CLAUDE.md for the project domain}.
+
+          3. Use the @seo-content-auditor agent to audit all .md content files in the repo root.
+
+          4. Use the @seo-reporter agent to synthesise all findings and write the report to seo/outputs/report-${DATE}.md.
+
+          5. After the report is written, create a GitHub issue titled 'SEO Weekly Report ${DATE}' with:
+             - The executive summary from the report
+             - The top 5 priority actions as a checklist
+             - A link to the report file
+
+          Keep each subagent focused — pass only the necessary context between them. Use the context-mode MCP (ctx_index/ctx_search) to pass large data sets efficiently rather than repeating raw data.
+
+          Token budget: prefer haiku subagents for data gathering, sonnet only for the final report."
+
+          echo "prompt<<EOF" >> $GITHUB_OUTPUT
+          echo "$PROMPT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - uses: anthropics/claude-code-action@v1
+        env:
+          SEMRUSH_API_KEY: ${{ secrets.SEMRUSH_API_KEY }}
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: ${{ steps.prompt.outputs.prompt }}
+          claude_args: |
+            --mcp-config .claude/mcp-actions.json
+            --max-turns 30
+            --model claude-sonnet-4-6
+            --allowedTools "Agent,Read,Write,Glob,Grep,Bash,mcp__semrush__*"
+            --append-system-prompt "You are running in GitHub Actions. Write all output files before creating issues. Always use subagents for data gathering to preserve your own context window."
+
+      - name: Upload SEO outputs as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: seo-outputs-${{ github.run_id }}
+          path: seo/outputs/
+          retention-days: 90

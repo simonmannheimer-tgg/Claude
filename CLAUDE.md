@@ -126,14 +126,56 @@ Always confirm with the user before:
 
 ## MCP Servers
 
-Both MCP servers are registered in `.claude/settings.json` and start automatically with Claude Code.
+All MCP servers are registered in `.claude/settings.json` and start automatically with Claude Code.
 
 | Server | Entry point | Purpose |
 |--------|-------------|---------|
 | `context-mode` | `context_mode/server.py` | Token-efficient context indexing |
 | `gtmetrix` | `main.py` | GTMetrix performance audits |
+| `semrush` | `npx @semrush/mcp` | Semrush keyword, competitor, backlink data |
 
 The context index database is stored at `context_mode/context_index.db` (git-ignored).
+
+Semrush requires `SEMRUSH_API_KEY` in the environment. Set it in your shell profile or `.env`.
+
+---
+
+## SEO Agent Team
+
+This repo contains a team of specialised SEO subagents. See `seo/README.md` for full documentation.
+
+### Default SEO targets (update these for your project)
+
+```
+TARGET_DOMAIN=your-domain.com
+COMPETITORS=competitor1.com,competitor2.com,competitor3.com
+DEFAULT_TOPICS=your main product/content topics here
+DEFAULT_DATABASE=uk
+```
+
+### Subagents
+
+| Agent | Model | Purpose |
+|-------|-------|---------|
+| `seo-keyword-researcher` | Haiku | Semrush keyword & organic data |
+| `seo-competitor-analyst` | Haiku | Backlink & competitor gap analysis |
+| `seo-content-auditor` | Haiku | On-page audit of repo content files |
+| `seo-reporter` | Sonnet | Synthesises findings into actionable reports |
+
+### Token efficiency rules for SEO tasks
+
+1. **Always use subagents** for Semrush data gathering — never query Semrush in the main conversation.
+2. **Index large results immediately** with `ctx_index("kw:<topic>", data)` before summarising.
+3. Pass only JSON summaries between agents — not raw API responses.
+4. Use `--max-turns 8` for data agents, `--max-turns 10` for the reporter.
+
+### Scheduled automation
+
+- **Weekly report**: every Monday 08:00 UTC via `seo-weekly-report.yml`
+- **On-demand**: mention `@claude` in any GitHub issue or PR
+- **Manual**: GitHub Actions → Run workflow with optional domain/topic inputs
+
+Required GitHub secrets: `ANTHROPIC_API_KEY`, `SEMRUSH_API_KEY`
 
 ---
 

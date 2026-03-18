@@ -1,0 +1,62 @@
+name: SEO On-Demand (@claude)
+
+# Responds to @claude mentions in issues and PR comments
+# Also supports direct workflow_dispatch for scripted tasks
+on:
+  issue_comment:
+    types: [created]
+  issues:
+    types: [opened]
+  workflow_dispatch:
+    inputs:
+      task:
+        description: 'SEO task to run (free text prompt)'
+        required: true
+        type: string
+
+jobs:
+  seo-on-demand:
+    # For comments/issues: only run if @claude is mentioned
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'issues' && contains(github.event.issue.body, '@claude'))
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # For workflow_dispatch: build a direct prompt
+      - name: Build direct prompt (workflow_dispatch only)
+        if: github.event_name == 'workflow_dispatch'
+        id: direct_prompt
+        run: |
+          echo "prompt=${{ github.event.inputs.task }}" >> $GITHUB_OUTPUT
+
+      # Interactive mode: responds to @claude mention naturally
+      - uses: anthropics/claude-code-action@v1
+        env:
+          SEMRUSH_API_KEY: ${{ secrets.SEMRUSH_API_KEY }}
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          # prompt only set for workflow_dispatch; issue/comment mode auto-detects @claude
+          prompt: ${{ steps.direct_prompt.outputs.prompt }}
+          claude_args: |
+            --mcp-config .claude/mcp-actions.json
+            --max-turns 20
+            --model claude-sonnet-4-6
+            --allowedTools "Agent,Read,Write,Glob,Grep,Bash,mcp__semrush__*"
+            --append-system-prompt "You are an SEO assistant with access to Semrush data and specialised subagents (seo-keyword-researcher, seo-competitor-analyst, seo-content-auditor, seo-reporter). Use subagents for data gathering to keep your own context lean. Save outputs to seo/outputs/ and always post a summary comment when done."
+
+      - name: Upload outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: seo-on-demand-${{ github.run_id }}
+          path: seo/outputs/
+          retention-days: 30
