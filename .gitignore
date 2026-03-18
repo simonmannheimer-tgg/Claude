@@ -4,6 +4,9 @@
 # Reports contain URLs and performance data — keep local
 reports/
 
+# Context Mode — local index DB, not shared
+context_mode/context_index.db
+
 # Python
 __pycache__/
 *.py[cod]
