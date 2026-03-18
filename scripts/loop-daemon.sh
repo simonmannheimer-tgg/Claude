@@ -31,5 +31,5 @@ while true; do
     echo "$POLL" | python3 scripts/process-tasks.py >> "$LOG" 2>&1
   fi
 
-  sleep 300  # poll every 5 minutes
+  sleep 30  # poll every 30 seconds
 done
