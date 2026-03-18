@@ -1,6 +1,4 @@
-Poll GitHub Discussion #5 for new @claude messages, process them with the SEO agent team, and post replies back.
-
-Discussion URL: https://github.com/simonmannheimer-tgg/Claude/discussions/5
+Poll GitHub Issues for new @claude messages, process them with the SEO agent team, write outputs to disk, and post replies back.
 
 ## Steps
 
@@ -10,7 +8,7 @@ Discussion URL: https://github.com/simonmannheimer-tgg/Claude/discussions/5
    ```
    If output is `{"pending":[]}`, say "No pending tasks." and stop.
 
-2. For each item in `pending`, extract `id`, `db_id`, `task`.
+2. For each item in `pending`, extract `id`, `number`, `task`.
 
 3. Determine what kind of task it is and run the right agent:
    - SEO copy / PLP / FAQs / metadata → use **seo-team-lead**
@@ -21,18 +19,26 @@ Discussion URL: https://github.com/simonmannheimer-tgg/Claude/discussions/5
    For seo-team-lead tasks:
    ```
    Use the seo-team-lead to: <task>
-   Context: thegoodguys.com.au. Save outputs to seo/outputs/. Return a concise summary.
+   Context: thegoodguys.com.au. Save all outputs to seo/outputs/. Commit and push when done. Return a concise summary.
    ```
 
-4. Format the reply. It MUST:
+4. After all agents complete, commit any new output files:
+   ```bash
+   git add seo/outputs/
+   git diff --cached --quiet || git commit -m "feat(outputs): process @claude tasks from GitHub Issues"
+   git push -u origin HEAD
+   ```
+
+5. Format the reply. It MUST:
    - Lead with the key output or answer (not preamble)
    - Use markdown — headings, bullets, code blocks as appropriate
+   - Include the file path(s) written (e.g. `seo/outputs/plp-robot-vacuums-2026-03-18.md`)
    - End with: `_— Claude Code_`
    - NOT contain `@claude` anywhere (prevents re-trigger)
 
-5. Post the reply to the discussion:
+6. Post the reply to the issue:
    ```bash
-   BODY="<formatted reply>" TASK_ID="<id from step 2>" bash scripts/github-post-comment.sh
+   BODY="<formatted reply>" TASK_ID="<id from step 2>" ISSUE_NUMBER="<number>" bash scripts/github-post-comment.sh
    ```
 
-6. Process all pending tasks before stopping.
+7. Process all pending tasks before stopping.
