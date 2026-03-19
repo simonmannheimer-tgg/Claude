@@ -2,6 +2,8 @@ name: SEO On-Demand (@claude)
 
 # Responds to @claude mentions in issues and PR comments.
 # Also supports direct workflow_dispatch for scripted tasks.
+# Requires ANTHROPIC_API_KEY secret — posts a friendly notice and exits
+# cleanly (green) if the secret is not configured.
 on:
   issue_comment:
     types: [created]
@@ -41,18 +43,51 @@ jobs:
       CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: "1"
 
     steps:
+      # ── API key guard ──────────────────────────────────────────────────────
+      # If ANTHROPIC_API_KEY is not configured the remaining steps are skipped
+      # and a helpful comment is posted. The job exits green (not red).
+      - name: Check API key
+        id: check
+        env:
+          HAS_KEY: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+        run: echo "has_key=$HAS_KEY" >> "$GITHUB_OUTPUT"
+
+      - name: Notify — API key not configured
+        if: steps.check.outputs.has_key == 'false' && github.event_name != 'workflow_dispatch'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: [
+                '**Claude Code is not yet connected.** ⚙️',
+                '',
+                'The `ANTHROPIC_API_KEY` secret is not configured for this repository.',
+                'Add it under **Settings → Secrets and variables → Actions** to enable on-demand SEO tasks.',
+                '',
+                '_— GitHub Actions_'
+              ].join('\n')
+            });
+
+      # ── Main workflow (only runs when API key is present) ──────────────────
       - uses: actions/checkout@v4
+        if: steps.check.outputs.has_key == 'true'
 
       # context-mode MCP requires uv + Python
       - uses: astral-sh/setup-uv@v4
+        if: steps.check.outputs.has_key == 'true'
         with:
           python-version: "3.11"
 
       - name: Install dependencies
+        if: steps.check.outputs.has_key == 'true'
         run: uv sync --frozen
 
       # Build prompt for all event types safely using toJson() to avoid shell injection
       - name: Build prompt
+        if: steps.check.outputs.has_key == 'true'
         id: prompt
         run: |
           EVENT="${{ github.event_name }}"
@@ -71,6 +106,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - uses: anthropics/claude-code-action@v1
+        if: steps.check.outputs.has_key == 'true'
         env:
           SEMRUSH_API_KEY: ${{ secrets.SEMRUSH_API_KEY }}
           CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: "1"
@@ -92,7 +128,7 @@ jobs:
           prompt: ${{ steps.prompt.outputs.prompt }}
 
       - name: Upload outputs
-        if: always()
+        if: steps.check.outputs.has_key == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: seo-on-demand-${{ github.run_id }}

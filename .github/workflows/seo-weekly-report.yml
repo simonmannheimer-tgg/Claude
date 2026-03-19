@@ -31,16 +31,34 @@ jobs:
       CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: "1"
 
     steps:
+      # ── API key guard ──────────────────────────────────────────────────────
+      - name: Check API key
+        id: check
+        env:
+          HAS_KEY: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+        run: echo "has_key=$HAS_KEY" >> "$GITHUB_OUTPUT"
+
+      - name: Skip — API key not configured
+        if: steps.check.outputs.has_key == 'false'
+        run: |
+          echo "::warning::ANTHROPIC_API_KEY secret is not configured. Skipping weekly report."
+          echo "Add the secret under Settings → Secrets and variables → Actions."
+
+      # ── Main workflow (only runs when API key is present) ──────────────────
       - uses: actions/checkout@v4
+        if: steps.check.outputs.has_key == 'true'
 
       - uses: astral-sh/setup-uv@v4
+        if: steps.check.outputs.has_key == 'true'
         with:
           python-version: "3.11"
 
       - name: Install dependencies
+        if: steps.check.outputs.has_key == 'true'
         run: uv sync --frozen
 
       - name: Build prompt
+        if: steps.check.outputs.has_key == 'true'
         id: prompt
         run: |
           DOMAIN="${{ github.event.inputs.domain || 'thegoodguys.com.au' }}"
@@ -68,6 +86,7 @@ jobs:
           EOF
 
       - uses: anthropics/claude-code-action@v1
+        if: steps.check.outputs.has_key == 'true'
         env:
           SEMRUSH_API_KEY: ${{ secrets.SEMRUSH_API_KEY }}
           CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: "1"
@@ -85,7 +104,7 @@ jobs:
           prompt: ${{ steps.prompt.outputs.prompt }}
 
       - name: Upload SEO outputs as artifact
-        if: always()
+        if: steps.check.outputs.has_key == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: seo-outputs-${{ github.run_id }}
