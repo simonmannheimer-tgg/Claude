@@ -45,7 +45,7 @@ Instructions:
     result = subprocess.run(
         ["claude", "--print", "--dangerously-skip-permissions"],
         input=prompt,
-        capture_output=True, text=True, timeout=300,
+        capture_output=True, text=True, timeout=600,
         cwd=ROOT, env=env
     )
     response = (result.stdout or result.stderr or "(no response)").strip()
