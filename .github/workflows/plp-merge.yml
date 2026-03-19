@@ -1,0 +1,36 @@
+name: PLP Merge
+
+# Fires whenever Claude pushes .md batch files to seo/outputs/.
+# Runs the merge script and commits the CSV back to the same branch.
+on:
+  push:
+    paths:
+      - 'seo/outputs/plp-batch-*.md'
+
+jobs:
+  merge-to-csv:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # fetch the branch that was just pushed to
+          ref: ${{ github.ref }}
+
+      - uses: astral-sh/setup-uv@v4
+        with:
+          python-version: "3.11"
+
+      - name: Run merge script
+        run: python3 seo/scripts/merge-plp-outputs.py
+
+      - name: Commit CSV
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add seo/outputs/plp-all-batches-*.csv
+          # only commit if something changed
+          git diff --cached --quiet || git commit -m "chore(plp): regenerate merged CSV from batch .md files [skip ci]"
+          git push
