@@ -14,5 +14,4 @@ __pycache__/
 .venv/
 dist/
 .uv/
-uv.lock
 .claude/processed-comments.txt

@@ -21,10 +21,13 @@ This repository contains a GTMetrix MCP server (Python/uv) and a Context Mode MC
 
 ### Branch Naming
 
-- Feature branches for Claude sessions must follow the pattern:
+- Each Claude Code session is assigned a branch by the system prompt in the format:
   `claude/<feature-name>-<session-id>`
-  Example: `claude/claude-md-mm42r61l51dt1g1s-EyZO6`
+  Example: `claude/plp-intro-copy-good-guys-XVTa0`
+- **Always push to the branch specified in the current session's system prompt.** The proxy enforces a session-to-branch mapping and will return HTTP 403 if you attempt to push to a branch from a different session.
 - Never push directly to `main` or `master` without explicit permission.
+- Do not attempt to merge or rebase work onto other branches — stay on the assigned session branch.
+- Branch proliferation is a system-level behaviour (one branch per session). Clean up stale branches manually on GitHub.
 
 ### Commits
 
@@ -47,6 +50,8 @@ If push fails due to network errors, retry with exponential backoff:
 - Wait 4s, retry
 - Wait 8s, retry
 - Wait 16s, retry (final attempt)
+
+**If push returns HTTP 403**, do not retry — this means the branch does not match the current session. Stay on the session-assigned branch.
 
 ### Fetching / Pulling
 
