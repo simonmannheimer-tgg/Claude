@@ -1,9 +1,11 @@
 name: SEO Weekly Report
 
-# Runs every Monday at 08:00 UTC — generates keyword + competitor + content brief
+# Manual trigger only — generates keyword + competitor + content brief.
+# NOTE: scheduled trigger intentionally disabled to avoid Anthropic API credit
+# spend. Re-enable by uncommenting the `schedule` block below.
 on:
-  schedule:
-    - cron: '0 8 * * 1'
+  # schedule:
+  #   - cron: '0 8 * * 1'   # Every Monday 08:00 UTC — DISABLED
   workflow_dispatch:
     inputs:
       domain:

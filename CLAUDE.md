@@ -212,8 +212,9 @@ Use the seo-competitor-analyst to compare us vs jbhifi.com.au for TVs
 ### GitHub Actions (requires separate Anthropic API key)
 
 - **Note:** Claude Pro subscription does NOT include API access. GitHub Actions needs a separate key from console.anthropic.com (pay-per-token).
-- Workflows are ready but disabled until you have an API key: `.github/workflows/seo-weekly-report.yml`, `.github/workflows/seo-on-demand.yml`
-- Required secrets when ready: `ANTHROPIC_API_KEY`, `SEMRUSH_API_KEY`
+- Workflows: `seo-weekly-report.yml` (manual only — cron disabled), `seo-on-demand.yml` (event-driven on @claude), `shopping-scraper.yml` (manual only — cron disabled), `gtmetrix-audit.yml` (manual only), `issue-receiver.yml` + `plp-merge.yml` (no API key needed).
+- **No scheduled workflows currently run** — every cron is commented out to prevent API credit / Actions-minute spend. Re-enable by uncommenting the `schedule:` block in the relevant workflow file.
+- Required secrets when an API run is invoked: `ANTHROPIC_API_KEY`, `SEMRUSH_API_KEY`.
 
 ---
 
