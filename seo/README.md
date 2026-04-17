@@ -18,7 +18,7 @@ Claude (Team Leader / Orchestrator)
 
 | Trigger | How |
 |---|---|
-| Weekly (Mon 08:00 UTC) | `seo-weekly-report.yml` runs automatically |
+| Weekly schedule | **Disabled** — no automatic runs. Re-enable via the commented `schedule:` block in `.github/workflows/seo-weekly-report.yml` |
 | On-demand (any time) | Mention `@claude` in a GitHub issue or PR comment |
 | Manual with parameters | GitHub Actions → SEO Weekly Report → Run workflow |
 | One-off task | GitHub Actions → SEO On-Demand → Run workflow → enter prompt |

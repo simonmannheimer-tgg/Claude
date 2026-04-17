@@ -33,19 +33,5 @@
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "PAT_TOKEN_GH": "${PAT_TOKEN_GH}",
     "GITHUB_REPO": "simonmannheimer-tgg/Claude"
-  },
-  "hooks": {
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash /home/user/Claude/scripts/loop-daemon.sh >> /tmp/claude-loop.log 2>&1",
-            "async": true,
-            "statusMessage": "Starting GitHub discussion loop..."
-          }
-        ]
-      }
-    ]
   }
 }

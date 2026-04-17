@@ -209,11 +209,34 @@ Use the seo-competitor-analyst to compare us vs jbhifi.com.au for TVs
 4. **Index large outputs** with `ctx_index` before passing between agents.
 5. **No scheduling yet** — all runs are manual or on-demand via @claude in issues.
 
+### Standard SEO workflows
+
+Process files live at the repo root (`00-*.md` through `09-*.md`). Common chains:
+
+- **Category Page Optimisation:** `08 (EAV)` → `04 (Core Query + Fanout)` → `06 (Link Validation)` → `05 (Brand+Category FAQ)`
+- **Article AEO Audit:** `04 (Summarise + Keyword)` → `06 (Link Opportunities)` → `07 (AEO Suggestions + Finalise)`
+- **Internal Linking:** `06 (Find → Validate → Verify → Insert)`
+- **Full Category Page Build:** `08 (EAV)` → `04 (Fanout)` → `01 (PLP Intro)` → `05 (FAQ Copy)` → `02 (Metadata)` → `06 (Linking)`
+
+Always read `00-tov-language-reference.md` before any content-writing task — it has the master banned word list and tone rules.
+
+### Writing philosophy (applies to all content)
+
+- **Guardrails, not templates.** Ban harmful patterns; don't prescribe "allowed" patterns.
+- **Vary everything.** Sentence openers, TGG placement, benefit angles, structure. If a batch of 20 intros reads like they came from the same fill-in-the-blank template, rewrite.
+- **Be specific.** Name brands, features, use cases. Specificity is what makes copy useful to humans and citable by AI.
+- **Sound human.** If it reads like a chatbot or a keyword list disguised as prose, rewrite.
+
+### Process updates
+
+When Simon changes a rule or preference, update the relevant root process file immediately: add a changelog note at the top (version + date + what changed). If a request conflicts with an existing process rule, flag it and ask whether it's a one-time exception or a permanent change.
+
 ### GitHub Actions (requires separate Anthropic API key)
 
 - **Note:** Claude Pro subscription does NOT include API access. GitHub Actions needs a separate key from console.anthropic.com (pay-per-token).
-- Workflows are ready but disabled until you have an API key: `.github/workflows/seo-weekly-report.yml`, `.github/workflows/seo-on-demand.yml`
-- Required secrets when ready: `ANTHROPIC_API_KEY`, `SEMRUSH_API_KEY`
+- Workflows: `seo-weekly-report.yml` (manual only — cron disabled), `seo-on-demand.yml` (event-driven on @claude), `shopping-scraper.yml` (manual only — cron disabled), `gtmetrix-audit.yml` (manual only), `issue-receiver.yml` + `plp-merge.yml` (no API key needed).
+- **No scheduled workflows currently run** — every cron is commented out to prevent API credit / Actions-minute spend. Re-enable by uncommenting the `schedule:` block in the relevant workflow file.
+- Required secrets when an API run is invoked: `ANTHROPIC_API_KEY`, `SEMRUSH_API_KEY`.
 
 ---
 
