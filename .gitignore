@@ -34,6 +34,10 @@ reports/
 
 # Large packages
 plp-copywriting-package.zip
+Claude_Repo_Final_v3.zip
+
+# Local backups (restore-only; never commit)
+.backups/
 
 # OS
 .DS_Store
