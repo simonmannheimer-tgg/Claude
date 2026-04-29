@@ -75,6 +75,27 @@ git push -u origin <branch-name>
 ```
 Retry with exponential backoff (2s, 4s, 8s, 16s) on network errors. HTTP 403 = wrong branch, do not retry.
 
+### Pull Requests and Merging
+
+After pushing, use this rule to decide whether to create and merge a PR automatically:
+
+- **Create and merge automatically** — when the task is clearly scoped, completed exactly as asked, and the change is low-risk (docs, config, copy, refactors with no functional side-effects).
+- **Create PR and ask before merging** — when the change is experimental, architecturally significant, or there is any doubt about whether the output matches intent.
+- **Never create a PR** — only if Simon explicitly says not to.
+
+Use the GitHub MCP tools (`mcp__github__create_pull_request`, `mcp__github__merge_pull_request`) to create and merge. Default merge method: squash.
+
+### Fetching / Pulling
+
+Prefer fetching specific branches:
+
+```bash
+git fetch origin <branch-name>
+git pull origin <branch-name>
+```
+
+Apply the same exponential backoff retry strategy on network failures.
+
 ---
 
 ## Context Mode (Token Efficiency — MANDATORY)
