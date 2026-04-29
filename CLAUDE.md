@@ -14,16 +14,13 @@ Daily work: batch copy production, technical SEO audits, Python/JS scripting, GM
 ## Repository Overview
 
 Central Claude Code workspace containing:
-- GTMetrix MCP server (Python/uv) — `main.py` + `gtmetrix_client.py`
-- Context Mode MCP server (token-efficient sessions) — `context_mode/server.py`
+- GTMetrix MCP server (Python/uv)
+- Context Mode MCP server (token-efficient sessions)
 - 14-agent SEO team (seo-team-lead orchestrates all)
-- 10 numbered process files (`00-*.md` … `09-*.md`) at the **repo root** governing all TGG copy and SEO work
+- 10 numbered process files (00–09) governing all TGG copy and SEO work
 - Local Python tools in `tools/` for PLP auditing, MHTML parsing, CSV manipulation
-- Repo-level shell/Python helpers in `scripts/` (GitHub polling, task processor, loop daemon)
-- Chat UI server in `chat_ui/` (port 7860, started by `/start-chat`)
 - GitHub Actions workflows for on-demand and scheduled SEO tasks
 - Optional tools staged in `.claude/optional/` — inactive until needed
-- Working directories: `seo/` (briefs, prompts, outputs, scripts), `docs/` (internal documentation), `gtmetrix_results/` (persisted audit JSON/CSV)
 
 **Setup:**
 - Language: Python 3.11 / Package manager: uv
@@ -31,35 +28,6 @@ Central Claude Code workspace containing:
 - Run GTMetrix MCP: `uv run python3 main.py`
 - Run Context Mode MCP: `uv run python3 context_mode/server.py`
 - All MCP paths use `.` (repo root) — portable across machines and GitHub Actions
-
----
-
-## Repo Layout
-
-Quick reference so agents can locate things without `ls`.
-
-| Path | Purpose |
-|------|---------|
-| `main.py` | GTMetrix MCP server entry point |
-| `gtmetrix_client.py` | GTMetrix API client used by `main.py` |
-| `config.py` | Shared config loader (env vars) |
-| `plp-qa-audit.py` | PLP QA audit runner (root-level) |
-| `run_audit_ci.py` | Audit runner invoked by GitHub Actions |
-| `00-*.md` … `09-*.md` | Process files governing all TGG copy work |
-| `context_mode/` | Context Mode MCP server (`server.py`) |
-| `chat_ui/` | Chat UI server (port 7860, started by `/start-chat`) |
-| `tools/` | Local Python utilities (PLP audit, MHTML, CSV ops) |
-| `scripts/` | Repo-level helpers: `github-poll.sh`, `github-post-comment.sh`, `loop-daemon.sh`, `process-tasks.py` |
-| `seo/` | Briefs, prompts, outputs, scripts for SEO workflows |
-| `docs/` | Internal documentation (archive, drafts, all-time conversation index) |
-| `gtmetrix_results/` | Persisted GTMetrix audit JSON/CSV |
-| `.claude/agents/` | 14 SEO agent definitions |
-| `.claude/skills/` | 4 slash skills |
-| `.claude/hooks/` | 3 active hooks |
-| `.claude/optional/` | Staged optional tools (most now active — see Trigger map) |
-| `.github/workflows/` | GitHub Actions workflows |
-| `.devcontainer/` | Codespaces config + shared setup script |
-| `vault/` | Logseq PKM graph (markdown files, browser-edited via logseq.com) |
 
 ---
 
@@ -76,7 +44,12 @@ Then wait for confirmation. Do not activate anything without explicit approval.
 
 | Task type | Offer this tool |
 |-----------|----------------|
+| Complex multi-step task, batch job, deck build, audit pipeline, anything likely to involve 5+ steps | **Superpowers plugin** — enforces plan-before-execute, prevents runaway iteration |
+| GSC data, query analysis, CTR by position, ranking opportunities, non-brand performance | **GSC MCP** — pull query data directly, no CSV export needed |
+| Email drafting in context, calendar check, reading/writing Sheets, Slides updates | **Google Workspace MCP** — Gmail, Calendar, Sheets, Slides from Claude Code |
 | Sprint tracking, task status, what's in-flight, creating tickets | **Linear MCP** — project management connected to Claude Code |
+| End-of-week review, goal tracking, what did I work on, career reflection, session learning | **Obsidian PKM** — weekly reviews and goal alignment in a local vault |
+| Schema audit, GEO/AEO content scoring, backlink gap analysis, E-E-A-T scoring, AI Overview optimisation | **claude-seo skill suite** — 19 sub-skills, deeper than current aeo-optimizer agent |
 
 ### Already active (no offer needed)
 - Semrush MCP — keyword, competitor, backlink data
@@ -85,32 +58,6 @@ Then wait for confirmation. Do not activate anything without explicit approval.
 - GTMetrix MCP — performance audits
 - Context Mode MCP — token-efficient context indexing
 - Google Drive — file access
-- **Superpowers plugin** — enforces plan-before-execute on complex multi-step tasks
-- **GSC MCP** (`gsc`) — Search Console queries, CTR, position data
-- **Google Workspace MCP** (`google-workspace`) — Gmail, Calendar, Drive, Sheets, Slides
-- **claude-seo plugin** — schema, GEO/AEO, backlink, E-E-A-T sub-skills (19 total)
-- **Logseq vault** (filesystem MCP scoped to `vault/`) — daily notes, weekly reviews, goal tracking
-
----
-
-## Where this runs (cloud-only)
-
-This workspace is designed to run *without* a local Claude install. Three execution layers:
-
-| Layer | What runs | Auth | When |
-|-------|-----------|------|------|
-| **Codespaces VM** | Full Claude Code session, all MCPs live | `claude login` once per Codespace (Pro/Max) | Long interactive sessions, audits |
-| **Claude Code on the web** | Same MCPs, bootstrapped by SessionStart hook | Already logged in via claude.ai | Quick browser sessions |
-| **GitHub Actions (non-AI batch)** | `vault-autocommit.yml`, `gsc-weekly-pull.yml`, scrapers | Service-specific API keys only | Scheduled jobs |
-
-**No Anthropic API key.** Claude Code authenticates via Pro/Max OAuth, so anything that *invokes Claude in CI* won't run. The two existing AI-driven workflows (`seo-on-demand.yml`, `seo-weekly-report.yml`) already guard on `secrets.ANTHROPIC_API_KEY` being empty — they post a notice and exit green when no key is set.
-
-**OAuth credentials** for GSC and Google Workspace are stored as base64-encoded GitHub secrets (`GSC_CREDENTIALS_JSON`, `GOOGLE_WORKSPACE_CREDENTIALS_JSON`) and materialised at session start by `.devcontainer/setup.sh` into `/tmp/creds/`. Run the OAuth flow once on a personal device, then save the credentials JSON as a secret.
-
-**Bootstrap files:**
-- `.devcontainer/devcontainer.json` — Codespaces image + features
-- `.devcontainer/setup.sh` — installs MCPs, materialises credentials (reused by SessionStart hook)
-- `.claude/hooks/session_start.sh` — wrapper for Claude Code on the web
 
 ---
 
@@ -127,27 +74,6 @@ Imperative mood. `Add user authentication module` not `stuff`. Sign with SSH. Ke
 git push -u origin <branch-name>
 ```
 Retry with exponential backoff (2s, 4s, 8s, 16s) on network errors. HTTP 403 = wrong branch, do not retry.
-
-### Pull Requests and Merging
-
-After pushing, use this rule to decide whether to create and merge a PR automatically:
-
-- **Create and merge automatically** — when the task is clearly scoped, completed exactly as asked, and the change is low-risk (docs, config, copy, refactors with no functional side-effects).
-- **Create PR and ask before merging** — when the change is experimental, architecturally significant, or there is any doubt about whether the output matches intent.
-- **Never create a PR** — only if Simon explicitly says not to.
-
-Use the GitHub MCP tools (`mcp__github__create_pull_request`, `mcp__github__merge_pull_request`) to create and merge. Default merge method: squash.
-
-### Fetching / Pulling
-
-Prefer fetching specific branches:
-
-```bash
-git fetch origin <branch-name>
-git pull origin <branch-name>
-```
-
-Apply the same exponential backoff retry strategy on network failures.
 
 ---
 
@@ -181,10 +107,6 @@ Apply the same exponential backoff retry strategy on network failures.
 - `block_dangerous.py` — PreToolUse: blocks dangerous patterns before execution
 - `log_writes.py` — PostToolUse: logs every file write to `.claude/write_log.txt`
 - `session_log.py` — Stop: logs session end to `.claude/session_log.txt`
-
-**Other config files in `.claude/`:**
-- `mcp-actions.json` — declarative MCP action shortcuts referenced by tooling
-- `settings.local.json.example` — template for activating optional MCP servers (GSC, Google Workspace, Linear). Copy to `settings.local.json` and fill in credentials when activating an optional tool.
 
 ---
 
@@ -259,12 +181,6 @@ Always read `00-tov-language-reference.md` before any content task.
 ### Process updates
 When Simon changes a rule, update the relevant process file immediately. Add changelog note at top (version + date + what changed). If a request conflicts with a process rule, flag it and ask: one-off exception or permanent change?
 
-### `seo/` layout
-- `seo/briefs/` — production briefs (e.g. `PLP-Batch-Production-Brief-2026-03-19.md`)
-- `seo/prompts/` — reusable prompt templates: `competitor-audit.md`, `keyword-research.md`
-- `seo/scripts/` — Python utilities: `fix-clone-openers.py`, `fix-critical-rows.py`, `generate-md-files.py`, `merge-plp-outputs.py`
-- `seo/outputs/` — generated content (PLP intros, metadata batches, FAQ copy)
-
 ---
 
 ## Slash Skills
@@ -296,8 +212,6 @@ For local use on Windows/PowerShell or macOS. Not run in GitHub Actions.
 
 Run from repo root: `python tools/tgg_plp_auditor.py`
 
-A `tools/run.bat` Windows runner is included for double-click invocation on Windows.
-
 **Note on paths:** Some scripts have hardcoded Windows paths. Update the path variables at the top for your machine.
 
 ---
@@ -316,18 +230,16 @@ A `tools/run.bat` Windows runner is included for double-click invocation on Wind
 
 **Note:** Claude Pro subscription does NOT include API access. GitHub Actions requires a separate key from console.anthropic.com.
 
-| Workflow | Trigger | Anthropic API needed |
+| Workflow | Trigger | API key needed |
 |----------|---------|---------------|
-| `seo-weekly-report.yml` | Manual only (cron disabled) | Yes — guards on missing key, exits green |
-| `seo-on-demand.yml` | @claude in issues/PRs | Yes — guards on missing key, exits green |
+| `seo-weekly-report.yml` | Manual only (cron disabled) | Yes |
+| `seo-on-demand.yml` | @claude in issues/PRs | Yes |
 | `shopping-scraper.yml` | Manual only | Yes |
-| `gtmetrix-audit.yml` | Manual only | No |
+| `gtmetrix-audit.yml` | Manual only | Yes |
 | `issue-receiver.yml` | Issue events | No |
 | `plp-merge.yml` | Push to branch | No |
-| `vault-autocommit.yml` | Daily 13:15 UTC + manual | No |
-| `gsc-weekly-pull.yml` | Mondays 07:00 UTC + manual | No (needs `GSC_CREDENTIALS_JSON`) |
 
-Required secrets: `SEMRUSH_API_KEY`, `FIRECRAWL_API_KEY`, `GSC_CREDENTIALS_JSON`, `GOOGLE_WORKSPACE_CREDENTIALS_JSON`. `ANTHROPIC_API_KEY` is optional — the AI-driven workflows skip cleanly when it's absent.
+Required secrets: `ANTHROPIC_API_KEY`, `SEMRUSH_API_KEY`, `FIRECRAWL_API_KEY`.
 
 ---
 
@@ -338,3 +250,20 @@ Required secrets: `SEMRUSH_API_KEY`, `FIRECRAWL_API_KEY`, `GSC_CREDENTIALS_JSON`
 ---
 
 *Update this file when project structure, active tools, or conventions change.*
+
+
+---
+
+## Plan-Before-Execute (Superpowers equivalent — no CLI required)
+
+Claude Code CLI and the Superpowers plugin are not available on this machine (no Node/npm). This rule replicates the same discipline natively.
+
+**For any task with 3 or more steps:**
+1. Write a numbered plan with checkboxes to `seo/outputs/plan-YYYY-MM-DD-[task].md` before starting
+2. State the plan in chat and wait for confirmation
+3. Check off each step as completed — do not skip ahead
+4. Do not begin execution until the plan is confirmed
+
+**For batch jobs (10+ outputs):** include a checkpoint after every 10 items. Stop, validate, report pass/fail, wait before continuing.
+
+**Override:** Simon can say "skip the plan, just do it" to bypass for simple tasks.

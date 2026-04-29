@@ -19,8 +19,7 @@ Scans recent conversations, scores significance, updates the master index, and f
 
 | Purpose | File name in Drive |
 |---|---|
-| All-time master index | `TGG SEO — Claude Session Index All Time` |
-| Monthly index (current month) | `TGG SEO — Claude Session Index [Month YYYY]` |
+| Master index (current month) | `TGG SEO — Claude Session Index [Month YYYY]` |
 | Abandoned projects todo | `TGG SEO — Abandoned Projects Todo` |
 | Last run timestamp | `TGG SEO — Indexer Last Run` |
 
@@ -153,5 +152,3 @@ Index file updated: TGG SEO — Claude Session Index [Month YYYY]
 - Significance scoring is pass/fail per criterion — no partial points.
 - When in doubt on classification, default to Active rather than Completed.
 - Month rollover happens automatically when the current month's index file does not exist yet. Always carry forward all Active projects — never drop them.
-- **Project conversations are invisible to `recent_chats`.** Conversations inside Claude Projects (EOFY, Monthly SEO Update, Blog inventory, testing pdpd, Compass OS, etc.) do not appear in `recent_chats` results. If Simon uploads a `skills_reference.zip` alongside a run, scan the `example_conversations.md` files in each skill folder for UUIDs and titles not already in the index and add them. This is the only way to capture Project-based work.
-- The all-time master index is named `TGG SEO — Claude Session Index All Time` in Drive. Monthly indexes are named `TGG SEO — Claude Session Index [Month YYYY]`. The all-time index is seeded manually; monthly indexes are auto-maintained by this skill.
