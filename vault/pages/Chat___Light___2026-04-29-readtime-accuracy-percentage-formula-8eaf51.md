@@ -1,18 +1,18 @@
 ---
 title: Readtime accuracy percentage formula
 date: 2026-04-29
-project: EOFY
+project: Readtime Accuracy Formula
 status: completed
 score: 3/5
 uuid: 8eaf51ec-1e90-4d13-bc0f-03dc0e4e4028
 ---
 
-#chat/light #project/eofy #status/completed #topic/blog #topic/eofy
+#chat/light #project/readtime-accuracy-formula #status/completed #topic/blog #topic/eofy
 
 # Readtime accuracy percentage formula
 
 - **Date:** [[2026-04-29]]
-- **Project:** [[Projects/EOFY]]
+- **Project:** [[Projects/Readtime Accuracy Formula]]
 - **Status:** #status/completed (score 3/5: named-tgg, 5+turns, project-keyword)
 - **Messages:** 16
 - **Chat URL:** https://claude.ai/chat/8eaf51ec-1e90-4d13-bc0f-03dc0e4e4028

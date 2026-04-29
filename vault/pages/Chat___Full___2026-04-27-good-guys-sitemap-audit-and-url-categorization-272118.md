@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-27-good-guys-sitemap-audit-and-url-categorization-272
 uuid: 2721186d-f0f3-4dca-a6c8-176a1e08e370
 ---
 
-#chat/full #project/main #status/tactical
+#chat/full #project/closed-tactical-tasks #status/tactical
 
 # Good Guys sitemap audit and URL categorization — Full Transcript
 

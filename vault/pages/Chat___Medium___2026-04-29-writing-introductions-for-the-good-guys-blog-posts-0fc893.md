@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-29-writing-introductions-for-the-good-guys-blog-posts
 uuid: 0fc89328-5ad2-4592-8ee0-0c2b6c437901
 ---
 
-#chat/medium #project/main #status/completed
+#chat/medium #project/blog-intros-new-pages-april-29-batch #status/completed
 
 # Writing introductions for The Good Guys blog posts — Key User Messages
 

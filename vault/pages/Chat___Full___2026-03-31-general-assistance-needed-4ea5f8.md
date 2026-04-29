@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-31-general-assistance-needed-4ea5f8
 uuid: 4ea5f890-5bdd-460c-924e-cc58720b00aa
 ---
 
-#chat/full #project/main #status/abandoned
+#chat/full #project/youtube-transcript-downstream-work #status/abandoned
 
 # General assistance needed — Full Transcript
 

@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-28-semrush-mcp-access-ffe47d
 uuid: ffe47d9f-52c9-4bab-8fe3-bce660c24063
 ---
 
-#chat/full #project/main #status/tactical
+#chat/full #project/closed-tactical-tasks #status/tactical
 
 # Semrush MCP access — Full Transcript
 

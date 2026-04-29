@@ -1,18 +1,18 @@
 ---
 title: Dynamic schema mapping for lifecycle states
 date: 2026-04-24
-project: main
+project: Delivery Schema — 9x5 Purchase State Matrix
 status: active
 score: 5/5
 uuid: c6151f6e-501e-45a9-8586-87da6d825d77
 ---
 
-#chat/light #project/main #status/active #topic/feed #topic/jira #topic/schema #topic/shopify
+#chat/light #project/delivery-schema-9x5-purchase-state-matri #status/active #topic/feed #topic/jira #topic/schema #topic/shopify
 
 # Dynamic schema mapping for lifecycle states
 
 - **Date:** [[2026-04-24]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Delivery Schema — 9x5 Purchase State Matrix]]
 - **Status:** #status/active (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 9
 - **Chat URL:** https://claude.ai/chat/c6151f6e-501e-45a9-8586-87da6d825d77

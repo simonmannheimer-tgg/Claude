@@ -1,18 +1,18 @@
 ---
 title: 2026 TV pages H1 naming strategy
 date: 2026-03-18
-project: main
+project: LG, Samsung, Hisense, TCL Latest TVs Copy
 status: completed
 score: 5/5
 uuid: f929c4cf-849a-4e00-b266-7e243f4999a2
 ---
 
-#chat/light #project/main #status/completed #topic/404 #topic/bfcm #topic/blog #topic/copy #topic/inlink #topic/keyword #topic/meta #topic/plp #topic/redirect #topic/shopify
+#chat/light #project/lg-samsung-hisense-tcl-latest-tvs-copy #status/completed #topic/404 #topic/bfcm #topic/blog #topic/copy #topic/inlink #topic/keyword #topic/meta #topic/plp #topic/redirect #topic/shopify
 
 # 2026 TV pages H1 naming strategy
 
 - **Date:** [[2026-03-18]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/LG, Samsung, Hisense, TCL Latest TVs Copy]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 46
 - **Chat URL:** https://claude.ai/chat/f929c4cf-849a-4e00-b266-7e243f4999a2

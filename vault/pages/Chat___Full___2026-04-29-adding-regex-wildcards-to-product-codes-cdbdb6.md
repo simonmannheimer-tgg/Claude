@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-29-adding-regex-wildcards-to-product-codes-cdbdb6
 uuid: cdbdb6ee-88b3-437a-b69b-9d6e7ea048b4
 ---
 
-#chat/full #project/main #status/tactical
+#chat/full #project/closed-tactical-tasks #status/tactical
 
 # Adding regex wildcards to product codes — Full Transcript
 

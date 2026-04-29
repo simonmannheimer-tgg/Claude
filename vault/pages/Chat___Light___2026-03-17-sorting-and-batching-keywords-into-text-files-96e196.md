@@ -1,18 +1,18 @@
 ---
 title: Sorting and batching keywords into text files
 date: 2026-03-17
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 1/5
 uuid: 96e19605-c63b-48fd-bef9-73575faedbbf
 ---
 
-#chat/light #project/main #status/tactical #topic/keyword
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/keyword
 
 # Sorting and batching keywords into text files
 
 - **Date:** [[2026-03-17]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 1/5: deliverable)
 - **Messages:** 2
 - **Chat URL:** https://claude.ai/chat/96e19605-c63b-48fd-bef9-73575faedbbf

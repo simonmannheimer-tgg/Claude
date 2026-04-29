@@ -1,18 +1,18 @@
 ---
 title: Converting regex pattern to comma-separated list
 date: 2026-04-20
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 4/5
 uuid: 2559c58a-f7c7-4f7b-8321-3425064db114
 ---
 
-#chat/light #project/main #status/tactical #topic/copy #topic/feed #topic/gsc #topic/plp #topic/regex #topic/semrush #skill/tgg-seo-specialist
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/copy #topic/feed #topic/gsc #topic/plp #topic/regex #topic/semrush #skill/tgg-seo-specialist
 
 # Converting regex pattern to comma-separated list
 
 - **Date:** [[2026-04-20]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 4/5: deliverable, named-tgg, project-keyword, lasting-effect)
 - **Messages:** 2
 - **Chat URL:** https://claude.ai/chat/2559c58a-f7c7-4f7b-8321-3425064db114

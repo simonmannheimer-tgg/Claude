@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-29-format-product-names-by-removing-slashes-e4e94c
 uuid: e4e94cef-d369-466a-9004-a0b5e35775a2
 ---
 
-#chat/medium #project/main #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # Format product names by removing slashes — Key User Messages
 

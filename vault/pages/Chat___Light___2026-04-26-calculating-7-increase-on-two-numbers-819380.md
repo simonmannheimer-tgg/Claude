@@ -1,18 +1,18 @@
 ---
 title: Calculating 7% increase on two numbers
 date: 2026-04-26
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 0/5
 uuid: 8193806c-2a50-4331-9c7d-f1103d6b555d
 ---
 
-#chat/light #project/main #status/tactical
+#chat/light #project/closed-tactical-tasks #status/tactical
 
 # Calculating 7% increase on two numbers
 
 - **Date:** [[2026-04-26]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 0/5: n/a)
 - **Messages:** 2
 - **Chat URL:** https://claude.ai/chat/8193806c-2a50-4331-9c7d-f1103d6b555d

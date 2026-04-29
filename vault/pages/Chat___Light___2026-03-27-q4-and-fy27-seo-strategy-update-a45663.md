@@ -1,18 +1,18 @@
 ---
 title: Q4 and FY27 SEO strategy update
 date: 2026-03-27
-project: main
+project: February 2026 SEO Deck \+ Executive Email
 status: completed
 score: 4/5
 uuid: a456636c-aed8-41b0-8486-d11d91b6d386
 ---
 
-#chat/light #project/main #status/completed #topic/aeo #topic/bfcm #topic/blog #topic/copy #topic/feed #topic/gsc #topic/keyword #topic/pdp #topic/plp #topic/profound #topic/youtube
+#chat/light #project/february-2026-seo-deck-executive-email #status/completed #topic/aeo #topic/bfcm #topic/blog #topic/copy #topic/feed #topic/gsc #topic/keyword #topic/pdp #topic/plp #topic/profound #topic/youtube
 
 # Q4 and FY27 SEO strategy update
 
 - **Date:** [[2026-03-27]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/February 2026 SEO Deck \+ Executive Email]]
 - **Status:** #status/completed (score 4/5: deliverable, named-tgg, 5+turns, project-keyword)
 - **Messages:** 50
 - **Chat URL:** https://claude.ai/chat/a456636c-aed8-41b0-8486-d11d91b6d386

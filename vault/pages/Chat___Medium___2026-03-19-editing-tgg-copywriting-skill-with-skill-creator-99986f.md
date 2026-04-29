@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-19-editing-tgg-copywriting-skill-with-skill-creator-9
 uuid: 99986fbb-2079-49c5-ae7b-17847d965610
 ---
 
-#chat/medium #project/main #status/completed
+#chat/medium #project/skills-built-full-set #status/completed
 
 # Editing tgg-copywriting skill with skill-creator — Key User Messages
 

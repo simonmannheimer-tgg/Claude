@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-27-q4-and-fy27-seo-strategy-update-a45663
 uuid: a456636c-aed8-41b0-8486-d11d91b6d386
 ---
 
-#chat/medium #project/main #status/completed
+#chat/medium #project/february-2026-seo-deck-executive-email #status/completed
 
 # Q4 and FY27 SEO strategy update — Key User Messages
 

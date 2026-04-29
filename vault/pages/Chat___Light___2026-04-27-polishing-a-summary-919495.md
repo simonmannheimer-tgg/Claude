@@ -1,18 +1,18 @@
 ---
 title: Polishing a summary
 date: 2026-04-27
-project: EOFY
+project: Polishing a Summary (Meeting Notes)
 status: completed
 score: 5/5
 uuid: 9194957f-af5b-4c43-9b4c-5ad7855bc309
 ---
 
-#chat/light #project/eofy #status/completed #topic/eofy #topic/plp #skill/tgg-humanizer
+#chat/light #project/polishing-a-summary-meeting-notes #status/completed #topic/eofy #topic/plp #skill/tgg-humanizer
 
 # Polishing a summary
 
 - **Date:** [[2026-04-27]]
-- **Project:** [[Projects/EOFY]]
+- **Project:** [[Projects/Polishing a Summary (Meeting Notes)]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 6
 - **Chat URL:** https://claude.ai/chat/9194957f-af5b-4c43-9b4c-5ad7855bc309

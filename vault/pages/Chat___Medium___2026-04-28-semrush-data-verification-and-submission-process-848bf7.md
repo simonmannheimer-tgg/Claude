@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-28-semrush-data-verification-and-submission-process-8
 uuid: 848bf76a-f0ce-4246-9df6-4ad237670f8d
 ---
 
-#chat/medium #project/semrush-migration #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # Semrush data verification and submission process — Key User Messages
 

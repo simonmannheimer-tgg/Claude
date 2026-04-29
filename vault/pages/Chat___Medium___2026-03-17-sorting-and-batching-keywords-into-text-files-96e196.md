@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-17-sorting-and-batching-keywords-into-text-files-96e1
 uuid: 96e19605-c63b-48fd-bef9-73575faedbbf
 ---
 
-#chat/medium #project/main #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # Sorting and batching keywords into text files — Key User Messages
 

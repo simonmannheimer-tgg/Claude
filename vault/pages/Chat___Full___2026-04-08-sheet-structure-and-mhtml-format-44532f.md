@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-08-sheet-structure-and-mhtml-format-44532f
 uuid: 44532fa9-eb75-4acb-86fd-f4ee5d2576c7
 ---
 
-#chat/full #project/main #status/completed
+#chat/full #project/product-meta-title-colour-standardisatio #status/completed
 
 # Sheet structure and MHTML format — Full Transcript
 

@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-28-exporting-any-contentful-page-type-c8f228
 uuid: c8f22818-3654-47c3-a7bc-9c1c8b2be25c
 ---
 
-#chat/medium #project/main #status/active
+#chat/medium #project/contentful-graphql-universal-export #status/active
 
 # Exporting any Contentful page type — Key User Messages
 

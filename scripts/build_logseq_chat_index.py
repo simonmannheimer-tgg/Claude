@@ -11,8 +11,9 @@ Defaults to /tmp/chat-export and ./vault.
 """
 import json
 import re
-import sys
 import shutil
+import subprocess
+import sys
 from pathlib import Path
 from datetime import datetime, timezone
 from collections import defaultdict
@@ -163,21 +164,28 @@ def parse_index_mappings(text):
             if proj:
                 proj = re.sub(r'\s*\((?:claude project[s]?)\)\s*$', '', proj, flags=re.I).strip()
                 proj = proj.split('/')[0].strip()
+            # Section title becomes the project name when no formal **Project:**
+            # field exists. Strip leading "N. " numbering.
+            virtual_proj = re.sub(r'^\d+\.\s+', '', section_head).strip()
+            virtual_proj = virtual_proj[:60].rstrip(' —-:')
+
+            assigned_proj = (proj or virtual_proj or 'main').strip()
+
             for m in chat_re.finditer(sec):
                 uuid = m.group(1)
                 if uuid not in out:
                     out[uuid] = {
-                        'project': proj,
+                        'project': assigned_proj,
                         'section': section_head,
                         'status': block_status,
                     }
                 else:
-                    # If already mapped, prefer non-tactical status
                     existing = out[uuid]
                     if existing.get('status') is None and block_status:
                         existing['status'] = block_status
-                    if not existing.get('project') and proj:
-                        existing['project'] = proj
+                    # Prefer the more specific (longer/non-main) project name
+                    if (not existing.get('project') or existing['project'] == 'main') and assigned_proj != 'main':
+                        existing['project'] = assigned_proj
     return out
 
 
@@ -355,6 +363,188 @@ uuid: {meta['uuid']}
 """
 
 
+def _git(args):
+    """Run a git command from the repo root and return stdout (or '')."""
+    try:
+        r = subprocess.run(
+            ['git'] + args,
+            capture_output=True, text=True, check=False,
+            cwd=str(Path(__file__).resolve().parent.parent),
+        )
+        return r.stdout
+    except Exception:
+        return ''
+
+
+def index_claude_code_sessions(pages_dir):
+    """Scan git history for Claude Code sessions and write vault pages.
+
+    Each `claude.ai/code/session_<id>` URL in a commit body marks one Claude
+    Code session. We treat the owning `claude/*` branch as the project.
+    """
+    raw = _git([
+        'log', '--all', '--reverse',
+        '--pretty=format:%H%x01%cI%x01%an%x01%s%x01%b%x02',
+    ])
+    if not raw:
+        return {'sessions': 0, 'branches': 0}
+
+    session_re = re.compile(r'claude\.ai/code/session_([A-Za-z0-9]+)')
+    sessions = defaultdict(list)
+    for entry in raw.split('\x02'):
+        entry = entry.strip()
+        if not entry:
+            continue
+        parts = entry.split('\x01')
+        if len(parts) < 5:
+            continue
+        commit_hash, dt, author, subject, body = parts[:5]
+        m = session_re.search(body)
+        if not m:
+            continue
+        sid = m.group(1)
+        sessions[sid].append({
+            'hash': commit_hash,
+            'date': dt[:10],
+            'author': author,
+            'subject': subject,
+        })
+
+    if not sessions:
+        return {'sessions': 0, 'branches': 0}
+
+    branch_chats = defaultdict(list)
+    for sid, commits in sessions.items():
+        last_hash = commits[-1]['hash']
+        branch_out = _git(['branch', '-a', '--contains', last_hash])
+        branch = None
+        for line in branch_out.splitlines():
+            line = line.strip().lstrip('* ').strip()
+            if 'claude/' in line and 'HEAD' not in line:
+                if line.startswith('remotes/origin/'):
+                    line = line[len('remotes/origin/'):]
+                if line.startswith('claude/'):
+                    branch = line
+                    break
+        if not branch:
+            branch = 'claude-code-misc'
+
+        files_raw = _git([
+            'show', '--name-only', '--pretty=format:',
+        ] + [c['hash'] for c in commits])
+        files = sorted({f for f in files_raw.splitlines() if f.strip()})
+
+        first_subject = commits[0]['subject']
+        first_date = commits[0]['date']
+        last_date = commits[-1]['date']
+        slug = f'{first_date}-code-{slugify(branch, 40)}-{sid[:6]}'
+
+        body_md = [
+            '---',
+            f'title: Chat/Code/{slug}',
+            f'session-id: {sid}',
+            f'branch: {branch}',
+            f'first-commit: {first_date}',
+            f'last-commit: {last_date}',
+            f'commits: {len(commits)}',
+            f'files-touched: {len(files)}',
+            'type: claude-code-session',
+            '---',
+            '',
+            f'#project/{slugify(branch, 40)} #status/completed '
+            f'#topic/claude-code #skill/development',
+            '',
+            f'# Claude Code session — {first_subject[:80]}',
+            '',
+            f'**Session:** [{sid}](https://claude.ai/code/session_{sid})',
+            f'**Branch:** `{branch}`',
+            f'**Window:** {first_date} → {last_date}',
+            f'**Commits:** {len(commits)}',
+            f'**Files touched:** {len(files)}',
+            '',
+            '## Commits',
+            '',
+        ]
+        for c in commits:
+            body_md.append(f'- `{c["hash"][:8]}` {c["date"]} — {c["subject"]}')
+        body_md.append('')
+        body_md.append('## Files touched')
+        body_md.append('')
+        for f in files[:200]:
+            body_md.append(f'- `{f}`')
+        if len(files) > 200:
+            body_md.append(f'- … +{len(files)-200} more')
+
+        (pages_dir / f'Chat___Code___{slug}.md').write_text('\n'.join(body_md))
+
+        branch_chats[branch].append({
+            'slug': slug,
+            'date': first_date,
+            'subject': first_subject,
+            'commits': len(commits),
+            'sid': sid,
+        })
+
+    # Per-branch MOC + master Claude Code MOC
+    for branch, items in branch_chats.items():
+        items_sorted = sorted(items, key=lambda c: c['date'], reverse=True)
+        rows = [
+            f'- [[Chat/Code/{c["slug"]}]] — {c["date"]} — '
+            f'{c["subject"][:80]} ({c["commits"]} commits)'
+            for c in items_sorted
+        ]
+        slug = slugify(branch, 40)
+        (pages_dir / f'Projects___{slug}.md').write_text(f"""---
+title: Projects/{branch}
+type: claude-code-branch-moc
+session-count: {len(items)}
+---
+
+#project/{slug} #moc #claude-code
+
+# Projects/{branch}
+
+**Branch:** `{branch}`
+**Sessions:** {len(items)}
+
+## Sessions (newest first)
+
+{chr(10).join(rows)}
+""")
+
+    master_rows = []
+    for branch, items in sorted(branch_chats.items(), key=lambda kv: -len(kv[1])):
+        master_rows.append(
+            f'- [[Projects/{branch}]] — {len(items)} session(s)'
+        )
+    (pages_dir / 'Projects___Claude-Code.md').write_text(f"""---
+title: Projects/Claude-Code
+type: claude-code-master-moc
+branch-count: {len(branch_chats)}
+session-count: {sum(len(v) for v in branch_chats.values())}
+---
+
+#project/claude-code #moc
+
+# Projects/Claude-Code
+
+All Claude Code sessions that committed work to this repo, grouped by branch.
+Re-run `python3 scripts/build_logseq_chat_index.py` to refresh.
+
+**Total branches:** {len(branch_chats)}
+**Total sessions:** {sum(len(v) for v in branch_chats.values())}
+
+## Branches (most active first)
+
+{chr(10).join(master_rows)}
+""")
+
+    return {
+        'sessions': sum(len(v) for v in branch_chats.values()),
+        'branches': len(branch_chats),
+    }
+
+
 def main():
     print(f'Loading export from {EXPORT_DIR}...')
     with (EXPORT_DIR / 'conversations.json').open() as f:
@@ -375,6 +565,8 @@ def main():
         for p in PAGES_DIR.glob('Projects___*.md'):
             p.unlink()
     PAGES_DIR.mkdir(parents=True, exist_ok=True)
+
+    code_stats = index_claude_code_sessions(PAGES_DIR)
 
     project_chats = defaultdict(list)
     status_chats = defaultdict(list)
@@ -536,6 +728,8 @@ chat-count: {len(chats)}
     print(f'Wrote {len(project_chats)} project MOC pages')
     print(f'Wrote 1 master index')
     print(f'Skipped {skipped} empty conversations')
+    print(f'Indexed {code_stats["sessions"]} Claude Code sessions across '
+          f'{code_stats["branches"]} branches')
     print(f'\nStatus breakdown:')
     for status, chats in sorted(status_chats.items(), key=lambda kv: -len(kv[1])):
         print(f'  {status:12} {len(chats)}')

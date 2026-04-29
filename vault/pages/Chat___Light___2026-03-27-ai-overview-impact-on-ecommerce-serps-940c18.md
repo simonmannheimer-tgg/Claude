@@ -1,18 +1,18 @@
 ---
 title: AI overview impact on ecommerce SERPs
 date: 2026-03-27
-project: main
+project: February 2026 SEO Deck \+ Executive Email
 status: completed
 score: 5/5
 uuid: 940c186b-da5e-45bd-9659-45b0f2a427ea
 ---
 
-#chat/light #project/main #status/completed #topic/aeo #topic/blog #topic/crawl #topic/feed #topic/keyword #topic/pdp #topic/plp #topic/profound #topic/semrush #topic/youtube
+#chat/light #project/february-2026-seo-deck-executive-email #status/completed #topic/aeo #topic/blog #topic/crawl #topic/feed #topic/keyword #topic/pdp #topic/plp #topic/profound #topic/semrush #topic/youtube
 
 # AI overview impact on ecommerce SERPs
 
 - **Date:** [[2026-03-27]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/February 2026 SEO Deck \+ Executive Email]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 100
 - **Chat URL:** https://claude.ai/chat/940c186b-da5e-45bd-9659-45b0f2a427ea

@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-16-understanding-the-new-deck-and-slides-17-onwards-a
 uuid: af7ddfd8-979a-4b2b-93af-bd98db351f45
 ---
 
-#chat/medium #project/main #status/completed
+#chat/medium #project/bfcm-2025-post-mortem-deck #status/completed
 
 # Understanding the new deck and slides 17 onwards — Key User Messages
 

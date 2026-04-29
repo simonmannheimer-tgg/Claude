@@ -1,18 +1,18 @@
 ---
 title: Consolidated tech roadmap with SEO issues tracker
 date: 2026-04-22
-project: EOFY
+project: Tech Roadmap (Monday.com \+ OD Items)
 status: completed
 score: 5/5
 uuid: c6c492c4-fc3b-4fff-a646-aeb73ac60de2
 ---
 
-#chat/light #project/eofy #status/completed #topic/404 #topic/aeo #topic/blog #topic/crawl #topic/deals #topic/eofy #topic/feed #topic/inlink #topic/jira #topic/keyword #topic/monday #topic/pdp #topic/plp #topic/profound #topic/redirect #topic/schema #topic/semrush #topic/shopify #topic/youtube
+#chat/light #project/tech-roadmap-mondaycom-od-items #status/completed #topic/404 #topic/aeo #topic/blog #topic/crawl #topic/deals #topic/eofy #topic/feed #topic/inlink #topic/jira #topic/keyword #topic/monday #topic/pdp #topic/plp #topic/profound #topic/redirect #topic/schema #topic/semrush #topic/shopify #topic/youtube
 
 # Consolidated tech roadmap with SEO issues tracker
 
 - **Date:** [[2026-04-22]]
-- **Project:** [[Projects/EOFY]]
+- **Project:** [[Projects/Tech Roadmap (Monday.com \+ OD Items)]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 10
 - **Chat URL:** https://claude.ai/chat/c6c492c4-fc3b-4fff-a646-aeb73ac60de2

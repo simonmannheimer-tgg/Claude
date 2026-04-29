@@ -1,29 +1,22 @@
 ---
 title: Projects/EOFY
 type: project-moc
-chat-count: 37
+chat-count: 29
 ---
 
 #project/eofy #moc
 
 # Projects/EOFY
 
-**Total chats:** 37
-**Status breakdown:** active=7, completed=27, abandoned=2, tactical=1
+**Total chats:** 29
+**Status breakdown:** active=6, completed=21, abandoned=2, tactical=0
 
 ## Chats (newest first)
 
 - [[Chat/Light/2026-04-29-i-need-you-to-take-all-our-con-31e082]] — 2026-04-29 — #status/active (42 msgs)
-- [[Chat/Light/2026-04-29-readtime-accuracy-percentage-formula-8eaf51]] — 2026-04-29 — #status/completed (16 msgs)
-- [[Chat/Light/2026-04-29-technical-seo-reset-assessment-155cce]] — 2026-04-29 — #status/completed (4 msgs)
 - [[Chat/Light/2026-04-28-converting-xpaths-to-contains-version-04a6aa]] — 2026-04-28 — #status/active (6 msgs)
-- [[Chat/Light/2026-04-28-verify-product-category-links-on-good-guys-deals-page-219059]] — 2026-04-28 — #status/completed (6 msgs)
-- [[Chat/Light/2026-04-28-blog-linking-map-for-eofy-deals-pages-735105]] — 2026-04-28 — #status/tactical (4 msgs)
 - [[Chat/Light/2026-04-27-eofy-blog-content-table-for-mondaycom-ad41ad]] — 2026-04-27 — #status/active (12 msgs)
-- [[Chat/Light/2026-04-27-semantic-review-and-link-validation-f9ad18]] — 2026-04-27 — #status/active (36 msgs)
-- [[Chat/Light/2026-04-27-polishing-a-summary-919495]] — 2026-04-27 — #status/completed (6 msgs)
 - [[Chat/Light/2026-04-22-eofy-seo-strategy-for-organic-revenue-growth-48499c]] — 2026-04-22 — #status/completed (2 msgs)
-- [[Chat/Light/2026-04-22-consolidated-tech-roadmap-with-seo-issues-tracker-c6c492]] — 2026-04-22 — #status/completed (10 msgs)
 - [[Chat/Light/2026-04-22-extracting-june-2025-data-4eb1b2]] — 2026-04-22 — #status/completed (10 msgs)
 - [[Chat/Light/2026-04-22-semrush-average-rank-for-the-good-guys-deal-pages-605a4a]] — 2026-04-22 — #status/completed (6 msgs)
 - [[Chat/Light/2026-04-22-sales-prompts-and-performance-data-analysis-7c0502]] — 2026-04-22 — #status/completed (8 msgs)
@@ -35,7 +28,6 @@ chat-count: 37
 - [[Chat/Light/2026-04-17-task-completion-8a0eb2]] — 2026-04-17 — #status/active (20 msgs)
 - [[Chat/Light/2026-04-17-task-completion-guidance-669606]] — 2026-04-17 — #status/active (65 msgs)
 - [[Chat/Light/2026-04-15-balancing-eofy-and-non-eofy-terms-in-data-d3c9e0]] — 2026-04-15 — #status/completed (2 msgs)
-- [[Chat/Light/2026-04-15-page-types-summary-visualization-and-analysis-a00d4d]] — 2026-04-15 — #status/completed (6 msgs)
 - [[Chat/Light/2026-04-15-missing-product-categories-in-search-volume-trend-a628c8]] — 2026-04-15 — #status/completed (12 msgs)
 - [[Chat/Light/2026-04-15-update-sale-skus-and-summary-tables-baad36]] — 2026-04-15 — #status/completed (4 msgs)
 - [[Chat/Light/2026-04-15-refining-keywords-and-ranking-data-aea7d1]] — 2026-04-15 — #status/completed (16 msgs)

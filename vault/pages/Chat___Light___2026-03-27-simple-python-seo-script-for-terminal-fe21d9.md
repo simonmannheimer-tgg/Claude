@@ -1,18 +1,18 @@
 ---
 title: Simple Python SEO script for terminal
 date: 2026-03-27
-project: main
+project: PLP Copy Auditor Script
 status: completed
 score: 4/5
 uuid: fe21d9bb-451e-438e-a2ff-ef8d48139457
 ---
 
-#chat/light #project/main #status/completed #topic/contentful #topic/crawl #topic/keyword #topic/plp
+#chat/light #project/plp-copy-auditor-script #status/completed #topic/contentful #topic/crawl #topic/keyword #topic/plp
 
 # Simple Python SEO script for terminal
 
 - **Date:** [[2026-03-27]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/PLP Copy Auditor Script]]
 - **Status:** #status/completed (score 4/5: deliverable, named-tgg, 5+turns, project-keyword)
 - **Messages:** 20
 - **Chat URL:** https://claude.ai/chat/fe21d9bb-451e-438e-a2ff-ef8d48139457

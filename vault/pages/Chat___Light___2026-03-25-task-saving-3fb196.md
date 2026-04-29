@@ -1,18 +1,18 @@
 ---
 title: Task saving
 date: 2026-03-25
-project: main
+project: Click Frenzy FAQ (Sunsetting Page)
 status: completed
 score: 5/5
 uuid: 3fb196bd-39e2-4af3-9919-3ae12f7881d5
 ---
 
-#chat/light #project/main #status/completed #topic/bfcm #topic/copy #topic/eofy #topic/inlink #topic/redirect #skill/tgg-copywriting
+#chat/light #project/click-frenzy-faq-sunsetting-page #status/completed #topic/bfcm #topic/copy #topic/eofy #topic/inlink #topic/redirect #skill/tgg-copywriting
 
 # Task saving
 
 - **Date:** [[2026-03-25]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Click Frenzy FAQ (Sunsetting Page)]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 16
 - **Chat URL:** https://claude.ai/chat/3fb196bd-39e2-4af3-9919-3ae12f7881d5

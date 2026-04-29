@@ -1,18 +1,18 @@
 ---
 title: visit these sitemaps, get me a...
 date: 2026-03-19
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 2/5
 uuid: 126ede04-9c0c-47bf-b726-0b41f43fcac0
 ---
 
-#chat/light #project/main #status/tactical #topic/regex #topic/sitemap
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/regex #topic/sitemap
 
 # visit these sitemaps, get me a...
 
 - **Date:** [[2026-03-19]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 2/5: deliverable, project-keyword)
 - **Messages:** 2
 - **Chat URL:** https://claude.ai/chat/126ede04-9c0c-47bf-b726-0b41f43fcac0

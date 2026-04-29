@@ -1,18 +1,18 @@
 ---
 title: Meta and copy for TCL latest TVs page
 date: 2026-04-27
-project: main
+project: LG, Samsung, Hisense, TCL Latest TVs Copy
 status: completed
 score: 5/5
 uuid: 9b97faf8-1adc-4fb6-8dd0-0c287a5ecca2
 ---
 
-#chat/light #project/main #status/completed #topic/aeo #topic/copy #topic/keyword #topic/meta #topic/plp #skill/tgg-copywriting
+#chat/light #project/lg-samsung-hisense-tcl-latest-tvs-copy #status/completed #topic/aeo #topic/copy #topic/keyword #topic/meta #topic/plp #skill/tgg-copywriting
 
 # Meta and copy for TCL latest TVs page
 
 - **Date:** [[2026-04-27]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/LG, Samsung, Hisense, TCL Latest TVs Copy]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 22
 - **Chat URL:** https://claude.ai/chat/9b97faf8-1adc-4fb6-8dd0-0c287a5ecca2

@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-06-blog-intro-h2-heading-variation-28b1ed
 uuid: 28b1ed01-6608-4cbd-b358-3e0c015a39ca
 ---
 
-#chat/full #project/main #status/completed
+#chat/full #project/blog-intro-h2-heading-decision #status/completed
 
 # Blog intro h2 heading variation — Full Transcript
 

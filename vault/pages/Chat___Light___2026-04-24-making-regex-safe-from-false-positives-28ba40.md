@@ -1,18 +1,18 @@
 ---
 title: Making regex safe from false positives
 date: 2026-04-24
-project: main
+project: Colour Keyword GSC Analysis
 status: active
 score: 3/5
 uuid: 28ba404d-dce9-446d-aa65-a46d4f4f99b1
 ---
 
-#chat/light #project/main #status/active #topic/bfcm #topic/blog #topic/deals #topic/gsc #topic/keyword #topic/plp #topic/regex
+#chat/light #project/colour-keyword-gsc-analysis #status/active #topic/bfcm #topic/blog #topic/deals #topic/gsc #topic/keyword #topic/plp #topic/regex
 
 # Making regex safe from false positives
 
 - **Date:** [[2026-04-24]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Colour Keyword GSC Analysis]]
 - **Status:** #status/active (score 3/5: deliverable, 5+turns, project-keyword)
 - **Messages:** 8
 - **Chat URL:** https://claude.ai/chat/28ba404d-dce9-446d-aa65-a46d4f4f99b1

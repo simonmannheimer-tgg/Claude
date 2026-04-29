@@ -1,18 +1,18 @@
 ---
 title: XLOOKUP formula with URL concatenation
 date: 2026-04-29
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 2/5
 uuid: 7e2e3aeb-3c42-4946-89c1-b15145ed6d63
 ---
 
-#chat/light #project/main #status/tactical
+#chat/light #project/closed-tactical-tasks #status/tactical
 
 # XLOOKUP formula with URL concatenation
 
 - **Date:** [[2026-04-29]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 2/5: deliverable, 5+turns)
 - **Messages:** 10
 - **Chat URL:** https://claude.ai/chat/7e2e3aeb-3c42-4946-89c1-b15145ed6d63

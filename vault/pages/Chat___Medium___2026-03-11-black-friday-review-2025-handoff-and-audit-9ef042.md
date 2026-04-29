@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-11-black-friday-review-2025-handoff-and-audit-9ef042
 uuid: 9ef04228-e498-4511-892d-3f9064ab1410
 ---
 
-#chat/medium #project/main #status/completed
+#chat/medium #project/bfcm-2025-post-mortem-deck #status/completed
 
 # Black Friday review 2025 handoff and audit — Key User Messages
 

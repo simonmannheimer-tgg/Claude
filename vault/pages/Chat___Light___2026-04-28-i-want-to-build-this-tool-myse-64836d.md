@@ -1,18 +1,18 @@
 ---
 title: I want to build this tool myse...
 date: 2026-04-28
-project: main
+project: IntentGaps-style Tool Build
 status: active
 score: 5/5
 uuid: 64836d5b-4329-43d3-8687-2f322b6579d0
 ---
 
-#chat/light #project/main #status/active #topic/blog #topic/crawl #topic/keyword #skill/mhtml-reader
+#chat/light #project/intentgaps-style-tool-build #status/active #topic/blog #topic/crawl #topic/keyword #skill/mhtml-reader
 
 # I want to build this tool myse...
 
 - **Date:** [[2026-04-28]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/IntentGaps-style Tool Build]]
 - **Status:** #status/active (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 10
 - **Chat URL:** https://claude.ai/chat/64836d5b-4329-43d3-8687-2f322b6579d0

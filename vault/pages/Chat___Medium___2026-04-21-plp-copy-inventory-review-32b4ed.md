@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-21-plp-copy-inventory-review-32b4ed
 uuid: 32b4ed02-6508-4c20-9d1c-b858233587b4
 ---
 
-#chat/medium #project/main #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # PLP copy inventory review — Key User Messages
 

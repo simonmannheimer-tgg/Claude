@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-29-creating-a-blog-intro-summary-for-the-good-guys-b6
 uuid: b6d86861-755a-47c6-8cb2-00cfd097a198
 ---
 
-#chat/medium #project/main #status/completed
+#chat/medium #project/blog-intros-new-pages-april-29-batch #status/completed
 
 # Creating a blog intro summary for The Good Guys — Key User Messages
 

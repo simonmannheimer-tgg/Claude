@@ -1,18 +1,18 @@
 ---
 title: Regex to strip URL parameters and remove duplicates
 date: 2026-04-24
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 1/5
 uuid: cf7c2201-d4b9-436a-a520-42e0fa011873
 ---
 
-#chat/light #project/main #status/tactical #topic/regex
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/regex
 
 # Regex to strip URL parameters and remove duplicates
 
 - **Date:** [[2026-04-24]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 1/5: deliverable)
 - **Messages:** 4
 - **Chat URL:** https://claude.ai/chat/cf7c2201-d4b9-436a-a520-42e0fa011873

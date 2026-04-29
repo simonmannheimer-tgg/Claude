@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-07-fixing-comma-linebreaks-in-gmc-feed-28b9d8
 uuid: 28b9d837-95a4-48b8-9587-aeb766abd343
 ---
 
-#chat/full #project/main #status/completed
+#chat/full #project/gmc-feed-audit-delimiter-conflict #status/completed
 
 # Fixing comma linebreaks in GMC feed — Full Transcript
 

@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-19-visit-these-sitemaps-get-me-a-126ede
 uuid: 126ede04-9c0c-47bf-b726-0b41f43fcac0
 ---
 
-#chat/full #project/main #status/tactical
+#chat/full #project/closed-tactical-tasks #status/tactical
 
 # visit these sitemaps, get me a... — Full Transcript
 

@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-18-building-a-copywriting-skill-from-github-code-63f3
 uuid: 63f3c699-be20-4241-9b4e-ec7a94d34c97
 ---
 
-#chat/full #project/main #status/completed
+#chat/full #project/skills-built-full-set #status/completed
 
 # Building a copywriting skill from GitHub code — Full Transcript
 

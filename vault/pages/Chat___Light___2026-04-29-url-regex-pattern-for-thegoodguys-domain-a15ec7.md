@@ -1,18 +1,18 @@
 ---
 title: URL regex pattern for thegoodguys domain
 date: 2026-04-29
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 4/5
 uuid: a15ec777-109b-4e46-bc5d-ebe749f043a8
 ---
 
-#chat/light #project/main #status/tactical #topic/crawl #topic/ga4 #topic/gsc #topic/regex
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/crawl #topic/ga4 #topic/gsc #topic/regex
 
 # URL regex pattern for thegoodguys domain
 
 - **Date:** [[2026-04-29]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 4/5: deliverable, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 24
 - **Chat URL:** https://claude.ai/chat/a15ec777-109b-4e46-bc5d-ebe749f043a8

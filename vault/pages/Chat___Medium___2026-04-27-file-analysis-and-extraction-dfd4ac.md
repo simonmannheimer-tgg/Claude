@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-27-file-analysis-and-extraction-dfd4ac
 uuid: dfd4ac8d-4912-4859-88ba-0e8a1de55834
 ---
 
-#chat/medium #project/main #status/active
+#chat/medium #project/content-cluster-inlink-gap-analysis-comp #status/active
 
 # File analysis and extraction — Key User Messages
 

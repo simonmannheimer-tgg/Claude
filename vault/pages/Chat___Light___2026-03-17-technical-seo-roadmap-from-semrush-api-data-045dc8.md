@@ -1,18 +1,18 @@
 ---
 title: Technical SEO roadmap from Semrush API data
 date: 2026-03-17
-project: main
+project: Technical SEO Roadmap from Semrush
 status: completed
 score: 4/5
 uuid: 045dc8ba-d9de-432b-af35-06c8eddec622
 ---
 
-#chat/light #project/main #status/completed #topic/crawl #topic/inlink #topic/pdp #topic/plp #topic/redirect #topic/schema #topic/semrush #topic/sitemap
+#chat/light #project/technical-seo-roadmap-from-semrush #status/completed #topic/crawl #topic/inlink #topic/pdp #topic/plp #topic/redirect #topic/schema #topic/semrush #topic/sitemap
 
 # Technical SEO roadmap from Semrush API data
 
 - **Date:** [[2026-03-17]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Technical SEO Roadmap from Semrush]]
 - **Status:** #status/completed (score 4/5: deliverable, named-tgg, project-keyword, lasting-effect)
 - **Messages:** 2
 - **Chat URL:** https://claude.ai/chat/045dc8ba-d9de-432b-af35-06c8eddec622

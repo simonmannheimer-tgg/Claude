@@ -1,18 +1,18 @@
 ---
 title: Exporting any Contentful page type
 date: 2026-04-28
-project: main
+project: Contentful GraphQL Universal Export
 status: active
 score: 4/5
 uuid: c8f22818-3654-47c3-a7bc-9c1c8b2be25c
 ---
 
-#chat/light #project/main #status/active #topic/blog #topic/contentful #topic/schema #skill/mhtml-reader
+#chat/light #project/contentful-graphql-universal-export #status/active #topic/blog #topic/contentful #topic/schema #skill/mhtml-reader
 
 # Exporting any Contentful page type
 
 - **Date:** [[2026-04-28]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Contentful GraphQL Universal Export]]
 - **Status:** #status/active (score 4/5: deliverable, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 20
 - **Chat URL:** https://claude.ai/chat/c8f22818-3654-47c3-a7bc-9c1c8b2be25c

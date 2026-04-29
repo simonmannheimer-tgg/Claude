@@ -1,18 +1,18 @@
 ---
 title: Editing tgg-copywriting skill with skill-creator
 date: 2026-03-19
-project: main
+project: Skills Built (full set)
 status: completed
 score: 4/5
 uuid: 99986fbb-2079-49c5-ae7b-17847d965610
 ---
 
-#chat/light #project/main #status/completed #topic/copy #topic/plp #skill/tgg-copywriting
+#chat/light #project/skills-built-full-set #status/completed #topic/copy #topic/plp #skill/tgg-copywriting
 
 # Editing tgg-copywriting skill with skill-creator
 
 - **Date:** [[2026-03-19]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Skills Built (full set)]]
 - **Status:** #status/completed (score 4/5: deliverable, named-tgg, project-keyword, lasting-effect)
 - **Messages:** 2
 - **Chat URL:** https://claude.ai/chat/99986fbb-2079-49c5-ae7b-17847d965610

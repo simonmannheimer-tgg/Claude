@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-28-editorial-content-performance-and-prompt-analysis-
 uuid: 2cba6c0c-0634-4ed7-b01d-1fb0d528461d
 ---
 
-#chat/full #project/main #status/active
+#chat/full #project/profound-editorialprompt-citation-analys #status/active
 
 # Editorial content performance and prompt analysis — Full Transcript
 

@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-29-claude-agent-workflows-for-work-projects-ff0a86
 uuid: ff0a86b9-30b2-40fd-ad49-a7621d123886
 ---
 
-#chat/medium #project/main #status/active
+#chat/medium #project/claude-code-agent-workflows-research #status/active
 
 # Claude agent workflows for work projects — Key User Messages
 

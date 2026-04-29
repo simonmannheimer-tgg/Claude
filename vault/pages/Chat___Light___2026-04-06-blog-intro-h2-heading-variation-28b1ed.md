@@ -1,18 +1,18 @@
 ---
 title: Blog intro h2 heading variation
 date: 2026-04-06
-project: main
+project: Blog Intro H2 Heading Decision
 status: completed
 score: 3/5
 uuid: 28b1ed01-6608-4cbd-b358-3e0c015a39ca
 ---
 
-#chat/light #project/main #status/completed #topic/aeo #topic/blog #topic/screaming-frog #skill/tgg-content-strategist
+#chat/light #project/blog-intro-h2-heading-decision #status/completed #topic/aeo #topic/blog #topic/screaming-frog #skill/tgg-content-strategist
 
 # Blog intro h2 heading variation
 
 - **Date:** [[2026-04-06]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Blog Intro H2 Heading Decision]]
 - **Status:** #status/completed (score 3/5: named-tgg, project-keyword, lasting-effect)
 - **Messages:** 2
 - **Chat URL:** https://claude.ai/chat/28b1ed01-6608-4cbd-b358-3e0c015a39ca

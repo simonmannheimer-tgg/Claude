@@ -1,18 +1,18 @@
 ---
 title: Fixing comma linebreaks in GMC feed
 date: 2026-04-07
-project: main
+project: GMC Feed Audit — Delimiter Conflict
 status: completed
 score: 5/5
 uuid: 28b9d837-95a4-48b8-9587-aeb766abd343
 ---
 
-#chat/light #project/main #status/completed #topic/feed #topic/regex #topic/shopify
+#chat/light #project/gmc-feed-audit-delimiter-conflict #status/completed #topic/feed #topic/regex #topic/shopify
 
 # Fixing comma linebreaks in GMC feed
 
 - **Date:** [[2026-04-07]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/GMC Feed Audit — Delimiter Conflict]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 14
 - **Chat URL:** https://claude.ai/chat/28b9d837-95a4-48b8-9587-aeb766abd343

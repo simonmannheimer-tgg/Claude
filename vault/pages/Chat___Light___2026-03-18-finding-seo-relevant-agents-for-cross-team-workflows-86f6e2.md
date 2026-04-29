@@ -1,18 +1,18 @@
 ---
 title: Finding SEO-relevant agents for cross-team workflows
 date: 2026-03-18
-project: SEMRUSH MIGRATION
+project: Skills Built (full set)
 status: completed
 score: 5/5
 uuid: 86f6e284-5363-4889-9da7-934bf734987e
 ---
 
-#chat/light #project/semrush-migration #status/completed #topic/aeo #topic/agent #topic/bfcm #topic/copy #topic/ga4 #topic/gsc #topic/inlink #topic/keyword #topic/mcp #topic/meta #topic/plp #topic/schema #topic/semrush #topic/sitemap #skill/tgg-content-strategist #skill/tgg-marketing-analyst #skill/tgg-repo-manager #skill/tgg-seo-specialist #skill/tgg-template-generator
+#chat/light #project/skills-built-full-set #status/completed #topic/aeo #topic/agent #topic/bfcm #topic/copy #topic/ga4 #topic/gsc #topic/inlink #topic/keyword #topic/mcp #topic/meta #topic/plp #topic/schema #topic/semrush #topic/sitemap #skill/tgg-content-strategist #skill/tgg-marketing-analyst #skill/tgg-repo-manager #skill/tgg-seo-specialist #skill/tgg-template-generator
 
 # Finding SEO-relevant agents for cross-team workflows
 
 - **Date:** [[2026-03-18]]
-- **Project:** [[Projects/SEMRUSH MIGRATION]]
+- **Project:** [[Projects/Skills Built (full set)]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 28
 - **Chat URL:** https://claude.ai/chat/86f6e284-5363-4889-9da7-934bf734987e

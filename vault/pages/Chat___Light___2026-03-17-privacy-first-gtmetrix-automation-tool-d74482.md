@@ -1,18 +1,18 @@
 ---
 title: Privacy-first GTmetrix automation tool
 date: 2026-03-17
-project: main
+project: GTMetrix MCP Server (Scaffolded \+ Cloudflare Worker Live)
 status: completed
 score: 5/5
 uuid: d74482e9-5710-49df-a67a-3589e2a48bbb
 ---
 
-#chat/light #project/main #status/completed #topic/agent #topic/bfcm #topic/copy #topic/gsc #topic/mcp #topic/plp #topic/semrush #topic/sitemap
+#chat/light #project/gtmetrix-mcp-server-scaffolded-cloudflar #status/completed #topic/agent #topic/bfcm #topic/copy #topic/gsc #topic/mcp #topic/plp #topic/semrush #topic/sitemap
 
 # Privacy-first GTmetrix automation tool
 
 - **Date:** [[2026-03-17]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/GTMetrix MCP Server (Scaffolded \+ Cloudflare Worker Live)]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 44
 - **Chat URL:** https://claude.ai/chat/d74482e9-5710-49df-a67a-3589e2a48bbb

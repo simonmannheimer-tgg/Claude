@@ -1,18 +1,18 @@
 ---
 title: Samsung and Hisense TV copy and metadata creation
 date: 2026-03-25
-project: main
+project: LG, Samsung, Hisense, TCL Latest TVs Copy
 status: completed
 score: 5/5
 uuid: 9a215b0b-7b78-4ab4-acfc-9f4ea69ab146
 ---
 
-#chat/light #project/main #status/completed #topic/blog #topic/contentful #topic/copy #topic/meta #topic/plp #skill/tgg-copywriting
+#chat/light #project/lg-samsung-hisense-tcl-latest-tvs-copy #status/completed #topic/blog #topic/contentful #topic/copy #topic/meta #topic/plp #skill/tgg-copywriting
 
 # Samsung and Hisense TV copy and metadata creation
 
 - **Date:** [[2026-03-25]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/LG, Samsung, Hisense, TCL Latest TVs Copy]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 12
 - **Chat URL:** https://claude.ai/chat/9a215b0b-7b78-4ab4-acfc-9f4ea69ab146

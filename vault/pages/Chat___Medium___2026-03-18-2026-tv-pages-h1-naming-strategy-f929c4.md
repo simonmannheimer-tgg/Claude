@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-18-2026-tv-pages-h1-naming-strategy-f929c4
 uuid: f929c4cf-849a-4e00-b266-7e243f4999a2
 ---
 
-#chat/medium #project/main #status/completed
+#chat/medium #project/lg-samsung-hisense-tcl-latest-tvs-copy #status/completed
 
 # 2026 TV pages H1 naming strategy — Key User Messages
 

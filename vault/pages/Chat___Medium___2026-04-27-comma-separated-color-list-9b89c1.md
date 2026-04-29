@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-27-comma-separated-color-list-9b89c1
 uuid: 9b89c15a-f6e9-4697-8a47-6a851f77878c
 ---
 
-#chat/medium #project/main #status/active
+#chat/medium #project/colour-keyword-gsc-analysis #status/active
 
 # Comma separated color list — Key User Messages
 

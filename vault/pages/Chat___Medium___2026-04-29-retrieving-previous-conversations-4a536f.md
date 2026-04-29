@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-29-retrieving-previous-conversations-4a536f
 uuid: 4a536f60-1e62-4054-aeaa-b157a2fbba06
 ---
 
-#chat/medium #project/blog-inventory #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # Retrieving previous conversations — Key User Messages
 

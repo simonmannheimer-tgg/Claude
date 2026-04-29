@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-29-clarifying-year-over-year-growth-comparison-552265
 uuid: 55226538-144d-4ae7-b2c4-bee735d5c184
 ---
 
-#chat/medium #project/main #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # Clarifying year-over-year growth comparison — Key User Messages
 

@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-18-finding-seo-relevant-agents-for-cross-team-workflo
 uuid: 86f6e284-5363-4889-9da7-934bf734987e
 ---
 
-#chat/full #project/semrush-migration #status/completed
+#chat/full #project/skills-built-full-set #status/completed
 
 # Finding SEO-relevant agents for cross-team workflows — Full Transcript
 

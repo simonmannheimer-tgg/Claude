@@ -1,18 +1,18 @@
 ---
 title: Converting brand URLs to .com.au domain format
 date: 2026-04-29
-project: main
+project: Brand URL Regex (All TGG Brands \~200 brands)
 status: completed
 score: 1/5
 uuid: c61ccfc1-676b-4afb-b7ee-5976aa167a9b
 ---
 
-#chat/light #project/main #status/completed
+#chat/light #project/brand-url-regex-all-tgg-brands-200-brand #status/completed
 
 # Converting brand URLs to .com.au domain format
 
 - **Date:** [[2026-04-29]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Brand URL Regex (All TGG Brands \~200 brands)]]
 - **Status:** #status/completed (score 1/5: 5+turns)
 - **Messages:** 8
 - **Chat URL:** https://claude.ai/chat/c61ccfc1-676b-4afb-b7ee-5976aa167a9b

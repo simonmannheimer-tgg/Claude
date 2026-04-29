@@ -1,18 +1,18 @@
 ---
 title: Clarifying an unclear phrase
 date: 2026-03-26
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 2/5
 uuid: 4842b6df-44fe-4908-9d51-e9169f02ab1f
 ---
 
-#chat/light #project/main #status/tactical
+#chat/light #project/closed-tactical-tasks #status/tactical
 
 # Clarifying an unclear phrase
 
 - **Date:** [[2026-03-26]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 2/5: deliverable, lasting-effect)
 - **Messages:** 4
 - **Chat URL:** https://claude.ai/chat/4842b6df-44fe-4908-9d51-e9169f02ab1f

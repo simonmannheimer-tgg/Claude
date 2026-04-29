@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-27-extract-domain-from-url-list-86b66c
 uuid: 86b66c66-402f-4ea3-9ad2-6f953baf3959
 ---
 
-#chat/full #project/main #status/tactical
+#chat/full #project/closed-tactical-tasks #status/tactical
 
 # Extract domain from URL list — Full Transcript
 

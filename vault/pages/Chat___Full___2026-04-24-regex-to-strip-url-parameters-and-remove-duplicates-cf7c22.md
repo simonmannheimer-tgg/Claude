@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-24-regex-to-strip-url-parameters-and-remove-duplicate
 uuid: cf7c2201-d4b9-436a-a520-42e0fa011873
 ---
 
-#chat/full #project/main #status/tactical
+#chat/full #project/closed-tactical-tasks #status/tactical
 
 # Regex to strip URL parameters and remove duplicates — Full Transcript
 

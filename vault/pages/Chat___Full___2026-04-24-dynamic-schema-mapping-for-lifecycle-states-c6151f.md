@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-24-dynamic-schema-mapping-for-lifecycle-states-c6151f
 uuid: c6151f6e-501e-45a9-8586-87da6d825d77
 ---
 
-#chat/full #project/main #status/active
+#chat/full #project/delivery-schema-9x5-purchase-state-matri #status/active
 
 # Dynamic schema mapping for lifecycle states — Full Transcript
 

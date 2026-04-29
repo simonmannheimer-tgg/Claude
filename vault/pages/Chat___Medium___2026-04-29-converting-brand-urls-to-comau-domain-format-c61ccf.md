@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-29-converting-brand-urls-to-comau-domain-format-c61cc
 uuid: c61ccfc1-676b-4afb-b7ee-5976aa167a9b
 ---
 
-#chat/medium #project/main #status/completed
+#chat/medium #project/brand-url-regex-all-tgg-brands-200-brand #status/completed
 
 # Converting brand URLs to .com.au domain format — Key User Messages
 

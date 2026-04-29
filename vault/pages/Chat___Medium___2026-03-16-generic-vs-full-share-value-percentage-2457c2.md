@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-16-generic-vs-full-share-value-percentage-2457c2
 uuid: 2457c2d2-5fd5-4b12-89ae-8f84e05a4b6f
 ---
 
-#chat/medium #project/main #status/completed
+#chat/medium #project/bfcm-2025-post-mortem-deck #status/completed
 
 # Generic vs full share value percentage — Key User Messages
 

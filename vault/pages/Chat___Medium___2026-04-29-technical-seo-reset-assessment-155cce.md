@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-29-technical-seo-reset-assessment-155cce
 uuid: 155cce4b-b9c0-4738-9521-8c3b3b4738e0
 ---
 
-#chat/medium #project/eofy #status/completed
+#chat/medium #project/tech-seo-reset-document #status/completed
 
 # Technical SEO reset assessment — Key User Messages
 

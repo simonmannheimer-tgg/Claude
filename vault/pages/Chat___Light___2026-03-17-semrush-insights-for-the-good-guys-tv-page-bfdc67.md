@@ -1,18 +1,18 @@
 ---
 title: SEMrush insights for The Good Guys TV page
 date: 2026-03-17
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 3/5
 uuid: bfdc670f-1ee6-45ea-8ade-62f324992e83
 ---
 
-#chat/light #project/main #status/tactical #topic/aeo #topic/keyword #topic/semrush
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/aeo #topic/keyword #topic/semrush
 
 # SEMrush insights for The Good Guys TV page
 
 - **Date:** [[2026-03-17]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 3/5: deliverable, named-tgg, project-keyword)
 - **Messages:** 2
 - **Chat URL:** https://claude.ai/chat/bfdc670f-1ee6-45ea-8ade-62f324992e83

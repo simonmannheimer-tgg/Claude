@@ -1,18 +1,18 @@
 ---
 title: HTML formatting issues on deals pages
 date: 2026-03-19
-project: main
+project: Contentful Deals Page Audit \+ HTML Restoration
 status: completed
 score: 4/5
 uuid: ef3335b2-e56c-4de1-a0b0-d51c1b639e88
 ---
 
-#chat/light #project/main #status/completed #topic/bfcm #topic/contentful #topic/copy #topic/crawl #topic/deals #topic/inlink #topic/regex
+#chat/light #project/contentful-deals-page-audit-html-restora #status/completed #topic/bfcm #topic/contentful #topic/copy #topic/crawl #topic/deals #topic/inlink #topic/regex
 
 # HTML formatting issues on deals pages
 
 - **Date:** [[2026-03-19]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Contentful Deals Page Audit \+ HTML Restoration]]
 - **Status:** #status/completed (score 4/5: deliverable, named-tgg, 5+turns, project-keyword)
 - **Messages:** 12
 - **Chat URL:** https://claude.ai/chat/ef3335b2-e56c-4de1-a0b0-d51c1b639e88

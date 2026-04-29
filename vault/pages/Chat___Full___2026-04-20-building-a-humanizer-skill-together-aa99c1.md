@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-20-building-a-humanizer-skill-together-aa99c1
 uuid: aa99c12e-c1e0-4281-9b0f-e3390360e9cc
 ---
 
-#chat/full #project/main #status/completed
+#chat/full #project/skills-built-full-set #status/completed
 
 # Building a humanizer skill together — Full Transcript
 

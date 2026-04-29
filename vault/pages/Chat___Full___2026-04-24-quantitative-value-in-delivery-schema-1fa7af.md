@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-24-quantitative-value-in-delivery-schema-1fa7af
 uuid: 1fa7afec-7a5d-41e5-a4a2-9bd900bdb6f7
 ---
 
-#chat/full #project/main #status/active
+#chat/full #project/delivery-schema-9x5-purchase-state-matri #status/active
 
 # Quantitative value in delivery schema — Full Transcript
 

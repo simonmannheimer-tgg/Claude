@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-21-seeking-feedback-eaf278
 uuid: eaf2789e-217b-4fee-88ba-589b867dd3de
 ---
 
-#chat/medium #project/main #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # Seeking feedback — Key User Messages
 

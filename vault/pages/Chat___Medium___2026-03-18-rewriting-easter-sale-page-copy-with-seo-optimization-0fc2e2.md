@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-18-rewriting-easter-sale-page-copy-with-seo-optimizat
 uuid: 0fc2e267-5302-4830-8fa0-02d760b3f5a2
 ---
 
-#chat/medium #project/main #status/completed
+#chat/medium #project/easter-sale-2026-copy-package #status/completed
 
 # Rewriting Easter sale page copy with SEO optimization — Key User Messages
 

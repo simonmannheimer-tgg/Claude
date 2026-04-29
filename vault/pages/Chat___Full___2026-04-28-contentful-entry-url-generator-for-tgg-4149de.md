@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-28-contentful-entry-url-generator-for-tgg-4149de
 uuid: 4149de58-434b-4c3a-b3bc-6219950239f0
 ---
 
-#chat/full #project/main #status/completed
+#chat/full #project/skills-built-full-set #status/completed
 
 # Contentful entry URL generator for TGG — Full Transcript
 

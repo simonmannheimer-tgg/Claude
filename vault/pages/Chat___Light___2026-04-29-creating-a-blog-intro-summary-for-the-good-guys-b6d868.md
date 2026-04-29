@@ -1,18 +1,18 @@
 ---
 title: Creating a blog intro summary for The Good Guys
 date: 2026-04-29
-project: main
+project: Blog Intros — New Pages (April 29 batch)
 status: completed
 score: 5/5
 uuid: b6d86861-755a-47c6-8cb2-00cfd097a198
 ---
 
-#chat/light #project/main #status/completed #topic/blog #topic/contentful #topic/copy #topic/keyword #topic/plp #topic/shopify #skill/tgg-content-strategist #skill/tgg-contentful-linker #skill/tgg-copywriting #skill/tgg-seo-specialist
+#chat/light #project/blog-intros-new-pages-april-29-batch #status/completed #topic/blog #topic/contentful #topic/copy #topic/keyword #topic/plp #topic/shopify #skill/tgg-content-strategist #skill/tgg-contentful-linker #skill/tgg-copywriting #skill/tgg-seo-specialist
 
 # Creating a blog intro summary for The Good Guys
 
 - **Date:** [[2026-04-29]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Blog Intros — New Pages (April 29 batch)]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 37
 - **Chat URL:** https://claude.ai/chat/b6d86861-755a-47c6-8cb2-00cfd097a198

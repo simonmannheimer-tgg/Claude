@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-27-ai-overview-impact-on-ecommerce-serps-940c18
 uuid: 940c186b-da5e-45bd-9659-45b0f2a427ea
 ---
 
-#chat/full #project/main #status/completed
+#chat/full #project/february-2026-seo-deck-executive-email #status/completed
 
 # AI overview impact on ecommerce SERPs — Full Transcript
 

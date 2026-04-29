@@ -183,6 +183,56 @@ When Simon changes a rule, update the relevant process file immediately. Add cha
 
 ---
 
+## Conversation & Session Indexing
+
+The Logseq vault under `vault/` is the long-memory layer. Every Claude
+conversation (web/desktop) **and** every Claude Code session that touches this
+repo is indexed into it as a tagged page, with a per-project MOC.
+
+### Build script
+
+```
+python3 scripts/build_logseq_chat_index.py [export_dir] [vault_dir]
+```
+
+Inputs:
+- `export_dir` — unzipped Anthropic conversation export
+  (default `/tmp/chat-export`); contains `conversations.json` + `projects.json`.
+- `vault_dir` — Logseq vault root (default `vault/`).
+
+Outputs (writes to `vault/pages/`):
+- `Chat___Light___<slug>.md` — short summary (1–2 paragraphs, 240-char excerpt)
+- `Chat___Medium___<slug>.md` — user messages only, full text
+- `Chat___Full___<slug>.md` — full transcript (human + assistant)
+- `Chat___Code___<slug>.md` — Claude Code session (commits + files touched)
+- `Projects___<project>.md` — per-project MOC listing every chat/session
+- `Projects___Claude-Code.md` — master MOC of all Claude Code branches
+- `Conversations Master Index.md` — by-status / by-project / by-topic index
+
+### Tag taxonomy
+
+Every page is tagged with all of: `#project/<slug>`, `#status/<active|completed|abandoned|tactical>`, `#topic/<keyword>` (one per detected topic), `#skill/<seo|development|reporting|...>`. Project tags use a 40-char slug; project MOC pages use the human-readable name as title.
+
+### Convention: every Claude Code branch is a project
+
+Each `claude/<feature>-<id>` branch the harness assigns is treated as its own project in the vault. The indexer extracts `claude.ai/code/session_<id>` URLs from commit messages, groups commits by session, infers the owning branch, and writes:
+- one `Chat___Code___<slug>.md` per session (commits + files touched)
+- one `Projects___<branch>.md` MOC per branch
+- one row in `Projects___Claude-Code.md`
+
+This means every piece of work that lands on a Claude Code branch is automatically discoverable from the vault, even though the underlying transcript lives on Anthropic's side and is not in the export.
+
+### When to re-run
+
+Re-run the build script:
+- Whenever a fresh Anthropic conversation export is available (replaces `vault/pages/Chat___*.md` and `Projects___*.md`)
+- After landing significant work on a Claude Code branch (picks up new commits + sessions)
+- As part of the weekly `tgg-conversation-indexer` skill run
+
+The script is idempotent — it deletes all `Chat___*.md` and `Projects___*.md` pages before regenerating, so manual edits to those files will be lost. Hand-written notes belong in journal pages (`vault/journals/`) or non-`Chat`/`Projects` pages.
+
+---
+
 ## Slash Skills
 
 | Skill | What it does |
@@ -223,6 +273,7 @@ Run from repo root: `python tools/tgg_plp_auditor.py`
 3. No over-engineering — no feature flags, backwards-compat shims, speculative abstractions
 4. Prefer editing over creating
 5. Confirm before: deleting files, force-pushing, destructive resets, modifying CI/CD
+6. **Vault hygiene** — after a substantive Claude Code session lands on a `claude/*` branch (i.e. before you create a PR or merge), re-run `python3 scripts/build_logseq_chat_index.py` so the new commits become a `Chat/Code/<slug>` page and the branch shows up in `Projects/Claude-Code`. Skip for trivial single-line fixes; required for any work that adds files or new functionality.
 
 ---
 

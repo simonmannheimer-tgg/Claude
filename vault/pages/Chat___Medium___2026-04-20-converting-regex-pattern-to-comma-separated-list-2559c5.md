@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-20-converting-regex-pattern-to-comma-separated-list-2
 uuid: 2559c58a-f7c7-4f7b-8321-3425064db114
 ---
 
-#chat/medium #project/main #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # Converting regex pattern to comma-separated list — Key User Messages
 

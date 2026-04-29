@@ -1,18 +1,18 @@
 ---
 title: Avoiding duplicate supplier color entries
 date: 2026-04-07
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 2/5
 uuid: 6bcdd2d7-30ae-4016-a5b6-edf6da74cbd1
 ---
 
-#chat/light #project/main #status/tactical
+#chat/light #project/closed-tactical-tasks #status/tactical
 
 # Avoiding duplicate supplier color entries
 
 - **Date:** [[2026-04-07]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 2/5: deliverable, 5+turns)
 - **Messages:** 8
 - **Chat URL:** https://claude.ai/chat/6bcdd2d7-30ae-4016-a5b6-edf6da74cbd1

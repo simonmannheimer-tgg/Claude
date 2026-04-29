@@ -1,18 +1,18 @@
 ---
 title: using your skills for copy, so...
 date: 2026-03-27
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 5/5
 uuid: 0230a6e0-22c0-45cd-b098-13c41578a0e7
 ---
 
-#chat/light #project/main #status/tactical #topic/aeo #topic/agent #topic/airtable #topic/bfcm #topic/blog #topic/contentful #topic/copy #topic/deals #topic/keyword #topic/mcp #topic/plp #topic/semrush #skill/tgg-content-strategist #skill/tgg-copywriting #skill/tgg-marketing-analyst #skill/tgg-repo-manager #skill/tgg-seo-specialist #skill/tgg-template-generator
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/aeo #topic/agent #topic/airtable #topic/bfcm #topic/blog #topic/contentful #topic/copy #topic/deals #topic/keyword #topic/mcp #topic/plp #topic/semrush #skill/tgg-content-strategist #skill/tgg-copywriting #skill/tgg-marketing-analyst #skill/tgg-repo-manager #skill/tgg-seo-specialist #skill/tgg-template-generator
 
 # using your skills for copy, so...
 
 - **Date:** [[2026-03-27]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 72
 - **Chat URL:** https://claude.ai/chat/0230a6e0-22c0-45cd-b098-13c41578a0e7

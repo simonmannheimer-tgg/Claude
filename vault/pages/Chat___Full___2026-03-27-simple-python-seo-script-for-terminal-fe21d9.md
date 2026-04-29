@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-27-simple-python-seo-script-for-terminal-fe21d9
 uuid: fe21d9bb-451e-438e-a2ff-ef8d48139457
 ---
 
-#chat/full #project/main #status/completed
+#chat/full #project/plp-copy-auditor-script #status/completed
 
 # Simple Python SEO script for terminal — Full Transcript
 

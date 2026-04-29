@@ -1,18 +1,18 @@
 ---
 title: Generic vs full share value percentage
 date: 2026-03-16
-project: main
+project: BFCM 2025 Post-Mortem Deck
 status: completed
 score: 5/5
 uuid: 2457c2d2-5fd5-4b12-89ae-8f84e05a4b6f
 ---
 
-#chat/light #project/main #status/completed #topic/aeo #topic/bfcm #topic/crawl #topic/deals #topic/ga4 #topic/gsc #topic/inlink #topic/keyword #topic/plp #topic/profound #topic/semrush
+#chat/light #project/bfcm-2025-post-mortem-deck #status/completed #topic/aeo #topic/bfcm #topic/crawl #topic/deals #topic/ga4 #topic/gsc #topic/inlink #topic/keyword #topic/plp #topic/profound #topic/semrush
 
 # Generic vs full share value percentage
 
 - **Date:** [[2026-03-16]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/BFCM 2025 Post-Mortem Deck]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 175
 - **Chat URL:** https://claude.ai/chat/2457c2d2-5fd5-4b12-89ae-8f84e05a4b6f

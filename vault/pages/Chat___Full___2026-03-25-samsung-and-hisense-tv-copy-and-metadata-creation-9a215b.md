@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-25-samsung-and-hisense-tv-copy-and-metadata-creation-
 uuid: 9a215b0b-7b78-4ab4-acfc-9f4ea69ab146
 ---
 
-#chat/full #project/main #status/completed
+#chat/full #project/lg-samsung-hisense-tcl-latest-tvs-copy #status/completed
 
 # Samsung and Hisense TV copy and metadata creation — Full Transcript
 

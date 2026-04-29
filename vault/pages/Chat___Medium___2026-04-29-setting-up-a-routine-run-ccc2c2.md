@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-29-setting-up-a-routine-run-ccc2c2
 uuid: ccc2c23a-da3d-4d86-9721-523e516ebb10
 ---
 
-#chat/medium #project/main #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # Setting up a routine run — Key User Messages
 

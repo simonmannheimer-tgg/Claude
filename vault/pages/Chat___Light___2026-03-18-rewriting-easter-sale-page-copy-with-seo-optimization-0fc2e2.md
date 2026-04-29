@@ -1,18 +1,18 @@
 ---
 title: Rewriting Easter sale page copy with SEO optimization
 date: 2026-03-18
-project: main
+project: Easter Sale 2026 Copy Package
 status: completed
 score: 5/5
 uuid: 0fc2e267-5302-4830-8fa0-02d760b3f5a2
 ---
 
-#chat/light #project/main #status/completed #topic/bfcm #topic/copy #topic/deals #topic/inlink #topic/keyword #topic/mcp #topic/meta #topic/plp #topic/schema #topic/semrush #skill/tgg-content-strategist #skill/tgg-copywriting #skill/tgg-marketing-analyst #skill/tgg-seo-specialist
+#chat/light #project/easter-sale-2026-copy-package #status/completed #topic/bfcm #topic/copy #topic/deals #topic/inlink #topic/keyword #topic/mcp #topic/meta #topic/plp #topic/schema #topic/semrush #skill/tgg-content-strategist #skill/tgg-copywriting #skill/tgg-marketing-analyst #skill/tgg-seo-specialist
 
 # Rewriting Easter sale page copy with SEO optimization
 
 - **Date:** [[2026-03-18]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Easter Sale 2026 Copy Package]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 6
 - **Chat URL:** https://claude.ai/chat/0fc2e267-5302-4830-8fa0-02d760b3f5a2

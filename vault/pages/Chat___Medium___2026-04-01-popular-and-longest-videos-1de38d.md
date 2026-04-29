@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-01-popular-and-longest-videos-1de38d
 uuid: 1de38dc1-1046-4a89-b2a5-2254ffb25fa5
 ---
 
-#chat/medium #project/main #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # Popular and longest videos — Key User Messages
 

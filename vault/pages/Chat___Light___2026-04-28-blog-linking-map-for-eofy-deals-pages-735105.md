@@ -1,18 +1,18 @@
 ---
 title: Blog linking map for EOFY deals pages
 date: 2026-04-28
-project: EOFY
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 4/5
 uuid: 73510503-fa5a-490e-b9eb-fd69ff339759
 ---
 
-#chat/light #project/eofy #status/tactical #topic/blog #topic/contentful #topic/eofy #topic/inlink #topic/keyword
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/blog #topic/contentful #topic/eofy #topic/inlink #topic/keyword
 
 # Blog linking map for EOFY deals pages
 
 - **Date:** [[2026-04-28]]
-- **Project:** [[Projects/EOFY]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 4/5: deliverable, named-tgg, project-keyword, lasting-effect)
 - **Messages:** 4
 - **Chat URL:** https://claude.ai/chat/73510503-fa5a-490e-b9eb-fd69ff339759

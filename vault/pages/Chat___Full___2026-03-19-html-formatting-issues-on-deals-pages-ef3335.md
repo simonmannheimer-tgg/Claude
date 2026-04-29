@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-19-html-formatting-issues-on-deals-pages-ef3335
 uuid: ef3335b2-e56c-4de1-a0b0-d51c1b639e88
 ---
 
-#chat/full #project/main #status/completed
+#chat/full #project/contentful-deals-page-audit-html-restora #status/completed
 
 # HTML formatting issues on deals pages — Full Transcript
 

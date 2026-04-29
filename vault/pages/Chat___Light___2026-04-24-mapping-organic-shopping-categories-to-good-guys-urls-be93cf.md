@@ -1,18 +1,18 @@
 ---
 title: Mapping organic shopping categories to Good Guys URLs
 date: 2026-04-24
-project: main
+project: GMC Organic Shopping to Deals Page Attribution
 status: active
 score: 5/5
 uuid: be93cf2e-ef97-4750-95ba-09f42bec990a
 ---
 
-#chat/light #project/main #status/active #topic/deals #topic/eofy #topic/feed #topic/gsc #topic/keyword #topic/redirect #topic/regex #topic/shopify
+#chat/light #project/gmc-organic-shopping-to-deals-page-attri #status/active #topic/deals #topic/eofy #topic/feed #topic/gsc #topic/keyword #topic/redirect #topic/regex #topic/shopify
 
 # Mapping organic shopping categories to Good Guys URLs
 
 - **Date:** [[2026-04-24]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/GMC Organic Shopping to Deals Page Attribution]]
 - **Status:** #status/active (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 51
 - **Chat URL:** https://claude.ai/chat/be93cf2e-ef97-4750-95ba-09f42bec990a

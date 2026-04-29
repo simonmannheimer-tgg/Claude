@@ -1,18 +1,18 @@
 ---
 title: Sheet structure and MHTML format
 date: 2026-04-08
-project: main
+project: Product Meta Title Colour Standardisation (8,582 Titles)
 status: completed
 score: 4/5
 uuid: 44532fa9-eb75-4acb-86fd-f4ee5d2576c7
 ---
 
-#chat/light #project/main #status/completed #topic/keyword #topic/meta #topic/monday #topic/regex #topic/shopify #skill/mhtml-reader
+#chat/light #project/product-meta-title-colour-standardisatio #status/completed #topic/keyword #topic/meta #topic/monday #topic/regex #topic/shopify #skill/mhtml-reader
 
 # Sheet structure and MHTML format
 
 - **Date:** [[2026-04-08]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Product Meta Title Colour Standardisation (8,582 Titles)]]
 - **Status:** #status/completed (score 4/5: deliverable, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 69
 - **Chat URL:** https://claude.ai/chat/44532fa9-eb75-4acb-86fd-f4ee5d2576c7

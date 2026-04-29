@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-11-combining-elements-or-concepts-288c37
 uuid: 288c37b0-99ad-45b7-a61e-72bec9c81334
 ---
 
-#chat/medium #project/main #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # Combining elements or concepts — Key User Messages
 

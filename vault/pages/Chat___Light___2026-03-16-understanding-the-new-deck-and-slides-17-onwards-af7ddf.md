@@ -1,18 +1,18 @@
 ---
 title: Understanding the new deck and slides 17 onwards
 date: 2026-03-16
-project: main
+project: BFCM 2025 Post-Mortem Deck
 status: completed
 score: 4/5
 uuid: af7ddfd8-979a-4b2b-93af-bd98db351f45
 ---
 
-#chat/light #project/main #status/completed #topic/aeo #topic/bfcm #topic/copy #topic/deals #topic/keyword #topic/semrush
+#chat/light #project/bfcm-2025-post-mortem-deck #status/completed #topic/aeo #topic/bfcm #topic/copy #topic/deals #topic/keyword #topic/semrush
 
 # Understanding the new deck and slides 17 onwards
 
 - **Date:** [[2026-03-16]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/BFCM 2025 Post-Mortem Deck]]
 - **Status:** #status/completed (score 4/5: deliverable, named-tgg, project-keyword, lasting-effect)
 - **Messages:** 4
 - **Chat URL:** https://claude.ai/chat/af7ddfd8-979a-4b2b-93af-bd98db351f45

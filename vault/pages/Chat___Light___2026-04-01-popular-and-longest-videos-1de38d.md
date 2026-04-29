@@ -1,18 +1,18 @@
 ---
 title: Popular and longest videos
 date: 2026-04-01
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 1/5
 uuid: 1de38dc1-1046-4a89-b2a5-2254ffb25fa5
 ---
 
-#chat/light #project/main #status/tactical #topic/youtube
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/youtube
 
 # Popular and longest videos
 
 - **Date:** [[2026-04-01]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 1/5: deliverable)
 - **Messages:** 4
 - **Chat URL:** https://claude.ai/chat/1de38dc1-1046-4a89-b2a5-2254ffb25fa5

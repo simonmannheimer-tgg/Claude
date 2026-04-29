@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-10-web-scraper-transcript-collection-issue-e590b1
 uuid: e590b103-1c68-481e-83af-a67a46377648
 ---
 
-#chat/full #project/main #status/abandoned
+#chat/full #project/youtube-transcript-downstream-work #status/abandoned
 
 # Web scraper transcript collection issue — Full Transcript
 

@@ -1,18 +1,18 @@
 ---
 title: Regex pattern validation for product URLs
 date: 2026-04-28
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 1/5
 uuid: 53aebdef-018b-4079-b47a-184beb03ff23
 ---
 
-#chat/light #project/main #status/tactical #topic/regex
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/regex
 
 # Regex pattern validation for product URLs
 
 - **Date:** [[2026-04-28]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 1/5: deliverable)
 - **Messages:** 4
 - **Chat URL:** https://claude.ai/chat/53aebdef-018b-4079-b47a-184beb03ff23

@@ -1,18 +1,18 @@
 ---
 title: Editorial content performance and prompt analysis
 date: 2026-04-28
-project: main
+project: Profound Editorial/Prompt Citation Analysis
 status: active
 score: 5/5
 uuid: 2cba6c0c-0634-4ed7-b01d-1fb0d528461d
 ---
 
-#chat/light #project/main #status/active #topic/aeo #topic/blog #topic/deals #topic/plp #topic/profound #topic/youtube #skill/docx-human-style
+#chat/light #project/profound-editorialprompt-citation-analys #status/active #topic/aeo #topic/blog #topic/deals #topic/plp #topic/profound #topic/youtube #skill/docx-human-style
 
 # Editorial content performance and prompt analysis
 
 - **Date:** [[2026-04-28]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Profound Editorial/Prompt Citation Analysis]]
 - **Status:** #status/active (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 24
 - **Chat URL:** https://claude.ai/chat/2cba6c0c-0634-4ed7-b01d-1fb0d528461d

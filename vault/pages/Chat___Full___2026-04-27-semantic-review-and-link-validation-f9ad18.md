@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-27-semantic-review-and-link-validation-f9ad18
 uuid: f9ad183a-5e51-478d-b519-c0c7968aa633
 ---
 
-#chat/full #project/eofy #status/active
+#chat/full #project/eofy-blog-briefs-two-url-errors-outstand #status/active
 
 # Semantic review and link validation — Full Transcript
 

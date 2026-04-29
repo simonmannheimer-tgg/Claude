@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-07-refining-shopify-flow-redirects-with-url-pattern-m
 uuid: 4c640f7a-8395-4200-ba4a-a38476d6c48e
 ---
 
-#chat/full #project/main #status/abandoned
+#chat/full #project/shopify-flow-redirect-verification-pendi #status/abandoned
 
 # Refining Shopify flow redirects with URL pattern matching — Full Transcript
 

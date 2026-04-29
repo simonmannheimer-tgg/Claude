@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-18-finalizing-black-friday-deck-and-recommendations-8
 uuid: 8f6d61b2-f735-4855-b705-4431fd3e432c
 ---
 
-#chat/medium #project/main #status/completed
+#chat/medium #project/bfcm-2025-post-mortem-deck #status/completed
 
 # Finalizing Black Friday deck and recommendations — Key User Messages
 

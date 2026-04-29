@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-17-seo-content-recommendations-and-internal-linking-a
 uuid: 5f98def5-ecef-400d-a191-efc7f5ea1766
 ---
 
-#chat/medium #project/main #status/active
+#chat/medium #project/content-cluster-inlink-gap-analysis-comp #status/active
 
 # SEO content recommendations and internal linking audit — Key User Messages
 

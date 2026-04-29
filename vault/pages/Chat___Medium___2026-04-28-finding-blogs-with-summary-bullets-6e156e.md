@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-28-finding-blogs-with-summary-bullets-6e156e
 uuid: 6e156e24-4ea7-4906-a49d-1026f49e449c
 ---
 
-#chat/medium #project/main #status/active
+#chat/medium #project/aeo-blog-summary-bullet-audit-gono-go-pe #status/active
 
 # Finding blogs with summary bullets — Key User Messages
 

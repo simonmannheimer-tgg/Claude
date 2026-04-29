@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-29-reviewing-ai-content-and-review-summary-projects-3
 uuid: 3360b620-171d-4c36-9df6-2e3a72baef27
 ---
 
-#chat/medium #project/main #status/active
+#chat/medium #project/ai-content-summaries-ai-review-summaries #status/active
 
 # Reviewing AI content and review summary projects — Key User Messages
 

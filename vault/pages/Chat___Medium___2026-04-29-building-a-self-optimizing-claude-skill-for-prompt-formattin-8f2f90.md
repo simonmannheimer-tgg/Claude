@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-29-building-a-self-optimizing-claude-skill-for-prompt
 uuid: 8f2f90c8-62a4-4290-9514-25ef8bf6e0a7
 ---
 
-#chat/medium #project/main #status/completed
+#chat/medium #project/skills-built-full-set #status/completed
 
 # Building a self-optimizing Claude skill for prompt formatting — Key User Messages
 
