@@ -24,33 +24,12 @@
       "command": "npx",
       "args": ["-y", "@domdomegg/airtable-mcp-server"],
       "env": { "AIRTABLE_API_KEY": "${AIRTABLE_API_KEY}" }
-    },
-    "gsc": {
-      "command": "npx",
-      "args": ["-y", "mcp-gsc"],
-      "env": {
-        "GSC_CREDENTIALS_PATH": "/tmp/creds/gsc.json",
-        "GSC_SITE_URL": "${GSC_SITE_URL}"
-      }
-    },
-    "google-workspace": {
-      "command": "uvx",
-      "args": ["google-workspace-mcp"],
-      "env": {
-        "GOOGLE_CREDENTIALS_PATH": "/tmp/creds/gws.json",
-        "GOOGLE_TOOL_TIER": "core"
-      }
-    },
-    "vault": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "vault"]
     }
   },
 
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "GITHUB_REPO": "simonmannheimer-tgg/Claude",
-    "GSC_SITE_URL": "https://www.thegoodguys.com.au/"
+    "GITHUB_REPO": "simonmannheimer-tgg/Claude"
   },
 
   "permissions": {
@@ -67,8 +46,7 @@
       "Bash(grep:*)", "Bash(cat:*)", "Bash(ls:*)", "Bash(find:*)",
       "Bash(sort:*)", "Bash(uniq:*)", "Bash(awk:*)", "Bash(sed:*)",
       "mcp__context-mode__*", "mcp__semrush__*",
-      "mcp__firecrawl__*", "mcp__airtable__*",
-      "mcp__gsc__*", "mcp__google-workspace__*", "mcp__vault__*"
+      "mcp__firecrawl__*", "mcp__airtable__*"
     ],
     "deny": [
       "Read(.env)", "Read(.env.*)", "Read(**/.env)",
@@ -80,9 +58,6 @@
   },
 
   "hooks": {
-    "SessionStart": [
-      { "hooks": [{ "type": "command", "command": "bash .claude/hooks/session_start.sh" }] }
-    ],
     "PreToolUse": [
       {
         "matcher": "Bash",

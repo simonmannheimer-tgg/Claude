@@ -2,10 +2,6 @@
 .env
 .env.*
 
-# Materialised credentials (written by .devcontainer/setup.sh from base64 secrets)
-/tmp/creds/
-.claude/session_start.log
-
 # Machine-specific Claude Code config
 .claude/settings.local.json
 
@@ -38,10 +34,6 @@ reports/
 
 # Large packages
 plp-copywriting-package.zip
-Claude_Repo_Final_v3.zip
-
-# Local backups (restore-only; never commit)
-.backups/
 
 # OS
 .DS_Store
