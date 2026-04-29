@@ -14,13 +14,16 @@ Daily work: batch copy production, technical SEO audits, Python/JS scripting, GM
 ## Repository Overview
 
 Central Claude Code workspace containing:
-- GTMetrix MCP server (Python/uv)
-- Context Mode MCP server (token-efficient sessions)
+- GTMetrix MCP server (Python/uv) — `main.py` + `gtmetrix_client.py`
+- Context Mode MCP server (token-efficient sessions) — `context_mode/server.py`
 - 14-agent SEO team (seo-team-lead orchestrates all)
-- 10 numbered process files (00–09) governing all TGG copy and SEO work
+- 10 numbered process files (`00-*.md` … `09-*.md`) at the **repo root** governing all TGG copy and SEO work
 - Local Python tools in `tools/` for PLP auditing, MHTML parsing, CSV manipulation
+- Repo-level shell/Python helpers in `scripts/` (GitHub polling, task processor, loop daemon)
+- Chat UI server in `chat_ui/` (port 7860, started by `/start-chat`)
 - GitHub Actions workflows for on-demand and scheduled SEO tasks
 - Optional tools staged in `.claude/optional/` — inactive until needed
+- Working directories: `seo/` (briefs, prompts, outputs, scripts), `docs/` (internal documentation), `gtmetrix_results/` (persisted audit JSON/CSV)
 
 **Setup:**
 - Language: Python 3.11 / Package manager: uv
@@ -28,6 +31,33 @@ Central Claude Code workspace containing:
 - Run GTMetrix MCP: `uv run python3 main.py`
 - Run Context Mode MCP: `uv run python3 context_mode/server.py`
 - All MCP paths use `.` (repo root) — portable across machines and GitHub Actions
+
+---
+
+## Repo Layout
+
+Quick reference so agents can locate things without `ls`.
+
+| Path | Purpose |
+|------|---------|
+| `main.py` | GTMetrix MCP server entry point |
+| `gtmetrix_client.py` | GTMetrix API client used by `main.py` |
+| `config.py` | Shared config loader (env vars) |
+| `plp-qa-audit.py` | PLP QA audit runner (root-level) |
+| `run_audit_ci.py` | Audit runner invoked by GitHub Actions |
+| `00-*.md` … `09-*.md` | Process files governing all TGG copy work |
+| `context_mode/` | Context Mode MCP server (`server.py`) |
+| `chat_ui/` | Chat UI server (port 7860, started by `/start-chat`) |
+| `tools/` | Local Python utilities (PLP audit, MHTML, CSV ops) |
+| `scripts/` | Repo-level helpers: `github-poll.sh`, `github-post-comment.sh`, `loop-daemon.sh`, `process-tasks.py` |
+| `seo/` | Briefs, prompts, outputs, scripts for SEO workflows |
+| `docs/` | Internal documentation (archive, drafts, all-time conversation index) |
+| `gtmetrix_results/` | Persisted GTMetrix audit JSON/CSV |
+| `.claude/agents/` | 14 SEO agent definitions |
+| `.claude/skills/` | 4 slash skills |
+| `.claude/hooks/` | 3 active hooks |
+| `.claude/optional/` | 6 staged optional tools (inactive) |
+| `.github/workflows/` | 6 GitHub Actions workflows |
 
 ---
 
@@ -129,6 +159,10 @@ Apply the same exponential backoff retry strategy on network failures.
 - `log_writes.py` — PostToolUse: logs every file write to `.claude/write_log.txt`
 - `session_log.py` — Stop: logs session end to `.claude/session_log.txt`
 
+**Other config files in `.claude/`:**
+- `mcp-actions.json` — declarative MCP action shortcuts referenced by tooling
+- `settings.local.json.example` — template for activating optional MCP servers (GSC, Google Workspace, Linear). Copy to `settings.local.json` and fill in credentials when activating an optional tool.
+
 ---
 
 ## MCP Servers (Active)
@@ -202,6 +236,12 @@ Always read `00-tov-language-reference.md` before any content task.
 ### Process updates
 When Simon changes a rule, update the relevant process file immediately. Add changelog note at top (version + date + what changed). If a request conflicts with a process rule, flag it and ask: one-off exception or permanent change?
 
+### `seo/` layout
+- `seo/briefs/` — production briefs (e.g. `PLP-Batch-Production-Brief-2026-03-19.md`)
+- `seo/prompts/` — reusable prompt templates: `competitor-audit.md`, `keyword-research.md`
+- `seo/scripts/` — Python utilities: `fix-clone-openers.py`, `fix-critical-rows.py`, `generate-md-files.py`, `merge-plp-outputs.py`
+- `seo/outputs/` — generated content (PLP intros, metadata batches, FAQ copy)
+
 ---
 
 ## Slash Skills
@@ -232,6 +272,8 @@ For local use on Windows/PowerShell or macOS. Not run in GitHub Actions.
 | `split_csv.py` | Splits a large CSV into two halves |
 
 Run from repo root: `python tools/tgg_plp_auditor.py`
+
+A `tools/run.bat` Windows runner is included for double-click invocation on Windows.
 
 **Note on paths:** Some scripts have hardcoded Windows paths. Update the path variables at the top for your machine.
 
