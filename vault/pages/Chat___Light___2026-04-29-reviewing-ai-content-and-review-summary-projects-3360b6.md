@@ -1,18 +1,18 @@
 ---
 title: Reviewing AI content and review summary projects
 date: 2026-04-29
-project: main
+project: AI Content Summaries \+ AI Review Summaries — Jira Pending
 status: active
 score: 5/5
 uuid: 3360b620-171d-4c36-9df6-2e3a72baef27
 ---
 
-#chat/light #project/main #status/active #topic/aeo #topic/blog #topic/crawl #topic/feed #topic/jira #topic/keyword #topic/pdp #topic/schema #topic/shopify #skill/docx-human-style
+#chat/light #project/ai-content-summaries-ai-review-summaries #status/active #topic/aeo #topic/blog #topic/crawl #topic/feed #topic/jira #topic/keyword #topic/pdp #topic/schema #topic/shopify #skill/docx-human-style
 
 # Reviewing AI content and review summary projects
 
 - **Date:** [[2026-04-29]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/AI Content Summaries \+ AI Review Summaries — Jira Pending]]
 - **Status:** #status/active (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 121
 - **Chat URL:** https://claude.ai/chat/3360b620-171d-4c36-9df6-2e3a72baef27

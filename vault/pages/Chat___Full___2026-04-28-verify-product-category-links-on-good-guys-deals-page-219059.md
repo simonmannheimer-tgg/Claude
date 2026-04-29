@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-28-verify-product-category-links-on-good-guys-deals-p
 uuid: 219059f1-601c-416c-9e7f-e976b5c07198
 ---
 
-#chat/full #project/eofy #status/completed
+#chat/full #project/deals-page-slider-audit-14-pages #status/completed
 
 # Verify product category links on Good Guys deals page — Full Transcript
 

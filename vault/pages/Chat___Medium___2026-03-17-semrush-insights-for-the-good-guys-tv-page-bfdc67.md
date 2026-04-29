@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-17-semrush-insights-for-the-good-guys-tv-page-bfdc67
 uuid: bfdc670f-1ee6-45ea-8ade-62f324992e83
 ---
 
-#chat/medium #project/main #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # SEMrush insights for The Good Guys TV page — Key User Messages
 

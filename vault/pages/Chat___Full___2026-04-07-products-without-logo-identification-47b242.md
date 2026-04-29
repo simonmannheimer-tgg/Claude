@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-07-products-without-logo-identification-47b242
 uuid: 47b2425a-ec58-48b0-800c-f6ecc79e7e41
 ---
 
-#chat/full #project/main #status/completed
+#chat/full #project/pdp-logo-audit #status/completed
 
 # Products without logo identification — Full Transcript
 

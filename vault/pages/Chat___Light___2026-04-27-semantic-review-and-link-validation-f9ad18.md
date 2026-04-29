@@ -1,18 +1,18 @@
 ---
 title: Semantic review and link validation
 date: 2026-04-27
-project: EOFY
+project: EOFY Blog Briefs — Two URL Errors Outstanding
 status: active
 score: 5/5
 uuid: f9ad183a-5e51-478d-b519-c0c7968aa633
 ---
 
-#chat/light #project/eofy #status/active #topic/404 #topic/aeo #topic/blog #topic/contentful #topic/crawl #topic/deals #topic/eofy #topic/inlink #topic/keyword #topic/meta #topic/plp #topic/redirect #topic/schema #topic/screaming-frog #topic/semrush #topic/shopify #skill/tgg-seo-specialist
+#chat/light #project/eofy-blog-briefs-two-url-errors-outstand #status/active #topic/404 #topic/aeo #topic/blog #topic/contentful #topic/crawl #topic/deals #topic/eofy #topic/inlink #topic/keyword #topic/meta #topic/plp #topic/redirect #topic/schema #topic/screaming-frog #topic/semrush #topic/shopify #skill/tgg-seo-specialist
 
 # Semantic review and link validation
 
 - **Date:** [[2026-04-27]]
-- **Project:** [[Projects/EOFY]]
+- **Project:** [[Projects/EOFY Blog Briefs — Two URL Errors Outstanding]]
 - **Status:** #status/active (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 36
 - **Chat URL:** https://claude.ai/chat/f9ad183a-5e51-478d-b519-c0c7968aa633

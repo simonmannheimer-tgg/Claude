@@ -1,18 +1,18 @@
 ---
 title: Extract domain from URL list
 date: 2026-04-27
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 3/5
 uuid: 86b66c66-402f-4ea3-9ad2-6f953baf3959
 ---
 
-#chat/light #project/main #status/tactical #topic/regex
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/regex
 
 # Extract domain from URL list
 
 - **Date:** [[2026-04-27]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 3/5: deliverable, named-tgg, 5+turns)
 - **Messages:** 6
 - **Chat URL:** https://claude.ai/chat/86b66c66-402f-4ea3-9ad2-6f953baf3959

@@ -1,18 +1,18 @@
 ---
 title: Products without logo identification
 date: 2026-04-07
-project: main
+project: PDP Logo Audit
 status: completed
 score: 3/5
 uuid: 47b2425a-ec58-48b0-800c-f6ecc79e7e41
 ---
 
-#chat/light #project/main #status/completed #topic/contentful #topic/crawl #topic/deals #topic/pdp #topic/plp
+#chat/light #project/pdp-logo-audit #status/completed #topic/contentful #topic/crawl #topic/deals #topic/pdp #topic/plp
 
 # Products without logo identification
 
 - **Date:** [[2026-04-07]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/PDP Logo Audit]]
 - **Status:** #status/completed (score 3/5: deliverable, 5+turns, project-keyword)
 - **Messages:** 6
 - **Chat URL:** https://claude.ai/chat/47b2425a-ec58-48b0-800c-f6ecc79e7e41

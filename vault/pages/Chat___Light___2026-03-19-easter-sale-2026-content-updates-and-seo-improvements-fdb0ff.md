@@ -1,18 +1,18 @@
 ---
 title: Easter sale 2026 content updates and SEO improvements
 date: 2026-03-19
-project: main
+project: Easter Sale 2026 Copy Package
 status: completed
 score: 5/5
 uuid: fdb0ffd6-2700-412b-a808-d12d752cfd0f
 ---
 
-#chat/light #project/main #status/completed #topic/aeo #topic/bfcm #topic/blog #topic/contentful #topic/copy #topic/crawl #topic/deals #topic/eofy #topic/inlink #topic/keyword #topic/meta #topic/pdp #topic/plp #topic/profound #skill/tgg-seo-specialist
+#chat/light #project/easter-sale-2026-copy-package #status/completed #topic/aeo #topic/bfcm #topic/blog #topic/contentful #topic/copy #topic/crawl #topic/deals #topic/eofy #topic/inlink #topic/keyword #topic/meta #topic/pdp #topic/plp #topic/profound #skill/tgg-seo-specialist
 
 # Easter sale 2026 content updates and SEO improvements
 
 - **Date:** [[2026-03-19]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Easter Sale 2026 Copy Package]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 62
 - **Chat URL:** https://claude.ai/chat/fdb0ffd6-2700-412b-a808-d12d752cfd0f

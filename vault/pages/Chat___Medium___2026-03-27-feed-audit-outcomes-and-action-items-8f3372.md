@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-27-feed-audit-outcomes-and-action-items-8f3372
 uuid: 8f3372b1-7c7c-4b16-86bc-25f3b3aaab20
 ---
 
-#chat/medium #project/main #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # Feed audit outcomes and action items — Key User Messages
 

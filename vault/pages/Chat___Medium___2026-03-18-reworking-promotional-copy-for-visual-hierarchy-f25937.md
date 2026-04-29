@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-18-reworking-promotional-copy-for-visual-hierarchy-f2
 uuid: f259374f-d3bc-4a63-ab59-c38b5f35f7e0
 ---
 
-#chat/medium #project/main #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # Reworking promotional copy for visual hierarchy — Key User Messages
 

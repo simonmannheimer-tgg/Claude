@@ -1,18 +1,18 @@
 ---
 title: Reworking promotional copy for visual hierarchy
 date: 2026-03-18
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 4/5
 uuid: f259374f-d3bc-4a63-ab59-c38b5f35f7e0
 ---
 
-#chat/light #project/main #status/tactical #topic/blog #topic/copy #topic/plp
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/blog #topic/copy #topic/plp
 
 # Reworking promotional copy for visual hierarchy
 
 - **Date:** [[2026-03-18]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 4/5: deliverable, named-tgg, 5+turns, project-keyword)
 - **Messages:** 20
 - **Chat URL:** https://claude.ai/chat/f259374f-d3bc-4a63-ab59-c38b5f35f7e0

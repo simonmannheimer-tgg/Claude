@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-17-technical-seo-roadmap-from-semrush-api-data-045dc8
 uuid: 045dc8ba-d9de-432b-af35-06c8eddec622
 ---
 
-#chat/full #project/main #status/completed
+#chat/full #project/technical-seo-roadmap-from-semrush #status/completed
 
 # Technical SEO roadmap from Semrush API data — Full Transcript
 

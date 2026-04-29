@@ -1,18 +1,18 @@
 ---
 title: Airtable capabilities and uses
 date: 2026-03-19
-project: main
+project: Airtable PLP Copy Tracker
 status: completed
 score: 4/5
 uuid: aa2d1486-f300-46c8-93e1-708adc5a4fec
 ---
 
-#chat/light #project/main #status/completed #topic/airtable #topic/copy #topic/keyword #topic/mcp #topic/meta #topic/plp #topic/redirect #topic/semrush
+#chat/light #project/airtable-plp-copy-tracker #status/completed #topic/airtable #topic/copy #topic/keyword #topic/mcp #topic/meta #topic/plp #topic/redirect #topic/semrush
 
 # Airtable capabilities and uses
 
 - **Date:** [[2026-03-19]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Airtable PLP Copy Tracker]]
 - **Status:** #status/completed (score 4/5: deliverable, named-tgg, 5+turns, project-keyword)
 - **Messages:** 10
 - **Chat URL:** https://claude.ai/chat/aa2d1486-f300-46c8-93e1-708adc5a4fec

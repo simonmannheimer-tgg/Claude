@@ -1,18 +1,18 @@
 ---
 title: Finalizing Black Friday deck and recommendations
 date: 2026-03-18
-project: main
+project: BFCM 2025 Post-Mortem Deck
 status: completed
 score: 5/5
 uuid: 8f6d61b2-f735-4855-b705-4431fd3e432c
 ---
 
-#chat/light #project/main #status/completed #topic/aeo #topic/bfcm #topic/deals #topic/inlink #topic/keyword #topic/mcp #topic/pdp #topic/schema
+#chat/light #project/bfcm-2025-post-mortem-deck #status/completed #topic/aeo #topic/bfcm #topic/deals #topic/inlink #topic/keyword #topic/mcp #topic/pdp #topic/schema
 
 # Finalizing Black Friday deck and recommendations
 
 - **Date:** [[2026-03-18]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/BFCM 2025 Post-Mortem Deck]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 22
 - **Chat URL:** https://claude.ai/chat/8f6d61b2-f735-4855-b705-4431fd3e432c

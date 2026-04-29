@@ -1,18 +1,18 @@
 ---
 title: Verify product material and supplier specifications
 date: 2026-03-31
-project: main
+project: Product Meta Title Colour Standardisation (8,582 Titles)
 status: completed
 score: 3/5
 uuid: f0f10727-2aeb-4902-b2f7-d33a0963aebc
 ---
 
-#chat/light #project/main #status/completed #topic/ga4 #topic/gsc #topic/regex
+#chat/light #project/product-meta-title-colour-standardisatio #status/completed #topic/ga4 #topic/gsc #topic/regex
 
 # Verify product material and supplier specifications
 
 - **Date:** [[2026-03-31]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Product Meta Title Colour Standardisation (8,582 Titles)]]
 - **Status:** #status/completed (score 3/5: deliverable, 5+turns, project-keyword)
 - **Messages:** 24
 - **Chat URL:** https://claude.ai/chat/f0f10727-2aeb-4902-b2f7-d33a0963aebc

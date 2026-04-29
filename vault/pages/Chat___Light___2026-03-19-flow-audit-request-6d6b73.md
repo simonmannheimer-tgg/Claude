@@ -1,18 +1,18 @@
 ---
 title: Flow audit request
 date: 2026-03-19
-project: main
+project: Shopify Flow Bug Fix (SHA256 Hash)
 status: completed
 score: 4/5
 uuid: 6d6b73c9-7965-4c48-916f-31443bc44aad
 ---
 
-#chat/light #project/main #status/completed #topic/redirect #topic/shopify
+#chat/light #project/shopify-flow-bug-fix-sha256-hash #status/completed #topic/redirect #topic/shopify
 
 # Flow audit request
 
 - **Date:** [[2026-03-19]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Shopify Flow Bug Fix (SHA256 Hash)]]
 - **Status:** #status/completed (score 4/5: deliverable, named-tgg, 5+turns, project-keyword)
 - **Messages:** 6
 - **Chat URL:** https://claude.ai/chat/6d6b73c9-7965-4c48-916f-31443bc44aad

@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-28-i-want-to-build-this-tool-myse-64836d
 uuid: 64836d5b-4329-43d3-8687-2f322b6579d0
 ---
 
-#chat/full #project/main #status/active
+#chat/full #project/intentgaps-style-tool-build #status/active
 
 # I want to build this tool myse... — Full Transcript
 

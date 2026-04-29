@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-27-polishing-a-summary-919495
 uuid: 9194957f-af5b-4c43-9b4c-5ad7855bc309
 ---
 
-#chat/full #project/eofy #status/completed
+#chat/full #project/polishing-a-summary-meeting-notes #status/completed
 
 # Polishing a summary — Full Transcript
 

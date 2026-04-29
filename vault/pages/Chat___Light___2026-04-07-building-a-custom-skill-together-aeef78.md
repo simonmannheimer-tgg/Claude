@@ -1,18 +1,18 @@
 ---
 title: Building a custom skill together
 date: 2026-04-07
-project: main
+project: Skills Built (full set)
 status: completed
 score: 5/5
 uuid: aeef7830-a429-485b-8451-0e075d7bda1d
 ---
 
-#chat/light #project/main #status/completed #topic/copy #topic/inlink #topic/plp #topic/schema #topic/semrush #skill/tgg-copywriting #skill/tgg-seo-specialist
+#chat/light #project/skills-built-full-set #status/completed #topic/copy #topic/inlink #topic/plp #topic/schema #topic/semrush #skill/tgg-copywriting #skill/tgg-seo-specialist
 
 # Building a custom skill together
 
 - **Date:** [[2026-04-07]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Skills Built (full set)]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 16
 - **Chat URL:** https://claude.ai/chat/aeef7830-a429-485b-8451-0e075d7bda1d

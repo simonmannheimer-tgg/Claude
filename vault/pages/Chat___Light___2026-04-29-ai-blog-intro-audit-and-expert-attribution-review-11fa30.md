@@ -1,18 +1,18 @@
 ---
 title: AI blog intro audit and expert attribution review
 date: 2026-04-29
-project: main
+project: Blog EEAT / AIO Optimisation (792 Articles)
 status: completed
 score: 5/5
 uuid: 11fa3047-9e68-4745-a0a0-b330ff2af6ae
 ---
 
-#chat/light #project/main #status/completed #topic/aeo #topic/blog #topic/contentful #topic/copy #topic/eofy #topic/inlink #topic/keyword #topic/meta #topic/plp #topic/redirect #topic/regex #topic/schema #topic/shopify #skill/tgg-content-strategist #skill/tgg-contentful-linker #skill/tgg-copywriting #skill/tgg-seo-specialist
+#chat/light #project/blog-eeat-aio-optimisation-792-articles #status/completed #topic/aeo #topic/blog #topic/contentful #topic/copy #topic/eofy #topic/inlink #topic/keyword #topic/meta #topic/plp #topic/redirect #topic/regex #topic/schema #topic/shopify #skill/tgg-content-strategist #skill/tgg-contentful-linker #skill/tgg-copywriting #skill/tgg-seo-specialist
 
 # AI blog intro audit and expert attribution review
 
 - **Date:** [[2026-04-29]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Blog EEAT / AIO Optimisation (792 Articles)]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 176
 - **Chat URL:** https://claude.ai/chat/11fa3047-9e68-4745-a0a0-b330ff2af6ae

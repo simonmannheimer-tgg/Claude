@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-28-regex-pattern-validation-for-product-urls-53aebd
 uuid: 53aebdef-018b-4079-b47a-184beb03ff23
 ---
 
-#chat/medium #project/main #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # Regex pattern validation for product URLs — Key User Messages
 

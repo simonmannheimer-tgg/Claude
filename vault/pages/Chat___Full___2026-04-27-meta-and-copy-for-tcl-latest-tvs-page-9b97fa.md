@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-27-meta-and-copy-for-tcl-latest-tvs-page-9b97fa
 uuid: 9b97faf8-1adc-4fb6-8dd0-0c287a5ecca2
 ---
 
-#chat/full #project/main #status/completed
+#chat/full #project/lg-samsung-hisense-tcl-latest-tvs-copy #status/completed
 
 # Meta and copy for TCL latest TVs page — Full Transcript
 

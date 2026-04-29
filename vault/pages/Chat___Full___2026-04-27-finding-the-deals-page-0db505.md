@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-27-finding-the-deals-page-0db505
 uuid: 0db505f3-98b7-4571-a785-d62a0e2a54e4
 ---
 
-#chat/full #project/main #status/tactical
+#chat/full #project/closed-tactical-tasks #status/tactical
 
 # Finding the deals page — Full Transcript
 

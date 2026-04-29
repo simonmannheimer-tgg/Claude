@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-28-graphql-query-for-expanded-faq-items-93aa4c
 uuid: 93aa4c1d-58a0-4188-8538-abb0954e0599
 ---
 
-#chat/full #project/main #status/active
+#chat/full #project/contentful-graphql-universal-export #status/active
 
 # GraphQL query for expanded FAQ items — Full Transcript
 

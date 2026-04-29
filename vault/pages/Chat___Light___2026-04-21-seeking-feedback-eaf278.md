@@ -1,18 +1,18 @@
 ---
 title: Seeking feedback
 date: 2026-04-21
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 5/5
 uuid: eaf2789e-217b-4fee-88ba-589b867dd3de
 ---
 
-#chat/light #project/main #status/tactical #topic/deals #topic/feed #topic/gsc #topic/inlink #topic/keyword #topic/plp #topic/redirect #topic/regex #topic/schema #topic/screaming-frog #topic/semrush #topic/sitemap #skill/tgg-seo-specialist
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/deals #topic/feed #topic/gsc #topic/inlink #topic/keyword #topic/plp #topic/redirect #topic/regex #topic/schema #topic/screaming-frog #topic/semrush #topic/sitemap #skill/tgg-seo-specialist
 
 # Seeking feedback
 
 - **Date:** [[2026-04-21]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 42
 - **Chat URL:** https://claude.ai/chat/eaf2789e-217b-4fee-88ba-589b867dd3de

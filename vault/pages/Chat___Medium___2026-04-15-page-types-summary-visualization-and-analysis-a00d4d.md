@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-15-page-types-summary-visualization-and-analysis-a00d
 uuid: a00d4d6c-3847-4e67-991e-e674b89df93b
 ---
 
-#chat/medium #project/eofy #status/completed
+#chat/medium #project/page-types-summary-visualisation #status/completed
 
 # Page types summary visualization and analysis — Key User Messages
 

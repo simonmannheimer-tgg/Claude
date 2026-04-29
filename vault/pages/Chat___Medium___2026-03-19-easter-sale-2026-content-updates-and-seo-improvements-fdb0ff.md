@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-19-easter-sale-2026-content-updates-and-seo-improveme
 uuid: fdb0ffd6-2700-412b-a808-d12d752cfd0f
 ---
 
-#chat/medium #project/main #status/completed
+#chat/medium #project/easter-sale-2026-copy-package #status/completed
 
 # Easter sale 2026 content updates and SEO improvements — Key User Messages
 

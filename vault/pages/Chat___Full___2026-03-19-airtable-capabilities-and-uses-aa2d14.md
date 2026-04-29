@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-19-airtable-capabilities-and-uses-aa2d14
 uuid: aa2d1486-f300-46c8-93e1-708adc5a4fec
 ---
 
-#chat/full #project/main #status/completed
+#chat/full #project/airtable-plp-copy-tracker #status/completed
 
 # Airtable capabilities and uses — Full Transcript
 

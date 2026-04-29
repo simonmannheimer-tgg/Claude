@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-12-downloadable-table-file-output-dd45e2
 uuid: dd45e2ab-413a-4903-a3de-196a8c2314c6
 ---
 
-#chat/medium #project/main #status/completed
+#chat/medium #project/sitemap-audit-scripts-redirect-mapper-go #status/completed
 
 # Downloadable table file output — Key User Messages
 

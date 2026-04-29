@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-27-using-your-skills-for-copy-so-0230a6
 uuid: 0230a6e0-22c0-45cd-b098-13c41578a0e7
 ---
 
-#chat/full #project/main #status/tactical
+#chat/full #project/closed-tactical-tasks #status/tactical
 
 # using your skills for copy, so... — Full Transcript
 

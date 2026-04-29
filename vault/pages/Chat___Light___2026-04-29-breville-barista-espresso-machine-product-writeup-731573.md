@@ -1,18 +1,18 @@
 ---
 title: Breville Barista espresso machine product writeup
 date: 2026-04-29
-project: main
+project: Breville Barista Schema — PDP Conflict Resolution
 status: active
 score: 5/5
 uuid: 7315731e-ebfe-4d98-b969-ca311316ba07
 ---
 
-#chat/light #project/main #status/active #topic/keyword #topic/pdp #topic/schema #topic/shopify #skill/tgg-humanizer
+#chat/light #project/breville-barista-schema-pdp-conflict-res #status/active #topic/keyword #topic/pdp #topic/schema #topic/shopify #skill/tgg-humanizer
 
 # Breville Barista espresso machine product writeup
 
 - **Date:** [[2026-04-29]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Breville Barista Schema — PDP Conflict Resolution]]
 - **Status:** #status/active (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 26
 - **Chat URL:** https://claude.ai/chat/7315731e-ebfe-4d98-b969-ca311316ba07

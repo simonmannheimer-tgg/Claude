@@ -1,18 +1,18 @@
 ---
 title: Good Guys sitemap audit and URL categorization
 date: 2026-04-27
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 4/5
 uuid: 2721186d-f0f3-4dca-a6c8-176a1e08e370
 ---
 
-#chat/light #project/main #status/tactical #topic/404 #topic/deals #topic/pdp #topic/plp #topic/redirect #topic/sitemap
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/404 #topic/deals #topic/pdp #topic/plp #topic/redirect #topic/sitemap
 
 # Good Guys sitemap audit and URL categorization
 
 - **Date:** [[2026-04-27]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 4/5: deliverable, named-tgg, project-keyword, lasting-effect)
 - **Messages:** 4
 - **Chat URL:** https://claude.ai/chat/2721186d-f0f3-4dca-a6c8-176a1e08e370

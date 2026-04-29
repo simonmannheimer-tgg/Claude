@@ -1,18 +1,18 @@
 ---
 title: File analysis and extraction
 date: 2026-04-27
-project: main
+project: Content Cluster / Inlink Gap Analysis (Computing PDPs)
 status: active
 score: 5/5
 uuid: dfd4ac8d-4912-4859-88ba-0e8a1de55834
 ---
 
-#chat/light #project/main #status/active #topic/aeo #topic/blog #topic/copy #topic/crawl #topic/ga4 #topic/gsc #topic/inlink #topic/keyword #topic/meta #topic/pdp #topic/plp #topic/schema #topic/screaming-frog #topic/semrush #topic/shopify #topic/sitemap #skill/tgg-seo-specialist
+#chat/light #project/content-cluster-inlink-gap-analysis-comp #status/active #topic/aeo #topic/blog #topic/copy #topic/crawl #topic/ga4 #topic/gsc #topic/inlink #topic/keyword #topic/meta #topic/pdp #topic/plp #topic/schema #topic/screaming-frog #topic/semrush #topic/shopify #topic/sitemap #skill/tgg-seo-specialist
 
 # File analysis and extraction
 
 - **Date:** [[2026-04-27]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Content Cluster / Inlink Gap Analysis (Computing PDPs)]]
 - **Status:** #status/active (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 18
 - **Chat URL:** https://claude.ai/chat/dfd4ac8d-4912-4859-88ba-0e8a1de55834

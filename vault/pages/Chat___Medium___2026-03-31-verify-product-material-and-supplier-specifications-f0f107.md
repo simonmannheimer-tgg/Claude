@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-31-verify-product-material-and-supplier-specification
 uuid: f0f10727-2aeb-4902-b2f7-d33a0963aebc
 ---
 
-#chat/medium #project/main #status/completed
+#chat/medium #project/product-meta-title-colour-standardisatio #status/completed
 
 # Verify product material and supplier specifications — Key User Messages
 

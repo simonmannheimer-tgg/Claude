@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-29-hepa-filters-for-allergies-and-pet-dander-be52f4
 uuid: be52f4e2-999d-429f-b433-e89549dd62b4
 ---
 
-#chat/medium #project/main #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # HEPA filters for allergies and pet dander — Key User Messages
 

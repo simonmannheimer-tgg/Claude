@@ -1,18 +1,18 @@
 ---
 title: PoP calculations with task names
 date: 2026-03-27
-project: main
+project: GSC Indexability Tracker Fixes
 status: completed
 score: 5/5
 uuid: 99850b82-5476-46b9-9352-23388a0d2b60
 ---
 
-#chat/light #project/main #status/completed #topic/404 #topic/bfcm #topic/crawl #topic/gsc #topic/pdp #topic/redirect
+#chat/light #project/gsc-indexability-tracker-fixes #status/completed #topic/404 #topic/bfcm #topic/crawl #topic/gsc #topic/pdp #topic/redirect
 
 # PoP calculations with task names
 
 - **Date:** [[2026-03-27]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/GSC Indexability Tracker Fixes]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 16
 - **Chat URL:** https://claude.ai/chat/99850b82-5476-46b9-9352-23388a0d2b60

@@ -1,18 +1,18 @@
 ---
 title: Semrush MCP access
 date: 2026-04-28
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 3/5
 uuid: ffe47d9f-52c9-4bab-8fe3-bce660c24063
 ---
 
-#chat/light #project/main #status/tactical #topic/mcp #topic/semrush
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/mcp #topic/semrush
 
 # Semrush MCP access
 
 - **Date:** [[2026-04-28]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 3/5: deliverable, named-tgg, project-keyword)
 - **Messages:** 4
 - **Chat URL:** https://claude.ai/chat/ffe47d9f-52c9-4bab-8fe3-bce660c24063

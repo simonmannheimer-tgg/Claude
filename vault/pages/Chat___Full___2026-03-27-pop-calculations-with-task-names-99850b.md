@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-27-pop-calculations-with-task-names-99850b
 uuid: 99850b82-5476-46b9-9352-23388a0d2b60
 ---
 
-#chat/full #project/main #status/completed
+#chat/full #project/gsc-indexability-tracker-fixes #status/completed
 
 # PoP calculations with task names — Full Transcript
 

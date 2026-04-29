@@ -1,18 +1,18 @@
 ---
 title: Combining elements or concepts
 date: 2026-03-11
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 4/5
 uuid: 288c37b0-99ad-45b7-a61e-72bec9c81334
 ---
 
-#chat/light #project/main #status/tactical #topic/404 #topic/aeo #topic/bfcm #topic/blog #topic/copy #topic/deals #topic/feed #topic/ga4 #topic/gsc #topic/inlink #topic/keyword #topic/plp #topic/profound #topic/redirect #topic/regex #topic/schema #topic/semrush #topic/shopify #topic/sitemap #topic/youtube
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/404 #topic/aeo #topic/bfcm #topic/blog #topic/copy #topic/deals #topic/feed #topic/ga4 #topic/gsc #topic/inlink #topic/keyword #topic/plp #topic/profound #topic/redirect #topic/regex #topic/schema #topic/semrush #topic/shopify #topic/sitemap #topic/youtube
 
 # Combining elements or concepts
 
 - **Date:** [[2026-03-11]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 4/5: deliverable, named-tgg, project-keyword, lasting-effect)
 - **Messages:** 4
 - **Chat URL:** https://claude.ai/chat/288c37b0-99ad-45b7-a61e-72bec9c81334

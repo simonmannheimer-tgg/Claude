@@ -1,18 +1,18 @@
 ---
 title: Refining Shopify flow redirects with URL pattern matching
 date: 2026-04-07
-project: main
+project: Shopify Flow Redirect — Verification Pending
 status: abandoned
 score: 5/5
 uuid: 4c640f7a-8395-4200-ba4a-a38476d6c48e
 ---
 
-#chat/light #project/main #status/abandoned #topic/plp #topic/redirect #topic/shopify #topic/sitemap
+#chat/light #project/shopify-flow-redirect-verification-pendi #status/abandoned #topic/plp #topic/redirect #topic/shopify #topic/sitemap
 
 # Refining Shopify flow redirects with URL pattern matching
 
 - **Date:** [[2026-04-07]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Shopify Flow Redirect — Verification Pending]]
 - **Status:** #status/abandoned (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 34
 - **Chat URL:** https://claude.ai/chat/4c640f7a-8395-4200-ba4a-a38476d6c48e

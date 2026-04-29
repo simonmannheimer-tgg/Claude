@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-26-calculating-7-increase-on-two-numbers-819380
 uuid: 8193806c-2a50-4331-9c7d-f1103d6b555d
 ---
 
-#chat/medium #project/main #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # Calculating 7% increase on two numbers — Key User Messages
 

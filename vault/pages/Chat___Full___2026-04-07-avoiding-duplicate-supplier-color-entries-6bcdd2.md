@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-07-avoiding-duplicate-supplier-color-entries-6bcdd2
 uuid: 6bcdd2d7-30ae-4016-a5b6-edf6da74cbd1
 ---
 
-#chat/full #project/main #status/tactical
+#chat/full #project/closed-tactical-tasks #status/tactical
 
 # Avoiding duplicate supplier color entries — Full Transcript
 

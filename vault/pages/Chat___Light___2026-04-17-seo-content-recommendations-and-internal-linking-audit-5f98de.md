@@ -1,18 +1,18 @@
 ---
 title: SEO content recommendations and internal linking audit
 date: 2026-04-17
-project: main
+project: Content Cluster / Inlink Gap Analysis (Computing PDPs)
 status: active
 score: 4/5
 uuid: 5f98def5-ecef-400d-a191-efc7f5ea1766
 ---
 
-#chat/light #project/main #status/active #topic/blog #topic/contentful #topic/deals #topic/eofy #topic/inlink #topic/plp #topic/sitemap #skill/tgg-seo-specialist
+#chat/light #project/content-cluster-inlink-gap-analysis-comp #status/active #topic/blog #topic/contentful #topic/deals #topic/eofy #topic/inlink #topic/plp #topic/sitemap #skill/tgg-seo-specialist
 
 # SEO content recommendations and internal linking audit
 
 - **Date:** [[2026-04-17]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Content Cluster / Inlink Gap Analysis (Computing PDPs)]]
 - **Status:** #status/active (score 4/5: deliverable, named-tgg, project-keyword, lasting-effect)
 - **Messages:** 4
 - **Chat URL:** https://claude.ai/chat/5f98def5-ecef-400d-a191-efc7f5ea1766

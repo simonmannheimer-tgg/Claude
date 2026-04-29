@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-11-second-key-insight-ef80a3
 uuid: ef80a3c1-9c08-4daf-b689-c6689580b32d
 ---
 
-#chat/medium #project/main #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # Second key insight — Key User Messages
 

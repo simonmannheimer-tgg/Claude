@@ -1,18 +1,18 @@
 ---
 title: Building a custom skill
 date: 2026-04-10
-project: main
+project: Skills Built (full set)
 status: completed
 score: 5/5
 uuid: 06d61231-0075-41df-aa7a-fd8797f8f4e3
 ---
 
-#chat/light #project/main #status/completed #topic/aeo #topic/copy #topic/inlink #topic/plp #topic/redirect #topic/youtube #skill/tgg-content-strategist #skill/tgg-marketing-analyst #skill/tgg-repo-manager #skill/tgg-seo-specialist #skill/tgg-template-generator #skill/verification-gate-protocol
+#chat/light #project/skills-built-full-set #status/completed #topic/aeo #topic/copy #topic/inlink #topic/plp #topic/redirect #topic/youtube #skill/tgg-content-strategist #skill/tgg-marketing-analyst #skill/tgg-repo-manager #skill/tgg-seo-specialist #skill/tgg-template-generator #skill/verification-gate-protocol
 
 # Building a custom skill
 
 - **Date:** [[2026-04-10]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Skills Built (full set)]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 20
 - **Chat URL:** https://claude.ai/chat/06d61231-0075-41df-aa7a-fd8797f8f4e3

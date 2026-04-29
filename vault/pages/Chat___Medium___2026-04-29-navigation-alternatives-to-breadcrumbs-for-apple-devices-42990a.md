@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-29-navigation-alternatives-to-breadcrumbs-for-apple-d
 uuid: 42990a6f-1e40-418f-bf30-1a1d156d0a5c
 ---
 
-#chat/medium #project/main #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # Navigation alternatives to breadcrumbs for Apple devices — Key User Messages
 

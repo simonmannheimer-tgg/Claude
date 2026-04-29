@@ -1,18 +1,18 @@
 ---
 title: Writing a similar introduction paragraph
 date: 2026-03-18
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 4/5
 uuid: 0f39c225-8c91-48ac-b181-fd7987c8e448
 ---
 
-#chat/light #project/main #status/tactical #topic/aeo #topic/bfcm #topic/schema #skill/tgg-seo-specialist
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/aeo #topic/bfcm #topic/schema #skill/tgg-seo-specialist
 
 # Writing a similar introduction paragraph
 
 - **Date:** [[2026-03-18]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 4/5: deliverable, named-tgg, project-keyword, lasting-effect)
 - **Messages:** 4
 - **Chat URL:** https://claude.ai/chat/0f39c225-8c91-48ac-b181-fd7987c8e448

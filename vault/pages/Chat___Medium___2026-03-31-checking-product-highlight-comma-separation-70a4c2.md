@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-31-checking-product-highlight-comma-separation-70a4c2
 uuid: 70a4c27b-e9ad-468c-8dc9-48c325219571
 ---
 
-#chat/medium #project/main #status/completed
+#chat/medium #project/gmc-feed-audit-delimiter-conflict #status/completed
 
 # Checking product highlight comma separation — Key User Messages
 

@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-24-converting-text-to-simple-regex-2e1397
 uuid: 2e1397b7-c40f-4849-82ab-b17faf687a43
 ---
 
-#chat/medium #project/main #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # Converting text to simple regex — Key User Messages
 

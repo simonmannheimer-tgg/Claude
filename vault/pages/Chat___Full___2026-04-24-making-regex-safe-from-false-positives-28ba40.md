@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-24-making-regex-safe-from-false-positives-28ba40
 uuid: 28ba404d-dce9-446d-aa65-a46d4f4f99b1
 ---
 
-#chat/full #project/main #status/active
+#chat/full #project/colour-keyword-gsc-analysis #status/active
 
 # Making regex safe from false positives — Full Transcript
 

@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-18-writing-a-similar-introduction-paragraph-0f39c2
 uuid: 0f39c225-8c91-48ac-b181-fd7987c8e448
 ---
 
-#chat/medium #project/main #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # Writing a similar introduction paragraph — Key User Messages
 

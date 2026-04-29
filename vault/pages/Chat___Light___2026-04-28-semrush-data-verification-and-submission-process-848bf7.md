@@ -1,18 +1,18 @@
 ---
 title: Semrush data verification and submission process
 date: 2026-04-28
-project: SEMRUSH MIGRATION
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 5/5
 uuid: 848bf76a-f0ce-4246-9df6-4ad237670f8d
 ---
 
-#chat/light #project/semrush-migration #status/tactical #topic/bfcm #topic/gsc #topic/keyword #topic/mcp #topic/schema #topic/semrush #skill/verification-gate-protocol
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/bfcm #topic/gsc #topic/keyword #topic/mcp #topic/schema #topic/semrush #skill/verification-gate-protocol
 
 # Semrush data verification and submission process
 
 - **Date:** [[2026-04-28]]
-- **Project:** [[Projects/SEMRUSH MIGRATION]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 16
 - **Chat URL:** https://claude.ai/chat/848bf76a-f0ce-4246-9df6-4ad237670f8d

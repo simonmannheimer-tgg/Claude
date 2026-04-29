@@ -1,18 +1,18 @@
 ---
 title: Debugging The Good Guys website content structure
 date: 2026-04-28
-project: main
+project: Contentful Node Type Fix — 4 Articles Remaining
 status: active
 score: 5/5
 uuid: 8519a693-f272-4871-a7dd-45bca7b7796c
 ---
 
-#chat/light #project/main #status/active #topic/blog #topic/contentful #topic/pdp #topic/schema #skill/mhtml-reader
+#chat/light #project/contentful-node-type-fix-4-articles-rema #status/active #topic/blog #topic/contentful #topic/pdp #topic/schema #skill/mhtml-reader
 
 # Debugging The Good Guys website content structure
 
 - **Date:** [[2026-04-28]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Contentful Node Type Fix — 4 Articles Remaining]]
 - **Status:** #status/active (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 10
 - **Chat URL:** https://claude.ai/chat/8519a693-f272-4871-a7dd-45bca7b7796c

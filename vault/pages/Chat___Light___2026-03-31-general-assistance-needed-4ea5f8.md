@@ -1,18 +1,18 @@
 ---
 title: General assistance needed
 date: 2026-03-31
-project: main
+project: YouTube Transcript Downstream Work
 status: abandoned
 score: 5/5
 uuid: 4ea5f890-5bdd-460c-924e-cc58720b00aa
 ---
 
-#chat/light #project/main #status/abandoned #topic/inlink #topic/keyword #topic/regex #topic/youtube
+#chat/light #project/youtube-transcript-downstream-work #status/abandoned #topic/inlink #topic/keyword #topic/regex #topic/youtube
 
 # General assistance needed
 
 - **Date:** [[2026-03-31]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/YouTube Transcript Downstream Work]]
 - **Status:** #status/abandoned (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 11
 - **Chat URL:** https://claude.ai/chat/4ea5f890-5bdd-460c-924e-cc58720b00aa

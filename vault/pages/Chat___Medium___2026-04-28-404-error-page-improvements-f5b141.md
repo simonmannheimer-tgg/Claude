@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-28-404-error-page-improvements-f5b141
 uuid: f5b1417a-1447-4632-ad3d-4e0767aee9c5
 ---
 
-#chat/medium #project/main #status/completed
+#chat/medium #project/404-page-backlog-tracker #status/completed
 
 # 404 error page improvements — Key User Messages
 

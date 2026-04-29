@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-24-mapping-organic-shopping-categories-to-good-guys-u
 uuid: be93cf2e-ef97-4750-95ba-09f42bec990a
 ---
 
-#chat/full #project/main #status/active
+#chat/full #project/gmc-organic-shopping-to-deals-page-attri #status/active
 
 # Mapping organic shopping categories to Good Guys URLs — Full Transcript
 

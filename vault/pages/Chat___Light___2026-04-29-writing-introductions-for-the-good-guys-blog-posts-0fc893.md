@@ -1,18 +1,18 @@
 ---
 title: Writing introductions for The Good Guys blog posts
 date: 2026-04-29
-project: main
+project: Blog Intros — New Pages (April 29 batch)
 status: completed
 score: 4/5
 uuid: 0fc89328-5ad2-4592-8ee0-0c2b6c437901
 ---
 
-#chat/light #project/main #status/completed #topic/blog #topic/contentful #topic/copy #topic/inlink #topic/plp #topic/youtube #skill/tgg-copywriting #skill/tgg-seo-specialist
+#chat/light #project/blog-intros-new-pages-april-29-batch #status/completed #topic/blog #topic/contentful #topic/copy #topic/inlink #topic/plp #topic/youtube #skill/tgg-copywriting #skill/tgg-seo-specialist
 
 # Writing introductions for The Good Guys blog posts
 
 - **Date:** [[2026-04-29]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Blog Intros — New Pages (April 29 batch)]]
 - **Status:** #status/completed (score 4/5: deliverable, named-tgg, project-keyword, lasting-effect)
 - **Messages:** 4
 - **Chat URL:** https://claude.ai/chat/0fc89328-5ad2-4592-8ee0-0c2b6c437901

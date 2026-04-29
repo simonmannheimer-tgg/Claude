@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-19-flow-audit-request-6d6b73
 uuid: 6d6b73c9-7965-4c48-916f-31443bc44aad
 ---
 
-#chat/medium #project/main #status/completed
+#chat/medium #project/shopify-flow-bug-fix-sha256-hash #status/completed
 
 # Flow audit request — Key User Messages
 

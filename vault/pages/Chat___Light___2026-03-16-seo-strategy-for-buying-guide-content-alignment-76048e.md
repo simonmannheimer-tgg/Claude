@@ -1,18 +1,18 @@
 ---
 title: SEO strategy for buying guide content alignment
 date: 2026-03-16
-project: main
+project: SEO Strategy Buying Guide (HTML Report)
 status: completed
 score: 5/5
 uuid: 76048e48-e800-495e-8124-71b919b73813
 ---
 
-#chat/light #project/main #status/completed #topic/aeo #topic/blog #topic/inlink #topic/keyword #topic/mcp #topic/pdp #topic/plp #topic/schema #topic/semrush
+#chat/light #project/seo-strategy-buying-guide-html-report #status/completed #topic/aeo #topic/blog #topic/inlink #topic/keyword #topic/mcp #topic/pdp #topic/plp #topic/schema #topic/semrush
 
 # SEO strategy for buying guide content alignment
 
 - **Date:** [[2026-03-16]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/SEO Strategy Buying Guide (HTML Report)]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 14
 - **Chat URL:** https://claude.ai/chat/76048e48-e800-495e-8124-71b919b73813

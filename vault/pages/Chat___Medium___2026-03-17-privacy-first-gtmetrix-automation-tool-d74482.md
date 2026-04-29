@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-17-privacy-first-gtmetrix-automation-tool-d74482
 uuid: d74482e9-5710-49df-a67a-3589e2a48bbb
 ---
 
-#chat/medium #project/main #status/completed
+#chat/medium #project/gtmetrix-mcp-server-scaffolded-cloudflar #status/completed
 
 # Privacy-first GTmetrix automation tool — Key User Messages
 

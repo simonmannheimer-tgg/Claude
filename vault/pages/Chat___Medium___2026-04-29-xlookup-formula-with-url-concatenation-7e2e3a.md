@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-29-xlookup-formula-with-url-concatenation-7e2e3a
 uuid: 7e2e3aeb-3c42-4946-89c1-b15145ed6d63
 ---
 
-#chat/medium #project/main #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # XLOOKUP formula with URL concatenation — Key User Messages
 

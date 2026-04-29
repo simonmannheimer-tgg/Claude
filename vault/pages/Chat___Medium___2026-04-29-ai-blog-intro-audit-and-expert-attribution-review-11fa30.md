@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-29-ai-blog-intro-audit-and-expert-attribution-review-
 uuid: 11fa3047-9e68-4745-a0a0-b330ff2af6ae
 ---
 
-#chat/medium #project/main #status/completed
+#chat/medium #project/blog-eeat-aio-optimisation-792-articles #status/completed
 
 # AI blog intro audit and expert attribution review — Key User Messages
 

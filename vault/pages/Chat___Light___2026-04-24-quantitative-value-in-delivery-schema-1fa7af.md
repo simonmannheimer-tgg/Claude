@@ -1,18 +1,18 @@
 ---
 title: Quantitative value in delivery schema
 date: 2026-04-24
-project: main
+project: Delivery Schema — 9x5 Purchase State Matrix
 status: active
 score: 2/5
 uuid: 1fa7afec-7a5d-41e5-a4a2-9bd900bdb6f7
 ---
 
-#chat/light #project/main #status/active #topic/jira #topic/pdp #topic/schema
+#chat/light #project/delivery-schema-9x5-purchase-state-matri #status/active #topic/jira #topic/pdp #topic/schema
 
 # Quantitative value in delivery schema
 
 - **Date:** [[2026-04-24]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Delivery Schema — 9x5 Purchase State Matrix]]
 - **Status:** #status/active (score 2/5: deliverable, project-keyword)
 - **Messages:** 4
 - **Chat URL:** https://claude.ai/chat/1fa7afec-7a5d-41e5-a4a2-9bd900bdb6f7

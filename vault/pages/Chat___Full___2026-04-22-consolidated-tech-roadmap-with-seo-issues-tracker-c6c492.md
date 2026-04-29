@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-22-consolidated-tech-roadmap-with-seo-issues-tracker-
 uuid: c6c492c4-fc3b-4fff-a646-aeb73ac60de2
 ---
 
-#chat/full #project/eofy #status/completed
+#chat/full #project/tech-roadmap-mondaycom-od-items #status/completed
 
 # Consolidated tech roadmap with SEO issues tracker — Full Transcript
 

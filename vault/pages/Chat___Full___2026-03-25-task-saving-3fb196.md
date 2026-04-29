@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-25-task-saving-3fb196
 uuid: 3fb196bd-39e2-4af3-9919-3ae12f7881d5
 ---
 
-#chat/full #project/main #status/completed
+#chat/full #project/click-frenzy-faq-sunsetting-page #status/completed
 
 # Task saving — Full Transcript
 

@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-28-blog-linking-map-for-eofy-deals-pages-735105
 uuid: 73510503-fa5a-490e-b9eb-fd69ff339759
 ---
 
-#chat/medium #project/eofy #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # Blog linking map for EOFY deals pages — Key User Messages
 

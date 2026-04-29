@@ -1,18 +1,18 @@
 ---
 title: Downloadable table file output
 date: 2026-03-12
-project: main
+project: Sitemap Audit Scripts \+ Redirect Mapper (Google Colab)
 status: completed
 score: 4/5
 uuid: dd45e2ab-413a-4903-a3de-196a8c2314c6
 ---
 
-#chat/light #project/main #status/completed #topic/404 #topic/blog #topic/crawl #topic/pdp #topic/plp #topic/redirect #topic/schema #topic/shopify #topic/sitemap
+#chat/light #project/sitemap-audit-scripts-redirect-mapper-go #status/completed #topic/404 #topic/blog #topic/crawl #topic/pdp #topic/plp #topic/redirect #topic/schema #topic/shopify #topic/sitemap
 
 # Downloadable table file output
 
 - **Date:** [[2026-03-12]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Sitemap Audit Scripts \+ Redirect Mapper (Google Colab)]]
 - **Status:** #status/completed (score 4/5: deliverable, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 14
 - **Chat URL:** https://claude.ai/chat/dd45e2ab-413a-4903-a3de-196a8c2314c6

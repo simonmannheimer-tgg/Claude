@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-29-breville-barista-espresso-machine-product-writeup-
 uuid: 7315731e-ebfe-4d98-b969-ca311316ba07
 ---
 
-#chat/medium #project/main #status/active
+#chat/medium #project/breville-barista-schema-pdp-conflict-res #status/active
 
 # Breville Barista espresso machine product writeup — Key User Messages
 

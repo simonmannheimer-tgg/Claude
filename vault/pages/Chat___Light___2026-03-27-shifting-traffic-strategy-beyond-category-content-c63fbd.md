@@ -1,18 +1,18 @@
 ---
 title: Shifting traffic strategy beyond category content
 date: 2026-03-27
-project: main
+project: February 2026 SEO Deck \+ Executive Email
 status: completed
 score: 5/5
 uuid: c63fbd99-3c86-435a-86e6-ed6670074654
 ---
 
-#chat/light #project/main #status/completed #topic/aeo #topic/bfcm #topic/blog #topic/copy #topic/feed #topic/ga4 #topic/gsc #topic/keyword #topic/pdp #topic/plp #topic/profound #topic/semrush #topic/youtube
+#chat/light #project/february-2026-seo-deck-executive-email #status/completed #topic/aeo #topic/bfcm #topic/blog #topic/copy #topic/feed #topic/ga4 #topic/gsc #topic/keyword #topic/pdp #topic/plp #topic/profound #topic/semrush #topic/youtube
 
 # Shifting traffic strategy beyond category content
 
 - **Date:** [[2026-03-27]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/February 2026 SEO Deck \+ Executive Email]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 71
 - **Chat URL:** https://claude.ai/chat/c63fbd99-3c86-435a-86e6-ed6670074654

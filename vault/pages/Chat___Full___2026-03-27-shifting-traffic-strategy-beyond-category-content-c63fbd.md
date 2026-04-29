@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-27-shifting-traffic-strategy-beyond-category-content-
 uuid: c63fbd99-3c86-435a-86e6-ed6670074654
 ---
 
-#chat/full #project/main #status/completed
+#chat/full #project/february-2026-seo-deck-executive-email #status/completed
 
 # Shifting traffic strategy beyond category content — Full Transcript
 

@@ -1,18 +1,18 @@
 ---
 title: Building a copywriting skill from GitHub code
 date: 2026-03-18
-project: main
+project: Skills Built (full set)
 status: completed
 score: 5/5
 uuid: 63f3c699-be20-4241-9b4e-ec7a94d34c97
 ---
 
-#chat/light #project/main #status/completed #topic/copy #topic/deals #topic/inlink #topic/meta #topic/plp #skill/tgg-copywriting
+#chat/light #project/skills-built-full-set #status/completed #topic/copy #topic/deals #topic/inlink #topic/meta #topic/plp #skill/tgg-copywriting
 
 # Building a copywriting skill from GitHub code
 
 - **Date:** [[2026-03-18]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Skills Built (full set)]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 18
 - **Chat URL:** https://claude.ai/chat/63f3c699-be20-4241-9b4e-ec7a94d34c97

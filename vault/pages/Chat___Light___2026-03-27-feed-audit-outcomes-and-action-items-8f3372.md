@@ -1,18 +1,18 @@
 ---
 title: Feed audit outcomes and action items
 date: 2026-03-27
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 2/5
 uuid: 8f3372b1-7c7c-4b16-86bc-25f3b3aaab20
 ---
 
-#chat/light #project/main #status/tactical #topic/pdp
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/pdp
 
 # Feed audit outcomes and action items
 
 - **Date:** [[2026-03-27]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 2/5: 5+turns, project-keyword)
 - **Messages:** 6
 - **Chat URL:** https://claude.ai/chat/8f3372b1-7c7c-4b16-86bc-25f3b3aaab20

@@ -1,18 +1,18 @@
 ---
 title: Finding blogs with summary bullets
 date: 2026-04-28
-project: main
+project: AEO Blog Summary Bullet Audit — Go/No-Go Pending
 status: active
 score: 4/5
 uuid: 6e156e24-4ea7-4906-a49d-1026f49e449c
 ---
 
-#chat/light #project/main #status/active #topic/aeo #topic/bfcm #topic/blog #topic/eofy
+#chat/light #project/aeo-blog-summary-bullet-audit-gono-go-pe #status/active #topic/aeo #topic/bfcm #topic/blog #topic/eofy
 
 # Finding blogs with summary bullets
 
 - **Date:** [[2026-04-28]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/AEO Blog Summary Bullet Audit — Go/No-Go Pending]]
 - **Status:** #status/active (score 4/5: deliverable, named-tgg, 5+turns, project-keyword)
 - **Messages:** 17
 - **Chat URL:** https://claude.ai/chat/6e156e24-4ea7-4906-a49d-1026f49e449c

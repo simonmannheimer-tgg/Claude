@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-29-url-regex-pattern-for-thegoodguys-domain-a15ec7
 uuid: a15ec777-109b-4e46-bc5d-ebe749f043a8
 ---
 
-#chat/medium #project/main #status/tactical
+#chat/medium #project/closed-tactical-tasks #status/tactical
 
 # URL regex pattern for thegoodguys domain — Key User Messages
 

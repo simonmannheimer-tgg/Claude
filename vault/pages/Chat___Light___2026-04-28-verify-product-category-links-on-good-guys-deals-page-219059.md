@@ -1,18 +1,18 @@
 ---
 title: Verify product category links on Good Guys deals page
 date: 2026-04-28
-project: EOFY
+project: Deals Page Slider Audit (14 Pages)
 status: completed
 score: 4/5
 uuid: 219059f1-601c-416c-9e7f-e976b5c07198
 ---
 
-#chat/light #project/eofy #status/completed #topic/bfcm #topic/deals #topic/eofy #topic/inlink #topic/plp
+#chat/light #project/deals-page-slider-audit-14-pages #status/completed #topic/bfcm #topic/deals #topic/eofy #topic/inlink #topic/plp
 
 # Verify product category links on Good Guys deals page
 
 - **Date:** [[2026-04-28]]
-- **Project:** [[Projects/EOFY]]
+- **Project:** [[Projects/Deals Page Slider Audit (14 Pages)]]
 - **Status:** #status/completed (score 4/5: deliverable, named-tgg, 5+turns, project-keyword)
 - **Messages:** 6
 - **Chat URL:** https://claude.ai/chat/219059f1-601c-416c-9e7f-e976b5c07198

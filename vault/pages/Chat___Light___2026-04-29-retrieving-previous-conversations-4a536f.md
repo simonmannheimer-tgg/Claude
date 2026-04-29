@@ -1,18 +1,18 @@
 ---
 title: Retrieving previous conversations
 date: 2026-04-29
-project: Blog inventory
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 3/5
 uuid: 4a536f60-1e62-4054-aeaa-b157a2fbba06
 ---
 
-#chat/light #project/blog-inventory #status/tactical #topic/blog #topic/profound #topic/sitemap
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/blog #topic/profound #topic/sitemap
 
 # Retrieving previous conversations
 
 - **Date:** [[2026-04-29]]
-- **Project:** [[Projects/Blog inventory]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 3/5: deliverable, named-tgg, project-keyword)
 - **Messages:** 4
 - **Chat URL:** https://claude.ai/chat/4a536f60-1e62-4054-aeaa-b157a2fbba06

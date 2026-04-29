@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-28-custom-javascript-for-screaming-frog-reading-time-
 uuid: 777f4b97-7ce7-4af4-b2ae-089acdff2099
 ---
 
-#chat/full #project/main #status/completed
+#chat/full #project/sf-custom-js-reading-time #status/completed
 
 # Custom JavaScript for Screaming Frog reading time — Full Transcript
 

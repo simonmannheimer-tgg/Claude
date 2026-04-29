@@ -1,18 +1,18 @@
 ---
 title: Claude agent workflows for work projects
 date: 2026-04-29
-project: main
+project: Claude Code Agent Workflows Research
 status: active
 score: 4/5
 uuid: ff0a86b9-30b2-40fd-ad49-a7621d123886
 ---
 
-#chat/light #project/main #status/active #topic/airtable #topic/copy #topic/gsc #topic/mcp #topic/semrush
+#chat/light #project/claude-code-agent-workflows-research #status/active #topic/airtable #topic/copy #topic/gsc #topic/mcp #topic/semrush
 
 # Claude agent workflows for work projects
 
 - **Date:** [[2026-04-29]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Claude Code Agent Workflows Research]]
 - **Status:** #status/active (score 4/5: deliverable, named-tgg, 5+turns, project-keyword)
 - **Messages:** 6
 - **Chat URL:** https://claude.ai/chat/ff0a86b9-30b2-40fd-ad49-a7621d123886

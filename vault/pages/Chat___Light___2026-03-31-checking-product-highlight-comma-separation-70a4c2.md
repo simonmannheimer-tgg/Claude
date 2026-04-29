@@ -1,18 +1,18 @@
 ---
 title: Checking product highlight comma separation
 date: 2026-03-31
-project: main
+project: GMC Feed Audit — Delimiter Conflict
 status: completed
 score: 3/5
 uuid: 70a4c27b-e9ad-468c-8dc9-48c325219571
 ---
 
-#chat/light #project/main #status/completed
+#chat/light #project/gmc-feed-audit-delimiter-conflict #status/completed
 
 # Checking product highlight comma separation
 
 - **Date:** [[2026-03-31]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/GMC Feed Audit — Delimiter Conflict]]
 - **Status:** #status/completed (score 3/5: deliverable, project-keyword, lasting-effect)
 - **Messages:** 2
 - **Chat URL:** https://claude.ai/chat/70a4c27b-e9ad-468c-8dc9-48c325219571

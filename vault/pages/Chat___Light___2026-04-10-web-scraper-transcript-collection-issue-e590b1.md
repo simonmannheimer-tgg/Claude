@@ -1,18 +1,18 @@
 ---
 title: Web scraper transcript collection issue
 date: 2026-04-10
-project: main
+project: YouTube Transcript Downstream Work
 status: abandoned
 score: 5/5
 uuid: e590b103-1c68-481e-83af-a67a46377648
 ---
 
-#chat/light #project/main #status/abandoned #topic/youtube
+#chat/light #project/youtube-transcript-downstream-work #status/abandoned #topic/youtube
 
 # Web scraper transcript collection issue
 
 - **Date:** [[2026-04-10]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/YouTube Transcript Downstream Work]]
 - **Status:** #status/abandoned (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 76
 - **Chat URL:** https://claude.ai/chat/e590b103-1c68-481e-83af-a67a46377648

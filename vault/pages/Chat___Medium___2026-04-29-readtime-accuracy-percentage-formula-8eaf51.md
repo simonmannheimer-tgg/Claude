@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-29-readtime-accuracy-percentage-formula-8eaf51
 uuid: 8eaf51ec-1e90-4d13-bc0f-03dc0e4e4028
 ---
 
-#chat/medium #project/eofy #status/completed
+#chat/medium #project/readtime-accuracy-formula #status/completed
 
 # Readtime accuracy percentage formula — Key User Messages
 

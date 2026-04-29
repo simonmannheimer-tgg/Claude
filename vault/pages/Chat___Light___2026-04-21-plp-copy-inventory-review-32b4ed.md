@@ -1,18 +1,18 @@
 ---
 title: PLP copy inventory review
 date: 2026-04-21
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 4/5
 uuid: 32b4ed02-6508-4c20-9d1c-b858233587b4
 ---
 
-#chat/light #project/main #status/tactical #topic/aeo #topic/copy #topic/inlink #topic/keyword #topic/meta #topic/plp #topic/schema #skill/tgg-copywriting
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/aeo #topic/copy #topic/inlink #topic/keyword #topic/meta #topic/plp #topic/schema #skill/tgg-copywriting
 
 # PLP copy inventory review
 
 - **Date:** [[2026-04-21]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 4/5: deliverable, named-tgg, project-keyword, lasting-effect)
 - **Messages:** 4
 - **Chat URL:** https://claude.ai/chat/32b4ed02-6508-4c20-9d1c-b858233587b4

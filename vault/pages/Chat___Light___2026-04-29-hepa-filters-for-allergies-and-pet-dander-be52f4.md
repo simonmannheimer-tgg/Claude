@@ -1,18 +1,18 @@
 ---
 title: HEPA filters for allergies and pet dander
 date: 2026-04-29
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 0/5
 uuid: be52f4e2-999d-429f-b433-e89549dd62b4
 ---
 
-#chat/light #project/main #status/tactical
+#chat/light #project/closed-tactical-tasks #status/tactical
 
 # HEPA filters for allergies and pet dander
 
 - **Date:** [[2026-04-29]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 0/5: n/a)
 - **Messages:** 4
 - **Chat URL:** https://claude.ai/chat/be52f4e2-999d-429f-b433-e89549dd62b4

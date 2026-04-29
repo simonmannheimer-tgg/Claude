@@ -1,18 +1,18 @@
 ---
 title: Clarifying year-over-year growth comparison
 date: 2026-04-29
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 1/5
 uuid: 55226538-144d-4ae7-b2c4-bee735d5c184
 ---
 
-#chat/light #project/main #status/tactical
+#chat/light #project/closed-tactical-tasks #status/tactical
 
 # Clarifying year-over-year growth comparison
 
 - **Date:** [[2026-04-29]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 1/5: 5+turns)
 - **Messages:** 18
 - **Chat URL:** https://claude.ai/chat/55226538-144d-4ae7-b2c4-bee735d5c184

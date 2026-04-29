@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-26-clarifying-an-unclear-phrase-4842b6
 uuid: 4842b6df-44fe-4908-9d51-e9169f02ab1f
 ---
 
-#chat/full #project/main #status/tactical
+#chat/full #project/closed-tactical-tasks #status/tactical
 
 # Clarifying an unclear phrase — Full Transcript
 

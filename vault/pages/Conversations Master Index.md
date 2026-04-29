@@ -4,7 +4,7 @@ title: Conversations Master Index
 
 # Conversations Master Index
 
-**Generated:** 2026-04-29 15:59 UTC
+**Generated:** 2026-04-29 21:06 UTC
 **Total indexed:** 272 (skipped 5 empty conversations)
 
 ## By status
@@ -16,12 +16,57 @@ title: Conversations Master Index
 
 ## By project
 
-- [[Projects/main]] — 220 chats
-- [[Projects/EOFY]] — 37 chats
+- [[Projects/main]] — 129 chats
+- [[Projects/CLOSED / TACTICAL TASKS]] — 34 chats
+- [[Projects/EOFY]] — 29 chats
+- [[Projects/Skills Built (full set)]] — 8 chats
 - [[Projects/Monthly SEO Update]] — 7 chats
-- [[Projects/SEMRUSH MIGRATION]] — 4 chats
+- [[Projects/BFCM 2025 Post-Mortem Deck]] — 4 chats
+- [[Projects/LG, Samsung, Hisense, TCL Latest TVs Copy]] — 3 chats
+- [[Projects/February 2026 SEO Deck \+ Executive Email]] — 3 chats
 - [[Projects/testing pdpd]] — 3 chats
-- [[Projects/Blog inventory]] — 1 chats
+- [[Projects/Easter Sale 2026 Copy Package]] — 2 chats
+- [[Projects/SEMRUSH MIGRATION]] — 2 chats
+- [[Projects/GMC Feed Audit — Delimiter Conflict]] — 2 chats
+- [[Projects/Product Meta Title Colour Standardisation (8,582 Titles)]] — 2 chats
+- [[Projects/YouTube Transcript Downstream Work]] — 2 chats
+- [[Projects/Delivery Schema — 9x5 Purchase State Matrix]] — 2 chats
+- [[Projects/Content Cluster / Inlink Gap Analysis (Computing PDPs)]] — 2 chats
+- [[Projects/Blog Intros — New Pages (April 29 batch)]] — 2 chats
+- [[Projects/Colour Keyword GSC Analysis]] — 2 chats
+- [[Projects/Contentful GraphQL Universal Export]] — 2 chats
+- [[Projects/Technical SEO Roadmap from Semrush]] — 1 chats
+- [[Projects/SEO Strategy Buying Guide (HTML Report)]] — 1 chats
+- [[Projects/GTMetrix MCP Server (Scaffolded \+ Cloudflare Worker Live)]] — 1 chats
+- [[Projects/Sitemap Audit Scripts \+ Redirect Mapper (Google Colab)]] — 1 chats
+- [[Projects/Airtable PLP Copy Tracker]] — 1 chats
+- [[Projects/Contentful Deals Page Audit \+ HTML Restoration]] — 1 chats
+- [[Projects/Shopify Flow Bug Fix (SHA256 Hash)]] — 1 chats
+- [[Projects/PLP Copy Auditor Script]] — 1 chats
+- [[Projects/GSC Indexability Tracker Fixes]] — 1 chats
+- [[Projects/Click Frenzy FAQ (Sunsetting Page)]] — 1 chats
+- [[Projects/Blog Intro H2 Heading Decision]] — 1 chats
+- [[Projects/PDP Logo Audit]] — 1 chats
+- [[Projects/Shopify Flow Redirect — Verification Pending]] — 1 chats
+- [[Projects/Blog EEAT / AIO Optimisation (792 Articles)]] — 1 chats
+- [[Projects/Tech Roadmap (Monday.com \+ OD Items)]] — 1 chats
+- [[Projects/Page Types Summary Visualisation]] — 1 chats
+- [[Projects/AEO Blog Summary Bullet Audit — Go/No-Go Pending]] — 1 chats
+- [[Projects/Claude Code Agent Workflows Research]] — 1 chats
+- [[Projects/Brand URL Regex (All TGG Brands \~200 brands)]] — 1 chats
+- [[Projects/IntentGaps-style Tool Build]] — 1 chats
+- [[Projects/Deals Page Slider Audit (14 Pages)]] — 1 chats
+- [[Projects/Profound Editorial/Prompt Citation Analysis]] — 1 chats
+- [[Projects/Readtime Accuracy Formula]] — 1 chats
+- [[Projects/Tech SEO Reset Document]] — 1 chats
+- [[Projects/Breville Barista Schema — PDP Conflict Resolution]] — 1 chats
+- [[Projects/AI Content Summaries \+ AI Review Summaries — Jira Pending]] — 1 chats
+- [[Projects/404 Page Backlog Tracker]] — 1 chats
+- [[Projects/GMC Organic Shopping to Deals Page Attribution]] — 1 chats
+- [[Projects/EOFY Blog Briefs — Two URL Errors Outstanding]] — 1 chats
+- [[Projects/SF Custom JS — Reading Time]] — 1 chats
+- [[Projects/Contentful Node Type Fix — 4 Articles Remaining]] — 1 chats
+- [[Projects/Polishing a Summary (Meeting Notes)]] — 1 chats
 
 ## Top topics
 

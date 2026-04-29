@@ -1,18 +1,18 @@
 ---
 title: Building a self-optimizing Claude skill for prompt formatting
 date: 2026-04-29
-project: main
+project: Skills Built (full set)
 status: completed
 score: 5/5
 uuid: 8f2f90c8-62a4-4290-9514-25ef8bf6e0a7
 ---
 
-#chat/light #project/main #status/completed #topic/copy #topic/meta #topic/plp #skill/mhtml-reader #skill/tgg-copywriting #skill/tgg-prompt-architect #skill/tgg-seo-specialist
+#chat/light #project/skills-built-full-set #status/completed #topic/copy #topic/meta #topic/plp #skill/mhtml-reader #skill/tgg-copywriting #skill/tgg-prompt-architect #skill/tgg-seo-specialist
 
 # Building a self-optimizing Claude skill for prompt formatting
 
 - **Date:** [[2026-04-29]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/Skills Built (full set)]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 29
 - **Chat URL:** https://claude.ai/chat/8f2f90c8-62a4-4290-9514-25ef8bf6e0a7

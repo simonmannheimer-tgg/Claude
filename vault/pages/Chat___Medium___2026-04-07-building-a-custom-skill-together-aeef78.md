@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-07-building-a-custom-skill-together-aeef78
 uuid: aeef7830-a429-485b-8451-0e075d7bda1d
 ---
 
-#chat/medium #project/main #status/completed
+#chat/medium #project/skills-built-full-set #status/completed
 
 # Building a custom skill together — Key User Messages
 

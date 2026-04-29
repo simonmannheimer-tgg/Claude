@@ -4,7 +4,7 @@ parent: Chat/Light/2026-03-16-seo-strategy-for-buying-guide-content-alignment-76
 uuid: 76048e48-e800-495e-8124-71b919b73813
 ---
 
-#chat/full #project/main #status/completed
+#chat/full #project/seo-strategy-buying-guide-html-report #status/completed
 
 # SEO strategy for buying guide content alignment — Full Transcript
 

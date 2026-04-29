@@ -1,18 +1,18 @@
 ---
 title: Converting text to simple regex
 date: 2026-04-24
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 2/5
 uuid: 2e1397b7-c40f-4849-82ab-b17faf687a43
 ---
 
-#chat/light #project/main #status/tactical #topic/regex
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/regex
 
 # Converting text to simple regex
 
 - **Date:** [[2026-04-24]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 2/5: deliverable, named-tgg)
 - **Messages:** 4
 - **Chat URL:** https://claude.ai/chat/2e1397b7-c40f-4849-82ab-b17faf687a43

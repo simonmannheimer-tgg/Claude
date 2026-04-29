@@ -1,18 +1,18 @@
 ---
 title: Second key insight
 date: 2026-03-11
-project: main
+project: CLOSED / TACTICAL TASKS
 status: tactical
 score: 2/5
 uuid: ef80a3c1-9c08-4daf-b689-c6689580b32d
 ---
 
-#chat/light #project/main #status/tactical #topic/bfcm #topic/gsc
+#chat/light #project/closed-tactical-tasks #status/tactical #topic/bfcm #topic/gsc
 
 # Second key insight
 
 - **Date:** [[2026-03-11]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/CLOSED / TACTICAL TASKS]]
 - **Status:** #status/tactical (score 2/5: named-tgg, project-keyword)
 - **Messages:** 2
 - **Chat URL:** https://claude.ai/chat/ef80a3c1-9c08-4daf-b689-c6689580b32d

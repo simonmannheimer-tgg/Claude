@@ -4,7 +4,7 @@ parent: Chat/Light/2026-04-28-debugging-the-good-guys-website-content-structure-
 uuid: 8519a693-f272-4871-a7dd-45bca7b7796c
 ---
 
-#chat/medium #project/main #status/active
+#chat/medium #project/contentful-node-type-fix-4-articles-rema #status/active
 
 # Debugging The Good Guys website content structure — Key User Messages
 

@@ -1,18 +1,18 @@
 ---
 title: Black Friday review 2025 handoff and audit
 date: 2026-03-11
-project: main
+project: BFCM 2025 Post-Mortem Deck
 status: completed
 score: 5/5
 uuid: 9ef04228-e498-4511-892d-3f9064ab1410
 ---
 
-#chat/light #project/main #status/completed #topic/aeo #topic/bfcm #topic/crawl #topic/deals #topic/ga4 #topic/gsc #topic/inlink #topic/keyword #topic/profound #topic/screaming-frog #topic/semrush
+#chat/light #project/bfcm-2025-post-mortem-deck #status/completed #topic/aeo #topic/bfcm #topic/crawl #topic/deals #topic/ga4 #topic/gsc #topic/inlink #topic/keyword #topic/profound #topic/screaming-frog #topic/semrush
 
 # Black Friday review 2025 handoff and audit
 
 - **Date:** [[2026-03-11]]
-- **Project:** [[Projects/main]]
+- **Project:** [[Projects/BFCM 2025 Post-Mortem Deck]]
 - **Status:** #status/completed (score 5/5: deliverable, named-tgg, 5+turns, project-keyword, lasting-effect)
 - **Messages:** 51
 - **Chat URL:** https://claude.ai/chat/9ef04228-e498-4511-892d-3f9064ab1410
