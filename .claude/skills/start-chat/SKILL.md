@@ -1,3 +1,10 @@
+---
+name: start-chat
+description: "Start the Claude Code Chat UI server on port 7860."
+---
+
+# Start Chat
+
 Start the Claude Code Chat UI server on port 7860.
 
 ## Steps

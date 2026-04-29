@@ -24,37 +24,38 @@ The repo is not a software development project. It is a personal SEO workflow ma
 ## .claude/ directory structure
 
 ```
-~/.claude/
-├── CLAUDE.md                   → Memory file: process rules, active projects, behavioural instructions
-├── agents/
-│   ├── seo-specialist.md       → Subagent: SEO audits, PLP copy, schema, AEO
-│   ├── content-strategist.md   → Subagent: copy production, briefs, AEO copy
-│   ├── base-template-generator.md
-│   ├── pr-manager.md
-│   └── marketing-analyst.md
-├── skills/
-│   ├── seo-specialist/SKILL.md
-│   ├── content-strategist/SKILL.md
-│   ├── base-template-generator/SKILL.md
-│   ├── pr-manager/SKILL.md
-│   └── marketing-analyst/SKILL.md
-└── commands/
-    └── [slash-command-name].md
-```
-
-**Project-scoped** (in repo root):
-```
 [repo-root]/
+├── CLAUDE.md                        → Project-level rules (supplements global)
 ├── .claude/
-│   └── agents/    → project-specific agents only
-├── CLAUDE.md      → project-level rules (supplements global)
+│   ├── agents/                      → Project-specific subagents
+│   │   ├── seo-team-lead.md
+│   │   ├── plp-copywriter.md
+│   │   ├── metadata-writer.md
+│   │   ├── faq-writer.md
+│   │   ├── aeo-optimizer.md
+│   │   ├── inlink-migrator.md
+│   │   ├── internal-linking-agent.md
+│   │   ├── content-analyst.md
+│   │   ├── eav-researcher.md
+│   │   ├── seo-keyword-researcher.md
+│   │   ├── seo-competitor-analyst.md
+│   │   ├── seo-content-auditor.md
+│   │   ├── seo-reporter.md
+│   │   └── ai-visibility-analyst.md
+│   ├── skills/                      → Slash skills
+│   │   ├── tgg-repo-manager/SKILL.md
+│   │   ├── check-github/SKILL.md
+│   │   └── start-chat/SKILL.md
+│   ├── settings.json
+│   └── mcp-actions.json
+├── 00-tov-language-reference.md
 ├── 01-plp-intros.md
-├── 02-metadata.md
+├── 02-metadata-generation.md
 ├── 03-inlink-migration.md
 ├── 04-content-analysis.md
 ├── 05-faq-category-copy.md
 ├── 06-internal-linking.md
-├── 07-aeo.md
+├── 07-aeo-optimisation.md
 ├── 08-eav-mapping.md
 └── 09-ai-visibility-polling.md
 ```
