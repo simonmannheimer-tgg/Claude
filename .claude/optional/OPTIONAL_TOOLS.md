@@ -13,12 +13,12 @@ Activate any tool by following the SETUP.md inside its folder.
 
 | Tool | Best for | Status | Effort to activate |
 |------|----------|--------|-------------------|
-| superpowers | Any complex multi-step task — enforces plan-before-execute | Not installed | 2 min |
-| gsc | Pulling GSC query/CTR data without CSV exports | Not connected | 20 min (OAuth) |
-| google-workspace | Gmail, Calendar, Sheets, Slides from Claude Code | Not connected | 20 min (OAuth) |
+| superpowers | Any complex multi-step task — enforces plan-before-execute | **Active** | — |
+| gsc | Pulling GSC query/CTR data without CSV exports | **Active** (declared in `.claude/settings.json`; needs `GSC_CREDENTIALS_JSON` secret) | OAuth once on personal device |
+| google-workspace | Gmail, Calendar, Sheets, Slides from Claude Code | **Active** (declared in `.claude/settings.json`; needs `GOOGLE_WORKSPACE_CREDENTIALS_JSON` secret) | OAuth once on personal device |
 | linear | Project/task tracking from Claude Code | Not connected | 5 min |
-| obsidian-pkm | Weekly reviews, goal tracking, session learning | Not set up | 30 min |
-| claude-seo | Deeper SEO sub-skills: schema, GEO/AEO, backlinks | Not installed | 5 min |
+| obsidian-pkm | Weekly reviews, goal tracking, session learning | **Replaced by Logseq** — vault at `vault/`, edited via logseq.com, served to Claude via `vault` filesystem MCP | — |
+| claude-seo | Deeper SEO sub-skills: schema, GEO/AEO, backlinks | **Active** (installed via `.devcontainer/setup.sh`) | — |
 
 ---
 
@@ -26,10 +26,7 @@ Activate any tool by following the SETUP.md inside its folder.
 
 | You say / ask for... | Claude offers... |
 |----------------------|-----------------|
-| Complex multi-step task, deck, batch, report | "Want me to use Superpowers to plan this first?" |
-| GSC data, query analysis, CTR, ranking positions | "Want me to connect GSC MCP to pull this directly?" |
-| Email draft, calendar check, slide update | "Want me to activate Google Workspace MCP?" |
 | Project tracking, sprint tasks, what's pending | "Want me to connect Linear?" |
-| Weekly review, what did I work on, career goals | "Want me to set up the Obsidian PKM workflow?" |
-| Schema markup, GEO/AEO, backlink audit, local SEO | "Want me to install the claude-seo skill suite?" |
+
+(Superpowers, GSC, Google Workspace, claude-seo, and Logseq vault are all active by default — no offer needed.)
 

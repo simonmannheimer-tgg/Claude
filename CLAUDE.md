@@ -56,8 +56,10 @@ Quick reference so agents can locate things without `ls`.
 | `.claude/agents/` | 14 SEO agent definitions |
 | `.claude/skills/` | 4 slash skills |
 | `.claude/hooks/` | 3 active hooks |
-| `.claude/optional/` | 6 staged optional tools (inactive) |
-| `.github/workflows/` | 6 GitHub Actions workflows |
+| `.claude/optional/` | Staged optional tools (most now active — see Trigger map) |
+| `.github/workflows/` | GitHub Actions workflows |
+| `.devcontainer/` | Codespaces config + shared setup script |
+| `vault/` | Logseq PKM graph (markdown files, browser-edited via logseq.com) |
 
 ---
 
@@ -74,12 +76,7 @@ Then wait for confirmation. Do not activate anything without explicit approval.
 
 | Task type | Offer this tool |
 |-----------|----------------|
-| Complex multi-step task, batch job, deck build, audit pipeline, anything likely to involve 5+ steps | **Superpowers plugin** — enforces plan-before-execute, prevents runaway iteration |
-| GSC data, query analysis, CTR by position, ranking opportunities, non-brand performance | **GSC MCP** — pull query data directly, no CSV export needed |
-| Email drafting in context, calendar check, reading/writing Sheets, Slides updates | **Google Workspace MCP** — Gmail, Calendar, Sheets, Slides from Claude Code |
 | Sprint tracking, task status, what's in-flight, creating tickets | **Linear MCP** — project management connected to Claude Code |
-| End-of-week review, goal tracking, what did I work on, career reflection, session learning | **Obsidian PKM** — weekly reviews and goal alignment in a local vault |
-| Schema audit, GEO/AEO content scoring, backlink gap analysis, E-E-A-T scoring, AI Overview optimisation | **claude-seo skill suite** — 19 sub-skills, deeper than current aeo-optimizer agent |
 
 ### Already active (no offer needed)
 - Semrush MCP — keyword, competitor, backlink data
@@ -88,6 +85,32 @@ Then wait for confirmation. Do not activate anything without explicit approval.
 - GTMetrix MCP — performance audits
 - Context Mode MCP — token-efficient context indexing
 - Google Drive — file access
+- **Superpowers plugin** — enforces plan-before-execute on complex multi-step tasks
+- **GSC MCP** (`gsc`) — Search Console queries, CTR, position data
+- **Google Workspace MCP** (`google-workspace`) — Gmail, Calendar, Drive, Sheets, Slides
+- **claude-seo plugin** — schema, GEO/AEO, backlink, E-E-A-T sub-skills (19 total)
+- **Logseq vault** (filesystem MCP scoped to `vault/`) — daily notes, weekly reviews, goal tracking
+
+---
+
+## Where this runs (cloud-only)
+
+This workspace is designed to run *without* a local Claude install. Three execution layers:
+
+| Layer | What runs | Auth | When |
+|-------|-----------|------|------|
+| **Codespaces VM** | Full Claude Code session, all MCPs live | `claude login` once per Codespace (Pro/Max) | Long interactive sessions, audits |
+| **Claude Code on the web** | Same MCPs, bootstrapped by SessionStart hook | Already logged in via claude.ai | Quick browser sessions |
+| **GitHub Actions (non-AI batch)** | `vault-autocommit.yml`, `gsc-weekly-pull.yml`, scrapers | Service-specific API keys only | Scheduled jobs |
+
+**No Anthropic API key.** Claude Code authenticates via Pro/Max OAuth, so anything that *invokes Claude in CI* won't run. The two existing AI-driven workflows (`seo-on-demand.yml`, `seo-weekly-report.yml`) already guard on `secrets.ANTHROPIC_API_KEY` being empty — they post a notice and exit green when no key is set.
+
+**OAuth credentials** for GSC and Google Workspace are stored as base64-encoded GitHub secrets (`GSC_CREDENTIALS_JSON`, `GOOGLE_WORKSPACE_CREDENTIALS_JSON`) and materialised at session start by `.devcontainer/setup.sh` into `/tmp/creds/`. Run the OAuth flow once on a personal device, then save the credentials JSON as a secret.
+
+**Bootstrap files:**
+- `.devcontainer/devcontainer.json` — Codespaces image + features
+- `.devcontainer/setup.sh` — installs MCPs, materialises credentials (reused by SessionStart hook)
+- `.claude/hooks/session_start.sh` — wrapper for Claude Code on the web
 
 ---
 
@@ -293,16 +316,18 @@ A `tools/run.bat` Windows runner is included for double-click invocation on Wind
 
 **Note:** Claude Pro subscription does NOT include API access. GitHub Actions requires a separate key from console.anthropic.com.
 
-| Workflow | Trigger | API key needed |
+| Workflow | Trigger | Anthropic API needed |
 |----------|---------|---------------|
-| `seo-weekly-report.yml` | Manual only (cron disabled) | Yes |
-| `seo-on-demand.yml` | @claude in issues/PRs | Yes |
+| `seo-weekly-report.yml` | Manual only (cron disabled) | Yes — guards on missing key, exits green |
+| `seo-on-demand.yml` | @claude in issues/PRs | Yes — guards on missing key, exits green |
 | `shopping-scraper.yml` | Manual only | Yes |
-| `gtmetrix-audit.yml` | Manual only | Yes |
+| `gtmetrix-audit.yml` | Manual only | No |
 | `issue-receiver.yml` | Issue events | No |
 | `plp-merge.yml` | Push to branch | No |
+| `vault-autocommit.yml` | Daily 13:15 UTC + manual | No |
+| `gsc-weekly-pull.yml` | Mondays 07:00 UTC + manual | No (needs `GSC_CREDENTIALS_JSON`) |
 
-Required secrets: `ANTHROPIC_API_KEY`, `SEMRUSH_API_KEY`, `FIRECRAWL_API_KEY`.
+Required secrets: `SEMRUSH_API_KEY`, `FIRECRAWL_API_KEY`, `GSC_CREDENTIALS_JSON`, `GOOGLE_WORKSPACE_CREDENTIALS_JSON`. `ANTHROPIC_API_KEY` is optional — the AI-driven workflows skip cleanly when it's absent.
 
 ---
 

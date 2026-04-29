@@ -1,0 +1,27 @@
+{
+  "name": "TGG Claude Code workspace",
+  "image": "mcr.microsoft.com/devcontainers/universal:2-linux",
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": { "version": "3.11" },
+    "ghcr.io/devcontainers/features/node:1": { "version": "22" },
+    "ghcr.io/va-h/devcontainers-features/uv:1": {}
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "remoteEnv": {
+    "ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}",
+    "SEMRUSH_API_KEY": "${localEnv:SEMRUSH_API_KEY}",
+    "FIRECRAWL_API_KEY": "${localEnv:FIRECRAWL_API_KEY}",
+    "AIRTABLE_API_KEY": "${localEnv:AIRTABLE_API_KEY}",
+    "GSC_CREDENTIALS_JSON": "${localEnv:GSC_CREDENTIALS_JSON}",
+    "GOOGLE_WORKSPACE_CREDENTIALS_JSON": "${localEnv:GOOGLE_WORKSPACE_CREDENTIALS_JSON}",
+    "GSC_SITE_URL": "https://www.thegoodguys.com.au/"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "anthropic.claude-code"
+      ]
+    }
+  }
+}

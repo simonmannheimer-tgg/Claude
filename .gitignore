@@ -2,6 +2,10 @@
 .env
 .env.*
 
+# Materialised credentials (written by .devcontainer/setup.sh from base64 secrets)
+/tmp/creds/
+.claude/session_start.log
+
 # Machine-specific Claude Code config
 .claude/settings.local.json
 
