@@ -1,57 +1,79 @@
 # CLAUDE.md
 
-This file provides guidance to AI assistants (Claude and others) working in this repository.
+This file provides guidance to AI assistants working in this repository.
+
+---
+
+## Who this is for
+
+Simon Mannheimer — SEO Lead, The Good Guys (thegoodguys.com.au), Melbourne.
+Daily work: batch copy production, technical SEO audits, Python/JS scripting, GMC feed work, Semrush reporting, stakeholder decks, monthly SEO reports, internal linking audits, schema, AI visibility tracking.
 
 ---
 
 ## Repository Overview
 
-This repository contains a GTMetrix MCP server (Python/uv) and a Context Mode MCP server for token-efficient Claude Code sessions.
+Central Claude Code workspace containing:
+- GTMetrix MCP server (Python/uv)
+- Context Mode MCP server (token-efficient sessions)
+- 14-agent SEO team (seo-team-lead orchestrates all)
+- 10 numbered process files (00–09) governing all TGG copy and SEO work
+- Local Python tools in `tools/` for PLP auditing, MHTML parsing, CSV manipulation
+- GitHub Actions workflows for on-demand and scheduled SEO tasks
+- Optional tools staged in `.claude/optional/` — inactive until needed
 
-**Project Setup:**
-- **Language / Runtime**: Python 3.11
-- **Package manager**: uv
-- **Install dependencies**: `uv sync` (auto-runs on first `uv run`)
-- **Run GTMetrix MCP**: `uv run python3 main.py`
-- **Run Context Mode MCP**: `uv run python3 context_mode/server.py`
+**Setup:**
+- Language: Python 3.11 / Package manager: uv
+- Install: `uv sync`
+- Run GTMetrix MCP: `uv run python3 main.py`
+- Run Context Mode MCP: `uv run python3 context_mode/server.py`
+- All MCP paths use `.` (repo root) — portable across machines and GitHub Actions
+
+---
+
+## Optional Tool Activation — IMPORTANT
+
+Several powerful tools are staged but inactive. When a task comes in that one of these would meaningfully improve, **offer it before proceeding**.
+
+Use this exact pattern:
+> "I could activate **[tool]** to help with this — it would let me [specific benefit]. Want me to set it up? Setup takes [X minutes] and is documented in `.claude/optional/[tool]/SETUP.md`."
+
+Then wait for confirmation. Do not activate anything without explicit approval.
+
+### Trigger map
+
+| Task type | Offer this tool |
+|-----------|----------------|
+| Complex multi-step task, batch job, deck build, audit pipeline, anything likely to involve 5+ steps | **Superpowers plugin** — enforces plan-before-execute, prevents runaway iteration |
+| GSC data, query analysis, CTR by position, ranking opportunities, non-brand performance | **GSC MCP** — pull query data directly, no CSV export needed |
+| Email drafting in context, calendar check, reading/writing Sheets, Slides updates | **Google Workspace MCP** — Gmail, Calendar, Sheets, Slides from Claude Code |
+| Sprint tracking, task status, what's in-flight, creating tickets | **Linear MCP** — project management connected to Claude Code |
+| End-of-week review, goal tracking, what did I work on, career reflection, session learning | **Obsidian PKM** — weekly reviews and goal alignment in a local vault |
+| Schema audit, GEO/AEO content scoring, backlink gap analysis, E-E-A-T scoring, AI Overview optimisation | **claude-seo skill suite** — 19 sub-skills, deeper than current aeo-optimizer agent |
+
+### Already active (no offer needed)
+- Semrush MCP — keyword, competitor, backlink data
+- Firecrawl MCP — live page scraping, competitor crawls, sitemap pulls
+- Airtable MCP — base appS4NfrOth5cVo7P tracker tables
+- GTMetrix MCP — performance audits
+- Context Mode MCP — token-efficient context indexing
+- Google Drive — file access
 
 ---
 
 ## Git Workflow
 
-### Branch Naming
-
-- Each Claude Code session is assigned a branch by the system prompt in the format:
-  `claude/<feature-name>-<session-id>`
-  Example: `claude/plp-intro-copy-good-guys-XVTa0`
-- **Always push to the branch specified in the current session's system prompt.** The proxy enforces a session-to-branch mapping and will return HTTP 403 if you attempt to push to a branch from a different session.
-- Never push directly to `main` or `master` without explicit permission.
-- Do not attempt to merge or rebase work onto other branches — stay on the assigned session branch.
-- Branch proliferation is a system-level behaviour (one branch per session). Clean up stale branches manually on GitHub.
+### Branch naming
+Each Claude Code session is assigned a branch: `claude/<feature-name>-<session-id>`. Always push to the branch specified in the session system prompt. Never push directly to `main`.
 
 ### Commits
-
-- Write clear, descriptive commit messages in the imperative mood:
-  - Good: `Add user authentication module`
-  - Bad: `stuff` or `WIP`
-- Sign commits using SSH (already configured via `.git/config`).
-- Commit only related changes together — keep commits focused.
+Imperative mood. `Add user authentication module` not `stuff`. Sign with SSH. Keep commits focused.
 
 ### Pushing
-
-Always push with the upstream tracking flag:
-
 ```bash
 git push -u origin <branch-name>
 ```
-
-If push fails due to network errors, retry with exponential backoff:
-- Wait 2s, retry
-- Wait 4s, retry
-- Wait 8s, retry
-- Wait 16s, retry (final attempt)
-
-**If push returns HTTP 403**, do not retry — this means the branch does not match the current session. Stay on the session-assigned branch.
+Retry with exponential backoff (2s, 4s, 8s, 16s) on network errors. HTTP 403 = wrong branch, do not retry.
 
 ### Pull Requests and Merging
 
@@ -78,31 +100,15 @@ Apply the same exponential backoff retry strategy on network failures.
 
 ## Context Mode (Token Efficiency — MANDATORY)
 
-A Context Mode MCP server is registered at `.claude/settings.json`. It indexes large content into SQLite and returns compact summaries, reducing context usage by up to 98%.
-
-### Rules — follow these in every session
-
-1. **Files over 50 lines**: Use `ctx_read_file` instead of the Read tool.
-   - `ctx_read_file` returns a section map (~10–15 lines) rather than the raw file.
-   - Then use `ctx_search(key, query)` to pull only the sections you need.
-
-2. **Large tool outputs / API responses**: If a tool returns more than ~100 lines, pipe the content through `ctx_index(key, content)` immediately and work from the summary.
-
-3. **Session start**: Run `ctx_list` to see what is already indexed from prior work. Avoid re-indexing content that is already present.
-
-4. **Workflow pattern**:
-   ```
-   ctx_read_file("main.py")          → get structural summary
-   ctx_search("main.py", "bulk_audit handler")  → get only that function
-   ```
-
-5. **Never dump raw files into context** when the Context Mode tools are available. Every raw Read of a large file is a context budget violation.
-
-### Available context tools
+**Rules — follow in every session:**
+1. Files over 50 lines: use `ctx_read_file` instead of Read
+2. Large tool outputs over ~100 lines: pipe through `ctx_index(key, content)` immediately
+3. Session start: run `ctx_list` to check what is already indexed
+4. Never dump raw files into context when Context Mode tools are available
 
 | Tool | Purpose |
 |------|---------|
-| `ctx_read_file(path)` | Index a file; return section map |
+| `ctx_read_file(path)` | Index file; return section map |
 | `ctx_index(key, content)` | Index arbitrary large text |
 | `ctx_search(key, query)` | Retrieve matching sections only |
 | `ctx_list()` | Show all indexed keys |
@@ -110,71 +116,47 @@ A Context Mode MCP server is registered at `.claude/settings.json`. It indexes l
 
 ---
 
-## AI Assistant Guidelines
+## Permission Rules and Hooks
 
-### General Principles
+`settings.json` contains explicit `permissions.allow` and `permissions.deny` blocks. These eliminate the constant allow prompts in VS Code for routine operations.
 
-1. **Read before modifying** — always read existing files before editing them to understand current state and conventions.
-2. **Minimize scope** — only make changes directly requested or clearly necessary. Do not refactor surrounding code, add extra comments, or introduce new abstractions unless asked.
-3. **No over-engineering** — avoid feature flags, backwards-compatibility shims, or premature abstractions. Write the minimum code needed for the current task.
-4. **Avoid security vulnerabilities** — never introduce SQL injection, XSS, command injection, or other OWASP top-10 issues.
-5. **Prefer editing over creating** — modify existing files rather than creating new ones when possible.
+**Pre-approved (no prompt):** uv, python3, node, npx, all git read/log operations, writes to seo/outputs, seo/briefs, docs, scripts, tools, .claude/skills.
 
-### What NOT to Do
+**Always blocked:** `.env` reads, `curl`, `wget`, `rm -rf`, `git push --force`, writes to `.env`.
 
-- Do not add docstrings, type annotations, or comments to code you didn't change.
-- Do not add error handling for scenarios that cannot happen.
-- Do not create helper utilities for one-off operations.
-- Do not design for hypothetical future requirements.
-- Do not add backwards-compatibility code when you can just change the thing directly.
-
-### Confirming Risky Actions
-
-Always confirm with the user before:
-- Deleting files or branches
-- Force-pushing (`git push --force`)
-- Running destructive resets (`git reset --hard`)
-- Modifying CI/CD pipelines
-- Pushing to branches other than the designated feature branch
+**Active hooks in `.claude/hooks/`:**
+- `block_dangerous.py` — PreToolUse: blocks dangerous patterns before execution
+- `log_writes.py` — PostToolUse: logs every file write to `.claude/write_log.txt`
+- `session_log.py` — Stop: logs session end to `.claude/session_log.txt`
 
 ---
 
-## MCP Servers
-
-All MCP servers are registered in `.claude/settings.json` and start automatically with Claude Code.
+## MCP Servers (Active)
 
 | Server | Entry point | Purpose |
 |--------|-------------|---------|
 | `context-mode` | `context_mode/server.py` | Token-efficient context indexing |
 | `gtmetrix` | `main.py` | GTMetrix performance audits |
-| `semrush` | `npx semrush-mcp` | Semrush keyword, competitor, backlink data |
+| `semrush` | `npx semrush-mcp` | Keyword, competitor, backlink data (AU database) |
+| `firecrawl` | `npx firecrawl-mcp` | Live page scraping, competitor crawls |
+| `airtable` | `npx @domdomegg/airtable-mcp-server` | Base appS4NfrOth5cVo7P |
 
-The context index database is stored at `context_mode/context_index.db` (git-ignored).
-
-**Semrush authentication:**
-- In browser Claude Code sessions: Semrush OAuth is already active via the Claude.ai connector — no API key needed.
-- For GitHub Actions / headless use: requires `SEMRUSH_API_KEY` from the Semrush API portal. Set as a GitHub secret.
-- The npm package is `semrush-mcp` (unscoped). Official remote endpoint: `https://mcp.semrush.com/v1/mcp`
+Optional MCP servers (inactive): see `.claude/optional/` for GSC, Google Workspace, Linear.
 
 ---
 
 ## SEO Agent Team
 
-This repo contains a full SEO agent team for The Good Guys (thegoodguys.com.au). See `seo/README.md` for full documentation.
-
 ### Project defaults
-
 ```
 TARGET_DOMAIN=thegoodguys.com.au
 COMPETITORS_PRIMARY=jbhifi.com.au,harveynorman.com.au,officeworks.com.au
 COMPETITORS_SECONDARY=kogan.com,appliancesonline.com.au
-DEFAULT_TOPICS=TVs, washing machines, fridges, air conditioners, vacuum cleaners, coffee machines, air fryers, laptops, headphones, kitchen appliances
 DEFAULT_DATABASE=au
 SEMRUSH_DATABASE=au
 ```
 
 ### Chain of command
-
 ```
 seo-team-lead  (Sonnet — Orchestrator)
 ├── RESEARCH
@@ -191,70 +173,101 @@ seo-team-lead  (Sonnet — Orchestrator)
 ├── LINKING
 │   └── internal-linking-agent (Haiku)  — Process 06: find, validate, insert links
 ├── VISIBILITY
-│   └── ai-visibility-analyst  (Haiku)  — Process 09: AI visibility → poll questions
+│   └── ai-visibility-analyst  (Haiku)  — Process 09: AI visibility polling
 └── REPORTING
     ├── seo-content-auditor    (Haiku)  — on-page audit of repo content files
     └── seo-reporter           (Sonnet) — synthesise findings into reports
 ```
 
 ### How to invoke
-
-Always start with the team lead:
 ```
-Use the seo-team-lead to [describe your task]
+Use the seo-team-lead to [task]
 ```
+Or directly: `Use the plp-copywriter to write copy for /air-fryers`
 
-Or invoke specialists directly for known tasks:
-```
-Use the plp-copywriter to write copy for /air-fryers
-Use the eav-researcher to map the washing machines category
-Use the seo-competitor-analyst to compare us vs jbhifi.com.au for TVs
-```
-
-### Token efficiency rules
-
-1. **Always delegate through seo-team-lead** — it routes to the right agent and sequences parallel work.
-2. **Haiku for all data gathering** (keyword, EAV, competitor, content analysis, linking, auditing).
-3. **Sonnet only for writing** (PLP copy, FAQs, inlink migration, AEO, final reports).
-4. **Index large outputs** with `ctx_index` before passing between agents.
-5. **No scheduling yet** — all runs are manual or on-demand via @claude in issues.
-
-### Standard SEO workflows
-
-Process files live at the repo root (`00-*.md` through `09-*.md`). Common chains:
-
-- **Category Page Optimisation:** `08 (EAV)` → `04 (Core Query + Fanout)` → `06 (Link Validation)` → `05 (Brand+Category FAQ)`
-- **Article AEO Audit:** `04 (Summarise + Keyword)` → `06 (Link Opportunities)` → `07 (AEO Suggestions + Finalise)`
+### Standard workflows
+- **Category Page Build:** `08 (EAV)` → `04 (Fanout)` → `01 (PLP Intro)` → `05 (FAQ Copy)` → `02 (Metadata)` → `06 (Linking)`
+- **AEO Audit:** `04 (Summarise)` → `06 (Link Opportunities)` → `07 (AEO Suggestions)`
 - **Internal Linking:** `06 (Find → Validate → Verify → Insert)`
-- **Full Category Page Build:** `08 (EAV)` → `04 (Fanout)` → `01 (PLP Intro)` → `05 (FAQ Copy)` → `02 (Metadata)` → `06 (Linking)`
+- **Category Optimisation:** `08 (EAV)` → `04 (Fanout)` → `06 (Link Validation)` → `05 (Brand+Category FAQ)`
 
-Always read `00-tov-language-reference.md` before any content-writing task — it has the master banned word list and tone rules.
+Always read `00-tov-language-reference.md` before any content task.
 
-### Writing philosophy (applies to all content)
-
-- **Guardrails, not templates.** Ban harmful patterns; don't prescribe "allowed" patterns.
-- **Vary everything.** Sentence openers, TGG placement, benefit angles, structure. If a batch of 20 intros reads like they came from the same fill-in-the-blank template, rewrite.
-- **Be specific.** Name brands, features, use cases. Specificity is what makes copy useful to humans and citable by AI.
-- **Sound human.** If it reads like a chatbot or a keyword list disguised as prose, rewrite.
+### Writing philosophy
+- Guardrails not templates. Ban harmful patterns; don't prescribe "allowed" ones.
+- Vary everything. Sentence openers, TGG placement, benefit angles.
+- Be specific. Name brands, features, use cases.
+- Sound human. If it reads like a chatbot, rewrite.
 
 ### Process updates
+When Simon changes a rule, update the relevant process file immediately. Add changelog note at top (version + date + what changed). If a request conflicts with a process rule, flag it and ask: one-off exception or permanent change?
 
-When Simon changes a rule or preference, update the relevant root process file immediately: add a changelog note at the top (version + date + what changed). If a request conflicts with an existing process rule, flag it and ask whether it's a one-time exception or a permanent change.
+---
 
-### GitHub Actions (requires separate Anthropic API key)
+## Slash Skills
 
-- **Note:** Claude Pro subscription does NOT include API access. GitHub Actions needs a separate key from console.anthropic.com (pay-per-token).
-- Workflows: `seo-weekly-report.yml` (manual only — cron disabled), `seo-on-demand.yml` (event-driven on @claude), `shopping-scraper.yml` (manual only — cron disabled), `gtmetrix-audit.yml` (manual only), `issue-receiver.yml` + `plp-merge.yml` (no API key needed).
-- **No scheduled workflows currently run** — every cron is commented out to prevent API credit / Actions-minute spend. Re-enable by uncommenting the `schedule:` block in the relevant workflow file.
-- Required secrets when an API run is invoked: `ANTHROPIC_API_KEY`, `SEMRUSH_API_KEY`.
+| Skill | What it does |
+|-------|-------------|
+| `check-github` | Poll GitHub Issues for @claude tasks, route to seo-team-lead, post replies |
+| `start-chat` | Start Chat UI server on port 7860 |
+| `tgg-conversation-indexer` | Weekly indexer — scans conversations, updates Google Drive index, flags abandoned projects |
+| `tgg-repo-manager` | Commit messages, PR descriptions, CLAUDE.md entries, process file updates |
+
+**Conversation Indexer:** Run weekly. Trigger: "run tgg-conversation-indexer" or "what have I left unfinished".
+
+---
+
+## Local Python Tools (`tools/`)
+
+For local use on Windows/PowerShell or macOS. Not run in GitHub Actions.
+
+| Script | Purpose |
+|--------|---------|
+| `tgg_plp_auditor.py` | Audits live TGG PLP pages against intro copy rules |
+| `tgg_transcript_scraper.py` | Extracts YouTube transcripts in bulk |
+| `mhtml_parser.py` | Parses browser-saved MHTML files for Claude ingestion |
+| `mhtml_transformer.py` | Converts MHTML to self-contained .ai.html |
+| `check_status.py` | Checks URL status codes from a CSV |
+| `merge_and_split.py` | Merges/splits CSVs (Semrush keyword exports) |
+| `split_csv.py` | Splits a large CSV into two halves |
+
+Run from repo root: `python tools/tgg_plp_auditor.py`
+
+**Note on paths:** Some scripts have hardcoded Windows paths. Update the path variables at the top for your machine.
+
+---
+
+## AI Assistant Guidelines
+
+1. Read before modifying — always read existing files first
+2. Minimise scope — only change what was explicitly requested
+3. No over-engineering — no feature flags, backwards-compat shims, speculative abstractions
+4. Prefer editing over creating
+5. Confirm before: deleting files, force-pushing, destructive resets, modifying CI/CD
+
+---
+
+## GitHub Actions
+
+**Note:** Claude Pro subscription does NOT include API access. GitHub Actions requires a separate key from console.anthropic.com.
+
+| Workflow | Trigger | API key needed |
+|----------|---------|---------------|
+| `seo-weekly-report.yml` | Manual only (cron disabled) | Yes |
+| `seo-on-demand.yml` | @claude in issues/PRs | Yes |
+| `shopping-scraper.yml` | Manual only | Yes |
+| `gtmetrix-audit.yml` | Manual only | Yes |
+| `issue-receiver.yml` | Issue events | No |
+| `plp-merge.yml` | Push to branch | No |
+
+Required secrets: `ANTHROPIC_API_KEY`, `SEMRUSH_API_KEY`, `FIRECRAWL_API_KEY`.
 
 ---
 
 ## Remote
 
-- **Origin**: `http://local_proxy@127.0.0.1:38487/git/simonmannheimer-tgg/Claude`
-- **Proxy**: Local proxy server on `127.0.0.1:38487`
+- Origin: `http://local_proxy@127.0.0.1:38487/git/simonmannheimer-tgg/Claude`
 
 ---
 
-*This CLAUDE.md will be updated as the project structure and conventions evolve.*
+*Update this file when project structure, active tools, or conventions change.*
