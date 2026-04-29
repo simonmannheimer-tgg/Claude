@@ -1,133 +1,67 @@
-# GTMetrix MCP Server
+# Claude Code SEO, Analytics, and Automation Suite
 
-Privacy-first GTMetrix MCP server for Claude Code. Runs locally — your API key never leaves your machine.
+**Purpose:**
 
-## Setup
-
-### 1. Install dependencies
-
-```bash
-cd /path/to/gtmetrix-mcp
-pip install -e .
-```
-
-Or with uv:
-
-```bash
-uv sync
-```
-
-### 2. Create your .env file
-
-```bash
-cp .env.example .env
-```
-
-Open `.env` and set your GTMetrix API key:
-
-```
-GTMETRIX_API_KEY=your_real_key_here
-```
-
-The `.env` file is in `.gitignore` — it will never be committed.
-
-### 3. Add to Claude Code
-
-Add this to your `~/.claude/settings.json` (or project-level `.mcp.json`):
-
-```json
-{
-  "mcpServers": {
-    "gtmetrix": {
-      "command": "python",
-      "args": ["/absolute/path/to/gtmetrix-mcp/main.py"],
-      "cwd": "/absolute/path/to/gtmetrix-mcp"
-    }
-  }
-}
-```
-
-If using uv, replace `"command": "python"` with the full path to uv:
-
-```json
-{
-  "mcpServers": {
-    "gtmetrix": {
-      "command": "/opt/homebrew/bin/uv",
-      "args": ["run", "--directory", "/absolute/path/to/gtmetrix-mcp", "python", "main.py"],
-      "cwd": "/absolute/path/to/gtmetrix-mcp"
-    }
-  }
-}
-```
-
-> Run `which python` or `which uv` if unsure of the full path.
-
-Restart Claude Code after editing settings.
+This repository is a comprehensive workflow, automation, and skill management system built for The Good Guys' SEO, content, and reporting stack, powered by Claude Code. It supports privacy-first remote API orchestration, automated SEO and AEO analysis, modular process documentation, customizable agents and skills for Claude, and seamless GitHub Actions pipelines.
 
 ---
 
-## Tools
+## Repository Highlights
 
-| Tool | What it does |
-|---|---|
-| `check_credits` | Credits remaining, account type, refill date |
-| `list_locations` | All available test locations with IDs |
-| `analyze_url` | Full test on one URL — CWV, failing audits, slow resources |
-| `bulk_audit` | Test a list of URLs; supports dry_run=true |
+- **Modular Numbered Processes:** (`00-tov-...`, `01-plp-intros.md`, ..., `09-ai-visibility-polling.md`) — for content production, metadata, linking, FAQs, AEO, EAV, and audits.
+- **Claude Agents & Skills:** Defined in `.claude/agents/` and `.claude/skills/`, designed for high reuse across Claude Code/Claude.ai.
+- **SEO Research/Reporting Automation:** `seo/` directory contains multi-agent pipelines and GitHub Actions for keyword research, competitor tracking, content auditing, and automated weekly reports.
+- **GTMetrix MCP Server:** Privacy-first server and scripts for page speed audit automation.
+- **Tools for Scale:** Python scripts in `tools/` for in-house site auditing, content QA, and batch processing.
+- **Personal Knowledge Management:** `vault/` directory integrates a versioned Logseq graph, with nightly GitHub Actions backup, for daily notes and project tracking.
+- **Security & Privacy:** `.env`, robust secret handling, and CI-based backup routines keep tokens/private data safe.
+- **Comprehensive Documentation:** All major components and workflows are documented. Commit conventions, PR templates, and onboarding rules included.
 
-## Example usage in Claude Code
+---
 
-```
-Check my GTMetrix credits
+## Directory Map
 
-List available test locations
+- `.claude/agents/` — Project-specific agents (SEO, copywriting, automation)
+- `.claude/skills/` — Claude skills (repo-tracked & UI-only ones; see `.claude/skills/README.md` for scope)
+- `tools/` — Python CLI utilities for multi-step audits and data processing
+- `seo/` — Automated research/reporting pipelines and prompt templates
+- `vault/` — Logseq PKM graph and project memory
+- `docs/` — Archived audits, process notes, and findings
+- `[process files]` — Modular numbered markdowns for each core workflow
 
-Test https://www.thegoodguys.com.au/televisions
+---
 
-Run a dry run bulk audit on these URLs:
-- https://www.thegoodguys.com.au/laptops
-- https://www.thegoodguys.com.au/washing-machines
-- https://www.thegoodguys.com.au/refrigerators
+## Core Workflows
 
-Now run the bulk audit for real
-```
+- **Batch SEO Audits** and copy QA via agents and GitHub Actions
+- **PLP/metadata production** with automated quality guardrails (character limits, language, banned terms)
+- **Automated Logseq Vault backup** and weekly reviews
+- **GTMetrix Page-Speed Audits** for transactional and category pages
+- **Secure Secret Handling** for API keys and sensitive output
 
-## Output
+---
 
-Each session creates two files in `./reports/`:
+## Getting Started
 
-- `gtmetrix_YYYYMMDD_HHMMSS.json` — full structured results
-- `gtmetrix_YYYYMMDD_HHMMSS.csv` — flat CSV ready for PPTX/reporting
+1. Clone the repository
+2. Copy `.env.example` to `.env` and add your secrets (never committed)
+3. Set up Claude agent settings in `.claude/settings.json`
+4. Optional: Activate GitHub Actions workflows for automation
+5. Consult each directory or process file for agent-specific usage
 
-CSV columns:
-```
-url, performance_score, structure_score, largest_contentful_paint_ms,
-total_blocking_time_ms, cumulative_layout_shift, test_date, location_id,
-top_failing_audit, error
-```
+---
 
-## Privacy
+## Contribution & PRs
 
-- API key is loaded from `.env` only — never hardcoded, never logged
-- Authorization headers are stripped before any log output
-- No data is sent anywhere except GTMetrix's official API (`gtmetrix.com/api/2.0`)
-- Reports stay local in `./reports/`
-- `.env` and `reports/` are in `.gitignore`
+- Follow commit/PR guides in `.claude/skills/tgg-repo-manager/SKILL.md`
+- Keep process files and agent definitions standardized and up-to-date
+- Document any changes in `CLAUDE.md`
+- Run `vault-autocommit.yml` before closing major documentation sessions
 
-## Credit protection
+---
 
-Set `GTMETRIX_CREDIT_FLOOR` in `.env` (default: 10).
-Any run that would drop below this threshold is aborted before firing a single test.
-Use `dry_run=true` on bulk jobs to preview credit cost first.
+## Status & Audit
 
-## Location IDs (common)
+Last audited: 2026-04-29 (see docs/archive for full audit history and recommendations)
 
-| ID | Location |
-|---|---|
-| 4 | San Antonio, TX (free tier default) |
-| 2 | London, UK |
-| 13 | Amsterdam, Netherlands |
-| Use `list_locations` | Full list for your account |
-
-> GTMetrix does not currently have an AU server. Sydney CDN tests are best approximated from Singapore or the US west coast depending on your account tier.
+This repository is a model for modular, agent-driven, and privacy-first tooling for in-house SEO, analytics, and reporting.
