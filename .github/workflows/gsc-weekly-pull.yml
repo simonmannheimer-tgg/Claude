@@ -1,0 +1,84 @@
+name: GSC Weekly Pull
+
+# Pulls top GSC queries for thegoodguys.com.au and writes a CSV to
+# seo/outputs/gsc/. No Anthropic API needed — calls the Google Search
+# Console API directly using a service account or OAuth refresh token.
+#
+# Required secret: GSC_CREDENTIALS_JSON (base64-encoded credentials JSON)
+
+on:
+  schedule:
+    - cron: '0 7 * * 1'   # 07:00 UTC every Monday
+  workflow_dispatch:
+    inputs:
+      site_url:
+        description: 'GSC property (default: https://www.thegoodguys.com.au/)'
+        required: false
+        default: 'https://www.thegoodguys.com.au/'
+      days:
+        description: 'Lookback window in days'
+        required: false
+        default: '28'
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GSC_SITE_URL: ${{ github.event.inputs.site_url || 'https://www.thegoodguys.com.au/' }}
+      GSC_DAYS: ${{ github.event.inputs.days || '28' }}
+      GSC_CREDENTIALS_JSON: ${{ secrets.GSC_CREDENTIALS_JSON }}
+    steps:
+      - name: Check secret
+        id: check
+        run: |
+          if [ -z "$GSC_CREDENTIALS_JSON" ]; then
+            echo "GSC_CREDENTIALS_JSON not set — skipping. Add the secret under Settings → Secrets to enable."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.check.outputs.skip == 'false'
+
+      - uses: actions/setup-python@v5
+        if: steps.check.outputs.skip == 'false'
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        if: steps.check.outputs.skip == 'false'
+        run: |
+          pip install --quiet google-api-python-client google-auth google-auth-oauthlib
+
+      - name: Materialise credentials
+        if: steps.check.outputs.skip == 'false'
+        run: |
+          mkdir -p /tmp/creds
+          printf '%s' "$GSC_CREDENTIALS_JSON" | base64 -d > /tmp/creds/gsc.json
+          chmod 600 /tmp/creds/gsc.json
+
+      - name: Pull GSC queries
+        if: steps.check.outputs.skip == 'false'
+        run: |
+          mkdir -p seo/outputs/gsc
+          python scripts/gsc_weekly_pull.py \
+            --credentials /tmp/creds/gsc.json \
+            --site-url "$GSC_SITE_URL" \
+            --days "$GSC_DAYS" \
+            --output "seo/outputs/gsc/gsc-$(date -u +%Y-%m-%d).csv"
+
+      - name: Commit output
+        if: steps.check.outputs.skip == 'false'
+        run: |
+          git config user.name "gsc-pull[bot]"
+          git config user.email "gsc-pull@users.noreply.github.com"
+          if [ -z "$(git status --porcelain seo/outputs/gsc/)" ]; then
+            echo "No new GSC data — nothing to commit."
+            exit 0
+          fi
+          git add seo/outputs/gsc/
+          git commit -m "data(gsc): weekly pull $(date -u +%Y-%m-%d)"
+          git push origin HEAD:main
