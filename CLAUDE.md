@@ -53,6 +53,16 @@ If push fails due to network errors, retry with exponential backoff:
 
 **If push returns HTTP 403**, do not retry — this means the branch does not match the current session. Stay on the session-assigned branch.
 
+### Pull Requests and Merging
+
+After pushing, use this rule to decide whether to create and merge a PR automatically:
+
+- **Create and merge automatically** — when the task is clearly scoped, completed exactly as asked, and the change is low-risk (docs, config, copy, refactors with no functional side-effects).
+- **Create PR and ask before merging** — when the change is experimental, architecturally significant, or there is any doubt about whether the output matches intent.
+- **Never create a PR** — only if Simon explicitly says not to.
+
+Use the GitHub MCP tools (`mcp__github__create_pull_request`, `mcp__github__merge_pull_request`) to create and merge. Default merge method: squash.
+
 ### Fetching / Pulling
 
 Prefer fetching specific branches:
