@@ -1,3 +1,10 @@
+---
+name: check-github
+description: "Poll GitHub Issues for new @claude messages, process them with the SEO agent team, write outputs to disk, and post replies back."
+---
+
+# Check GitHub
+
 Poll GitHub Issues for new @claude messages, process them with the SEO agent team, write outputs to disk, and post replies back.
 
 ## Steps
