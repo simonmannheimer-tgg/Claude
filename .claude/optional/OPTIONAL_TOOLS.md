@@ -19,6 +19,7 @@ Activate any tool by following the SETUP.md inside its folder.
 | linear | Project/task tracking from Claude Code | Not connected | 5 min |
 | obsidian-pkm | Weekly reviews, goal tracking, session learning | Not set up | 30 min |
 | claude-seo | Deeper SEO sub-skills: schema, GEO/AEO, backlinks | Not installed | 5 min |
+| agentic-seo | AEO auditor — scores any site/build for AI agent discoverability | Not running | 2 min |
 
 ---
 
@@ -32,4 +33,5 @@ Activate any tool by following the SETUP.md inside its folder.
 | Project tracking, sprint tasks, what's pending | "Want me to connect Linear?" |
 | Weekly review, what did I work on, career goals | "Want me to set up the Obsidian PKM workflow?" |
 | Schema markup, GEO/AEO, backlink audit, local SEO | "Want me to install the claude-seo skill suite?" |
+| AEO audit, llms.txt, agent discoverability, token budget, robots.txt for AI | "Want me to run an agentic-seo audit? Repo is cloned and ready — takes 2 min to activate." |
 
