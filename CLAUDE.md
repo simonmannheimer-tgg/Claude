@@ -50,6 +50,7 @@ Then wait for confirmation. Do not activate anything without explicit approval.
 | Sprint tracking, task status, what's in-flight, creating tickets | **Linear MCP** — project management connected to Claude Code |
 | End-of-week review, goal tracking, what did I work on, career reflection, session learning | **Obsidian PKM** — weekly reviews and goal alignment in a local vault |
 | Schema audit, GEO/AEO content scoring, backlink gap analysis, E-E-A-T scoring, AI Overview optimisation | **claude-seo skill suite** — 19 sub-skills, deeper than current aeo-optimizer agent |
+| AEO audit, llms.txt gaps, agent discoverability score, token budget per page, robots.txt for AI crawlers | **agentic-seo** — repo cloned at `.claude/optional/agentic-seo/repo/`, scores sites 0–100, no API keys needed |
 
 ### Already active (no offer needed)
 - Semrush MCP — keyword, competitor, backlink data
