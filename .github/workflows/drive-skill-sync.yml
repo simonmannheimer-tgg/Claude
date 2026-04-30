@@ -1,0 +1,68 @@
+name: Drive Skill Sync
+
+# Pulls the latest skill ZIPs from Google Drive into .claude/skills/,
+# commits each updated skill, and pushes. Manual trigger only.
+# Requires ANTHROPIC_API_KEY and GOOGLE_DRIVE_MCP configured in repo secrets.
+# Drive delete is not available — processed ZIP IDs are logged to
+# .claude/skill-sync-cleanup.log for manual cleanup.
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run — report what would change without committing'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+jobs:
+  sync-skills:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install uv
+        run: pip install uv
+
+      - name: Install dependencies
+        run: uv sync
+        working-directory: .
+
+      - name: Configure git
+        run: |
+          git config user.name "drive-skill-sync[bot]"
+          git config user.email "drive-skill-sync@users.noreply.github.com"
+
+      - name: Run skill-zip-sync via Claude
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          DRY_RUN="${{ github.event.inputs.dry_run }}"
+          PROMPT="run skill-zip-sync"
+          if [ "$DRY_RUN" = "true" ]; then
+            PROMPT="run skill-zip-sync in dry-run mode — report what would change but do not commit or push"
+          fi
+          claude --dangerously-skip-permissions -p "$PROMPT"
+
+      - name: Push changes
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: |
+          if [ -z "$(git status --porcelain .claude/skills/)" ] && [ -z "$(git status --porcelain .claude/skill-sync-cleanup.log)" ]; then
+            echo "No skill changes detected — nothing to push."
+            exit 0
+          fi
+          git push origin HEAD:main
+          echo "Skills pushed to main."
