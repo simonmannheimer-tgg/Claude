@@ -1,0 +1,40 @@
+# Secrets — never commit
+.env
+.env.*
+
+# Machine-specific Claude Code config
+.claude/settings.local.json
+
+# Runtime logs (review locally, not repo content)
+.claude/write_log.txt
+.claude/session_log.txt
+
+# Large SEO output files — too big for Git, use locally or export manually
+seo/outputs/*.csv
+seo/outputs/*.md
+seo/outputs/*.json
+
+# Keep the outputs folder itself
+!seo/outputs/.gitkeep
+
+# Context Mode — local SQLite index
+context_mode/context_index.db
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+dist/
+.uv/
+.claude/processed-comments.txt
+
+# Reports
+reports/
+
+# Large packages
+plp-copywriting-package.zip
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,17 @@
+[
+  {
+    "url": "https://www.thegoodguys.com.au/",
+    "performance_score": 35,
+    "structure_score": 86,
+    "gtmetrix_grade": "E",
+    "lcp_ms": 3118,
+    "tbt_ms": 3840,
+    "cls": 0.00110959,
+    "ttfb_ms": 1484,
+    "fully_loaded_ms": 27177,
+    "speed_index_ms": 4370,
+    "location_id": 7,
+    "test_date": "2026-03-17T04:02:14.235812+00:00",
+    "failing_audits": []
+  }
+]

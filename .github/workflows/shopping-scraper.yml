@@ -1,0 +1,748 @@
+name: Google Shopping Scraper
+
+on:
+  workflow_dispatch:
+    inputs:
+      scraper:
+        description: "Which scraper to run"
+        required: true
+        default: "both"
+        type: choice
+        options:
+          - both
+          - organic
+          - carousel
+      mode:
+        description: "Browser mode"
+        required: true
+        default: "mobile"
+        type: choice
+        options:
+          - mobile
+          - desktop
+      keywords:
+        description: "Comma-separated keywords (leave blank for defaults)"
+        required: false
+        default: ""
+
+  # Scheduled trigger intentionally disabled to avoid Actions-minute / compute
+  # spend. Re-enable by uncommenting the `schedule` block below.
+  # schedule:
+  #   - cron: "0 7 * * 1"  # Every Monday 07:00 UTC (17:00 AEST) — DISABLED
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: read
+
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install playwright
+
+      - name: Install Playwright browsers
+        run: playwright install chromium --with-deps
+
+      # ──────────────────────────────────────────────────────────────────────
+      # CAROUSEL SCRAPER  (regular Google search → all shopping sections)
+      # ──────────────────────────────────────────────────────────────────────
+      - name: Run carousel scraper
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.scraper == 'carousel' || github.event.inputs.scraper == 'both' }}
+        env:
+          KEYWORDS: ${{ github.event.inputs.keywords }}
+          MODE: ${{ github.event.inputs.mode || 'mobile' }}
+        run: |
+          python - <<'PYEOF'
+          import asyncio, csv, re, os
+          from datetime import datetime
+          from pathlib import Path
+          from playwright.async_api import async_playwright
+
+          raw_kw = os.environ.get("KEYWORDS", "")
+          KEYWORDS = [k.strip() for k in raw_kw.split(",") if k.strip()] or [
+              "fridge", "vacuum", "television", "tv", "washer", "washing machine",
+              "dishwasher", "dryer", "microwave", "air conditioner"
+          ]
+          MODE = os.environ.get("MODE", "mobile")
+          RESULTS_DIR = Path("results")
+          SCREENSHOTS_DIR = Path("screenshots")
+          HEADERS = ["keyword","position","title","price","rating","reviews","store","store_domain","sponsored","mode","scraped_at"]
+
+          MOBILE_UA  = "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Mobile Safari/537.36"
+          DESKTOP_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+          MOBILE_VP  = {"width": 390,  "height": 844}
+          DESKTOP_VP = {"width": 1280, "height": 900}
+
+          def clean(s): return re.sub(r"\s+", " ", s or "").strip()
+
+          async def dismiss_consent(page):
+              for sel in ["button#L2AGLb","button:has-text('Accept all')","button:has-text('I agree')"]:
+                  try:
+                      btn = page.locator(sel)
+                      if await btn.count() > 0:
+                          await btn.first.click()
+                          await page.wait_for_timeout(800)
+                          return
+                  except: pass
+
+          async def slow_scroll(page):
+              """Scroll gradually to trigger lazy-loaded carousels."""
+              height = await page.evaluate("document.body.scrollHeight")
+              for y in range(0, height + 1, 500):
+                  await page.evaluate(f"window.scrollTo(0,{y})")
+                  await page.wait_for_timeout(200)
+              await page.evaluate("window.scrollTo(0,0)")
+              await page.wait_for_timeout(600)
+
+          # Uses TreeWalker to find ALL price-containing nodes anywhere on the page,
+          # walks up to the smallest reasonable card container, deduplicates to leaf
+          # nodes only so each physical product card is counted once regardless of
+          # how many containers wrap it.
+          CAROUSEL_JS = r"""
+          () => {
+              const priceRe  = /A?\$[\d,]+(?:\.\d{2})?/;
+              const ratingRe = /^(\d\.\d)\b/;
+
+              // ── 1. Walk ALL text nodes to find price-bearing elements ─────
+              const cardSet = new Set();
+              const root = document.getElementById('search') || document.body;
+              const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+              let node;
+              while ((node = walker.nextNode())) {
+                  if (!priceRe.test(node.nodeValue || '')) continue;
+                  let el = node.parentElement;
+                  for (let depth = 0; depth < 14; depth++) {
+                      if (!el || el === document.body || el === document.documentElement) break;
+                      const txt = el.innerText || '';
+                      const lines = txt.split('\n').filter(l => l.trim()).length;
+                      // a product card has 2-18 non-empty lines and < 800 chars
+                      if (lines >= 2 && lines <= 18 && txt.length <= 800) {
+                          cardSet.add(el);
+                          break;
+                      }
+                      el = el.parentElement;
+                  }
+              }
+
+              // ── 2. Keep only leaf cards (not containing another card) ─────
+              const allCards = Array.from(cardSet);
+              const leafCards = allCards.filter(el =>
+                  !allCards.some(other => other !== el && el.contains(other))
+              );
+
+              // ── 3. Extract data from each leaf card ───────────────────────
+              const seenKey = new Set();
+              const results = [];
+              let pos = 0;
+
+              for (const el of leafCards) {
+                  const lines = (el.innerText || '')
+                      .split('\n').map(l => l.trim()).filter(Boolean);
+                  if (lines.length < 2) continue;
+
+                  const priceLine = lines.find(l => priceRe.test(l));
+                  if (!priceLine) continue;
+                  const price = priceLine.match(priceRe)[0];
+                  const priceIdx = lines.indexOf(priceLine);
+
+                  // title = longest non-price line before the price
+                  const titleCandidates = lines
+                      .slice(0, priceIdx)
+                      .filter(l => !priceRe.test(l) && l.length > 3 && !/^\d+[%$]/.test(l));
+                  const title = titleCandidates.sort((a, b) => b.length - a.length)[0] || '';
+                  if (!title) continue;
+
+                  const key = title + '||' + price;
+                  if (seenKey.has(key)) continue;
+                  seenKey.add(key);
+
+                  // rating & reviews
+                  let rating = '', reviews = '';
+                  for (const l of lines) {
+                      if (!rating && ratingRe.test(l)) {
+                          rating = l.match(ratingRe)[1];
+                      } else if (rating && !reviews) {
+                          // "(1,234)" or "1234" after rating line
+                          const m = l.match(/^\(?([\d,]+)\)?(?:\s*reviews?)?$/i);
+                          if (m) reviews = m[1].replace(/,/g, '');
+                      }
+                  }
+                  // fallback: look for aria-label="Rated X out of 5"
+                  const ratingEl = el.querySelector('[aria-label*="out of 5"],[aria-label*="Rated"]');
+                  if (!rating && ratingEl) {
+                      const m = (ratingEl.getAttribute('aria-label') || '').match(/(\d\.\d)/);
+                      if (m) rating = m[1];
+                  }
+
+                  // sponsored detection
+                  const isSponsored =
+                      !!el.querySelector('[aria-label*="Sponsored"],.Krfl3e,[data-dtld]') ||
+                      /^sponsored$/im.test(lines[0]);
+
+                  // store: DOM first, then last meaningful text line after price
+                  const storeEl = el.querySelector(
+                      '[data-merchant-name],.aULzUe,.E5ocAb,.LbUacb,.IuHnof,.NJMzre,.zPEcBd,.Lq5OHe'
+                  );
+                  let store = (
+                      storeEl?.getAttribute('data-merchant-name') || storeEl?.innerText || ''
+                  ).replace(/^from\s+/i, '').trim();
+
+                  if (!store) {
+                      const afterLines = lines.slice(priceIdx + 1);
+                      store = afterLines.find(l =>
+                          !priceRe.test(l) &&
+                          !/^[\d.,()%]+$/.test(l) &&
+                          !/^\d+%\s*(off|save)/i.test(l) &&
+                          l.length > 1
+                      ) || '';
+                  }
+                  // reject obvious non-store strings
+                  if (/^\d+%|^free\s*delivery|^save\s*\$/i.test(store)) store = '';
+
+                  // ── store domain: 3-tier resolution ──────────────────────
+                  const KNOWN = {
+                      'harvey norman':'harveynorman.com.au','harvey norman australia':'harveynorman.com.au',
+                      'jb hi-fi':'jbhifi.com.au','jb hifi':'jbhifi.com.au','jb hi fi':'jbhifi.com.au',
+                      'the good guys':'thegoodguys.com.au','good guys':'thegoodguys.com.au',
+                      'big w':'bigw.com.au','kmart':'kmart.com.au','target':'target.com.au',
+                      'woolworths':'woolworths.com.au','amazon au':'amazon.com.au','amazon':'amazon.com.au',
+                      'bunnings':'bunnings.com.au','bunnings warehouse':'bunnings.com.au',
+                      'kogan':'kogan.com','kogan.com':'kogan.com','myer':'myer.com.au',
+                      'david jones':'davidjones.com','officeworks':'officeworks.com.au',
+                      'bing lee':'binglee.com.au','appliances online':'appliancesonline.com.au',
+                      'catch':'catch.com.au','ebay':'ebay.com.au','ebay au':'ebay.com.au',
+                      'costco':'costco.com.au','ikea':'ikea.com',
+                      'winning appliances':'winningappliances.com.au',
+                      'e&s':'eands.com.au','domayne':'domayne.com.au',
+                      'betta home living':'betta.com.au',
+                      'lg electronics australia':'lg.com','lg electronics':'lg.com',
+                      'samsung':'samsung.com/au','apple':'apple.com/au',
+                      'appliance giant':'appliancegiant.com.au',
+                      'appliances warehouse':'applianceswarehouse.com.au',
+                      'appliances deals':'appliancesdeals.com.au',
+                      'billy guyatts':'billyguyatts.com.au','stan cash':'stancash.com.au',
+                      'buysmarte':'buysmarte.com.au','buy smarte':'buysmarte.com.au',
+                      'road tech marine':'rtm.com.au','crowdshop':'crowdshop.com.au',
+                      'whybuy':'whybuy.com.au','temple & webster':'templeandwebster.com.au',
+                      'freedom':'freedom.com.au','nick scali':'nickscali.com.au',
+                  };
+                  let storeDomain = '';
+                  // Tier 1: decode from Google redirect href (e.g. /url?url=https://store.com)
+                  for (const a of el.querySelectorAll('a[href]')) {
+                      const raw = a.getAttribute('href') || '';
+                      const m = raw.match(/[?&](?:url|q|dest|adurl)=(https?[^&]+)/i);
+                      if (m) {
+                          const dm = decodeURIComponent(m[1]).match(/https?:\/\/(?:www\.)?([^/?#]+)/);
+                          if (dm) { storeDomain = dm[1]; break; }
+                      }
+                      const abs = a.href || '';
+                      if (abs && !abs.includes('google.') && abs.startsWith('http')) {
+                          const dm = abs.match(/https?:\/\/(?:www\.)?([^/?#]+)/);
+                          if (dm) { storeDomain = dm[1]; break; }
+                      }
+                  }
+                  // Tier 2: known AU retailer lookup
+                  if (!storeDomain && store) {
+                      const key = store.toLowerCase().trim();
+                      storeDomain = KNOWN[key] || '';
+                      if (!storeDomain) {
+                          for (const [k, v] of Object.entries(KNOWN)) {
+                              if (key.includes(k) || k.includes(key)) { storeDomain = v; break; }
+                          }
+                      }
+                  }
+                  // Tier 3: normalise store name → best-guess .com.au
+                  if (!storeDomain && store && store.length > 2) {
+                      storeDomain = store.toLowerCase()
+                          .replace(/\s+(australia|au)\s*$/i, '')
+                          .replace(/[^a-z0-9]/g, '') + '.com.au';
+                  }
+
+                  pos++;
+                  results.push({ pos, title, price, rating, reviews, store, storeDomain, sponsored: isSponsored });
+              }
+
+              return results;
+          }
+          """
+
+          async def extract(page, keyword):
+              raw = await page.evaluate(CAROUSEL_JS)
+              now = datetime.now().isoformat(timespec="seconds")
+              rows = []
+              for r in raw:
+                  store = clean(r.get("store", ""))
+                  sd = r.get("storeDomain", "")
+                  rows.append({
+                      "keyword":     keyword,
+                      "position":    r["pos"],
+                      "title":       clean(r["title"]),
+                      "price":       clean(r["price"]),
+                      "rating":      r["rating"],
+                      "reviews":     r["reviews"],
+                      "store":       store or sd,
+                      "store_domain": sd,
+                      "sponsored":   "yes" if r.get("sponsored") else "no",
+                      "mode":        MODE,
+                      "scraped_at":  now,
+                  })
+              return rows
+
+          def save_csv(rows, path):
+              path.parent.mkdir(exist_ok=True)
+              with open(path, "w", newline="", encoding="utf-8") as f:
+                  w = csv.DictWriter(f, fieldnames=HEADERS)
+                  w.writeheader()
+                  w.writerows(rows)
+
+          async def main():
+              all_rows = []
+              is_mobile = MODE == "mobile"
+              async with async_playwright() as pw:
+                  browser = await pw.chromium.launch(
+                      headless=True,
+                      args=["--no-sandbox", "--disable-blink-features=AutomationControlled"]
+                  )
+                  ctx = await browser.new_context(
+                      viewport=MOBILE_VP if is_mobile else DESKTOP_VP,
+                      user_agent=MOBILE_UA if is_mobile else DESKTOP_UA,
+                      locale="en-AU",
+                      is_mobile=is_mobile,
+                      has_touch=is_mobile,
+                  )
+                  await ctx.add_init_script(
+                      "Object.defineProperty(navigator,'webdriver',{get:()=>undefined})"
+                  )
+                  for kw in KEYWORDS:
+                      page = await ctx.new_page()
+                      slug = kw.replace(" ", "_")
+                      try:
+                          url = f"https://www.google.com.au/search?q={kw.replace(' ','+')}&gl=au&hl=en-AU"
+                          await page.goto(url, wait_until="domcontentloaded", timeout=30000)
+                          await dismiss_consent(page)
+                          await page.wait_for_timeout(2500)
+                          await slow_scroll(page)
+                          SCREENSHOTS_DIR.mkdir(exist_ok=True)
+                          await page.screenshot(
+                              path=str(SCREENSHOTS_DIR / f"carousel_{MODE}_{slug}.png"),
+                              full_page=True
+                          )
+                          rows = await extract(page, kw)
+                          all_rows.extend(rows)
+                          save_csv(rows, RESULTS_DIR / f"carousel_{slug}.csv")
+                          print(f"carousel [{MODE}] {kw!r}: {len(rows)} products")
+                          for r in rows:
+                              sp = "[S]" if r["sponsored"] == "yes" else "   "
+                              print(f"  {sp}#{r['position']:>2} {r['title'][:55]:<55} {r['price']:>10}  {r['store']}")
+                      except Exception as e:
+                          print(f"ERROR {kw}: {e}")
+                      finally:
+                          await page.close()
+                      await asyncio.sleep(2)
+                  await browser.close()
+
+              save_csv(all_rows, RESULTS_DIR / "carousel_all.csv")
+              print(f"\nCarousel total: {len(all_rows)} products across {len(KEYWORDS)} keywords")
+
+          asyncio.run(main())
+          PYEOF
+
+      # ──────────────────────────────────────────────────────────────────────
+      # ORGANIC SCRAPER  (?tbm=shop → Google Shopping tab, paginated)
+      # ──────────────────────────────────────────────────────────────────────
+      - name: Run organic scraper
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.scraper == 'organic' || github.event.inputs.scraper == 'both' }}
+        env:
+          KEYWORDS: ${{ github.event.inputs.keywords }}
+          MODE: ${{ github.event.inputs.mode || 'mobile' }}
+        run: |
+          python - <<'PYEOF'
+          import asyncio, csv, re, os
+          from datetime import datetime
+          from pathlib import Path
+          from urllib.parse import quote_plus
+          from playwright.async_api import async_playwright
+
+          raw_kw = os.environ.get("KEYWORDS", "")
+          KEYWORDS = [k.strip() for k in raw_kw.split(",") if k.strip()] or [
+              "fridge", "vacuum", "television", "tv", "washer", "washing machine",
+              "dishwasher", "dryer", "microwave", "air conditioner"
+          ]
+          MODE = os.environ.get("MODE", "mobile")
+          PAGES_PER_KW = 3          # pages of 40 results each → up to 120 per keyword
+          RESULTS_DIR = Path("results")
+          SCREENSHOTS_DIR = Path("screenshots")
+          HEADERS = ["keyword","position","title","price","original_price","rating","reviews",
+                     "store","store_domain","sponsored","url","mode","scraped_at"]
+
+          MOBILE_UA  = "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Mobile Safari/537.36"
+          DESKTOP_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+          MOBILE_VP  = {"width": 390,  "height": 844}
+          DESKTOP_VP = {"width": 1280, "height": 900}
+
+          def clean(s): return re.sub(r"\s+", " ", s or "").strip()
+
+          async def dismiss_consent(page):
+              for sel in ["button#L2AGLb","button:has-text('Accept all')","button:has-text('I agree')"]:
+                  try:
+                      btn = page.locator(sel)
+                      if await btn.count() > 0:
+                          await btn.first.click()
+                          await page.wait_for_timeout(800)
+                          return
+                  except: pass
+
+          async def slow_scroll(page):
+              height = await page.evaluate("document.body.scrollHeight")
+              for y in range(0, height + 1, 500):
+                  await page.evaluate(f"window.scrollTo(0,{y})")
+                  await page.wait_for_timeout(150)
+              await page.evaluate("window.scrollTo(0,0)")
+              await page.wait_for_timeout(500)
+
+          # On the Google Shopping tab (?tbm=shop) products appear in a grid.
+          # Each card reliably contains:  title / store / price / (original price) /
+          # (rating) / (review count).  We use the same TreeWalker leaf-card
+          # approach so the code survives class renames.
+          # We also extract:
+          #   • original_price  – the struck-through price when on sale
+          #   • sponsored flag  – first results with "Sponsored" text
+          #   • store_domain    – decoded from Google redirect href
+          #   • url             – Google Shopping product page (not store redirect)
+          ORGANIC_JS = r"""
+          () => {
+              const priceRe    = /A?\$[\d,]+(?:\.\d{2})?/g;
+              const ratingRe   = /^(\d\.\d)\b/;
+              const googleHost = location.hostname;  // e.g. www.google.com.au
+
+              // ── 1. Find leaf product cards via TreeWalker on price text ──
+              const cardSet = new Set();
+              const root = document.getElementById('rso') || document.getElementById('search') || document.body;
+              const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+              let node;
+              while ((node = walker.nextNode())) {
+                  if (!/A?\$[\d,]+/.test(node.nodeValue || '')) continue;
+                  let el = node.parentElement;
+                  for (let d = 0; d < 14; d++) {
+                      if (!el || el === document.body) break;
+                      const txt = el.innerText || '';
+                      const lines = txt.split('\n').filter(l => l.trim()).length;
+                      if (lines >= 2 && lines <= 20 && txt.length <= 900) {
+                          cardSet.add(el); break;
+                      }
+                      el = el.parentElement;
+                  }
+              }
+              const allCards = Array.from(cardSet);
+              const leafCards = allCards.filter(el =>
+                  !allCards.some(other => other !== el && el.contains(other))
+              );
+
+              // ── 2. Extract ────────────────────────────────────────────────
+              const seenKey = new Set();
+              const results  = [];
+              let pos = 0;
+
+              for (const el of leafCards) {
+                  const lines = (el.innerText || '')
+                      .split('\n').map(l => l.trim()).filter(Boolean);
+                  if (lines.length < 2) continue;
+
+                  // Collect ALL price-like strings in the card
+                  const fullText = el.innerText || '';
+                  const allPrices = [...new Set(fullText.match(/A?\$[\d,]+(?:\.\d{2})?/g) || [])];
+                  if (allPrices.length === 0) continue;
+
+                  // Current price = smallest price (sale price is usually lower)
+                  const price = allPrices.sort((a, b) =>
+                      parseFloat(a.replace(/[A$,]/g,'')) - parseFloat(b.replace(/[A$,]/g,''))
+                  )[0];
+                  // Original price = largest (if there are two prices on the card)
+                  const originalPrice = allPrices.length > 1 ? allPrices[allPrices.length - 1] : '';
+
+                  // title = longest non-price, non-short line before first price line
+                  const priceIdx = lines.findIndex(l => /A?\$[\d,]/.test(l));
+                  const titleCandidates = lines
+                      .slice(0, priceIdx < 0 ? lines.length : priceIdx)
+                      .filter(l => !/A?\$[\d,]/.test(l) && l.length > 3 && !/^\d+[%$]/.test(l));
+                  const title = titleCandidates.sort((a, b) => b.length - a.length)[0] || '';
+                  if (!title) continue;
+
+                  const key = title + '||' + price;
+                  if (seenKey.has(key)) continue;
+                  seenKey.add(key);
+
+                  // sponsored
+                  const isSponsored =
+                      !!el.querySelector('[aria-label*="Sponsored"],.Krfl3e,[data-dtld],.mnKHRc') ||
+                      /^sponsored$/im.test(lines[0]);
+
+                  // rating & reviews
+                  let rating = '', reviews = '';
+                  const ratingEl = el.querySelector('[aria-label*="out of 5"],[aria-label*="Rated"],[aria-label*="stars"]');
+                  if (ratingEl) {
+                      const m = (ratingEl.getAttribute('aria-label') || '').match(/(\d\.\d)/);
+                      if (m) rating = m[1];
+                  }
+                  if (!rating) {
+                      for (const l of lines) {
+                          if (ratingRe.test(l)) { rating = l.match(ratingRe)[1]; break; }
+                      }
+                  }
+                  // review count – parenthesised number on same or next line as rating
+                  for (const l of lines) {
+                      const m = l.match(/^\(?([\d,]+)\)?\s*(?:reviews?|ratings?)?$/i);
+                      if (m && l !== price && l !== originalPrice) {
+                          const n = parseInt(m[1].replace(/,/g, ''), 10);
+                          if (n > 0 && n < 2_000_000) { reviews = String(n); break; }
+                      }
+                  }
+
+                  // store name
+                  const storeEl = el.querySelector(
+                      '[data-merchant-name],.aULzUe,.E5ocAb,.LbUacb,.IuHnof,.NJMzre,.zPEcBd,.Lq5OHe'
+                  );
+                  let store = (
+                      storeEl?.getAttribute('data-merchant-name') || storeEl?.innerText || ''
+                  ).replace(/^from\s+/i, '').trim();
+
+                  if (!store) {
+                      const afterLines = lines.slice(priceIdx + 1);
+                      store = afterLines.find(l =>
+                          !/A?\$[\d,]/.test(l) &&
+                          !/^[\d.,()%]+$/.test(l) &&
+                          !/^\d+%\s*(off|save)/i.test(l) &&
+                          !/^free\s*(delivery|shipping)/i.test(l) &&
+                          l.length > 1
+                      ) || '';
+                  }
+                  if (/^\d+%|^free\s*(delivery|ship)/i.test(store)) store = '';
+
+                  // ── store domain: 3-tier resolution (same as carousel) ───
+                  const KNOWN2 = {
+                      'harvey norman':'harveynorman.com.au','harvey norman australia':'harveynorman.com.au',
+                      'jb hi-fi':'jbhifi.com.au','jb hifi':'jbhifi.com.au','jb hi fi':'jbhifi.com.au',
+                      'the good guys':'thegoodguys.com.au','good guys':'thegoodguys.com.au',
+                      'big w':'bigw.com.au','kmart':'kmart.com.au','target':'target.com.au',
+                      'woolworths':'woolworths.com.au','amazon au':'amazon.com.au','amazon':'amazon.com.au',
+                      'bunnings':'bunnings.com.au','bunnings warehouse':'bunnings.com.au',
+                      'kogan':'kogan.com','kogan.com':'kogan.com','myer':'myer.com.au',
+                      'david jones':'davidjones.com','officeworks':'officeworks.com.au',
+                      'bing lee':'binglee.com.au','appliances online':'appliancesonline.com.au',
+                      'catch':'catch.com.au','ebay':'ebay.com.au','ebay au':'ebay.com.au',
+                      'costco':'costco.com.au','ikea':'ikea.com',
+                      'winning appliances':'winningappliances.com.au',
+                      'e&s':'eands.com.au','domayne':'domayne.com.au',
+                      'betta home living':'betta.com.au',
+                      'lg electronics australia':'lg.com','lg electronics':'lg.com',
+                      'samsung':'samsung.com/au','apple':'apple.com/au',
+                      'appliance giant':'appliancegiant.com.au',
+                      'appliances warehouse':'applianceswarehouse.com.au',
+                      'appliances deals':'appliancesdeals.com.au',
+                      'billy guyatts':'billyguyatts.com.au','stan cash':'stancash.com.au',
+                      'buysmarte':'buysmarte.com.au','buy smarte':'buysmarte.com.au',
+                      'road tech marine':'rtm.com.au','crowdshop':'crowdshop.com.au',
+                      'whybuy':'whybuy.com.au','temple & webster':'templeandwebster.com.au',
+                      'freedom':'freedom.com.au','nick scali':'nickscali.com.au',
+                  };
+                  let storeDomain = '';
+                  // Tier 1: decode from redirect href
+                  for (const a of el.querySelectorAll('a[href]')) {
+                      const raw = a.getAttribute('href') || '';
+                      const m = raw.match(/[?&](?:url|q|dest|adurl)=(https?[^&]+)/i);
+                      if (m) {
+                          const dm = decodeURIComponent(m[1]).match(/https?:\/\/(?:www\.)?([^/?#]+)/);
+                          if (dm) { storeDomain = dm[1]; break; }
+                      }
+                      const abs = a.href || '';
+                      if (abs && !abs.includes(googleHost) && abs.startsWith('http')) {
+                          const dm = abs.match(/https?:\/\/(?:www\.)?([^/?#]+)/);
+                          if (dm) { storeDomain = dm[1]; break; }
+                      }
+                  }
+                  // Tier 2: known AU retailer lookup
+                  if (!storeDomain && store) {
+                      const key = store.toLowerCase().trim();
+                      storeDomain = KNOWN2[key] || '';
+                      if (!storeDomain) {
+                          for (const [k, v] of Object.entries(KNOWN2)) {
+                              if (key.includes(k) || k.includes(key)) { storeDomain = v; break; }
+                          }
+                      }
+                  }
+                  // Tier 3: normalise store name → best-guess .com.au
+                  if (!storeDomain && store && store.length > 2) {
+                      storeDomain = store.toLowerCase()
+                          .replace(/\s+(australia|au)\s*$/i, '')
+                          .replace(/[^a-z0-9]/g, '') + '.com.au';
+                  }
+
+                  // Google Shopping product page URL (for position tracking)
+                  let productUrl = '';
+                  for (const a of el.querySelectorAll('a[href]')) {
+                      const h = a.getAttribute('href') || '';
+                      if (h.includes('/shopping/product/')) { productUrl = 'https://' + googleHost + h; break; }
+                      if (h.startsWith('/shopping/')) { productUrl = 'https://' + googleHost + h; break; }
+                  }
+                  if (productUrl.includes('support.google.com')) productUrl = '';
+
+                  pos++;
+                  results.push({
+                      pos, title, price,
+                      originalPrice: originalPrice === price ? '' : originalPrice,
+                      rating, reviews, store, storeDomain,
+                      sponsored: isSponsored,
+                      productUrl
+                  });
+              }
+
+              return results;
+          }
+          """
+
+          async def extract_page(page, keyword, page_offset):
+              raw = await page.evaluate(ORGANIC_JS)
+              now = datetime.now().isoformat(timespec="seconds")
+              rows = []
+              for r in raw:
+                  store = clean(r.get("store", ""))
+                  sd = r.get("storeDomain", "")
+                  rows.append({
+                      "keyword":        keyword,
+                      "position":       r["pos"] + page_offset,
+                      "title":          clean(r["title"]),
+                      "price":          clean(r["price"]),
+                      "original_price": clean(r.get("originalPrice", "")),
+                      "rating":         r["rating"],
+                      "reviews":        r["reviews"],
+                      "store":          store or sd,
+                      "store_domain":   sd,
+                      "sponsored":      "yes" if r.get("sponsored") else "no",
+                      "url":            r.get("productUrl", ""),
+                      "mode":           MODE,
+                      "scraped_at":     now,
+                  })
+              return rows
+
+          def save_csv(rows, path):
+              path.parent.mkdir(exist_ok=True)
+              with open(path, "w", newline="", encoding="utf-8") as f:
+                  w = csv.DictWriter(f, fieldnames=HEADERS)
+                  w.writeheader()
+                  w.writerows(rows)
+
+          async def main():
+              all_rows = []
+              is_mobile = MODE == "mobile"
+              async with async_playwright() as pw:
+                  browser = await pw.chromium.launch(
+                      headless=True,
+                      args=["--no-sandbox", "--disable-blink-features=AutomationControlled"]
+                  )
+                  ctx = await browser.new_context(
+                      viewport=MOBILE_VP if is_mobile else DESKTOP_VP,
+                      user_agent=MOBILE_UA if is_mobile else DESKTOP_UA,
+                      locale="en-AU",
+                      is_mobile=is_mobile,
+                      has_touch=is_mobile,
+                  )
+                  await ctx.add_init_script(
+                      "Object.defineProperty(navigator,'webdriver',{get:()=>undefined})"
+                  )
+                  for kw in KEYWORDS:
+                      slug = kw.replace(" ", "_")
+                      kw_rows = []
+                      for pg in range(PAGES_PER_KW):
+                          start = pg * 40
+                          page = await ctx.new_page()
+                          try:
+                              url = (
+                                  f"https://www.google.com.au/search"
+                                  f"?q={quote_plus(kw)}&tbm=shop&gl=au&hl=en-AU&num=40&start={start}"
+                              )
+                              await page.goto(url, wait_until="domcontentloaded", timeout=30000)
+                              if pg == 0:
+                                  await dismiss_consent(page)
+                              await page.wait_for_timeout(2000)
+                              await slow_scroll(page)
+                              if pg == 0:
+                                  SCREENSHOTS_DIR.mkdir(exist_ok=True)
+                                  await page.screenshot(
+                                      path=str(SCREENSHOTS_DIR / f"organic_{MODE}_{slug}.png"),
+                                      full_page=True
+                                  )
+                              rows = await extract_page(page, kw, page_offset=start)
+                              if not rows:
+                                  print(f"  page {pg+1}: 0 results — stopping pagination")
+                                  break
+                              kw_rows.extend(rows)
+                              print(f"  organic [{MODE}] {kw!r} page {pg+1}: {len(rows)} products")
+                          except Exception as e:
+                              print(f"ERROR {kw} page {pg}: {e}")
+                          finally:
+                              await page.close()
+                          await asyncio.sleep(1.5)
+
+                      # deduplicate across pages by title+price
+                      seen = set()
+                      deduped = []
+                      for r in kw_rows:
+                          k = r["title"] + "||" + r["price"]
+                          if k not in seen:
+                              seen.add(k)
+                              deduped.append(r)
+                      # re-number positions after dedup
+                      for i, r in enumerate(deduped, 1):
+                          r["position"] = i
+
+                      all_rows.extend(deduped)
+                      save_csv(deduped, RESULTS_DIR / f"organic_{slug}.csv")
+                      print(f"organic [{MODE}] {kw!r}: {len(deduped)} unique products total")
+                      for r in deduped[:10]:
+                          sp = "[S]" if r["sponsored"] == "yes" else "   "
+                          print(f"  {sp}#{r['position']:>3} {r['title'][:55]:<55} {r['price']:>10}  {r['store']}")
+                      if len(deduped) > 10:
+                          print(f"  ... and {len(deduped)-10} more")
+                      await asyncio.sleep(2)
+
+                  await browser.close()
+
+              save_csv(all_rows, RESULTS_DIR / "organic_all.csv")
+              print(f"\nOrganic total: {len(all_rows)} unique products across {len(KEYWORDS)} keywords")
+
+          asyncio.run(main())
+          PYEOF
+
+      # ──────────────────────────────────────────────────────────────────────
+      # UPLOAD & SUMMARY
+      # ──────────────────────────────────────────────────────────────────────
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: shopping-results-${{ github.run_id }}
+          path: |
+            results/
+            screenshots/
+          retention-days: 30
+
+      - name: Print summary
+        run: |
+          echo "## Shopping Scraper Results" >> $GITHUB_STEP_SUMMARY
+          echo "**Mode:** ${{ github.event.inputs.mode || 'mobile' }} | **Region:** Australia (google.com.au)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          for f in results/carousel_all.csv results/organic_all.csv; do
+            if [ -f "$f" ]; then
+              count=$(tail -n +2 "$f" | wc -l)
+              echo "### $f — ${count} rows" >> $GITHUB_STEP_SUMMARY
+              echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+              head -20 "$f" >> $GITHUB_STEP_SUMMARY
+              echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+            fi
+          done

@@ -1,0 +1,70 @@
+name: GTMetrix Audit
+
+on:
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: 'JSON array of URLs to test, e.g. ["https://example.com"]'
+        required: true
+        type: string
+      location_id:
+        description: 'GTMetrix location ID (4=San Antonio, 1=Vancouver, 7=Sydney)'
+        required: false
+        default: '4'
+        type: string
+      adblock:
+        description: 'Enable adblock during tests'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+      - name: Install dependencies
+        run: pip install httpx
+
+      - name: Run GTMetrix audit
+        continue-on-error: true
+        env:
+          GTMETRIX_API_KEY: ${{ secrets.GTMETRIX_API_KEY }}
+          GTMETRIX_URLS: ${{ inputs.urls }}
+          GTMETRIX_LOCATION_ID: ${{ inputs.location_id }}
+          GTMETRIX_ADBLOCK: ${{ inputs.adblock }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python run_audit_ci.py 2>&1
+
+      - name: Show results
+        if: always()
+        run: |
+          if [ -f gtmetrix_results.json ]; then
+            echo "Results file found:"
+            python3 -c "import json,sys; r=json.load(open('gtmetrix_results.json')); [print(x.get('url','?'), '|', x.get('performance_score','ERR'), '|', x.get('error','')) for x in r]"
+          else
+            echo "ERROR: gtmetrix_results.json not found - script likely crashed"
+          fi
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gtmetrix-results
+          path: gtmetrix_results.json
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true

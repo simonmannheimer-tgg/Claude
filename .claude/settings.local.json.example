@@ -1,0 +1,28 @@
+{
+  "_comment": "Copy to settings.local.json — this file is gitignored. Use for machine-specific paths and keys only.",
+  "mcpServers": {
+    "gsc": {
+      "command": "npx",
+      "args": ["-y", "mcp-gsc"],
+      "env": {
+        "GSC_CREDENTIALS_PATH": "/absolute/path/to/gsc-credentials.json",
+        "GSC_SITE_URL": "https://www.thegoodguys.com.au/"
+      }
+    },
+    "google-workspace": {
+      "command": "uvx",
+      "args": ["google-workspace-mcp"],
+      "env": {
+        "GOOGLE_CREDENTIALS_PATH": "/absolute/path/to/google-credentials.json"
+      }
+    },
+    "linear": {
+      "command": "npx",
+      "args": ["-y", "@linear/mcp-server"],
+      "env": { "LINEAR_API_KEY": "YOUR_LINEAR_API_KEY" }
+    }
+  },
+  "env": {
+    "PAT_TOKEN_GH": "YOUR_GITHUB_PAT_HERE"
+  }
+}

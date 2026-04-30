@@ -1,0 +1,18 @@
+
+=== SessionStart 2026-04-29T15:43:00Z ===
+[setup] starting Claude Code workspace setup
+[setup] running uv sync
+[setup] installing Node-based MCP servers
+[setup] npm install partial (will fall back to npx -y at runtime)
+[setup] installing Python MCP servers
+[setup] google-workspace-mcp pip install skipped
+[setup] ensuring claude-seo plugin is installed
+Adding marketplace…SSH not configured, cloning via HTTPS: https://github.com/AgriciDaniel/claude-seo.git
+Refreshing marketplace cache (timeout: 120s)…
+Cloning repository (timeout: 120s): https://github.com/AgriciDaniel/claude-seo.git
+Clone complete, validating marketplace…
+Cleaning up old marketplace cache…
+√ Successfully added marketplace: agricidaniel-seo (declared in user settings)
+Installing plugin "claude-seo"...√ Successfully installed plugin: claude-seo@agricidaniel-seo (scope: user)
+[setup] setup complete
+=== SessionStart complete ===

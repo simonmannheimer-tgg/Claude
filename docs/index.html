@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code Chat</title>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f0f11;--sidebar:#17171b;--surface:#1c1c20;--surface2:#242428;
+  --border:#2a2a30;--text:#e8e8ea;--muted:#666;--accent:#d97706;
+  --user-bg:#1e3a5f;--code-bg:#111118;--radius:12px;
+  --font:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px}
+a{color:var(--accent)}
+
+/* Layout */
+#app{display:flex;height:100vh;overflow:hidden}
+
+/* Sidebar */
+#sidebar{width:240px;min-width:240px;background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column}
+#sidebar-top{padding:16px;border-bottom:1px solid var(--border)}
+#sidebar-logo{font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;margin-bottom:12px}
+#sidebar-logo .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+#auth-status{font-size:12px;color:var(--muted);padding:6px 10px;background:var(--surface);border-radius:8px;cursor:pointer;border:1px solid var(--border);transition:border-color .2s}
+#auth-status:hover{border-color:var(--accent)}
+#auth-status.ok{color:#4ade80}
+#auth-status.err{color:#f87171}
+#sidebar-body{flex:1;overflow-y:auto;padding:8px}
+.section-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:12px 8px 4px}
+.issue-item{padding:8px 10px;border-radius:8px;cursor:pointer;font-size:13px;margin:2px 0;transition:background .15s;color:var(--muted)}
+.issue-item:hover,.issue-item.active{background:var(--surface2);color:var(--text)}
+.issue-item .inum{color:var(--accent);font-size:11px;font-weight:600;display:block;margin-bottom:2px}
+.issue-item .ititle{line-height:1.3}
+#live-indicator{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);padding:8px 10px}
+#live-dot{width:6px;height:6px;border-radius:50%;background:var(--muted)}
+#live-dot.active{background:#4ade80;box-shadow:0 0 0 2px rgba(74,222,128,.2);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* Main */
+#main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+#topbar{padding:12px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+#topbar h1{font-size:15px;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#issue-link{font-size:12px;color:var(--muted);text-decoration:none}
+#issue-link:hover{color:var(--accent)}
+.badge{background:var(--surface);border:1px solid var(--border);color:var(--muted);font-size:11px;padding:3px 8px;border-radius:20px;white-space:nowrap}
+
+/* Messages */
+#messages{flex:1;overflow-y:auto;padding:24px 0}
+#messages-inner{max-width:760px;margin:0 auto;padding:0 24px}
+.msg{margin-bottom:28px;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+/* User message */
+.msg-user{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.msg-user .meta{font-size:11px;color:var(--muted)}
+.msg-user .bubble{background:var(--user-bg);border-radius:var(--radius) var(--radius) 4px var(--radius);padding:12px 16px;max-width:82%;line-height:1.6;white-space:pre-wrap;word-break:break-word}
+
+/* Claude message */
+.msg-claude{display:flex;gap:12px;align-items:flex-start}
+.avatar{width:28px;height:28px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px;color:#fff}
+.msg-body{flex:1;min-width:0}
+.msg-meta{font-size:11px;color:var(--muted);margin-bottom:6px}
+.msg-content{line-height:1.75}
+.msg-content h1,.msg-content h2,.msg-content h3{margin:14px 0 6px;font-weight:600}
+.msg-content h1{font-size:1.25em}.msg-content h2{font-size:1.1em}.msg-content h3{font-size:1em}
+.msg-content p{margin-bottom:10px}
+.msg-content ul,.msg-content ol{margin:6px 0 10px 20px}
+.msg-content li{margin-bottom:4px}
+.msg-content code{background:var(--code-bg);border:1px solid var(--border);border-radius:4px;padding:1px 5px;font-size:13px;font-family:'JetBrains Mono','Fira Code',monospace}
+.msg-content pre{background:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:14px 16px;overflow-x:auto;margin:10px 0;position:relative}
+.msg-content pre code{background:none;border:none;padding:0;font-size:13px;line-height:1.6}
+.msg-content blockquote{border-left:3px solid var(--accent);padding-left:12px;color:var(--muted);margin:8px 0}
+.msg-content table{border-collapse:collapse;width:100%;margin:10px 0;font-size:13px}
+.msg-content th,.msg-content td{border:1px solid var(--border);padding:7px 11px;text-align:left}
+.msg-content th{background:var(--surface)}
+.copy-btn{position:absolute;top:8px;right:8px;background:var(--surface2);border:1px solid var(--border);color:var(--muted);padding:3px 8px;border-radius:5px;font-size:11px;cursor:pointer}
+.copy-btn:hover{background:var(--border);color:var(--text)}
+
+/* Pending indicator */
+.msg-pending .bubble{opacity:.6}
+.typing{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:13px}
+.typing-dots span{animation:dot 1.2s infinite;display:inline-block;font-size:16px;line-height:1}
+.typing-dots span:nth-child(2){animation-delay:.2s}
+.typing-dots span:nth-child(3){animation-delay:.4s}
+@keyframes dot{0%,60%,100%{opacity:.2}30%{opacity:1}}
+
+/* Empty state */
+#empty{text-align:center;padding:60px 24px;color:var(--muted)}
+#empty h2{font-size:22px;font-weight:600;color:var(--text);margin-bottom:8px}
+#empty p{font-size:14px;line-height:1.6;max-width:400px;margin:0 auto 24px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.chip{background:var(--surface);border:1px solid var(--border);padding:8px 14px;border-radius:20px;font-size:13px;cursor:pointer;transition:all .15s;color:var(--text)}
+.chip:hover{border-color:var(--accent)}
+
+/* Input */
+#input-area{border-top:1px solid var(--border);padding:16px 24px}
+#input-wrap{max-width:760px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:flex-end;gap:8px;padding:10px 12px;transition:border-color .2s}
+#input-wrap:focus-within{border-color:var(--accent)}
+#msg-input{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:15px;font-family:var(--font);resize:none;min-height:24px;max-height:160px;line-height:1.5}
+#msg-input::placeholder{color:var(--muted)}
+#send-btn{background:var(--accent);border:none;color:#fff;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:17px;flex-shrink:0;transition:opacity .15s;display:flex;align-items:center;justify-content:center}
+#send-btn:disabled{opacity:.35;cursor:not-allowed}
+#hint{max-width:760px;margin:7px auto 0;font-size:11px;color:var(--muted);text-align:center}
+
+/* Auth modal */
+#modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;align-items:center;justify-content:center}
+#modal.open{display:flex}
+#modal-box{background:var(--sidebar);border:1px solid var(--border);border-radius:var(--radius);padding:28px;width:480px;max-width:90vw}
+#modal-box h3{font-size:17px;margin-bottom:6px}
+#modal-box p{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.6}
+#modal-box input{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:8px;font-size:14px;outline:none;margin-bottom:14px;font-family:monospace}
+#modal-box input:focus{border-color:var(--accent)}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end}
+.btn{padding:8px 18px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-family:var(--font)}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-secondary{background:var(--surface2);color:var(--text)}
+.btn:hover{opacity:.85}
+#modal-box .help{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* Mobile */
+@media(max-width:600px){
+  #sidebar{display:none}
+  #messages-inner{padding:0 14px}
+  #input-area{padding:10px 14px}
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- Sidebar -->
+  <div id="sidebar">
+    <div id="sidebar-top">
+      <div id="sidebar-logo"><div class="dot"></div>Claude Code Chat</div>
+      <div id="auth-status" onclick="openAuthModal()">🔑 Set GitHub token</div>
+    </div>
+    <div id="sidebar-body">
+      <div id="live-indicator">
+        <div id="live-dot"></div>
+        <span id="live-text">Connecting…</span>
+      </div>
+      <div class="section-label">Conversations</div>
+      <div id="issue-list"></div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div id="main">
+    <div id="topbar">
+      <h1 id="chat-title">Claude Code Chat</h1>
+      <a id="issue-link" href="https://github.com/simonmannheimer-tgg/Claude/issues" target="_blank" class="badge">View on GitHub ↗</a>
+    </div>
+    <div id="messages"><div id="messages-inner">
+      <div id="empty">
+        <h2>What can I help with?</h2>
+        <p>Powered by Claude Code with SEO agents, GitHub integration, and coding skills.<br>Responses may take 30–60 seconds while agents run.</p>
+        <div class="chips">
+          <div class="chip" onclick="useChip(this)">Write PLP copy for /air-fryers</div>
+          <div class="chip" onclick="useChip(this)">SEO opportunities for thegoodguys.com.au</div>
+          <div class="chip" onclick="useChip(this)">Write 5 FAQs for washing machines</div>
+          <div class="chip" onclick="useChip(this)">Competitor analysis vs jbhifi.com.au</div>
+          <div class="chip" onclick="useChip(this)">Write meta titles for /laptops</div>
+        </div>
+      </div>
+    </div></div>
+    <div id="input-area">
+      <div id="input-wrap">
+        <textarea id="msg-input" placeholder="Message Claude…" rows="1"
+          onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+        <button id="send-btn" onclick="sendMessage()" title="Send (Enter)">↑</button>
+      </div>
+      <div id="hint">Enter to send · Shift+Enter for new line · Responses via GitHub Issue #4</div>
+    </div>
+  </div>
+</div>
+
+<!-- Auth Modal -->
+<div id="modal">
+  <div id="modal-box">
+    <h3>GitHub Personal Access Token</h3>
+    <p>Required to post messages. Your token is stored only in this browser and never sent anywhere except GitHub's API.</p>
+    <input id="token-input" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
+    <div class="modal-btns">
+      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveToken()">Save token</button>
+    </div>
+    <div class="help">
+      Get a free token: GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens<br>
+      Required permissions: <strong>Issues</strong> (Read &amp; Write), repository: <strong>simonmannheimer-tgg/Claude</strong>
+    </div>
+  </div>
+</div>
+
+<script>
+const REPO = 'simonmannheimer-tgg/Claude';
+const CHAT_ISSUE = 4;      // The "Claude Chat" issue number
+const POLL_INTERVAL = 12000; // 12 seconds
+const BOT_NAMES = new Set(['claude[bot]', 'github-actions[bot]']);
+
+let token = localStorage.getItem('github_token') || '';
+let lastCommentId = null;
+let pollTimer = null;
+let pendingCommentId = null;  // local ID of message we're waiting on
+let allComments = [];
+
+// ── Auth ──
+function openAuthModal() {
+  document.getElementById('token-input').value = token;
+  document.getElementById('modal').classList.add('open');
+  setTimeout(() => document.getElementById('token-input').focus(), 100);
+}
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+function saveToken() {
+  const t = document.getElementById('token-input').value.trim();
+  if (!t) return;
+  token = t;
+  localStorage.setItem('github_token', t);
+  closeModal();
+  updateAuthStatus();
+  loadIssues();
+}
+document.getElementById('modal').onclick = e => { if (e.target === document.getElementById('modal')) closeModal(); };
+
+function updateAuthStatus() {
+  const el = document.getElementById('auth-status');
+  if (token) {
+    el.textContent = '✓ GitHub connected';
+    el.className = 'ok';
+  } else {
+    el.textContent = '🔑 Set GitHub token';
+    el.className = '';
+  }
+}
+
+// ── GitHub API ──
+async function ghFetch(path, opts = {}) {
+  const headers = { 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  const res = await fetch(`https://api.github.com${path}`, { ...opts, headers: { ...headers, ...(opts.headers||{}) } });
+  if (!res.ok) throw new Error(`GitHub API ${res.status}: ${await res.text()}`);
+  return res.json();
+}
+
+async function loadIssues() {
+  try {
+    const issues = await ghFetch(`/repos/${REPO}/issues?state=open&per_page=20`);
+    const el = document.getElementById('issue-list');
+    el.innerHTML = '';
+    issues.forEach(issue => {
+      const d = document.createElement('div');
+      d.className = 'issue-item' + (issue.number === CHAT_ISSUE ? ' active' : '');
+      d.innerHTML = `<span class="inum">#${issue.number}</span><span class="ititle">${esc(issue.title)}</span>`;
+      d.onclick = () => {
+        if (issue.number !== CHAT_ISSUE) window.open(issue.html_url, '_blank');
+      };
+      el.appendChild(d);
+    });
+  } catch(e) { /* silent */ }
+}
+
+// ── Messages ──
+async function pollComments() {
+  try {
+    const comments = await ghFetch(`/repos/${REPO}/issues/${CHAT_ISSUE}/comments?per_page=100&direction=asc`);
+    const newComments = lastCommentId
+      ? comments.filter(c => c.id > lastCommentId)
+      : comments;
+
+    if (newComments.length > 0) {
+      lastCommentId = newComments[newComments.length - 1].id;
+
+      // First load: render all existing (or last 30)
+      if (allComments.length === 0 && comments.length > 0) {
+        const toShow = comments.slice(-30);
+        const empty = document.getElementById('empty');
+        if (empty) empty.remove();
+        toShow.forEach(renderComment);
+        allComments = comments;
+        lastCommentId = comments[comments.length - 1].id;
+        scrollBottom();
+        return;
+      }
+
+      newComments.forEach(c => {
+        // Remove pending indicator if this is Claude's reply
+        if (pendingCommentId && !isMe(c)) {
+          removePending();
+        }
+        renderComment(c);
+      });
+      allComments = [...allComments, ...newComments];
+      scrollBottom();
+    }
+
+    setLive(true);
+  } catch(e) {
+    setLive(false);
+  }
+}
+
+function isMe(comment) {
+  const login = comment.user?.login || '';
+  return BOT_NAMES.has(login) || login.includes('[bot]') || login === 'claude-code';
+}
+
+function isUserComment(comment) {
+  return !isMe(comment);
+}
+
+function renderComment(comment) {
+  const inner = document.getElementById('messages-inner');
+  const isBot = isMe(comment);
+  const body = comment.body || '';
+  const when = timeAgo(comment.created_at);
+
+  const div = document.createElement('div');
+
+  if (isBot) {
+    // Claude response
+    let cleaned = body.replace(/^@\S+\s*/,'');
+    div.className = 'msg msg-claude';
+    div.dataset.id = comment.id;
+    div.innerHTML = `
+      <div class="avatar">C</div>
+      <div class="msg-body">
+        <div class="msg-meta">Claude · ${when}</div>
+        <div class="msg-content">${renderMd(cleaned)}</div>
+      </div>`;
+    setTimeout(() => addCopyBtns(div), 0);
+  } else {
+    // User message — strip @claude prefix for display
+    let text = body.replace(/^@claude\s*/i, '').trim();
+    div.className = 'msg msg-user';
+    div.dataset.id = comment.id;
+    div.innerHTML = `
+      <div class="meta">${esc(comment.user?.login || 'you')} · ${when}</div>
+      <div class="bubble">${esc(text)}</div>`;
+  }
+
+  inner.appendChild(div);
+}
+
+function addPending() {
+  const id = 'pending-' + Date.now();
+  pendingCommentId = id;
+  const inner = document.getElementById('messages-inner');
+  const div = document.createElement('div');
+  div.id = id;
+  div.className = 'msg msg-claude';
+  div.innerHTML = `<div class="avatar">C</div><div class="msg-body"><div class="msg-meta">Claude</div><div class="msg-content typing">Thinking<div class="typing-dots"><span>.</span><span>.</span><span>.</span></div></div></div>`;
+  inner.appendChild(div);
+  scrollBottom();
+  return id;
+}
+
+function removePending() {
+  if (pendingCommentId) {
+    const el = document.getElementById(pendingCommentId);
+    if (el) el.remove();
+    pendingCommentId = null;
+  }
+}
+
+// ── Send ──
+async function sendMessage(preset) {
+  const input = document.getElementById('msg-input');
+  const text = (preset || input.value).trim();
+  if (!text) return;
+
+  if (!token) { openAuthModal(); return; }
+
+  const empty = document.getElementById('empty');
+  if (empty) empty.remove();
+
+  input.value = '';
+  autoResize(input);
+  document.getElementById('send-btn').disabled = true;
+
+  // Optimistic local render
+  const inner = document.getElementById('messages-inner');
+  const div = document.createElement('div');
+  div.className = 'msg msg-user msg-pending';
+  div.innerHTML = `<div class="meta">you · just now</div><div class="bubble">${esc(text)}</div>`;
+  inner.appendChild(div);
+  scrollBottom();
+
+  addPending();
+
+  try {
+    const body = `@claude ${text}`;
+    const comment = await ghFetch(`/repos/${REPO}/issues/${CHAT_ISSUE}/comments`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ body })
+    });
+
+    // Replace optimistic with real
+    div.remove();
+    // It will be picked up by the next poll cycle
+    lastCommentId = Math.max(lastCommentId || 0, comment.id - 1);
+
+  } catch(e) {
+    removePending();
+    div.innerHTML = `<div class="meta" style="color:#f87171">Failed to send — ${esc(e.message)}</div>`;
+  }
+
+  document.getElementById('send-btn').disabled = false;
+}
+
+function useChip(el) {
+  document.getElementById('msg-input').value = el.textContent;
+  document.getElementById('msg-input').focus();
+}
+
+// ── UI helpers ──
+function renderMd(text) {
+  return DOMPurify.sanitize(marked.parse(text));
+}
+
+function addCopyBtns(container) {
+  container.querySelectorAll('pre').forEach(pre => {
+    if (pre.querySelector('.copy-btn')) return;
+    const btn = document.createElement('button');
+    btn.className = 'copy-btn'; btn.textContent = 'Copy';
+    btn.onclick = () => {
+      const code = pre.querySelector('code');
+      navigator.clipboard.writeText(code ? code.textContent : pre.textContent);
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy', 2000);
+    };
+    pre.appendChild(btn);
+  });
+}
+
+function scrollBottom() {
+  const el = document.getElementById('messages');
+  el.scrollTop = el.scrollHeight;
+}
+
+function setLive(ok) {
+  const dot = document.getElementById('live-dot');
+  const text = document.getElementById('live-text');
+  dot.className = ok ? 'active' : '';
+  text.textContent = ok ? 'Live — polling every 12s' : 'Disconnected';
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 160) + 'px';
+}
+
+function timeAgo(iso) {
+  const diff = Math.floor((Date.now() - new Date(iso)) / 1000);
+  if (diff < 60) return 'just now';
+  if (diff < 3600) return Math.floor(diff/60) + 'm ago';
+  if (diff < 86400) return Math.floor(diff/3600) + 'h ago';
+  return new Date(iso).toLocaleDateString();
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Init ──
+updateAuthStatus();
+loadIssues();
+pollComments();
+pollTimer = setInterval(pollComments, POLL_INTERVAL);
+</script>
+</body>
+</html>
