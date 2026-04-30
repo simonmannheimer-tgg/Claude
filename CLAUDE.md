@@ -289,8 +289,49 @@ Run from repo root: `python tools/tgg_plp_auditor.py`
 | `gtmetrix-audit.yml` | Manual only | Yes |
 | `issue-receiver.yml` | Issue events | No |
 | `plp-merge.yml` | Push to branch | No |
+| `drive-skill-sync.yml` | Manual only — pull skill ZIPs from Drive | Yes |
 
 Required secrets: `ANTHROPIC_API_KEY`, `SEMRUSH_API_KEY`, `FIRECRAWL_API_KEY`.
+
+---
+
+## Chat ↔ Code Sync Pipeline
+
+Bridges Claude.ai chat sessions and this repo. Two directions:
+
+### Skills: Chat → Code
+
+When a chat session creates or updates a skill, package it as a ZIP and upload to Google Drive root using this naming convention:
+
+```
+skill-name_YYYYMMDD-HHMM.zip
+```
+
+Example: `tgg-copywriting_20260501-1430.zip`
+
+The ZIP must contain a `SKILL.md` at the root and a `metadata.json` with:
+```json
+{
+  "change": "Short description of what changed",
+  "timestamp": "2026-05-01T14:30:00+00:00"
+}
+```
+
+To pull all pending skill ZIPs into the repo:
+- Run `skill-zip-sync` in a Claude Code session, or
+- Trigger `drive-skill-sync.yml` from GitHub Actions (manual dispatch)
+
+Processed ZIPs are logged to `.claude/skill-sync-cleanup.log` for manual Drive deletion (Drive delete not yet automated — activate Google Workspace MCP to enable).
+
+### Conversations: Chat → Vault
+
+When you have a fresh Anthropic conversation export:
+
+1. Upload the ZIP to Google Drive as `claude-export_YYYYMMDD.zip`
+2. Run locally: `python3 scripts/drive_conversation_sync.py --from-file /path/to/export.zip`
+3. Vault pages regenerate automatically; `vault-autocommit.yml` commits them nightly
+
+Or run the script without arguments for full usage instructions.
 
 ---
 
