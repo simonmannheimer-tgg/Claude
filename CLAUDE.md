@@ -165,12 +165,51 @@ Use the seo-team-lead to [task]
 Or directly: `Use the plp-copywriter to write copy for /air-fryers`
 
 ### Standard workflows
-- **Category Page Build:** `08 (EAV)` → `04 (Fanout)` → `01 (PLP Intro)` → `05 (FAQ Copy)` → `02 (Metadata)` → `06 (Linking)`
+- **Category Page Build (full pipeline):** `/tgg-category-pipeline [URL]` — runs all steps in sequence, saves output per step
+- **Category Page Build (manual):** `08 (EAV)` → `04 (Fanout)` → `01 (PLP Intro)` → `05 (FAQ Copy)` → `02 (Metadata)` → `06 (Linking)`
 - **AEO Audit:** `04 (Summarise)` → `06 (Link Opportunities)` → `07 (AEO Suggestions)`
 - **Internal Linking:** `06 (Find → Validate → Verify → Insert)`
 - **Category Optimisation:** `08 (EAV)` → `04 (Fanout)` → `06 (Link Validation)` → `05 (Brand+Category FAQ)`
 
 Always read `00-tov-language-reference.md` before any content task.
+
+---
+
+## Content Engineering (Pipeline approach)
+
+Adapted from Ahrefs' content engineering system. Core principle: every production step saves its own output file before passing to the next stage, so any step can be reviewed, corrected, or re-run independently.
+
+### The pipeline skill
+`/tgg-category-pipeline [URL or slug]` — the master skill that chains all agents in sequence.
+
+Optional context parameter (front-load expert input):
+```
+/tgg-category-pipeline /air-fryers context: "focus on compact models, Ninja is priority brand this season"
+```
+
+### Output folder structure
+```
+seo/outputs/
+├── briefs/      ← context files + content briefs
+├── eav/         ← entity/attribute/value mappings
+├── keywords/    ← keyword research outputs
+├── plp/         ← PLP intro copy (2-sentence)
+├── faqs/        ← FAQ sections + category copy
+├── metadata/    ← meta titles + descriptions
+└── links/       ← internal link outputs
+```
+
+Full assembled build: `seo/outputs/[slug]-build-[date].md`
+
+### Recursive improvement
+After every pipeline run, note any step that needed manual correction under `## Pipeline notes` in the assembly file. These feed the CONNECTIONS TASK — reviewing what tools or rules to improve.
+
+### Pending tasks (open)
+- **ONBOARDING:** Walk Simon through the full system (agents, skills, pipeline, outputs, MCPs). Trigger: "run onboarding" or "walk me through the system".
+- **CONNECTIONS REVIEW:** Audit what tools/MCPs should connect to the pipeline to make skills better. Trigger: "what should we connect" or "connections review".
+- **RULE CONFLICTS (open questions for Simon):**
+  - PLP char count: Process 01 says **220–250**; `tgg-seo-specialist` skill says 230–260. Which is correct?
+  - Execution path: For production copy, do you prefer agents (via seo-team-lead) or skills (e.g. tgg-copywriting, tgg-category-pipeline)?
 
 ### Writing philosophy
 - Guardrails not templates. Ban harmful patterns; don't prescribe "allowed" ones.
