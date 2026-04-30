@@ -1,0 +1,3 @@
+[submodule ".claude/optional/agentic-seo/repo"]
+	path = .claude/optional/agentic-seo/repo
+	url = https://github.com/addyosmani/agentic-seo
