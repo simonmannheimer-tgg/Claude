@@ -13,9 +13,15 @@
 seo/outputs/*.csv
 seo/outputs/*.md
 seo/outputs/*.json
+seo/outputs/**/*.csv
+seo/outputs/**/*.md
+seo/outputs/**/*.json
 
 # Keep the outputs folder itself
 !seo/outputs/.gitkeep
+
+# VSCode workspace settings
+.vscode/
 
 # Context Mode — local SQLite index
 context_mode/context_index.db
