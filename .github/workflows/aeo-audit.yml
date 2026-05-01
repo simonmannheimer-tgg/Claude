@@ -121,6 +121,29 @@ on:
         required: false
         default: ''
 
+      run_sitemap_crawl:
+        description: |
+          ☐ Sitemap crawl mode (optional) — crawl via sitemap instead of fixed URLs.
+          Fetches sitemap_index.xml, classifies URLs by type, samples N per type.
+          Set sitemap_domain and sitemap_sample to configure.
+        type: boolean
+        default: false
+
+      sitemap_domain:
+        description: Domain to crawl in sitemap mode (default: thegoodguys.com.au)
+        required: false
+        default: 'thegoodguys.com.au'
+
+      sitemap_sample:
+        description: URLs to sample per page type in sitemap mode (default: 5)
+        required: false
+        default: '5'
+
+      sitemap_types:
+        description: Page types to crawl in sitemap mode (default: home,category,guide)
+        required: false
+        default: 'home,category,guide'
+
   # Uncomment to run weekly (Sunday 22:00 UTC = Monday 08:00 AEST):
   # schedule:
   #   - cron: '0 22 * * 0'
@@ -242,6 +265,15 @@ jobs:
               "https://www.thegoodguys.com.au/sale"
             ]' 2>&1
           fi
+
+      - name: "Sitemap crawl (optional)"
+        if: inputs.run_sitemap_crawl
+        continue-on-error: true
+        run: |
+          python crawl_from_sitemap.py \
+            --domain "${{ inputs.sitemap_domain }}" \
+            --sample "${{ inputs.sitemap_sample }}" \
+            --types "${{ inputs.sitemap_types }}" 2>&1
 
       - name: "Phase 2 — Local deep scan (~5 min)"
         if: inputs.run_phase2

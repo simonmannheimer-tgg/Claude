@@ -91,16 +91,25 @@ GRADE_EMOJI = {"A": "🟢", "B": "🟢", "C": "🟡", "D": "🟠", "F": "🔴"}
 # Required fields per schema @type for validity checks
 SCHEMA_REQUIRED_FIELDS: dict[str, set[str]] = {
     "Product":          {"name", "offers"},
-    "Offer":            {"price", "priceCurrency"},
+    "Offer":            {"price", "priceCurrency", "availability"},
     "AggregateRating":  {"ratingValue", "reviewCount"},
     "FAQPage":          {"mainEntity"},
     "Question":         {"name", "acceptedAnswer"},
     "BreadcrumbList":   {"itemListElement"},
-    "Article":          {"headline", "author"},
+    "Article":          {"headline", "author", "datePublished"},
     "WebSite":          {"url"},
     "Organization":     {"name"},
     "ItemList":         {"itemListElement"},
     "LocalBusiness":    {"name", "address"},
+    "MerchantReturnPolicy": {"applicableCountry", "returnPolicyCategory"},
+    "OfferShippingDetails": {"shippingRate"},
+}
+
+# Recommended (not required) fields that earn warning if absent
+SCHEMA_RECOMMENDED_FIELDS: dict[str, set[str]] = {
+    "Product":   {"brand", "gtin", "gtin13", "gtin14", "sameAs", "image"},
+    "Offer":     {"priceValidUntil", "seller"},
+    "Article":   {"dateModified", "image"},
 }
 
 DEFAULT_COMPETITORS = [
@@ -256,6 +265,7 @@ def check_render_diff(snapshot_dir: Path, urls: list[str]) -> dict:
             raw_text = raw_soup.get_text(separator=" ", strip=True)
             raw_words = len(raw_text.split())
             status = resp.status_code
+            raw_html_text = resp.text
         except Exception as e:
             results.append({"url": url, "error": str(e)[:100]})
             continue
@@ -271,13 +281,28 @@ def check_render_diff(snapshot_dir: Path, urls: list[str]) -> dict:
         ssr_detected = raw_words > rendered_words
         diff_words = rendered_words - raw_words  # negative when SSR (no JS-gated content)
 
+        # Element-level SSR diff: count JSON-LD blocks and price elements in raw vs rendered
+        raw_schema_count = len(re.findall(r'<script[^>]+type=["\']application/ld\+json["\']', raw_html_text, re.IGNORECASE))
+        rendered_html_text = rendered_soup.__str__()
+        rendered_schema_count = len(re.findall(r'<script[^>]+type=["\']application/ld\+json["\']', rendered_html_text, re.IGNORECASE))
+        schema_injected_csr = rendered_schema_count > raw_schema_count
+
+        # Price element counts (itemprop=price, data-price, .price class)
+        raw_price_els = len(raw_soup.find_all(attrs={"itemprop": "price"})) + \
+                        len(raw_soup.find_all(attrs={"data-price": True}))
+        rendered_price_els = len(rendered_soup.find_all(attrs={"itemprop": "price"})) + \
+                             len(rendered_soup.find_all(attrs={"data-price": True}))
+
         # Score: 20pts if >=80% content accessible without JS, partial 50-79%, 0 <50%
+        # Deduct 5pts if schema is CSR-only (AI bots won't see it)
         if pct_accessible >= 80:
             page_score = 20
         elif pct_accessible >= 50:
             page_score = 10
         else:
             page_score = 0
+        if schema_injected_csr:
+            page_score = max(0, page_score - 5)
 
         total_score += page_score
 
@@ -289,10 +314,18 @@ def check_render_diff(snapshot_dir: Path, urls: list[str]) -> dict:
             "pct_accessible": pct_accessible,
             "ssr_detected": ssr_detected,
             "js_only_words": max(diff_words, 0),
+            "ssr_schema_count": raw_schema_count,
+            "csr_schema_count": rendered_schema_count,
+            "schema_injected_csr": schema_injected_csr,
+            "price_elements_ssr": raw_price_els,
+            "price_elements_rendered": rendered_price_els,
             "score": page_score,
             "maxScore": 20,
             "note": "SSR detected — raw HTML contains full content" if ssr_detected else None,
-            "issue": "High JS dependency — bots without JS miss significant content" if pct_accessible < 80 else None,
+            "issue": (
+                "Schema injected via JS — AI bots cannot see structured data" if schema_injected_csr else
+                "High JS dependency — bots without JS miss significant content" if pct_accessible < 80 else None
+            ),
         })
 
     client.close()
@@ -639,18 +672,44 @@ def check_ai_signals(snapshot_dir: Path) -> dict:
     }
 
 
+# ── GTIN validation ───────────────────────────────────────────────────────────
+
+def _validate_gtin(gtin: str) -> bool:
+    """Luhn-based check digit validation for GTIN-8/12/13/14."""
+    digits = re.sub(r'\D', '', str(gtin))
+    if len(digits) not in (8, 12, 13, 14):
+        return False
+    total = 0
+    for i, d in enumerate(reversed(digits[:-1])):
+        n = int(d)
+        total += n * 3 if i % 2 == 0 else n
+    check = (10 - total % 10) % 10
+    return check == int(digits[-1])
+
+
 # ── Check 6: Schema Validity ──────────────────────────────────────────────────
 
-def _validate_schema_block(block: dict) -> list[str]:
+def _validate_schema_block(block: dict) -> tuple[list[str], list[str]]:
+    """Returns (errors, warnings) for a single schema block."""
     t = block.get("@type", "")
     if isinstance(t, list):
         t = t[0] if t else ""
     required = SCHEMA_REQUIRED_FIELDS.get(t, set())
-    return [f for f in required if not block.get(f)]
+    recommended = SCHEMA_RECOMMENDED_FIELDS.get(t, set())
+    errors = [f for f in required if not block.get(f)]
+    warnings = [f for f in recommended if not block.get(f)]
+
+    # GTIN validation when present
+    for gtin_field in ("gtin", "gtin13", "gtin14", "gtin8"):
+        val = block.get(gtin_field)
+        if val and not _validate_gtin(str(val)):
+            errors.append(f"{gtin_field} has invalid check digit: {val}")
+
+    return errors, warnings
 
 
 def check_schema_validity(snapshot_dir: Path) -> dict:
-    """Validates required fields in found JSON-LD blocks — presence alone isn't enough."""
+    """Validates required and recommended fields in JSON-LD blocks, including GTIN."""
     results = []
     total_score = 0
     max_score = 0
@@ -664,21 +723,24 @@ def check_schema_validity(snapshot_dir: Path) -> dict:
             max_score += page_max
             results.append({"file": html_file.name, "schema_count": 0, "valid": 0,
                             "invalid": 0, "score": 0, "maxScore": page_max,
-                            "issues": [], "issue": "No JSON-LD found"})
+                            "issues": [], "warnings": [], "issue": "No JSON-LD found"})
             continue
 
         issues = []
+        warn_list = []
         valid_count = 0
 
         def _validate(item: dict) -> None:
             nonlocal valid_count
-            missing = _validate_schema_block(item)
+            errs, warns = _validate_schema_block(item)
             t = item.get("@type", "unknown")
             if isinstance(t, list): t = t[0]
-            if missing:
-                issues.append(f"{t}: missing {', '.join(missing)}")
+            if errs:
+                issues.append(f"{t}: missing {', '.join(errs)}")
             else:
                 valid_count += 1
+            for w in warns:
+                warn_list.append(f"{t}: recommended field absent — {w}")
             for sub in item.get("@graph", []):
                 _validate(sub)
 
@@ -698,6 +760,7 @@ def check_schema_validity(snapshot_dir: Path) -> dict:
             "score": page_score,
             "maxScore": page_max,
             "issues": issues[:5],
+            "warnings": warn_list[:5],
             "issue": "; ".join(issues[:2]) if issues else None,
         })
 
