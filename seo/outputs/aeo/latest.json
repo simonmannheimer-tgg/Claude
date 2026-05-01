@@ -2258,8 +2258,8 @@
     }
   },
   {
-    "url": "https://www.jbhifi.com.au/blogs/news",
-    "label": "JB Hi-Fi \u00b7 Blog",
+    "url": "https://www.jbhifi.com.au/collections/headphones",
+    "label": "JB Hi-Fi \u00b7 Category 2",
     "result": {
       "score": 17,
       "maxScore": 75,
@@ -2306,7 +2306,7 @@
               "findings": [
                 {
                   "severity": "info",
-                  "message": "llms.txt found at https://www.jbhifi.com.au/blogs/news/llms.txt."
+                  "message": "llms.txt found at https://www.jbhifi.com.au/collections/headphones/llms.txt."
                 },
                 {
                   "severity": "info",
@@ -2473,7 +2473,7 @@
           "findings": [
             {
               "severity": "info",
-              "message": "llms.txt found at https://www.jbhifi.com.au/blogs/news/llms.txt."
+              "message": "llms.txt found at https://www.jbhifi.com.au/collections/headphones/llms.txt."
             },
             {
               "severity": "info",
@@ -2644,7 +2644,7 @@
           },
           {
             "severity": "info",
-            "message": "llms.txt found at https://www.jbhifi.com.au/blogs/news/llms.txt.",
+            "message": "llms.txt found at https://www.jbhifi.com.au/collections/headphones/llms.txt.",
             "checker": "llms-txt",
             "checkerName": "llms.txt Discovery Index"
           },
