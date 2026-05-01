@@ -1636,7 +1636,7 @@
         },
         {
           "file": "laptops-computers.html",
-          "total_words": 418,
+          "total_words": 426,
           "hidden_words": 0,
           "hidden_pct": 0,
           "details_collapsed_words": 0,
@@ -1660,7 +1660,7 @@
         },
         {
           "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
-          "total_words": 418,
+          "total_words": 426,
           "hidden_words": 0,
           "hidden_pct": 0,
           "details_collapsed_words": 0,
@@ -2145,13 +2145,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 765,
+          "dom_elements": 766,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (765 elements)",
+            "lean DOM (766 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -2203,21 +2203,20 @@
           "has_main": true,
           "has_article": true,
           "landmark_count": 5,
-          "heading_hierarchy_ok": true,
+          "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 762,
+          "dom_elements": 764,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "clean heading hierarchy",
-            "lean DOM (762 elements)",
+            "lean DOM (764 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
           "maxScore": 25,
-          "issue": "high external JS (24 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
         },
         {
           "file": "sale.html",
@@ -2243,21 +2242,20 @@
           "has_main": true,
           "has_article": true,
           "landmark_count": 5,
-          "heading_hierarchy_ok": true,
+          "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 762,
+          "dom_elements": 764,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "clean heading hierarchy",
-            "lean DOM (762 elements)",
+            "lean DOM (764 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
           "maxScore": 25,
-          "issue": "high external JS (24 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
         },
         {
           "file": "televisions--smart-tvs.html",
@@ -2384,13 +2382,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 765,
+          "dom_elements": 766,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (765 elements)",
+            "lean DOM (766 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -2442,21 +2440,20 @@
           "has_main": true,
           "has_article": true,
           "landmark_count": 5,
-          "heading_hierarchy_ok": true,
+          "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 762,
+          "dom_elements": 764,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "clean heading hierarchy",
-            "lean DOM (762 elements)",
+            "lean DOM (764 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
           "maxScore": 25,
-          "issue": "high external JS (24 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
         },
         {
           "file": "sale.html",
@@ -2482,21 +2479,20 @@
           "has_main": true,
           "has_article": true,
           "landmark_count": 5,
-          "heading_hierarchy_ok": true,
+          "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 762,
+          "dom_elements": 764,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "clean heading hierarchy",
-            "lean DOM (762 elements)",
+            "lean DOM (764 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
           "maxScore": 25,
-          "issue": "high external JS (24 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
         },
         {
           "file": "televisions--smart-tvs.html",
