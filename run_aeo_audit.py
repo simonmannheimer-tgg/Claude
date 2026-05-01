@@ -30,7 +30,7 @@ DEFAULT_URLS = [
     {"url": "https://www.thegoodguys.com.au",                              "label": "TGG · Home"},
     {"url": "https://www.thegoodguys.com.au/televisions",                  "label": "TGG · Category"},
     {"url": "https://www.thegoodguys.com.au/buying-guide/best-tvs",        "label": "TGG · Buying Guide"},
-    {"url": "https://www.thegoodguys.com.au/whats-new",                    "label": "TGG · Editorial"},
+    {"url": "https://www.thegoodguys.com.au/whats-new",                    "label": "TGG · News Hub"},
     # JB Hi-Fi — equivalent page types
     {"url": "https://www.jbhifi.com.au",                                               "label": "JB Hi-Fi · Home"},
     {"url": "https://www.jbhifi.com.au/collections/tvs",                               "label": "JB Hi-Fi · Category"},
