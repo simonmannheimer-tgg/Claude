@@ -7,6 +7,9 @@ name: Drive Skill Sync
 # .claude/skill-sync-cleanup.log for manual cleanup.
 
 on:
+  schedule:
+    - cron: "0 23 * * 1"  # Every Monday 23:00 UTC (Tuesday 09:00 AEST) — weekly skill sync
+
   workflow_dispatch:
     inputs:
       dry_run:
