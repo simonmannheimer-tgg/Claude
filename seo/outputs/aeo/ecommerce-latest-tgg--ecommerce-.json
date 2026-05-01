@@ -1648,7 +1648,7 @@
         },
         {
           "file": "sale.html",
-          "total_words": 4071,
+          "total_words": 3919,
           "hidden_words": 0,
           "hidden_pct": 0,
           "details_collapsed_words": 0,
@@ -2225,13 +2225,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 5804,
-          "aria_labels": 445,
+          "dom_elements": 5659,
+          "aria_labels": 430,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "good ARIA (445 labels)"
+            "good ARIA (430 labels)"
           ],
           "score": 20,
           "maxScore": 25,
@@ -2321,13 +2321,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 1125,
+          "dom_elements": 1123,
           "aria_labels": 51,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (1125 elements)",
+            "lean DOM (1123 elements)",
             "good ARIA (51 labels)"
           ],
           "score": 25,
@@ -2462,13 +2462,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 5804,
-          "aria_labels": 445,
+          "dom_elements": 5659,
+          "aria_labels": 430,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "good ARIA (445 labels)"
+            "good ARIA (430 labels)"
           ],
           "score": 20,
           "maxScore": 25,
@@ -2558,13 +2558,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 1125,
+          "dom_elements": 1123,
           "aria_labels": 51,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (1125 elements)",
+            "lean DOM (1123 elements)",
             "good ARIA (51 labels)"
           ],
           "score": 25,
