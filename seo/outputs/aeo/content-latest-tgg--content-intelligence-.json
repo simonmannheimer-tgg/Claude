@@ -2,9 +2,9 @@
   "label": "TGG (content intelligence)",
   "dir": "site-snapshots/thegoodguys.com.au",
   "grade": "D",
-  "score": 1201,
-  "maxScore": 2380,
-  "percentage": 50,
+  "score": 1089,
+  "maxScore": 2130,
+  "percentage": 51,
   "checks": {
     "boilerplate_ratio": {
       "score": 140,
@@ -475,18 +475,18 @@
           "category_entities": 8,
           "spec_entities": 4,
           "heading_entities": [
-            "price",
-            "reverse cycle",
-            "air conditioner",
+            "energy rating",
             "capacity",
-            "energy rating"
+            "air conditioner",
+            "reverse cycle",
+            "price"
           ],
           "intro_entities": [
-            "hisense",
             "fujitsu",
+            "samsung",
+            "hisense",
             "panasonic",
-            "split system",
-            "clearance"
+            "air conditioner"
           ],
           "top_entities": [
             {
@@ -514,11 +514,11 @@
               "count": 9
             },
             {
-              "entity": "hisense",
+              "entity": "fujitsu",
               "count": 8
             },
             {
-              "entity": "fujitsu",
+              "entity": "hisense",
               "count": 8
             }
           ],
@@ -536,19 +536,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "washing machine",
-            "tv",
-            "clearance",
-            "price",
-            "vacuum"
+            "coffee machine",
+            "fridge",
+            "dryer",
+            "smart home",
+            "tv"
           ],
           "top_entities": [
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
@@ -556,23 +556,23 @@
               "count": 2
             },
             {
-              "entity": "washing machine",
-              "count": 1
-            },
-            {
-              "entity": "tv",
-              "count": 1
-            },
-            {
-              "entity": "clearance",
-              "count": 1
-            },
-            {
-              "entity": "vacuum",
-              "count": 1
-            },
-            {
               "entity": "coffee machine",
+              "count": 1
+            },
+            {
+              "entity": "fridge",
+              "count": 1
+            },
+            {
+              "entity": "dryer",
+              "count": 1
+            },
+            {
+              "entity": "smart home",
+              "count": 1
+            },
+            {
+              "entity": "sale",
               "count": 1
             }
           ],
@@ -590,19 +590,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "washing machine",
-            "tv",
-            "clearance",
-            "price",
-            "vacuum"
+            "coffee machine",
+            "fridge",
+            "dryer",
+            "smart home",
+            "tv"
           ],
           "top_entities": [
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
@@ -610,23 +610,23 @@
               "count": 2
             },
             {
-              "entity": "washing machine",
-              "count": 1
-            },
-            {
-              "entity": "tv",
-              "count": 1
-            },
-            {
-              "entity": "clearance",
-              "count": 1
-            },
-            {
-              "entity": "vacuum",
-              "count": 1
-            },
-            {
               "entity": "coffee machine",
+              "count": 1
+            },
+            {
+              "entity": "fridge",
+              "count": 1
+            },
+            {
+              "entity": "dryer",
+              "count": 1
+            },
+            {
+              "entity": "smart home",
+              "count": 1
+            },
+            {
+              "entity": "sale",
               "count": 1
             }
           ],
@@ -644,19 +644,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "washing machine",
-            "tv",
-            "clearance",
-            "price",
-            "vacuum"
+            "coffee machine",
+            "fridge",
+            "dryer",
+            "smart home",
+            "tv"
           ],
           "top_entities": [
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
@@ -664,23 +664,23 @@
               "count": 2
             },
             {
-              "entity": "washing machine",
-              "count": 1
-            },
-            {
-              "entity": "tv",
-              "count": 1
-            },
-            {
-              "entity": "clearance",
-              "count": 1
-            },
-            {
-              "entity": "vacuum",
-              "count": 1
-            },
-            {
               "entity": "coffee machine",
+              "count": 1
+            },
+            {
+              "entity": "fridge",
+              "count": 1
+            },
+            {
+              "entity": "dryer",
+              "count": 1
+            },
+            {
+              "entity": "smart home",
+              "count": 1
+            },
+            {
+              "entity": "sale",
               "count": 1
             }
           ],
@@ -697,18 +697,18 @@
           "category_entities": 23,
           "spec_entities": 9,
           "heading_entities": [
-            "hisense",
             "philips",
-            "qled",
-            "mixer",
-            "headphones"
+            "acer",
+            "samsung",
+            "dryer",
+            "sharp"
           ],
           "intro_entities": [
-            "washing machine",
-            "tv",
-            "clearance",
-            "westinghouse",
-            "samsung"
+            "coffee machine",
+            "fridge",
+            "samsung",
+            "dryer",
+            "smart home"
           ],
           "top_entities": [
             {
@@ -736,11 +736,11 @@
               "count": 7
             },
             {
-              "entity": "price",
+              "entity": "refrigerator",
               "count": 6
             },
             {
-              "entity": "refrigerator",
+              "entity": "4k",
               "count": 6
             }
           ],
@@ -758,19 +758,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "washing machine",
-            "tv",
-            "clearance",
-            "price",
-            "vacuum"
+            "coffee machine",
+            "fridge",
+            "dryer",
+            "smart home",
+            "tv"
           ],
           "top_entities": [
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
@@ -778,23 +778,23 @@
               "count": 2
             },
             {
-              "entity": "washing machine",
-              "count": 1
-            },
-            {
-              "entity": "tv",
-              "count": 1
-            },
-            {
-              "entity": "clearance",
-              "count": 1
-            },
-            {
-              "entity": "vacuum",
-              "count": 1
-            },
-            {
               "entity": "coffee machine",
+              "count": 1
+            },
+            {
+              "entity": "fridge",
+              "count": 1
+            },
+            {
+              "entity": "dryer",
+              "count": 1
+            },
+            {
+              "entity": "smart home",
+              "count": 1
+            },
+            {
+              "entity": "sale",
               "count": 1
             }
           ],
@@ -811,18 +811,18 @@
           "category_entities": 25,
           "spec_entities": 12,
           "heading_entities": [
-            "hisense",
+            "coffee machine",
             "philips",
-            "television",
-            "qled",
-            "tcl"
+            "shark",
+            "samsung",
+            "dryer"
           ],
           "intro_entities": [
-            "hisense",
+            "coffee machine",
             "philips",
-            "qled",
-            "tcl",
-            "washing machine"
+            "fridge",
+            "dryer",
+            "smart home"
           ],
           "top_entities": [
             {
@@ -834,11 +834,11 @@
               "count": 54
             },
             {
-              "entity": "tv",
+              "entity": "delivery",
               "count": 17
             },
             {
-              "entity": "delivery",
+              "entity": "tv",
               "count": 17
             },
             {
@@ -850,11 +850,11 @@
               "count": 13
             },
             {
-              "entity": "refrigerator",
+              "entity": "fisher & paykel",
               "count": 10
             },
             {
-              "entity": "fisher & paykel",
+              "entity": "refrigerator",
               "count": 10
             }
           ],
@@ -872,19 +872,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "washing machine",
-            "tv",
-            "clearance",
-            "price",
-            "vacuum"
+            "coffee machine",
+            "fridge",
+            "dryer",
+            "smart home",
+            "tv"
           ],
           "top_entities": [
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
@@ -892,23 +892,23 @@
               "count": 2
             },
             {
-              "entity": "washing machine",
-              "count": 1
-            },
-            {
-              "entity": "tv",
-              "count": 1
-            },
-            {
-              "entity": "clearance",
-              "count": 1
-            },
-            {
-              "entity": "vacuum",
-              "count": 1
-            },
-            {
               "entity": "coffee machine",
+              "count": 1
+            },
+            {
+              "entity": "fridge",
+              "count": 1
+            },
+            {
+              "entity": "dryer",
+              "count": 1
+            },
+            {
+              "entity": "smart home",
+              "count": 1
+            },
+            {
+              "entity": "sale",
               "count": 1
             }
           ],
@@ -925,18 +925,18 @@
           "category_entities": 5,
           "spec_entities": 13,
           "heading_entities": [
-            "television",
+            "hdr",
+            "energy rating",
             "tv",
-            "price",
-            "lg",
-            "energy rating"
+            "television",
+            "lg"
           ],
           "intro_entities": [
-            "hisense",
-            "television",
-            "deal",
+            "samsung",
             "qled",
-            "tv"
+            "hisense",
+            "tv",
+            "soundbar"
           ],
           "top_entities": [
             {
@@ -985,18 +985,18 @@
           "category_entities": 5,
           "spec_entities": 13,
           "heading_entities": [
-            "television",
+            "hdr",
+            "energy rating",
             "tv",
-            "price",
-            "lg",
-            "energy rating"
+            "television",
+            "lg"
           ],
           "intro_entities": [
-            "hisense",
-            "television",
-            "deal",
+            "samsung",
             "qled",
-            "tv"
+            "hisense",
+            "tv",
+            "soundbar"
           ],
           "top_entities": [
             {
@@ -1045,18 +1045,18 @@
           "category_entities": 4,
           "spec_entities": 10,
           "heading_entities": [
-            "washing machine",
-            "price",
-            "washer",
+            "dryer",
+            "energy rating",
             "capacity",
-            "energy rating"
+            "washing machine",
+            "washer"
           ],
           "intro_entities": [
-            "washing machine",
-            "clearance",
-            "westinghouse",
             "samsung",
-            "top loader"
+            "dryer",
+            "fisher & paykel",
+            "sale",
+            "haier"
           ],
           "top_entities": [
             {
@@ -1126,15 +1126,15 @@
               "count": 4
             },
             {
+              "entity": "oven",
+              "count": 3
+            },
+            {
               "entity": "washing machine",
               "count": 3
             },
             {
               "entity": "discount",
-              "count": 3
-            },
-            {
-              "entity": "oven",
               "count": 3
             },
             {
@@ -2354,239 +2354,14 @@
       "summary": "6 pages analysed | avg coverage 33% vs competitor | method: spaCy NER"
     },
     "llm_quality": {
-      "score": 112,
-      "maxScore": 250,
-      "percentage": 45,
-      "grade": "D",
-      "pages": [
-        {
-          "file": "air-conditioners.html",
-          "page_type": "category",
-          "method": "heuristic",
-          "clarity": 4,
-          "specificity": 10,
-          "schema_alignment": 10,
-          "query_answerability": 5,
-          "llm_overall": 7.2,
-          "score": 18,
-          "maxScore": 25,
-          "reasoning": "clarity: Flesch reading ease 40, avg sentence 31 words; specificity: 189 numbers, 182 entities, 16 prices in 2587 words; schema: 10/10 schema entities visible in text; query: 6 questions, 6 definitions, intro_answer=False",
-          "issue": null
-        },
-        {
-          "file": "buying-guide--best-air-conditioners.html",
-          "page_type": "guide",
-          "method": "heuristic",
-          "clarity": 10,
-          "specificity": 0,
-          "schema_alignment": 0,
-          "query_answerability": 0,
-          "llm_overall": 2.5,
-          "score": 6,
-          "maxScore": 25,
-          "reasoning": "clarity: Flesch reading ease 79, avg sentence 6 words; specificity: Only 18 words \u2014 too thin to score; schema: No schema entities found \u2014 cannot align; query: Content too thin for question-answering",
-          "issue": "Low quality score (2.5/10) \u2014 improve clarity, specificity, or schema alignment"
-        },
-        {
-          "file": "buying-guide--best-tvs.html",
-          "page_type": "guide",
-          "method": "heuristic",
-          "clarity": 10,
-          "specificity": 0,
-          "schema_alignment": 0,
-          "query_answerability": 0,
-          "llm_overall": 2.5,
-          "score": 6,
-          "maxScore": 25,
-          "reasoning": "clarity: Flesch reading ease 79, avg sentence 6 words; specificity: Only 18 words \u2014 too thin to score; schema: No schema entities found \u2014 cannot align; query: Content too thin for question-answering",
-          "issue": "Low quality score (2.5/10) \u2014 improve clarity, specificity, or schema alignment"
-        },
-        {
-          "file": "buying-guide--best-washing-machines.html",
-          "page_type": "guide",
-          "method": "heuristic",
-          "clarity": 10,
-          "specificity": 0,
-          "schema_alignment": 0,
-          "query_answerability": 0,
-          "llm_overall": 2.5,
-          "score": 6,
-          "maxScore": 25,
-          "reasoning": "clarity: Flesch reading ease 79, avg sentence 6 words; specificity: Only 18 words \u2014 too thin to score; schema: No schema entities found \u2014 cannot align; query: Content too thin for question-answering",
-          "issue": "Low quality score (2.5/10) \u2014 improve clarity, specificity, or schema alignment"
-        },
-        {
-          "file": "index.html",
-          "page_type": "home",
-          "method": "heuristic",
-          "clarity": 6,
-          "specificity": 8,
-          "schema_alignment": 1,
-          "query_answerability": 0,
-          "llm_overall": 3.8,
-          "score": 10,
-          "maxScore": 25,
-          "reasoning": "clarity: Flesch reading ease 50, avg sentence 33 words; specificity: 25 numbers, 81 entities, 4 prices in 849 words; schema: 1/9 schema entities visible in text; query: 0 questions, 0 definitions, intro_answer=False",
-          "issue": "Low quality score (3.8/10) \u2014 improve clarity, specificity, or schema alignment"
-        },
-        {
-          "file": "laptops-computers.html",
-          "page_type": "category",
-          "method": "heuristic",
-          "clarity": 10,
-          "specificity": 0,
-          "schema_alignment": 0,
-          "query_answerability": 0,
-          "llm_overall": 2.5,
-          "score": 6,
-          "maxScore": 25,
-          "reasoning": "clarity: Flesch reading ease 79, avg sentence 6 words; specificity: Only 18 words \u2014 too thin to score; schema: No schema entities found \u2014 cannot align; query: Content too thin for question-answering",
-          "issue": "Low quality score (2.5/10) \u2014 improve clarity, specificity, or schema alignment"
-        },
-        {
-          "file": "sale.html",
-          "page_type": "category",
-          "method": "heuristic",
-          "clarity": 4,
-          "specificity": 9,
-          "schema_alignment": 10,
-          "query_answerability": 5,
-          "llm_overall": 7.0,
-          "score": 18,
-          "maxScore": 25,
-          "reasoning": "clarity: Flesch reading ease 39, avg sentence 17 words; specificity: 52 numbers, 74 entities, 0 prices in 1211 words; schema: 9/9 schema entities visible in text; query: 6 questions, 0 definitions, intro_answer=False",
-          "issue": null
-        },
-        {
-          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
-          "page_type": "category",
-          "method": "heuristic",
-          "clarity": 10,
-          "specificity": 0,
-          "schema_alignment": 0,
-          "query_answerability": 0,
-          "llm_overall": 2.5,
-          "score": 6,
-          "maxScore": 25,
-          "reasoning": "clarity: Flesch reading ease 79, avg sentence 6 words; specificity: Only 18 words \u2014 too thin to score; schema: No schema entities found \u2014 cannot align; query: Content too thin for question-answering",
-          "issue": "Low quality score (2.5/10) \u2014 improve clarity, specificity, or schema alignment"
-        },
-        {
-          "file": "televisions--smart-tvs.html",
-          "page_type": "category",
-          "method": "heuristic",
-          "clarity": 4,
-          "specificity": 10,
-          "schema_alignment": 10,
-          "query_answerability": 5,
-          "llm_overall": 7.2,
-          "score": 18,
-          "maxScore": 25,
-          "reasoning": "clarity: Flesch reading ease 43, avg sentence 40 words; specificity: 267 numbers, 171 entities, 13 prices in 2924 words; schema: 5/5 schema entities visible in text; query: 7 questions, 5 definitions, intro_answer=False",
-          "issue": null
-        },
-        {
-          "file": "televisions.html",
-          "page_type": "category",
-          "method": "heuristic",
-          "clarity": 4,
-          "specificity": 10,
-          "schema_alignment": 10,
-          "query_answerability": 5,
-          "llm_overall": 7.2,
-          "score": 18,
-          "maxScore": 25,
-          "reasoning": "clarity: Flesch reading ease 43, avg sentence 40 words; specificity: 267 numbers, 171 entities, 13 prices in 2924 words; schema: 5/5 schema entities visible in text; query: 7 questions, 5 definitions, intro_answer=False",
-          "issue": null
-        }
-      ],
-      "errors": [
-        {
-          "file": "buying-guide--best-air-conditioners.html",
-          "page_type": "guide",
-          "method": "heuristic",
-          "clarity": 10,
-          "specificity": 0,
-          "schema_alignment": 0,
-          "query_answerability": 0,
-          "llm_overall": 2.5,
-          "score": 6,
-          "maxScore": 25,
-          "reasoning": "clarity: Flesch reading ease 79, avg sentence 6 words; specificity: Only 18 words \u2014 too thin to score; schema: No schema entities found \u2014 cannot align; query: Content too thin for question-answering",
-          "issue": "Low quality score (2.5/10) \u2014 improve clarity, specificity, or schema alignment"
-        },
-        {
-          "file": "buying-guide--best-tvs.html",
-          "page_type": "guide",
-          "method": "heuristic",
-          "clarity": 10,
-          "specificity": 0,
-          "schema_alignment": 0,
-          "query_answerability": 0,
-          "llm_overall": 2.5,
-          "score": 6,
-          "maxScore": 25,
-          "reasoning": "clarity: Flesch reading ease 79, avg sentence 6 words; specificity: Only 18 words \u2014 too thin to score; schema: No schema entities found \u2014 cannot align; query: Content too thin for question-answering",
-          "issue": "Low quality score (2.5/10) \u2014 improve clarity, specificity, or schema alignment"
-        },
-        {
-          "file": "buying-guide--best-washing-machines.html",
-          "page_type": "guide",
-          "method": "heuristic",
-          "clarity": 10,
-          "specificity": 0,
-          "schema_alignment": 0,
-          "query_answerability": 0,
-          "llm_overall": 2.5,
-          "score": 6,
-          "maxScore": 25,
-          "reasoning": "clarity: Flesch reading ease 79, avg sentence 6 words; specificity: Only 18 words \u2014 too thin to score; schema: No schema entities found \u2014 cannot align; query: Content too thin for question-answering",
-          "issue": "Low quality score (2.5/10) \u2014 improve clarity, specificity, or schema alignment"
-        },
-        {
-          "file": "index.html",
-          "page_type": "home",
-          "method": "heuristic",
-          "clarity": 6,
-          "specificity": 8,
-          "schema_alignment": 1,
-          "query_answerability": 0,
-          "llm_overall": 3.8,
-          "score": 10,
-          "maxScore": 25,
-          "reasoning": "clarity: Flesch reading ease 50, avg sentence 33 words; specificity: 25 numbers, 81 entities, 4 prices in 849 words; schema: 1/9 schema entities visible in text; query: 0 questions, 0 definitions, intro_answer=False",
-          "issue": "Low quality score (3.8/10) \u2014 improve clarity, specificity, or schema alignment"
-        },
-        {
-          "file": "laptops-computers.html",
-          "page_type": "category",
-          "method": "heuristic",
-          "clarity": 10,
-          "specificity": 0,
-          "schema_alignment": 0,
-          "query_answerability": 0,
-          "llm_overall": 2.5,
-          "score": 6,
-          "maxScore": 25,
-          "reasoning": "clarity: Flesch reading ease 79, avg sentence 6 words; specificity: Only 18 words \u2014 too thin to score; schema: No schema entities found \u2014 cannot align; query: Content too thin for question-answering",
-          "issue": "Low quality score (2.5/10) \u2014 improve clarity, specificity, or schema alignment"
-        },
-        {
-          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
-          "page_type": "category",
-          "method": "heuristic",
-          "clarity": 10,
-          "specificity": 0,
-          "schema_alignment": 0,
-          "query_answerability": 0,
-          "llm_overall": 2.5,
-          "score": 6,
-          "maxScore": 25,
-          "reasoning": "clarity: Flesch reading ease 79, avg sentence 6 words; specificity: Only 18 words \u2014 too thin to score; schema: No schema entities found \u2014 cannot align; query: Content too thin for question-answering",
-          "issue": "Low quality score (2.5/10) \u2014 improve clarity, specificity, or schema alignment"
-        }
-      ],
-      "summary": "10 pages scored (heuristic judge) | avg 4.5/10"
+      "score": 0,
+      "maxScore": 0,
+      "percentage": 0,
+      "grade": "F",
+      "pages": [],
+      "errors": [],
+      "summary": "LLM judge skipped \u2014 Ollama not running (self-hosted runner only)",
+      "skipped": true
     }
   }
 }
