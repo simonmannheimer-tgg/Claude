@@ -50,6 +50,7 @@ Then wait for confirmation. Do not activate anything without explicit approval.
 | Sprint tracking, task status, what's in-flight, creating tickets | **Linear MCP** — project management connected to Claude Code |
 | End-of-week review, goal tracking, what did I work on, career reflection, session learning | **Obsidian PKM** — weekly reviews and goal alignment in a local vault |
 | Schema audit, GEO/AEO content scoring, backlink gap analysis, E-E-A-T scoring, AI Overview optimisation | **claude-seo skill suite** — 19 sub-skills, deeper than current aeo-optimizer agent |
+| AEO audit, llms.txt gaps, agent discoverability score, token budget per page, robots.txt for AI crawlers | **agentic-seo** — repo cloned at `.claude/optional/agentic-seo/repo/`, scores sites 0–100, no API keys needed |
 
 ### Already active (no offer needed)
 - Semrush MCP — keyword, competitor, backlink data
@@ -194,12 +195,51 @@ Use the seo-team-lead to [task]
 Or directly: `Use the plp-copywriter to write copy for /air-fryers`
 
 ### Standard workflows
-- **Category Page Build:** `08 (EAV)` → `04 (Fanout)` → `01 (PLP Intro)` → `05 (FAQ Copy)` → `02 (Metadata)` → `06 (Linking)`
+- **Category Page Build (full pipeline):** `/tgg-category-pipeline [URL]` — runs all steps in sequence, saves output per step
+- **Category Page Build (manual):** `08 (EAV)` → `04 (Fanout)` → `01 (PLP Intro)` → `05 (FAQ Copy)` → `02 (Metadata)` → `06 (Linking)`
 - **AEO Audit:** `04 (Summarise)` → `06 (Link Opportunities)` → `07 (AEO Suggestions)`
 - **Internal Linking:** `06 (Find → Validate → Verify → Insert)`
 - **Category Optimisation:** `08 (EAV)` → `04 (Fanout)` → `06 (Link Validation)` → `05 (Brand+Category FAQ)`
 
 Always read `00-tov-language-reference.md` before any content task.
+
+---
+
+## Content Engineering (Pipeline approach)
+
+Adapted from Ahrefs' content engineering system. Core principle: every production step saves its own output file before passing to the next stage, so any step can be reviewed, corrected, or re-run independently.
+
+### The pipeline skill
+`/tgg-category-pipeline [URL or slug]` — the master skill that chains all agents in sequence.
+
+Optional context parameter (front-load expert input):
+```
+/tgg-category-pipeline /air-fryers context: "focus on compact models, Ninja is priority brand this season"
+```
+
+### Output folder structure
+```
+seo/outputs/
+├── briefs/      ← context files + content briefs
+├── eav/         ← entity/attribute/value mappings
+├── keywords/    ← keyword research outputs
+├── plp/         ← PLP intro copy (2-sentence)
+├── faqs/        ← FAQ sections + category copy
+├── metadata/    ← meta titles + descriptions
+└── links/       ← internal link outputs
+```
+
+Full assembled build: `seo/outputs/[slug]-build-[date].md`
+
+### Recursive improvement
+After every pipeline run, note any step that needed manual correction under `## Pipeline notes` in the assembly file. These feed the CONNECTIONS TASK — reviewing what tools or rules to improve.
+
+### Pending tasks (open)
+- **ONBOARDING:** Walk Simon through the full system (agents, skills, pipeline, outputs, MCPs). Trigger: "run onboarding" or "walk me through the system".
+- **CONNECTIONS REVIEW:** Audit what tools/MCPs should connect to the pipeline to make skills better. Trigger: "what should we connect" or "connections review".
+- **RULE CONFLICTS (open questions for Simon):**
+  - PLP char count: Process 01 says **220–250**; `tgg-seo-specialist` skill says 230–260. Which is correct?
+  - Execution path: For production copy, do you prefer agents (via seo-team-lead) or skills (e.g. tgg-copywriting, tgg-category-pipeline)?
 
 ### Writing philosophy
 - Guardrails not templates. Ban harmful patterns; don't prescribe "allowed" ones.
@@ -319,8 +359,49 @@ Run from repo root: `python tools/tgg_plp_auditor.py`
 | `gtmetrix-audit.yml` | Manual only | Yes |
 | `issue-receiver.yml` | Issue events | No |
 | `plp-merge.yml` | Push to branch | No |
+| `drive-skill-sync.yml` | Manual only — pull skill ZIPs from Drive | Yes |
 
 Required secrets: `ANTHROPIC_API_KEY`, `SEMRUSH_API_KEY`, `FIRECRAWL_API_KEY`.
+
+---
+
+## Chat ↔ Code Sync Pipeline
+
+Bridges Claude.ai chat sessions and this repo. Two directions:
+
+### Skills: Chat → Code
+
+When a chat session creates or updates a skill, package it as a ZIP and upload to Google Drive root using this naming convention:
+
+```
+skill-name_YYYYMMDD-HHMM.zip
+```
+
+Example: `tgg-copywriting_20260501-1430.zip`
+
+The ZIP must contain a `SKILL.md` at the root and a `metadata.json` with:
+```json
+{
+  "change": "Short description of what changed",
+  "timestamp": "2026-05-01T14:30:00+00:00"
+}
+```
+
+To pull all pending skill ZIPs into the repo:
+- Run `skill-zip-sync` in a Claude Code session, or
+- Trigger `drive-skill-sync.yml` from GitHub Actions (manual dispatch)
+
+Processed ZIPs are logged to `.claude/skill-sync-cleanup.log` for manual Drive deletion (Drive delete not yet automated — activate Google Workspace MCP to enable).
+
+### Conversations: Chat → Vault
+
+When you have a fresh Anthropic conversation export:
+
+1. Upload the ZIP to Google Drive as `claude-export_YYYYMMDD.zip`
+2. Run locally: `python3 scripts/drive_conversation_sync.py --from-file /path/to/export.zip`
+3. Vault pages regenerate automatically; `vault-autocommit.yml` commits them nightly
+
+Or run the script without arguments for full usage instructions.
 
 ---
 
