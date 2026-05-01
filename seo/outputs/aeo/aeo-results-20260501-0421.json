@@ -1,0 +1,892 @@
+[
+  {
+    "url": "https://www.thegoodguys.com.au",
+    "label": "TGG Home",
+    "result": {
+      "score": 6,
+      "maxScore": 100,
+      "percentage": 6,
+      "grade": "F",
+      "categories": {
+        "discovery": {
+          "name": "Discovery",
+          "description": "Can agents find your documentation?",
+          "score": 5,
+          "maxScore": 25,
+          "percentage": 20,
+          "results": [
+            {
+              "id": "robots-txt",
+              "name": "Robots.txt AI Access",
+              "category": "discovery",
+              "score": 5,
+              "maxScore": 10,
+              "status": "warn",
+              "findings": [
+                {
+                  "severity": "info",
+                  "message": "No robots.txt found. Agents can access all content by default."
+                },
+                {
+                  "severity": "warning",
+                  "message": "Consider adding a robots.txt that explicitly permits AI agent crawlers.",
+                  "fix": "Create a robots.txt with:\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: GPTBot\nAllow: /"
+                }
+              ]
+            },
+            {
+              "id": "llms-txt",
+              "name": "llms.txt Discovery Index",
+              "category": "discovery",
+              "score": 0,
+              "maxScore": 10,
+              "status": "fail",
+              "findings": [
+                {
+                  "severity": "error",
+                  "message": "No llms.txt found at site root.",
+                  "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification."
+                }
+              ]
+            },
+            {
+              "id": "agents-md",
+              "name": "AGENTS.md / CLAUDE.md",
+              "category": "discovery",
+              "score": 0,
+              "maxScore": 5,
+              "status": "fail",
+              "findings": [
+                {
+                  "severity": "error",
+                  "message": "Cannot scan for AGENTS.md in URL-only mode.",
+                  "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
+                }
+              ]
+            }
+          ]
+        },
+        "content-structure": {
+          "name": "Content Structure",
+          "description": "Is content machine-readable and well-organized?",
+          "score": 0,
+          "maxScore": 25,
+          "percentage": 0,
+          "results": [
+            {
+              "id": "content-structure",
+              "name": "Content Structure Quality",
+              "category": "content-structure",
+              "score": 0,
+              "maxScore": 15,
+              "status": "warn",
+              "findings": [
+                {
+                  "severity": "warning",
+                  "message": "No local directory available to analyze content structure."
+                }
+              ]
+            },
+            {
+              "id": "markdown-availability",
+              "name": "Markdown Content Availability",
+              "category": "content-structure",
+              "score": 0,
+              "maxScore": 10,
+              "status": "warn",
+              "findings": [
+                {
+                  "severity": "warning",
+                  "message": "No local directory available to analyze Markdown availability."
+                }
+              ]
+            }
+          ]
+        },
+        "token-economics": {
+          "name": "Token Economics",
+          "description": "Does content fit within agent context windows?",
+          "score": 0,
+          "maxScore": 25,
+          "percentage": 0,
+          "results": [
+            {
+              "id": "token-budget",
+              "name": "Token Budget Analysis",
+              "category": "token-economics",
+              "score": 0,
+              "maxScore": 15,
+              "status": "warn",
+              "findings": [
+                {
+                  "severity": "warning",
+                  "message": "No local directory available to analyze token counts."
+                }
+              ]
+            },
+            {
+              "id": "meta-tags",
+              "name": "AI-Friendly Meta Tags",
+              "category": "token-economics",
+              "score": 0,
+              "maxScore": 10,
+              "status": "warn",
+              "findings": [
+                {
+                  "severity": "warning",
+                  "message": "No local directory available to analyze meta tags."
+                }
+              ]
+            }
+          ]
+        },
+        "capability-signaling": {
+          "name": "Capability Signaling",
+          "description": "Can agents understand what your APIs do?",
+          "score": 1,
+          "maxScore": 15,
+          "percentage": 7,
+          "results": [
+            {
+              "id": "skill-md",
+              "name": "Capability Signaling (skill.md)",
+              "category": "capability-signaling",
+              "score": 0,
+              "maxScore": 10,
+              "status": "fail",
+              "findings": [
+                {
+                  "severity": "error",
+                  "message": "Cannot scan for skill.md files in URL-only mode.",
+                  "fix": "Create skill.md files for your APIs and services. These tell agents what your product can DO, not just how to call it.\nInclude: capabilities list, required inputs, constraints, and links to detailed docs."
+                }
+              ]
+            },
+            {
+              "id": "agent-permissions",
+              "name": "Agent Permissions Configuration",
+              "category": "capability-signaling",
+              "score": 1,
+              "maxScore": 5,
+              "status": "warn",
+              "findings": [
+                {
+                  "severity": "info",
+                  "message": "No agent-permissions.json found.",
+                  "fix": "Consider creating an agent-permissions.json to define access rules for automated clients.\nThis emerging standard lets you specify allowed interactions, rate limits, and human-in-the-loop requirements."
+                }
+              ]
+            }
+          ]
+        },
+        "ux-bridge": {
+          "name": "UX Bridge",
+          "description": "Does the UX support human-agent workflows?",
+          "score": 0,
+          "maxScore": 10,
+          "percentage": 0,
+          "results": [
+            {
+              "id": "copy-for-ai",
+              "name": "Copy for AI UX",
+              "category": "ux-bridge",
+              "score": 0,
+              "maxScore": 10,
+              "status": "warn",
+              "findings": [
+                {
+                  "severity": "warning",
+                  "message": "No local directory available to analyze copy-for-AI affordances."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "id": "robots-txt",
+          "name": "Robots.txt AI Access",
+          "category": "discovery",
+          "score": 5,
+          "maxScore": 10,
+          "status": "warn",
+          "findings": [
+            {
+              "severity": "info",
+              "message": "No robots.txt found. Agents can access all content by default."
+            },
+            {
+              "severity": "warning",
+              "message": "Consider adding a robots.txt that explicitly permits AI agent crawlers.",
+              "fix": "Create a robots.txt with:\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: GPTBot\nAllow: /"
+            }
+          ]
+        },
+        {
+          "id": "llms-txt",
+          "name": "llms.txt Discovery Index",
+          "category": "discovery",
+          "score": 0,
+          "maxScore": 10,
+          "status": "fail",
+          "findings": [
+            {
+              "severity": "error",
+              "message": "No llms.txt found at site root.",
+              "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification."
+            }
+          ]
+        },
+        {
+          "id": "agents-md",
+          "name": "AGENTS.md / CLAUDE.md",
+          "category": "discovery",
+          "score": 0,
+          "maxScore": 5,
+          "status": "fail",
+          "findings": [
+            {
+              "severity": "error",
+              "message": "Cannot scan for AGENTS.md in URL-only mode.",
+              "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
+            }
+          ]
+        },
+        {
+          "id": "content-structure",
+          "name": "Content Structure Quality",
+          "category": "content-structure",
+          "score": 0,
+          "maxScore": 15,
+          "status": "warn",
+          "findings": [
+            {
+              "severity": "warning",
+              "message": "No local directory available to analyze content structure."
+            }
+          ]
+        },
+        {
+          "id": "markdown-availability",
+          "name": "Markdown Content Availability",
+          "category": "content-structure",
+          "score": 0,
+          "maxScore": 10,
+          "status": "warn",
+          "findings": [
+            {
+              "severity": "warning",
+              "message": "No local directory available to analyze Markdown availability."
+            }
+          ]
+        },
+        {
+          "id": "token-budget",
+          "name": "Token Budget Analysis",
+          "category": "token-economics",
+          "score": 0,
+          "maxScore": 15,
+          "status": "warn",
+          "findings": [
+            {
+              "severity": "warning",
+              "message": "No local directory available to analyze token counts."
+            }
+          ]
+        },
+        {
+          "id": "meta-tags",
+          "name": "AI-Friendly Meta Tags",
+          "category": "token-economics",
+          "score": 0,
+          "maxScore": 10,
+          "status": "warn",
+          "findings": [
+            {
+              "severity": "warning",
+              "message": "No local directory available to analyze meta tags."
+            }
+          ]
+        },
+        {
+          "id": "skill-md",
+          "name": "Capability Signaling (skill.md)",
+          "category": "capability-signaling",
+          "score": 0,
+          "maxScore": 10,
+          "status": "fail",
+          "findings": [
+            {
+              "severity": "error",
+              "message": "Cannot scan for skill.md files in URL-only mode.",
+              "fix": "Create skill.md files for your APIs and services. These tell agents what your product can DO, not just how to call it.\nInclude: capabilities list, required inputs, constraints, and links to detailed docs."
+            }
+          ]
+        },
+        {
+          "id": "agent-permissions",
+          "name": "Agent Permissions Configuration",
+          "category": "capability-signaling",
+          "score": 1,
+          "maxScore": 5,
+          "status": "warn",
+          "findings": [
+            {
+              "severity": "info",
+              "message": "No agent-permissions.json found.",
+              "fix": "Consider creating an agent-permissions.json to define access rules for automated clients.\nThis emerging standard lets you specify allowed interactions, rate limits, and human-in-the-loop requirements."
+            }
+          ]
+        },
+        {
+          "id": "copy-for-ai",
+          "name": "Copy for AI UX",
+          "category": "ux-bridge",
+          "score": 0,
+          "maxScore": 10,
+          "status": "warn",
+          "findings": [
+            {
+              "severity": "warning",
+              "message": "No local directory available to analyze copy-for-AI affordances."
+            }
+          ]
+        }
+      ],
+      "summary": {
+        "errors": 3,
+        "warnings": 6,
+        "infos": 2,
+        "passed": 0,
+        "warned": 7,
+        "failed": 3,
+        "errored": 0
+      },
+      "findings": {
+        "errors": [
+          {
+            "severity": "error",
+            "message": "No llms.txt found at site root.",
+            "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification.",
+            "checker": "llms-txt",
+            "checkerName": "llms.txt Discovery Index"
+          },
+          {
+            "severity": "error",
+            "message": "Cannot scan for AGENTS.md in URL-only mode.",
+            "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions.",
+            "checker": "agents-md",
+            "checkerName": "AGENTS.md / CLAUDE.md"
+          },
+          {
+            "severity": "error",
+            "message": "Cannot scan for skill.md files in URL-only mode.",
+            "fix": "Create skill.md files for your APIs and services. These tell agents what your product can DO, not just how to call it.\nInclude: capabilities list, required inputs, constraints, and links to detailed docs.",
+            "checker": "skill-md",
+            "checkerName": "Capability Signaling (skill.md)"
+          }
+        ],
+        "warnings": [
+          {
+            "severity": "warning",
+            "message": "Consider adding a robots.txt that explicitly permits AI agent crawlers.",
+            "fix": "Create a robots.txt with:\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: GPTBot\nAllow: /",
+            "checker": "robots-txt",
+            "checkerName": "Robots.txt AI Access"
+          },
+          {
+            "severity": "warning",
+            "message": "No local directory available to analyze content structure.",
+            "checker": "content-structure",
+            "checkerName": "Content Structure Quality"
+          },
+          {
+            "severity": "warning",
+            "message": "No local directory available to analyze Markdown availability.",
+            "checker": "markdown-availability",
+            "checkerName": "Markdown Content Availability"
+          },
+          {
+            "severity": "warning",
+            "message": "No local directory available to analyze token counts.",
+            "checker": "token-budget",
+            "checkerName": "Token Budget Analysis"
+          },
+          {
+            "severity": "warning",
+            "message": "No local directory available to analyze meta tags.",
+            "checker": "meta-tags",
+            "checkerName": "AI-Friendly Meta Tags"
+          },
+          {
+            "severity": "warning",
+            "message": "No local directory available to analyze copy-for-AI affordances.",
+            "checker": "copy-for-ai",
+            "checkerName": "Copy for AI UX"
+          }
+        ],
+        "infos": [
+          {
+            "severity": "info",
+            "message": "No robots.txt found. Agents can access all content by default.",
+            "checker": "robots-txt",
+            "checkerName": "Robots.txt AI Access"
+          },
+          {
+            "severity": "info",
+            "message": "No agent-permissions.json found.",
+            "fix": "Consider creating an agent-permissions.json to define access rules for automated clients.\nThis emerging standard lets you specify allowed interactions, rate limits, and human-in-the-loop requirements.",
+            "checker": "agent-permissions",
+            "checkerName": "Agent Permissions Configuration"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "url": "https://www.jbhifi.com.au",
+    "label": "JB Hi-Fi",
+    "result": {
+      "score": 6,
+      "maxScore": 100,
+      "percentage": 6,
+      "grade": "F",
+      "categories": {
+        "discovery": {
+          "name": "Discovery",
+          "description": "Can agents find your documentation?",
+          "score": 5,
+          "maxScore": 25,
+          "percentage": 20,
+          "results": [
+            {
+              "id": "robots-txt",
+              "name": "Robots.txt AI Access",
+              "category": "discovery",
+              "score": 5,
+              "maxScore": 10,
+              "status": "warn",
+              "findings": [
+                {
+                  "severity": "info",
+                  "message": "No robots.txt found. Agents can access all content by default."
+                },
+                {
+                  "severity": "warning",
+                  "message": "Consider adding a robots.txt that explicitly permits AI agent crawlers.",
+                  "fix": "Create a robots.txt with:\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: GPTBot\nAllow: /"
+                }
+              ]
+            },
+            {
+              "id": "llms-txt",
+              "name": "llms.txt Discovery Index",
+              "category": "discovery",
+              "score": 0,
+              "maxScore": 10,
+              "status": "fail",
+              "findings": [
+                {
+                  "severity": "error",
+                  "message": "No llms.txt found at site root.",
+                  "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification."
+                }
+              ]
+            },
+            {
+              "id": "agents-md",
+              "name": "AGENTS.md / CLAUDE.md",
+              "category": "discovery",
+              "score": 0,
+              "maxScore": 5,
+              "status": "fail",
+              "findings": [
+                {
+                  "severity": "error",
+                  "message": "Cannot scan for AGENTS.md in URL-only mode.",
+                  "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
+                }
+              ]
+            }
+          ]
+        },
+        "content-structure": {
+          "name": "Content Structure",
+          "description": "Is content machine-readable and well-organized?",
+          "score": 0,
+          "maxScore": 25,
+          "percentage": 0,
+          "results": [
+            {
+              "id": "content-structure",
+              "name": "Content Structure Quality",
+              "category": "content-structure",
+              "score": 0,
+              "maxScore": 15,
+              "status": "warn",
+              "findings": [
+                {
+                  "severity": "warning",
+                  "message": "No local directory available to analyze content structure."
+                }
+              ]
+            },
+            {
+              "id": "markdown-availability",
+              "name": "Markdown Content Availability",
+              "category": "content-structure",
+              "score": 0,
+              "maxScore": 10,
+              "status": "warn",
+              "findings": [
+                {
+                  "severity": "warning",
+                  "message": "No local directory available to analyze Markdown availability."
+                }
+              ]
+            }
+          ]
+        },
+        "token-economics": {
+          "name": "Token Economics",
+          "description": "Does content fit within agent context windows?",
+          "score": 0,
+          "maxScore": 25,
+          "percentage": 0,
+          "results": [
+            {
+              "id": "token-budget",
+              "name": "Token Budget Analysis",
+              "category": "token-economics",
+              "score": 0,
+              "maxScore": 15,
+              "status": "warn",
+              "findings": [
+                {
+                  "severity": "warning",
+                  "message": "No local directory available to analyze token counts."
+                }
+              ]
+            },
+            {
+              "id": "meta-tags",
+              "name": "AI-Friendly Meta Tags",
+              "category": "token-economics",
+              "score": 0,
+              "maxScore": 10,
+              "status": "warn",
+              "findings": [
+                {
+                  "severity": "warning",
+                  "message": "No local directory available to analyze meta tags."
+                }
+              ]
+            }
+          ]
+        },
+        "capability-signaling": {
+          "name": "Capability Signaling",
+          "description": "Can agents understand what your APIs do?",
+          "score": 1,
+          "maxScore": 15,
+          "percentage": 7,
+          "results": [
+            {
+              "id": "skill-md",
+              "name": "Capability Signaling (skill.md)",
+              "category": "capability-signaling",
+              "score": 0,
+              "maxScore": 10,
+              "status": "fail",
+              "findings": [
+                {
+                  "severity": "error",
+                  "message": "Cannot scan for skill.md files in URL-only mode.",
+                  "fix": "Create skill.md files for your APIs and services. These tell agents what your product can DO, not just how to call it.\nInclude: capabilities list, required inputs, constraints, and links to detailed docs."
+                }
+              ]
+            },
+            {
+              "id": "agent-permissions",
+              "name": "Agent Permissions Configuration",
+              "category": "capability-signaling",
+              "score": 1,
+              "maxScore": 5,
+              "status": "warn",
+              "findings": [
+                {
+                  "severity": "info",
+                  "message": "No agent-permissions.json found.",
+                  "fix": "Consider creating an agent-permissions.json to define access rules for automated clients.\nThis emerging standard lets you specify allowed interactions, rate limits, and human-in-the-loop requirements."
+                }
+              ]
+            }
+          ]
+        },
+        "ux-bridge": {
+          "name": "UX Bridge",
+          "description": "Does the UX support human-agent workflows?",
+          "score": 0,
+          "maxScore": 10,
+          "percentage": 0,
+          "results": [
+            {
+              "id": "copy-for-ai",
+              "name": "Copy for AI UX",
+              "category": "ux-bridge",
+              "score": 0,
+              "maxScore": 10,
+              "status": "warn",
+              "findings": [
+                {
+                  "severity": "warning",
+                  "message": "No local directory available to analyze copy-for-AI affordances."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "id": "robots-txt",
+          "name": "Robots.txt AI Access",
+          "category": "discovery",
+          "score": 5,
+          "maxScore": 10,
+          "status": "warn",
+          "findings": [
+            {
+              "severity": "info",
+              "message": "No robots.txt found. Agents can access all content by default."
+            },
+            {
+              "severity": "warning",
+              "message": "Consider adding a robots.txt that explicitly permits AI agent crawlers.",
+              "fix": "Create a robots.txt with:\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: GPTBot\nAllow: /"
+            }
+          ]
+        },
+        {
+          "id": "llms-txt",
+          "name": "llms.txt Discovery Index",
+          "category": "discovery",
+          "score": 0,
+          "maxScore": 10,
+          "status": "fail",
+          "findings": [
+            {
+              "severity": "error",
+              "message": "No llms.txt found at site root.",
+              "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification."
+            }
+          ]
+        },
+        {
+          "id": "agents-md",
+          "name": "AGENTS.md / CLAUDE.md",
+          "category": "discovery",
+          "score": 0,
+          "maxScore": 5,
+          "status": "fail",
+          "findings": [
+            {
+              "severity": "error",
+              "message": "Cannot scan for AGENTS.md in URL-only mode.",
+              "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
+            }
+          ]
+        },
+        {
+          "id": "content-structure",
+          "name": "Content Structure Quality",
+          "category": "content-structure",
+          "score": 0,
+          "maxScore": 15,
+          "status": "warn",
+          "findings": [
+            {
+              "severity": "warning",
+              "message": "No local directory available to analyze content structure."
+            }
+          ]
+        },
+        {
+          "id": "markdown-availability",
+          "name": "Markdown Content Availability",
+          "category": "content-structure",
+          "score": 0,
+          "maxScore": 10,
+          "status": "warn",
+          "findings": [
+            {
+              "severity": "warning",
+              "message": "No local directory available to analyze Markdown availability."
+            }
+          ]
+        },
+        {
+          "id": "token-budget",
+          "name": "Token Budget Analysis",
+          "category": "token-economics",
+          "score": 0,
+          "maxScore": 15,
+          "status": "warn",
+          "findings": [
+            {
+              "severity": "warning",
+              "message": "No local directory available to analyze token counts."
+            }
+          ]
+        },
+        {
+          "id": "meta-tags",
+          "name": "AI-Friendly Meta Tags",
+          "category": "token-economics",
+          "score": 0,
+          "maxScore": 10,
+          "status": "warn",
+          "findings": [
+            {
+              "severity": "warning",
+              "message": "No local directory available to analyze meta tags."
+            }
+          ]
+        },
+        {
+          "id": "skill-md",
+          "name": "Capability Signaling (skill.md)",
+          "category": "capability-signaling",
+          "score": 0,
+          "maxScore": 10,
+          "status": "fail",
+          "findings": [
+            {
+              "severity": "error",
+              "message": "Cannot scan for skill.md files in URL-only mode.",
+              "fix": "Create skill.md files for your APIs and services. These tell agents what your product can DO, not just how to call it.\nInclude: capabilities list, required inputs, constraints, and links to detailed docs."
+            }
+          ]
+        },
+        {
+          "id": "agent-permissions",
+          "name": "Agent Permissions Configuration",
+          "category": "capability-signaling",
+          "score": 1,
+          "maxScore": 5,
+          "status": "warn",
+          "findings": [
+            {
+              "severity": "info",
+              "message": "No agent-permissions.json found.",
+              "fix": "Consider creating an agent-permissions.json to define access rules for automated clients.\nThis emerging standard lets you specify allowed interactions, rate limits, and human-in-the-loop requirements."
+            }
+          ]
+        },
+        {
+          "id": "copy-for-ai",
+          "name": "Copy for AI UX",
+          "category": "ux-bridge",
+          "score": 0,
+          "maxScore": 10,
+          "status": "warn",
+          "findings": [
+            {
+              "severity": "warning",
+              "message": "No local directory available to analyze copy-for-AI affordances."
+            }
+          ]
+        }
+      ],
+      "summary": {
+        "errors": 3,
+        "warnings": 6,
+        "infos": 2,
+        "passed": 0,
+        "warned": 7,
+        "failed": 3,
+        "errored": 0
+      },
+      "findings": {
+        "errors": [
+          {
+            "severity": "error",
+            "message": "No llms.txt found at site root.",
+            "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification.",
+            "checker": "llms-txt",
+            "checkerName": "llms.txt Discovery Index"
+          },
+          {
+            "severity": "error",
+            "message": "Cannot scan for AGENTS.md in URL-only mode.",
+            "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions.",
+            "checker": "agents-md",
+            "checkerName": "AGENTS.md / CLAUDE.md"
+          },
+          {
+            "severity": "error",
+            "message": "Cannot scan for skill.md files in URL-only mode.",
+            "fix": "Create skill.md files for your APIs and services. These tell agents what your product can DO, not just how to call it.\nInclude: capabilities list, required inputs, constraints, and links to detailed docs.",
+            "checker": "skill-md",
+            "checkerName": "Capability Signaling (skill.md)"
+          }
+        ],
+        "warnings": [
+          {
+            "severity": "warning",
+            "message": "Consider adding a robots.txt that explicitly permits AI agent crawlers.",
+            "fix": "Create a robots.txt with:\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: GPTBot\nAllow: /",
+            "checker": "robots-txt",
+            "checkerName": "Robots.txt AI Access"
+          },
+          {
+            "severity": "warning",
+            "message": "No local directory available to analyze content structure.",
+            "checker": "content-structure",
+            "checkerName": "Content Structure Quality"
+          },
+          {
+            "severity": "warning",
+            "message": "No local directory available to analyze Markdown availability.",
+            "checker": "markdown-availability",
+            "checkerName": "Markdown Content Availability"
+          },
+          {
+            "severity": "warning",
+            "message": "No local directory available to analyze token counts.",
+            "checker": "token-budget",
+            "checkerName": "Token Budget Analysis"
+          },
+          {
+            "severity": "warning",
+            "message": "No local directory available to analyze meta tags.",
+            "checker": "meta-tags",
+            "checkerName": "AI-Friendly Meta Tags"
+          },
+          {
+            "severity": "warning",
+            "message": "No local directory available to analyze copy-for-AI affordances.",
+            "checker": "copy-for-ai",
+            "checkerName": "Copy for AI UX"
+          }
+        ],
+        "infos": [
+          {
+            "severity": "info",
+            "message": "No robots.txt found. Agents can access all content by default.",
+            "checker": "robots-txt",
+            "checkerName": "Robots.txt AI Access"
+          },
+          {
+            "severity": "info",
+            "message": "No agent-permissions.json found.",
+            "fix": "Consider creating an agent-permissions.json to define access rules for automated clients.\nThis emerging standard lets you specify allowed interactions, rate limits, and human-in-the-loop requirements.",
+            "checker": "agent-permissions",
+            "checkerName": "Agent Permissions Configuration"
+          }
+        ]
+      }
+    }
+  }
+]
