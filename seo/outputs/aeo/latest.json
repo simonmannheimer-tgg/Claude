@@ -4,16 +4,16 @@
     "label": "TGG \u00b7 Home",
     "result": {
       "score": 8,
-      "maxScore": 75,
-      "percentage": 11,
+      "maxScore": 60,
+      "percentage": 13,
       "grade": "F",
       "categories": {
         "discovery": {
           "name": "Discovery",
           "description": "Can agents find your documentation?",
           "score": 8,
-          "maxScore": 25,
-          "percentage": 32,
+          "maxScore": 20,
+          "percentage": 40,
           "results": [
             {
               "id": "robots-txt",
@@ -52,21 +52,6 @@
                   "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification."
                 }
               ]
-            },
-            {
-              "id": "agents-md",
-              "name": "AGENTS.md / CLAUDE.md",
-              "category": "discovery",
-              "score": 0,
-              "maxScore": 5,
-              "status": "fail",
-              "findings": [
-                {
-                  "severity": "error",
-                  "message": "Cannot scan for AGENTS.md in URL-only mode.",
-                  "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-                }
-              ]
             }
           ]
         },
@@ -74,7 +59,7 @@
           "name": "Content Structure",
           "description": "Is content machine-readable and well-organized?",
           "score": 0,
-          "maxScore": 25,
+          "maxScore": 15,
           "percentage": 0,
           "results": [
             {
@@ -88,20 +73,6 @@
                 {
                   "severity": "warning",
                   "message": "No local directory available to analyze content structure."
-                }
-              ]
-            },
-            {
-              "id": "markdown-availability",
-              "name": "Markdown Content Availability",
-              "category": "content-structure",
-              "score": 0,
-              "maxScore": 10,
-              "status": "warn",
-              "findings": [
-                {
-                  "severity": "warning",
-                  "message": "No local directory available to analyze Markdown availability."
                 }
               ]
             }
@@ -201,21 +172,6 @@
           ]
         },
         {
-          "id": "agents-md",
-          "name": "AGENTS.md / CLAUDE.md",
-          "category": "discovery",
-          "score": 0,
-          "maxScore": 5,
-          "status": "fail",
-          "findings": [
-            {
-              "severity": "error",
-              "message": "Cannot scan for AGENTS.md in URL-only mode.",
-              "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-            }
-          ]
-        },
-        {
           "id": "content-structure",
           "name": "Content Structure Quality",
           "category": "content-structure",
@@ -226,20 +182,6 @@
             {
               "severity": "warning",
               "message": "No local directory available to analyze content structure."
-            }
-          ]
-        },
-        {
-          "id": "markdown-availability",
-          "name": "Markdown Content Availability",
-          "category": "content-structure",
-          "score": 0,
-          "maxScore": 10,
-          "status": "warn",
-          "findings": [
-            {
-              "severity": "warning",
-              "message": "No local directory available to analyze Markdown availability."
             }
           ]
         },
@@ -273,12 +215,12 @@
         }
       ],
       "summary": {
-        "errors": 2,
-        "warnings": 5,
+        "errors": 1,
+        "warnings": 4,
         "infos": 2,
         "passed": 1,
-        "warned": 4,
-        "failed": 2,
+        "warned": 3,
+        "failed": 1,
         "errored": 0
       },
       "findings": {
@@ -289,13 +231,6 @@
             "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification.",
             "checker": "llms-txt",
             "checkerName": "llms.txt Discovery Index"
-          },
-          {
-            "severity": "error",
-            "message": "Cannot scan for AGENTS.md in URL-only mode.",
-            "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions.",
-            "checker": "agents-md",
-            "checkerName": "AGENTS.md / CLAUDE.md"
           }
         ],
         "warnings": [
@@ -311,12 +246,6 @@
             "message": "No local directory available to analyze content structure.",
             "checker": "content-structure",
             "checkerName": "Content Structure Quality"
-          },
-          {
-            "severity": "warning",
-            "message": "No local directory available to analyze Markdown availability.",
-            "checker": "markdown-availability",
-            "checkerName": "Markdown Content Availability"
           },
           {
             "severity": "warning",
@@ -357,16 +286,16 @@
     "label": "TGG \u00b7 Category",
     "result": {
       "score": 8,
-      "maxScore": 75,
-      "percentage": 11,
+      "maxScore": 60,
+      "percentage": 13,
       "grade": "F",
       "categories": {
         "discovery": {
           "name": "Discovery",
           "description": "Can agents find your documentation?",
           "score": 8,
-          "maxScore": 25,
-          "percentage": 32,
+          "maxScore": 20,
+          "percentage": 40,
           "results": [
             {
               "id": "robots-txt",
@@ -405,21 +334,6 @@
                   "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification."
                 }
               ]
-            },
-            {
-              "id": "agents-md",
-              "name": "AGENTS.md / CLAUDE.md",
-              "category": "discovery",
-              "score": 0,
-              "maxScore": 5,
-              "status": "fail",
-              "findings": [
-                {
-                  "severity": "error",
-                  "message": "Cannot scan for AGENTS.md in URL-only mode.",
-                  "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-                }
-              ]
             }
           ]
         },
@@ -427,7 +341,7 @@
           "name": "Content Structure",
           "description": "Is content machine-readable and well-organized?",
           "score": 0,
-          "maxScore": 25,
+          "maxScore": 15,
           "percentage": 0,
           "results": [
             {
@@ -441,20 +355,6 @@
                 {
                   "severity": "warning",
                   "message": "No local directory available to analyze content structure."
-                }
-              ]
-            },
-            {
-              "id": "markdown-availability",
-              "name": "Markdown Content Availability",
-              "category": "content-structure",
-              "score": 0,
-              "maxScore": 10,
-              "status": "warn",
-              "findings": [
-                {
-                  "severity": "warning",
-                  "message": "No local directory available to analyze Markdown availability."
                 }
               ]
             }
@@ -554,21 +454,6 @@
           ]
         },
         {
-          "id": "agents-md",
-          "name": "AGENTS.md / CLAUDE.md",
-          "category": "discovery",
-          "score": 0,
-          "maxScore": 5,
-          "status": "fail",
-          "findings": [
-            {
-              "severity": "error",
-              "message": "Cannot scan for AGENTS.md in URL-only mode.",
-              "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-            }
-          ]
-        },
-        {
           "id": "content-structure",
           "name": "Content Structure Quality",
           "category": "content-structure",
@@ -579,20 +464,6 @@
             {
               "severity": "warning",
               "message": "No local directory available to analyze content structure."
-            }
-          ]
-        },
-        {
-          "id": "markdown-availability",
-          "name": "Markdown Content Availability",
-          "category": "content-structure",
-          "score": 0,
-          "maxScore": 10,
-          "status": "warn",
-          "findings": [
-            {
-              "severity": "warning",
-              "message": "No local directory available to analyze Markdown availability."
             }
           ]
         },
@@ -626,12 +497,12 @@
         }
       ],
       "summary": {
-        "errors": 2,
-        "warnings": 5,
+        "errors": 1,
+        "warnings": 4,
         "infos": 2,
         "passed": 1,
-        "warned": 4,
-        "failed": 2,
+        "warned": 3,
+        "failed": 1,
         "errored": 0
       },
       "findings": {
@@ -642,13 +513,6 @@
             "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification.",
             "checker": "llms-txt",
             "checkerName": "llms.txt Discovery Index"
-          },
-          {
-            "severity": "error",
-            "message": "Cannot scan for AGENTS.md in URL-only mode.",
-            "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions.",
-            "checker": "agents-md",
-            "checkerName": "AGENTS.md / CLAUDE.md"
           }
         ],
         "warnings": [
@@ -664,12 +528,6 @@
             "message": "No local directory available to analyze content structure.",
             "checker": "content-structure",
             "checkerName": "Content Structure Quality"
-          },
-          {
-            "severity": "warning",
-            "message": "No local directory available to analyze Markdown availability.",
-            "checker": "markdown-availability",
-            "checkerName": "Markdown Content Availability"
           },
           {
             "severity": "warning",
@@ -710,16 +568,16 @@
     "label": "TGG \u00b7 Guide",
     "result": {
       "score": 8,
-      "maxScore": 75,
-      "percentage": 11,
+      "maxScore": 60,
+      "percentage": 13,
       "grade": "F",
       "categories": {
         "discovery": {
           "name": "Discovery",
           "description": "Can agents find your documentation?",
           "score": 8,
-          "maxScore": 25,
-          "percentage": 32,
+          "maxScore": 20,
+          "percentage": 40,
           "results": [
             {
               "id": "robots-txt",
@@ -758,21 +616,6 @@
                   "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification."
                 }
               ]
-            },
-            {
-              "id": "agents-md",
-              "name": "AGENTS.md / CLAUDE.md",
-              "category": "discovery",
-              "score": 0,
-              "maxScore": 5,
-              "status": "fail",
-              "findings": [
-                {
-                  "severity": "error",
-                  "message": "Cannot scan for AGENTS.md in URL-only mode.",
-                  "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-                }
-              ]
             }
           ]
         },
@@ -780,7 +623,7 @@
           "name": "Content Structure",
           "description": "Is content machine-readable and well-organized?",
           "score": 0,
-          "maxScore": 25,
+          "maxScore": 15,
           "percentage": 0,
           "results": [
             {
@@ -794,20 +637,6 @@
                 {
                   "severity": "warning",
                   "message": "No local directory available to analyze content structure."
-                }
-              ]
-            },
-            {
-              "id": "markdown-availability",
-              "name": "Markdown Content Availability",
-              "category": "content-structure",
-              "score": 0,
-              "maxScore": 10,
-              "status": "warn",
-              "findings": [
-                {
-                  "severity": "warning",
-                  "message": "No local directory available to analyze Markdown availability."
                 }
               ]
             }
@@ -907,21 +736,6 @@
           ]
         },
         {
-          "id": "agents-md",
-          "name": "AGENTS.md / CLAUDE.md",
-          "category": "discovery",
-          "score": 0,
-          "maxScore": 5,
-          "status": "fail",
-          "findings": [
-            {
-              "severity": "error",
-              "message": "Cannot scan for AGENTS.md in URL-only mode.",
-              "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-            }
-          ]
-        },
-        {
           "id": "content-structure",
           "name": "Content Structure Quality",
           "category": "content-structure",
@@ -932,20 +746,6 @@
             {
               "severity": "warning",
               "message": "No local directory available to analyze content structure."
-            }
-          ]
-        },
-        {
-          "id": "markdown-availability",
-          "name": "Markdown Content Availability",
-          "category": "content-structure",
-          "score": 0,
-          "maxScore": 10,
-          "status": "warn",
-          "findings": [
-            {
-              "severity": "warning",
-              "message": "No local directory available to analyze Markdown availability."
             }
           ]
         },
@@ -979,12 +779,12 @@
         }
       ],
       "summary": {
-        "errors": 2,
-        "warnings": 5,
+        "errors": 1,
+        "warnings": 4,
         "infos": 2,
         "passed": 1,
-        "warned": 4,
-        "failed": 2,
+        "warned": 3,
+        "failed": 1,
         "errored": 0
       },
       "findings": {
@@ -995,13 +795,6 @@
             "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification.",
             "checker": "llms-txt",
             "checkerName": "llms.txt Discovery Index"
-          },
-          {
-            "severity": "error",
-            "message": "Cannot scan for AGENTS.md in URL-only mode.",
-            "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions.",
-            "checker": "agents-md",
-            "checkerName": "AGENTS.md / CLAUDE.md"
           }
         ],
         "warnings": [
@@ -1017,12 +810,6 @@
             "message": "No local directory available to analyze content structure.",
             "checker": "content-structure",
             "checkerName": "Content Structure Quality"
-          },
-          {
-            "severity": "warning",
-            "message": "No local directory available to analyze Markdown availability.",
-            "checker": "markdown-availability",
-            "checkerName": "Markdown Content Availability"
           },
           {
             "severity": "warning",
@@ -1063,16 +850,16 @@
     "label": "TGG \u00b7 Editorial",
     "result": {
       "score": 8,
-      "maxScore": 75,
-      "percentage": 11,
+      "maxScore": 60,
+      "percentage": 13,
       "grade": "F",
       "categories": {
         "discovery": {
           "name": "Discovery",
           "description": "Can agents find your documentation?",
           "score": 8,
-          "maxScore": 25,
-          "percentage": 32,
+          "maxScore": 20,
+          "percentage": 40,
           "results": [
             {
               "id": "robots-txt",
@@ -1111,21 +898,6 @@
                   "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification."
                 }
               ]
-            },
-            {
-              "id": "agents-md",
-              "name": "AGENTS.md / CLAUDE.md",
-              "category": "discovery",
-              "score": 0,
-              "maxScore": 5,
-              "status": "fail",
-              "findings": [
-                {
-                  "severity": "error",
-                  "message": "Cannot scan for AGENTS.md in URL-only mode.",
-                  "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-                }
-              ]
             }
           ]
         },
@@ -1133,7 +905,7 @@
           "name": "Content Structure",
           "description": "Is content machine-readable and well-organized?",
           "score": 0,
-          "maxScore": 25,
+          "maxScore": 15,
           "percentage": 0,
           "results": [
             {
@@ -1147,20 +919,6 @@
                 {
                   "severity": "warning",
                   "message": "No local directory available to analyze content structure."
-                }
-              ]
-            },
-            {
-              "id": "markdown-availability",
-              "name": "Markdown Content Availability",
-              "category": "content-structure",
-              "score": 0,
-              "maxScore": 10,
-              "status": "warn",
-              "findings": [
-                {
-                  "severity": "warning",
-                  "message": "No local directory available to analyze Markdown availability."
                 }
               ]
             }
@@ -1260,21 +1018,6 @@
           ]
         },
         {
-          "id": "agents-md",
-          "name": "AGENTS.md / CLAUDE.md",
-          "category": "discovery",
-          "score": 0,
-          "maxScore": 5,
-          "status": "fail",
-          "findings": [
-            {
-              "severity": "error",
-              "message": "Cannot scan for AGENTS.md in URL-only mode.",
-              "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-            }
-          ]
-        },
-        {
           "id": "content-structure",
           "name": "Content Structure Quality",
           "category": "content-structure",
@@ -1285,20 +1028,6 @@
             {
               "severity": "warning",
               "message": "No local directory available to analyze content structure."
-            }
-          ]
-        },
-        {
-          "id": "markdown-availability",
-          "name": "Markdown Content Availability",
-          "category": "content-structure",
-          "score": 0,
-          "maxScore": 10,
-          "status": "warn",
-          "findings": [
-            {
-              "severity": "warning",
-              "message": "No local directory available to analyze Markdown availability."
             }
           ]
         },
@@ -1332,12 +1061,12 @@
         }
       ],
       "summary": {
-        "errors": 2,
-        "warnings": 5,
+        "errors": 1,
+        "warnings": 4,
         "infos": 2,
         "passed": 1,
-        "warned": 4,
-        "failed": 2,
+        "warned": 3,
+        "failed": 1,
         "errored": 0
       },
       "findings": {
@@ -1348,13 +1077,6 @@
             "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification.",
             "checker": "llms-txt",
             "checkerName": "llms.txt Discovery Index"
-          },
-          {
-            "severity": "error",
-            "message": "Cannot scan for AGENTS.md in URL-only mode.",
-            "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions.",
-            "checker": "agents-md",
-            "checkerName": "AGENTS.md / CLAUDE.md"
           }
         ],
         "warnings": [
@@ -1370,12 +1092,6 @@
             "message": "No local directory available to analyze content structure.",
             "checker": "content-structure",
             "checkerName": "Content Structure Quality"
-          },
-          {
-            "severity": "warning",
-            "message": "No local directory available to analyze Markdown availability.",
-            "checker": "markdown-availability",
-            "checkerName": "Markdown Content Availability"
           },
           {
             "severity": "warning",
@@ -1416,16 +1132,16 @@
     "label": "JB Hi-Fi \u00b7 Home",
     "result": {
       "score": 17,
-      "maxScore": 75,
-      "percentage": 23,
+      "maxScore": 60,
+      "percentage": 28,
       "grade": "F",
       "categories": {
         "discovery": {
           "name": "Discovery",
           "description": "Can agents find your documentation?",
           "score": 17,
-          "maxScore": 25,
-          "percentage": 68,
+          "maxScore": 20,
+          "percentage": 85,
           "results": [
             {
               "id": "robots-txt",
@@ -1484,21 +1200,6 @@
                   "message": "Organized into 19 sections."
                 }
               ]
-            },
-            {
-              "id": "agents-md",
-              "name": "AGENTS.md / CLAUDE.md",
-              "category": "discovery",
-              "score": 0,
-              "maxScore": 5,
-              "status": "fail",
-              "findings": [
-                {
-                  "severity": "error",
-                  "message": "Cannot scan for AGENTS.md in URL-only mode.",
-                  "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-                }
-              ]
             }
           ]
         },
@@ -1506,7 +1207,7 @@
           "name": "Content Structure",
           "description": "Is content machine-readable and well-organized?",
           "score": 0,
-          "maxScore": 25,
+          "maxScore": 15,
           "percentage": 0,
           "results": [
             {
@@ -1520,20 +1221,6 @@
                 {
                   "severity": "warning",
                   "message": "No local directory available to analyze content structure."
-                }
-              ]
-            },
-            {
-              "id": "markdown-availability",
-              "name": "Markdown Content Availability",
-              "category": "content-structure",
-              "score": 0,
-              "maxScore": 10,
-              "status": "warn",
-              "findings": [
-                {
-                  "severity": "warning",
-                  "message": "No local directory available to analyze Markdown availability."
                 }
               ]
             }
@@ -1653,21 +1340,6 @@
           ]
         },
         {
-          "id": "agents-md",
-          "name": "AGENTS.md / CLAUDE.md",
-          "category": "discovery",
-          "score": 0,
-          "maxScore": 5,
-          "status": "fail",
-          "findings": [
-            {
-              "severity": "error",
-              "message": "Cannot scan for AGENTS.md in URL-only mode.",
-              "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-            }
-          ]
-        },
-        {
           "id": "content-structure",
           "name": "Content Structure Quality",
           "category": "content-structure",
@@ -1678,20 +1350,6 @@
             {
               "severity": "warning",
               "message": "No local directory available to analyze content structure."
-            }
-          ]
-        },
-        {
-          "id": "markdown-availability",
-          "name": "Markdown Content Availability",
-          "category": "content-structure",
-          "score": 0,
-          "maxScore": 10,
-          "status": "warn",
-          "findings": [
-            {
-              "severity": "warning",
-              "message": "No local directory available to analyze Markdown availability."
             }
           ]
         },
@@ -1725,24 +1383,16 @@
         }
       ],
       "summary": {
-        "errors": 1,
-        "warnings": 6,
+        "errors": 0,
+        "warnings": 5,
         "infos": 7,
         "passed": 2,
-        "warned": 4,
-        "failed": 1,
+        "warned": 3,
+        "failed": 0,
         "errored": 0
       },
       "findings": {
-        "errors": [
-          {
-            "severity": "error",
-            "message": "Cannot scan for AGENTS.md in URL-only mode.",
-            "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions.",
-            "checker": "agents-md",
-            "checkerName": "AGENTS.md / CLAUDE.md"
-          }
-        ],
+        "errors": [],
         "warnings": [
           {
             "severity": "warning",
@@ -1763,12 +1413,6 @@
             "message": "No local directory available to analyze content structure.",
             "checker": "content-structure",
             "checkerName": "Content Structure Quality"
-          },
-          {
-            "severity": "warning",
-            "message": "No local directory available to analyze Markdown availability.",
-            "checker": "markdown-availability",
-            "checkerName": "Markdown Content Availability"
           },
           {
             "severity": "warning",
@@ -1839,16 +1483,16 @@
     "label": "JB Hi-Fi \u00b7 Category",
     "result": {
       "score": 17,
-      "maxScore": 75,
-      "percentage": 23,
+      "maxScore": 60,
+      "percentage": 28,
       "grade": "F",
       "categories": {
         "discovery": {
           "name": "Discovery",
           "description": "Can agents find your documentation?",
           "score": 17,
-          "maxScore": 25,
-          "percentage": 68,
+          "maxScore": 20,
+          "percentage": 85,
           "results": [
             {
               "id": "robots-txt",
@@ -1907,21 +1551,6 @@
                   "message": "Organized into 19 sections."
                 }
               ]
-            },
-            {
-              "id": "agents-md",
-              "name": "AGENTS.md / CLAUDE.md",
-              "category": "discovery",
-              "score": 0,
-              "maxScore": 5,
-              "status": "fail",
-              "findings": [
-                {
-                  "severity": "error",
-                  "message": "Cannot scan for AGENTS.md in URL-only mode.",
-                  "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-                }
-              ]
             }
           ]
         },
@@ -1929,7 +1558,7 @@
           "name": "Content Structure",
           "description": "Is content machine-readable and well-organized?",
           "score": 0,
-          "maxScore": 25,
+          "maxScore": 15,
           "percentage": 0,
           "results": [
             {
@@ -1943,20 +1572,6 @@
                 {
                   "severity": "warning",
                   "message": "No local directory available to analyze content structure."
-                }
-              ]
-            },
-            {
-              "id": "markdown-availability",
-              "name": "Markdown Content Availability",
-              "category": "content-structure",
-              "score": 0,
-              "maxScore": 10,
-              "status": "warn",
-              "findings": [
-                {
-                  "severity": "warning",
-                  "message": "No local directory available to analyze Markdown availability."
                 }
               ]
             }
@@ -2076,21 +1691,6 @@
           ]
         },
         {
-          "id": "agents-md",
-          "name": "AGENTS.md / CLAUDE.md",
-          "category": "discovery",
-          "score": 0,
-          "maxScore": 5,
-          "status": "fail",
-          "findings": [
-            {
-              "severity": "error",
-              "message": "Cannot scan for AGENTS.md in URL-only mode.",
-              "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-            }
-          ]
-        },
-        {
           "id": "content-structure",
           "name": "Content Structure Quality",
           "category": "content-structure",
@@ -2101,20 +1701,6 @@
             {
               "severity": "warning",
               "message": "No local directory available to analyze content structure."
-            }
-          ]
-        },
-        {
-          "id": "markdown-availability",
-          "name": "Markdown Content Availability",
-          "category": "content-structure",
-          "score": 0,
-          "maxScore": 10,
-          "status": "warn",
-          "findings": [
-            {
-              "severity": "warning",
-              "message": "No local directory available to analyze Markdown availability."
             }
           ]
         },
@@ -2148,24 +1734,16 @@
         }
       ],
       "summary": {
-        "errors": 1,
-        "warnings": 6,
+        "errors": 0,
+        "warnings": 5,
         "infos": 7,
         "passed": 2,
-        "warned": 4,
-        "failed": 1,
+        "warned": 3,
+        "failed": 0,
         "errored": 0
       },
       "findings": {
-        "errors": [
-          {
-            "severity": "error",
-            "message": "Cannot scan for AGENTS.md in URL-only mode.",
-            "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions.",
-            "checker": "agents-md",
-            "checkerName": "AGENTS.md / CLAUDE.md"
-          }
-        ],
+        "errors": [],
         "warnings": [
           {
             "severity": "warning",
@@ -2186,12 +1764,6 @@
             "message": "No local directory available to analyze content structure.",
             "checker": "content-structure",
             "checkerName": "Content Structure Quality"
-          },
-          {
-            "severity": "warning",
-            "message": "No local directory available to analyze Markdown availability.",
-            "checker": "markdown-availability",
-            "checkerName": "Markdown Content Availability"
           },
           {
             "severity": "warning",
@@ -2262,16 +1834,16 @@
     "label": "JB Hi-Fi \u00b7 Category 2",
     "result": {
       "score": 17,
-      "maxScore": 75,
-      "percentage": 23,
+      "maxScore": 60,
+      "percentage": 28,
       "grade": "F",
       "categories": {
         "discovery": {
           "name": "Discovery",
           "description": "Can agents find your documentation?",
           "score": 17,
-          "maxScore": 25,
-          "percentage": 68,
+          "maxScore": 20,
+          "percentage": 85,
           "results": [
             {
               "id": "robots-txt",
@@ -2330,21 +1902,6 @@
                   "message": "Organized into 19 sections."
                 }
               ]
-            },
-            {
-              "id": "agents-md",
-              "name": "AGENTS.md / CLAUDE.md",
-              "category": "discovery",
-              "score": 0,
-              "maxScore": 5,
-              "status": "fail",
-              "findings": [
-                {
-                  "severity": "error",
-                  "message": "Cannot scan for AGENTS.md in URL-only mode.",
-                  "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-                }
-              ]
             }
           ]
         },
@@ -2352,7 +1909,7 @@
           "name": "Content Structure",
           "description": "Is content machine-readable and well-organized?",
           "score": 0,
-          "maxScore": 25,
+          "maxScore": 15,
           "percentage": 0,
           "results": [
             {
@@ -2366,20 +1923,6 @@
                 {
                   "severity": "warning",
                   "message": "No local directory available to analyze content structure."
-                }
-              ]
-            },
-            {
-              "id": "markdown-availability",
-              "name": "Markdown Content Availability",
-              "category": "content-structure",
-              "score": 0,
-              "maxScore": 10,
-              "status": "warn",
-              "findings": [
-                {
-                  "severity": "warning",
-                  "message": "No local directory available to analyze Markdown availability."
                 }
               ]
             }
@@ -2499,21 +2042,6 @@
           ]
         },
         {
-          "id": "agents-md",
-          "name": "AGENTS.md / CLAUDE.md",
-          "category": "discovery",
-          "score": 0,
-          "maxScore": 5,
-          "status": "fail",
-          "findings": [
-            {
-              "severity": "error",
-              "message": "Cannot scan for AGENTS.md in URL-only mode.",
-              "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-            }
-          ]
-        },
-        {
           "id": "content-structure",
           "name": "Content Structure Quality",
           "category": "content-structure",
@@ -2524,20 +2052,6 @@
             {
               "severity": "warning",
               "message": "No local directory available to analyze content structure."
-            }
-          ]
-        },
-        {
-          "id": "markdown-availability",
-          "name": "Markdown Content Availability",
-          "category": "content-structure",
-          "score": 0,
-          "maxScore": 10,
-          "status": "warn",
-          "findings": [
-            {
-              "severity": "warning",
-              "message": "No local directory available to analyze Markdown availability."
             }
           ]
         },
@@ -2571,24 +2085,16 @@
         }
       ],
       "summary": {
-        "errors": 1,
-        "warnings": 6,
+        "errors": 0,
+        "warnings": 5,
         "infos": 7,
         "passed": 2,
-        "warned": 4,
-        "failed": 1,
+        "warned": 3,
+        "failed": 0,
         "errored": 0
       },
       "findings": {
-        "errors": [
-          {
-            "severity": "error",
-            "message": "Cannot scan for AGENTS.md in URL-only mode.",
-            "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions.",
-            "checker": "agents-md",
-            "checkerName": "AGENTS.md / CLAUDE.md"
-          }
-        ],
+        "errors": [],
         "warnings": [
           {
             "severity": "warning",
@@ -2609,12 +2115,6 @@
             "message": "No local directory available to analyze content structure.",
             "checker": "content-structure",
             "checkerName": "Content Structure Quality"
-          },
-          {
-            "severity": "warning",
-            "message": "No local directory available to analyze Markdown availability.",
-            "checker": "markdown-availability",
-            "checkerName": "Markdown Content Availability"
           },
           {
             "severity": "warning",
@@ -2685,16 +2185,16 @@
     "label": "Harvey Norman \u00b7 Home",
     "result": {
       "score": 8,
-      "maxScore": 75,
-      "percentage": 11,
+      "maxScore": 60,
+      "percentage": 13,
       "grade": "F",
       "categories": {
         "discovery": {
           "name": "Discovery",
           "description": "Can agents find your documentation?",
           "score": 8,
-          "maxScore": 25,
-          "percentage": 32,
+          "maxScore": 20,
+          "percentage": 40,
           "results": [
             {
               "id": "robots-txt",
@@ -2733,21 +2233,6 @@
                   "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification."
                 }
               ]
-            },
-            {
-              "id": "agents-md",
-              "name": "AGENTS.md / CLAUDE.md",
-              "category": "discovery",
-              "score": 0,
-              "maxScore": 5,
-              "status": "fail",
-              "findings": [
-                {
-                  "severity": "error",
-                  "message": "Cannot scan for AGENTS.md in URL-only mode.",
-                  "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-                }
-              ]
             }
           ]
         },
@@ -2755,7 +2240,7 @@
           "name": "Content Structure",
           "description": "Is content machine-readable and well-organized?",
           "score": 0,
-          "maxScore": 25,
+          "maxScore": 15,
           "percentage": 0,
           "results": [
             {
@@ -2769,20 +2254,6 @@
                 {
                   "severity": "warning",
                   "message": "No local directory available to analyze content structure."
-                }
-              ]
-            },
-            {
-              "id": "markdown-availability",
-              "name": "Markdown Content Availability",
-              "category": "content-structure",
-              "score": 0,
-              "maxScore": 10,
-              "status": "warn",
-              "findings": [
-                {
-                  "severity": "warning",
-                  "message": "No local directory available to analyze Markdown availability."
                 }
               ]
             }
@@ -2882,21 +2353,6 @@
           ]
         },
         {
-          "id": "agents-md",
-          "name": "AGENTS.md / CLAUDE.md",
-          "category": "discovery",
-          "score": 0,
-          "maxScore": 5,
-          "status": "fail",
-          "findings": [
-            {
-              "severity": "error",
-              "message": "Cannot scan for AGENTS.md in URL-only mode.",
-              "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-            }
-          ]
-        },
-        {
           "id": "content-structure",
           "name": "Content Structure Quality",
           "category": "content-structure",
@@ -2907,20 +2363,6 @@
             {
               "severity": "warning",
               "message": "No local directory available to analyze content structure."
-            }
-          ]
-        },
-        {
-          "id": "markdown-availability",
-          "name": "Markdown Content Availability",
-          "category": "content-structure",
-          "score": 0,
-          "maxScore": 10,
-          "status": "warn",
-          "findings": [
-            {
-              "severity": "warning",
-              "message": "No local directory available to analyze Markdown availability."
             }
           ]
         },
@@ -2954,12 +2396,12 @@
         }
       ],
       "summary": {
-        "errors": 2,
-        "warnings": 5,
+        "errors": 1,
+        "warnings": 4,
         "infos": 2,
         "passed": 1,
-        "warned": 4,
-        "failed": 2,
+        "warned": 3,
+        "failed": 1,
         "errored": 0
       },
       "findings": {
@@ -2970,13 +2412,6 @@
             "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification.",
             "checker": "llms-txt",
             "checkerName": "llms.txt Discovery Index"
-          },
-          {
-            "severity": "error",
-            "message": "Cannot scan for AGENTS.md in URL-only mode.",
-            "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions.",
-            "checker": "agents-md",
-            "checkerName": "AGENTS.md / CLAUDE.md"
           }
         ],
         "warnings": [
@@ -2992,12 +2427,6 @@
             "message": "No local directory available to analyze content structure.",
             "checker": "content-structure",
             "checkerName": "Content Structure Quality"
-          },
-          {
-            "severity": "warning",
-            "message": "No local directory available to analyze Markdown availability.",
-            "checker": "markdown-availability",
-            "checkerName": "Markdown Content Availability"
           },
           {
             "severity": "warning",
@@ -3038,16 +2467,16 @@
     "label": "Harvey Norman \u00b7 Category",
     "result": {
       "score": 8,
-      "maxScore": 75,
-      "percentage": 11,
+      "maxScore": 60,
+      "percentage": 13,
       "grade": "F",
       "categories": {
         "discovery": {
           "name": "Discovery",
           "description": "Can agents find your documentation?",
           "score": 8,
-          "maxScore": 25,
-          "percentage": 32,
+          "maxScore": 20,
+          "percentage": 40,
           "results": [
             {
               "id": "robots-txt",
@@ -3086,21 +2515,6 @@
                   "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification."
                 }
               ]
-            },
-            {
-              "id": "agents-md",
-              "name": "AGENTS.md / CLAUDE.md",
-              "category": "discovery",
-              "score": 0,
-              "maxScore": 5,
-              "status": "fail",
-              "findings": [
-                {
-                  "severity": "error",
-                  "message": "Cannot scan for AGENTS.md in URL-only mode.",
-                  "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-                }
-              ]
             }
           ]
         },
@@ -3108,7 +2522,7 @@
           "name": "Content Structure",
           "description": "Is content machine-readable and well-organized?",
           "score": 0,
-          "maxScore": 25,
+          "maxScore": 15,
           "percentage": 0,
           "results": [
             {
@@ -3122,20 +2536,6 @@
                 {
                   "severity": "warning",
                   "message": "No local directory available to analyze content structure."
-                }
-              ]
-            },
-            {
-              "id": "markdown-availability",
-              "name": "Markdown Content Availability",
-              "category": "content-structure",
-              "score": 0,
-              "maxScore": 10,
-              "status": "warn",
-              "findings": [
-                {
-                  "severity": "warning",
-                  "message": "No local directory available to analyze Markdown availability."
                 }
               ]
             }
@@ -3235,21 +2635,6 @@
           ]
         },
         {
-          "id": "agents-md",
-          "name": "AGENTS.md / CLAUDE.md",
-          "category": "discovery",
-          "score": 0,
-          "maxScore": 5,
-          "status": "fail",
-          "findings": [
-            {
-              "severity": "error",
-              "message": "Cannot scan for AGENTS.md in URL-only mode.",
-              "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-            }
-          ]
-        },
-        {
           "id": "content-structure",
           "name": "Content Structure Quality",
           "category": "content-structure",
@@ -3260,20 +2645,6 @@
             {
               "severity": "warning",
               "message": "No local directory available to analyze content structure."
-            }
-          ]
-        },
-        {
-          "id": "markdown-availability",
-          "name": "Markdown Content Availability",
-          "category": "content-structure",
-          "score": 0,
-          "maxScore": 10,
-          "status": "warn",
-          "findings": [
-            {
-              "severity": "warning",
-              "message": "No local directory available to analyze Markdown availability."
             }
           ]
         },
@@ -3307,12 +2678,12 @@
         }
       ],
       "summary": {
-        "errors": 2,
-        "warnings": 5,
+        "errors": 1,
+        "warnings": 4,
         "infos": 2,
         "passed": 1,
-        "warned": 4,
-        "failed": 2,
+        "warned": 3,
+        "failed": 1,
         "errored": 0
       },
       "findings": {
@@ -3323,13 +2694,6 @@
             "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification.",
             "checker": "llms-txt",
             "checkerName": "llms.txt Discovery Index"
-          },
-          {
-            "severity": "error",
-            "message": "Cannot scan for AGENTS.md in URL-only mode.",
-            "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions.",
-            "checker": "agents-md",
-            "checkerName": "AGENTS.md / CLAUDE.md"
           }
         ],
         "warnings": [
@@ -3345,12 +2709,6 @@
             "message": "No local directory available to analyze content structure.",
             "checker": "content-structure",
             "checkerName": "Content Structure Quality"
-          },
-          {
-            "severity": "warning",
-            "message": "No local directory available to analyze Markdown availability.",
-            "checker": "markdown-availability",
-            "checkerName": "Markdown Content Availability"
           },
           {
             "severity": "warning",
@@ -3391,16 +2749,16 @@
     "label": "Harvey Norman \u00b7 Guide",
     "result": {
       "score": 8,
-      "maxScore": 75,
-      "percentage": 11,
+      "maxScore": 60,
+      "percentage": 13,
       "grade": "F",
       "categories": {
         "discovery": {
           "name": "Discovery",
           "description": "Can agents find your documentation?",
           "score": 8,
-          "maxScore": 25,
-          "percentage": 32,
+          "maxScore": 20,
+          "percentage": 40,
           "results": [
             {
               "id": "robots-txt",
@@ -3439,21 +2797,6 @@
                   "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification."
                 }
               ]
-            },
-            {
-              "id": "agents-md",
-              "name": "AGENTS.md / CLAUDE.md",
-              "category": "discovery",
-              "score": 0,
-              "maxScore": 5,
-              "status": "fail",
-              "findings": [
-                {
-                  "severity": "error",
-                  "message": "Cannot scan for AGENTS.md in URL-only mode.",
-                  "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-                }
-              ]
             }
           ]
         },
@@ -3461,7 +2804,7 @@
           "name": "Content Structure",
           "description": "Is content machine-readable and well-organized?",
           "score": 0,
-          "maxScore": 25,
+          "maxScore": 15,
           "percentage": 0,
           "results": [
             {
@@ -3475,20 +2818,6 @@
                 {
                   "severity": "warning",
                   "message": "No local directory available to analyze content structure."
-                }
-              ]
-            },
-            {
-              "id": "markdown-availability",
-              "name": "Markdown Content Availability",
-              "category": "content-structure",
-              "score": 0,
-              "maxScore": 10,
-              "status": "warn",
-              "findings": [
-                {
-                  "severity": "warning",
-                  "message": "No local directory available to analyze Markdown availability."
                 }
               ]
             }
@@ -3588,21 +2917,6 @@
           ]
         },
         {
-          "id": "agents-md",
-          "name": "AGENTS.md / CLAUDE.md",
-          "category": "discovery",
-          "score": 0,
-          "maxScore": 5,
-          "status": "fail",
-          "findings": [
-            {
-              "severity": "error",
-              "message": "Cannot scan for AGENTS.md in URL-only mode.",
-              "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-            }
-          ]
-        },
-        {
           "id": "content-structure",
           "name": "Content Structure Quality",
           "category": "content-structure",
@@ -3613,20 +2927,6 @@
             {
               "severity": "warning",
               "message": "No local directory available to analyze content structure."
-            }
-          ]
-        },
-        {
-          "id": "markdown-availability",
-          "name": "Markdown Content Availability",
-          "category": "content-structure",
-          "score": 0,
-          "maxScore": 10,
-          "status": "warn",
-          "findings": [
-            {
-              "severity": "warning",
-              "message": "No local directory available to analyze Markdown availability."
             }
           ]
         },
@@ -3660,12 +2960,12 @@
         }
       ],
       "summary": {
-        "errors": 2,
-        "warnings": 5,
+        "errors": 1,
+        "warnings": 4,
         "infos": 2,
         "passed": 1,
-        "warned": 4,
-        "failed": 2,
+        "warned": 3,
+        "failed": 1,
         "errored": 0
       },
       "findings": {
@@ -3676,13 +2976,6 @@
             "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification.",
             "checker": "llms-txt",
             "checkerName": "llms.txt Discovery Index"
-          },
-          {
-            "severity": "error",
-            "message": "Cannot scan for AGENTS.md in URL-only mode.",
-            "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions.",
-            "checker": "agents-md",
-            "checkerName": "AGENTS.md / CLAUDE.md"
           }
         ],
         "warnings": [
@@ -3698,12 +2991,6 @@
             "message": "No local directory available to analyze content structure.",
             "checker": "content-structure",
             "checkerName": "Content Structure Quality"
-          },
-          {
-            "severity": "warning",
-            "message": "No local directory available to analyze Markdown availability.",
-            "checker": "markdown-availability",
-            "checkerName": "Markdown Content Availability"
           },
           {
             "severity": "warning",
@@ -3744,16 +3031,16 @@
     "label": "Appliances Online \u00b7 Home",
     "result": {
       "score": 17,
-      "maxScore": 75,
-      "percentage": 23,
+      "maxScore": 60,
+      "percentage": 28,
       "grade": "F",
       "categories": {
         "discovery": {
           "name": "Discovery",
           "description": "Can agents find your documentation?",
           "score": 17,
-          "maxScore": 25,
-          "percentage": 68,
+          "maxScore": 20,
+          "percentage": 85,
           "results": [
             {
               "id": "robots-txt",
@@ -3812,21 +3099,6 @@
                   "message": "Organized into 6 sections."
                 }
               ]
-            },
-            {
-              "id": "agents-md",
-              "name": "AGENTS.md / CLAUDE.md",
-              "category": "discovery",
-              "score": 0,
-              "maxScore": 5,
-              "status": "fail",
-              "findings": [
-                {
-                  "severity": "error",
-                  "message": "Cannot scan for AGENTS.md in URL-only mode.",
-                  "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-                }
-              ]
             }
           ]
         },
@@ -3834,7 +3106,7 @@
           "name": "Content Structure",
           "description": "Is content machine-readable and well-organized?",
           "score": 0,
-          "maxScore": 25,
+          "maxScore": 15,
           "percentage": 0,
           "results": [
             {
@@ -3848,20 +3120,6 @@
                 {
                   "severity": "warning",
                   "message": "No local directory available to analyze content structure."
-                }
-              ]
-            },
-            {
-              "id": "markdown-availability",
-              "name": "Markdown Content Availability",
-              "category": "content-structure",
-              "score": 0,
-              "maxScore": 10,
-              "status": "warn",
-              "findings": [
-                {
-                  "severity": "warning",
-                  "message": "No local directory available to analyze Markdown availability."
                 }
               ]
             }
@@ -3981,21 +3239,6 @@
           ]
         },
         {
-          "id": "agents-md",
-          "name": "AGENTS.md / CLAUDE.md",
-          "category": "discovery",
-          "score": 0,
-          "maxScore": 5,
-          "status": "fail",
-          "findings": [
-            {
-              "severity": "error",
-              "message": "Cannot scan for AGENTS.md in URL-only mode.",
-              "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-            }
-          ]
-        },
-        {
           "id": "content-structure",
           "name": "Content Structure Quality",
           "category": "content-structure",
@@ -4006,20 +3249,6 @@
             {
               "severity": "warning",
               "message": "No local directory available to analyze content structure."
-            }
-          ]
-        },
-        {
-          "id": "markdown-availability",
-          "name": "Markdown Content Availability",
-          "category": "content-structure",
-          "score": 0,
-          "maxScore": 10,
-          "status": "warn",
-          "findings": [
-            {
-              "severity": "warning",
-              "message": "No local directory available to analyze Markdown availability."
             }
           ]
         },
@@ -4053,24 +3282,16 @@
         }
       ],
       "summary": {
-        "errors": 1,
-        "warnings": 6,
+        "errors": 0,
+        "warnings": 5,
         "infos": 7,
         "passed": 2,
-        "warned": 4,
-        "failed": 1,
+        "warned": 3,
+        "failed": 0,
         "errored": 0
       },
       "findings": {
-        "errors": [
-          {
-            "severity": "error",
-            "message": "Cannot scan for AGENTS.md in URL-only mode.",
-            "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions.",
-            "checker": "agents-md",
-            "checkerName": "AGENTS.md / CLAUDE.md"
-          }
-        ],
+        "errors": [],
         "warnings": [
           {
             "severity": "warning",
@@ -4091,12 +3312,6 @@
             "message": "No local directory available to analyze content structure.",
             "checker": "content-structure",
             "checkerName": "Content Structure Quality"
-          },
-          {
-            "severity": "warning",
-            "message": "No local directory available to analyze Markdown availability.",
-            "checker": "markdown-availability",
-            "checkerName": "Markdown Content Availability"
           },
           {
             "severity": "warning",
@@ -4167,16 +3382,16 @@
     "label": "Appliances Online \u00b7 Category",
     "result": {
       "score": 17,
-      "maxScore": 75,
-      "percentage": 23,
+      "maxScore": 60,
+      "percentage": 28,
       "grade": "F",
       "categories": {
         "discovery": {
           "name": "Discovery",
           "description": "Can agents find your documentation?",
           "score": 17,
-          "maxScore": 25,
-          "percentage": 68,
+          "maxScore": 20,
+          "percentage": 85,
           "results": [
             {
               "id": "robots-txt",
@@ -4235,21 +3450,6 @@
                   "message": "Organized into 6 sections."
                 }
               ]
-            },
-            {
-              "id": "agents-md",
-              "name": "AGENTS.md / CLAUDE.md",
-              "category": "discovery",
-              "score": 0,
-              "maxScore": 5,
-              "status": "fail",
-              "findings": [
-                {
-                  "severity": "error",
-                  "message": "Cannot scan for AGENTS.md in URL-only mode.",
-                  "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-                }
-              ]
             }
           ]
         },
@@ -4257,7 +3457,7 @@
           "name": "Content Structure",
           "description": "Is content machine-readable and well-organized?",
           "score": 0,
-          "maxScore": 25,
+          "maxScore": 15,
           "percentage": 0,
           "results": [
             {
@@ -4271,20 +3471,6 @@
                 {
                   "severity": "warning",
                   "message": "No local directory available to analyze content structure."
-                }
-              ]
-            },
-            {
-              "id": "markdown-availability",
-              "name": "Markdown Content Availability",
-              "category": "content-structure",
-              "score": 0,
-              "maxScore": 10,
-              "status": "warn",
-              "findings": [
-                {
-                  "severity": "warning",
-                  "message": "No local directory available to analyze Markdown availability."
                 }
               ]
             }
@@ -4404,21 +3590,6 @@
           ]
         },
         {
-          "id": "agents-md",
-          "name": "AGENTS.md / CLAUDE.md",
-          "category": "discovery",
-          "score": 0,
-          "maxScore": 5,
-          "status": "fail",
-          "findings": [
-            {
-              "severity": "error",
-              "message": "Cannot scan for AGENTS.md in URL-only mode.",
-              "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-            }
-          ]
-        },
-        {
           "id": "content-structure",
           "name": "Content Structure Quality",
           "category": "content-structure",
@@ -4429,20 +3600,6 @@
             {
               "severity": "warning",
               "message": "No local directory available to analyze content structure."
-            }
-          ]
-        },
-        {
-          "id": "markdown-availability",
-          "name": "Markdown Content Availability",
-          "category": "content-structure",
-          "score": 0,
-          "maxScore": 10,
-          "status": "warn",
-          "findings": [
-            {
-              "severity": "warning",
-              "message": "No local directory available to analyze Markdown availability."
             }
           ]
         },
@@ -4476,24 +3633,16 @@
         }
       ],
       "summary": {
-        "errors": 1,
-        "warnings": 6,
+        "errors": 0,
+        "warnings": 5,
         "infos": 7,
         "passed": 2,
-        "warned": 4,
-        "failed": 1,
+        "warned": 3,
+        "failed": 0,
         "errored": 0
       },
       "findings": {
-        "errors": [
-          {
-            "severity": "error",
-            "message": "Cannot scan for AGENTS.md in URL-only mode.",
-            "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions.",
-            "checker": "agents-md",
-            "checkerName": "AGENTS.md / CLAUDE.md"
-          }
-        ],
+        "errors": [],
         "warnings": [
           {
             "severity": "warning",
@@ -4514,12 +3663,6 @@
             "message": "No local directory available to analyze content structure.",
             "checker": "content-structure",
             "checkerName": "Content Structure Quality"
-          },
-          {
-            "severity": "warning",
-            "message": "No local directory available to analyze Markdown availability.",
-            "checker": "markdown-availability",
-            "checkerName": "Markdown Content Availability"
           },
           {
             "severity": "warning",
@@ -4590,16 +3733,16 @@
     "label": "Appliances Online \u00b7 Guide",
     "result": {
       "score": 17,
-      "maxScore": 75,
-      "percentage": 23,
+      "maxScore": 60,
+      "percentage": 28,
       "grade": "F",
       "categories": {
         "discovery": {
           "name": "Discovery",
           "description": "Can agents find your documentation?",
           "score": 17,
-          "maxScore": 25,
-          "percentage": 68,
+          "maxScore": 20,
+          "percentage": 85,
           "results": [
             {
               "id": "robots-txt",
@@ -4658,21 +3801,6 @@
                   "message": "Organized into 6 sections."
                 }
               ]
-            },
-            {
-              "id": "agents-md",
-              "name": "AGENTS.md / CLAUDE.md",
-              "category": "discovery",
-              "score": 0,
-              "maxScore": 5,
-              "status": "fail",
-              "findings": [
-                {
-                  "severity": "error",
-                  "message": "Cannot scan for AGENTS.md in URL-only mode.",
-                  "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-                }
-              ]
             }
           ]
         },
@@ -4680,7 +3808,7 @@
           "name": "Content Structure",
           "description": "Is content machine-readable and well-organized?",
           "score": 0,
-          "maxScore": 25,
+          "maxScore": 15,
           "percentage": 0,
           "results": [
             {
@@ -4694,20 +3822,6 @@
                 {
                   "severity": "warning",
                   "message": "No local directory available to analyze content structure."
-                }
-              ]
-            },
-            {
-              "id": "markdown-availability",
-              "name": "Markdown Content Availability",
-              "category": "content-structure",
-              "score": 0,
-              "maxScore": 10,
-              "status": "warn",
-              "findings": [
-                {
-                  "severity": "warning",
-                  "message": "No local directory available to analyze Markdown availability."
                 }
               ]
             }
@@ -4827,21 +3941,6 @@
           ]
         },
         {
-          "id": "agents-md",
-          "name": "AGENTS.md / CLAUDE.md",
-          "category": "discovery",
-          "score": 0,
-          "maxScore": 5,
-          "status": "fail",
-          "findings": [
-            {
-              "severity": "error",
-              "message": "Cannot scan for AGENTS.md in URL-only mode.",
-              "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
-            }
-          ]
-        },
-        {
           "id": "content-structure",
           "name": "Content Structure Quality",
           "category": "content-structure",
@@ -4852,20 +3951,6 @@
             {
               "severity": "warning",
               "message": "No local directory available to analyze content structure."
-            }
-          ]
-        },
-        {
-          "id": "markdown-availability",
-          "name": "Markdown Content Availability",
-          "category": "content-structure",
-          "score": 0,
-          "maxScore": 10,
-          "status": "warn",
-          "findings": [
-            {
-              "severity": "warning",
-              "message": "No local directory available to analyze Markdown availability."
             }
           ]
         },
@@ -4899,24 +3984,16 @@
         }
       ],
       "summary": {
-        "errors": 1,
-        "warnings": 6,
+        "errors": 0,
+        "warnings": 5,
         "infos": 7,
         "passed": 2,
-        "warned": 4,
-        "failed": 1,
+        "warned": 3,
+        "failed": 0,
         "errored": 0
       },
       "findings": {
-        "errors": [
-          {
-            "severity": "error",
-            "message": "Cannot scan for AGENTS.md in URL-only mode.",
-            "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions.",
-            "checker": "agents-md",
-            "checkerName": "AGENTS.md / CLAUDE.md"
-          }
-        ],
+        "errors": [],
         "warnings": [
           {
             "severity": "warning",
@@ -4937,12 +4014,6 @@
             "message": "No local directory available to analyze content structure.",
             "checker": "content-structure",
             "checkerName": "Content Structure Quality"
-          },
-          {
-            "severity": "warning",
-            "message": "No local directory available to analyze Markdown availability.",
-            "checker": "markdown-availability",
-            "checkerName": "Markdown Content Availability"
           },
           {
             "severity": "warning",
