@@ -335,6 +335,19 @@ Run from repo root: `python tools/tgg_plp_auditor.py`
 
 ---
 
+## Inbox (`inbox/`)
+
+`inbox/` is Simon's drop zone for files he wants the AI to use. Anything placed here is fair game to read, parse, or process when requested.
+
+**Rule — use then offer to delete:**
+1. When Simon asks you to use a file from `inbox/`, process it fully.
+2. After completing the task, ask: *"Done. Want me to delete `inbox/[filename]` now?"*
+3. If Simon says yes (or any affirmative), delete the file using `PowerShell(Remove-Item ...)`. If no, leave it.
+4. Never delete inbox files proactively — only after explicit yes in response to the offer.
+5. Empty subdirectories left behind can also be removed if Simon says yes.
+
+---
+
 ## AI Assistant Guidelines
 
 1. Read before modifying — always read existing files first
