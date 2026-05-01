@@ -293,11 +293,44 @@ Status: READY ✓
 [Present deliverable]
 ```
 
+## Content Engineering Typed Constraints
+
+When called from the content engineering pipeline (`tgg-content-pipeline`, `tgg-ce-qa`, or `tgg-ce-batch`), load the constraint set for the relevant content type by reading the corresponding file in `.claude/skills/verification-gate-protocol/constraints/<type>.yaml`.
+
+Pass the type via the `--type` parameter or from the `content_type` field in `intake.md`.
+
+**Supported types and their constraint files:**
+
+| Content type | Constraint file | Key limits |
+|---|---|---|
+| `buying-guide` | `constraints/buying-guide.yaml` | 1,800–2,500 words, 6–9 H2s, 8–12 internal links, 5–8 FAQs |
+| `how-to` | `constraints/how-to.yaml` | 800–1,400 words, 4–7 H2s, 4–8 internal links |
+| `comparison` | `constraints/comparison.yaml` | 1,200–2,000 words, 4–6 H2s, 6–10 internal links, table required |
+| `eav-explainer` | `constraints/eav-explainer.yaml` | 1,000–1,800 words, 4–7 H2s, EAV section mandatory |
+| `plp-intro` | `constraints/plp-intro.yaml` | 220–250 chars, 2 sentences, TGG in S2 only |
+| `faq-block` | `constraints/faq-block.yaml` | 5–8 Q/A pairs, A: 50–120 words, schema-ready |
+
+**Usage in pipeline:**
+```
+Invoking verification-gate-protocol --type buying-guide
+→ Loads constraints/buying-guide.yaml
+→ Applies all constraints as hard limits
+→ Returns PASS or FAIL with per-constraint detail
+```
+
+**Universal constraints applied to every content type (regardless of `--type`):**
+- Australian English spelling (organise, colour, optimise — not US variants)
+- No banned AI phrases (defers to tgg-humanizer's 29-pattern list)
+- No em dashes as sentence connectors (use period + space)
+- Claim-evidence pairing: every factual claim must cite a source or link to one
+- "The Good Guys" appears in S2 only for PLP intros; for body copy, not more than once per 200 words
+
 ## Integration with Existing Skills
 
 This verification protocol works WITH specialized skills like:
 - `tgg-copywriting`: Provides content rules, this skill enforces validation
 - `tgg-seo-specialist`: Provides SEO requirements, this skill ensures compliance
+- `tgg-ce-qa`: Invokes this skill with `--type` set to the current content type
 - `docx`, `pptx`, `xlsx`: Provide file creation, this skill validates output quality
 
 **Workflow:**

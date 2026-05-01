@@ -1,0 +1,49 @@
+type: plp-intro
+description: Product listing page 2-sentence intro copy
+
+hard_limits:
+  char_count:
+    min: 220
+    max: 250
+  sentence_count: 2
+  tgg_mention_count: 1              # exactly once, in S2 only
+
+required_elements:
+  - s1_action_verb_opener           # S1 must open with an action verb (not Discover, Explore, Shop)
+  - tgg_in_s2_only                  # "The Good Guys" appears in S2, not S1
+  - category_range_cue              # some indication of range width (brands, types, or features)
+
+banned_s1_openers:
+  - Discover
+  - Explore
+  - Shop
+  - Find
+  - Browse
+
+brand_plp_banned_words:             # applies only to brand-specific PLPs (Apple, Samsung, Dyson, etc.)
+  - trusted
+  - reliable
+  - enjoy
+  - features
+
+content_rules:
+  australian_english: true
+  banned_ai_phrases: true
+  em_dash_as_connector: false
+
+qa_gates:
+  - id: char_count
+    check: "total character count between 220 and 250 (inclusive)"
+    fail_action: block_delivery
+  - id: sentence_count
+    check: "exactly 2 sentences"
+    fail_action: block_delivery
+  - id: tgg_placement
+    check: "The Good Guys appears exactly once, in S2"
+    fail_action: block_delivery
+  - id: s1_opener
+    check: "S1 opens with an action verb not in banned list"
+    fail_action: block_delivery
+  - id: australian_english
+    check: "no US English spellings"
+    fail_action: block_delivery

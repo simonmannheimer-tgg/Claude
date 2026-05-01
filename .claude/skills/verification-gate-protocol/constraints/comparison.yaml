@@ -1,0 +1,45 @@
+type: comparison
+description: Side-by-side comparison article (e.g. "heat pump vs condenser dryers")
+
+hard_limits:
+  word_count:
+    min: 1200
+    max: 2000
+  h2_count:
+    min: 4
+    max: 6
+  internal_links:
+    min: 6
+    max: 10
+
+required_sections:
+  - comparison_table                   # markdown table with at least 4 rows of attributes
+  - recommendation_callout             # explicit winner/recommendation with rationale
+  - australian_retail_considerations   # energy ratings, price range, finance where relevant
+
+content_rules:
+  australian_english: true
+  banned_ai_phrases: true
+  em_dash_as_connector: false
+  claim_evidence_pairing: true
+  table_required: true
+
+qa_gates:
+  - id: word_count
+    check: "word count between 1200 and 2000"
+    fail_action: flag_and_fix
+  - id: h2_count
+    check: "H2 count between 4 and 6"
+    fail_action: flag_and_fix
+  - id: comparison_table
+    check: "markdown comparison table present with 4+ attribute rows"
+    fail_action: block_delivery
+  - id: recommendation
+    check: "explicit recommendation or winner callout present"
+    fail_action: block_delivery
+  - id: internal_links
+    check: "internal link count between 6 and 10"
+    fail_action: flag_and_fix
+  - id: australian_english
+    check: "no US English spellings"
+    fail_action: block_delivery

@@ -1,0 +1,46 @@
+type: eav-explainer
+description: Entity-Attribute-Value explainer for a product category (e.g. "what to look for in a dishwasher")
+
+hard_limits:
+  word_count:
+    min: 1000
+    max: 1800
+  h2_count:
+    min: 4
+    max: 7
+  internal_links:
+    min: 6
+    max: 10
+  eav_attributes_min: 5              # minimum number of distinct attributes defined
+
+required_sections:
+  - eav_mapping_block                # table or list defining entity, attributes, and values with what they mean
+  - australian_retail_considerations # energy ratings, dimensions, connection types relevant to AU market
+  - buyer_decision_summary           # which attributes matter most for which buyer type
+
+content_rules:
+  australian_english: true
+  banned_ai_phrases: true
+  em_dash_as_connector: false
+  claim_evidence_pairing: true
+  eav_table_required: true           # structured attribute table required, not freeform prose only
+
+qa_gates:
+  - id: word_count
+    check: "word count between 1000 and 1800"
+    fail_action: flag_and_fix
+  - id: eav_attributes
+    check: "at least 5 distinct attributes defined with values explained"
+    fail_action: block_delivery
+  - id: eav_table
+    check: "EAV mapping block present as table or structured list"
+    fail_action: block_delivery
+  - id: h2_count
+    check: "H2 count between 4 and 7"
+    fail_action: flag_and_fix
+  - id: internal_links
+    check: "internal link count between 6 and 10"
+    fail_action: flag_and_fix
+  - id: australian_english
+    check: "no US English spellings"
+    fail_action: block_delivery
