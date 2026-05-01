@@ -1,0 +1,58 @@
+name: Cleanup stale branches
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (list branches but don't delete)"
+        type: boolean
+        default: true
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Delete stale claude/ branches
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          echo "Fetching all branches..."
+          BRANCHES=$(gh api repos/$REPO/branches --paginate --jq '.[].name' | grep '^claude/')
+
+          if [ -z "$BRANCHES" ]; then
+            echo "No claude/ branches found."
+            exit 0
+          fi
+
+          # Keep the current branch if we're running from one
+          CURRENT_REF="${{ github.ref_name }}"
+
+          echo ""
+          echo "Found claude/ branches:"
+          echo "$BRANCHES"
+          echo ""
+
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "DRY RUN — no branches deleted. Re-run with dry_run=false to delete."
+            COUNT=$(echo "$BRANCHES" | wc -l)
+            echo "Would delete: $COUNT branches"
+          else
+            DELETED=0
+            SKIPPED=0
+            while IFS= read -r branch; do
+              if [ "$branch" = "$CURRENT_REF" ]; then
+                echo "  SKIP (current): $branch"
+                SKIPPED=$((SKIPPED + 1))
+                continue
+              fi
+              gh api repos/$REPO/git/refs/heads/$branch -X DELETE && \
+                echo "  DELETED: $branch" && DELETED=$((DELETED + 1)) || \
+                echo "  FAILED:  $branch"
+            done <<< "$BRANCHES"
+            echo ""
+            echo "Done. Deleted: $DELETED  Skipped: $SKIPPED"
+          fi
