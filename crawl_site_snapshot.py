@@ -1,14 +1,19 @@
 """
-Download HTML snapshots of a site for local agentic-seo analysis.
+Download fully-rendered HTML snapshots for local agentic-seo analysis.
+Uses Playwright (Chromium) to bypass Cloudflare and JS-rendering requirements.
 
 Usage:
-    python crawl_site_snapshot.py                      # TGG defaults
-    python crawl_site_snapshot.py --urls '["https://..."]' --out site-snapshots/custom
+    python crawl_site_snapshot.py                            # TGG defaults
+    python crawl_site_snapshot.py --urls '["https://..."]'  # custom URLs
+    python crawl_site_snapshot.py --out site-snapshots/custom/
 
-Outputs HTML files to site-snapshots/<domain>/ ready for:
+Install:
+    pip install playwright
+    playwright install chromium --with-deps
+
+Output: site-snapshots/<domain>/*.html, ready for:
     node .claude/optional/agentic-seo/repo/bin/aeo.js site-snapshots/<domain>/
-
-Uses httpx (no curl/wget). Respects rate limits. Handles redirects and errors.
+    python run_aeo_local.py  (AEO_DIR=site-snapshots/<domain>)
 """
 
 import argparse
@@ -19,7 +24,7 @@ import sys
 from pathlib import Path
 from urllib.parse import urlparse
 
-import httpx
+from playwright.async_api import async_playwright
 
 DEFAULT_URLS = [
     "https://www.thegoodguys.com.au",
@@ -34,73 +39,72 @@ DEFAULT_URLS = [
     "https://www.thegoodguys.com.au/buying-guide/best-washing-machines",
 ]
 
-HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-        "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
-    ),
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "Accept-Language": "en-AU,en;q=0.9",
-}
+UA = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/122.0.0.0 Safari/537.36"
+)
+VP = {"width": 1280, "height": 900}
 
 
 def url_to_filename(url: str) -> str:
-    """Convert a URL path to a safe filename."""
     parsed = urlparse(url)
     path = parsed.path.strip("/")
     if not path:
         return "index.html"
-    # Replace slashes with dashes, strip unsafe chars
     safe = re.sub(r"[^a-zA-Z0-9_-]", "-", path.replace("/", "--"))
     return f"{safe}.html"
 
 
-async def fetch_page(client: httpx.AsyncClient, url: str) -> tuple[str, str | None, str | None]:
-    """Fetch a URL and return (url, html_content, error)."""
+async def fetch_page(page, url: str) -> tuple[str | None, str | None]:
     try:
-        resp = await client.get(url, follow_redirects=True, timeout=20)
-        if resp.status_code == 200:
-            return url, resp.text, None
-        return url, None, f"HTTP {resp.status_code}"
-    except httpx.TimeoutException:
-        return url, None, "Timeout after 20s"
+        await page.goto(url, wait_until="domcontentloaded", timeout=30_000)
+        # Let JS settle then scroll mid-page to trigger lazy-loaded content
+        await page.wait_for_timeout(2_000)
+        await page.evaluate("window.scrollTo(0, Math.floor(document.body.scrollHeight * 0.4))")
+        await page.wait_for_timeout(800)
+        return await page.content(), None
     except Exception as e:
-        return url, None, str(e)
+        return None, str(e)
 
 
-async def crawl(urls: list[str], out_dir: Path, delay: float = 1.0) -> list[dict]:
+async def crawl(urls: list[str], out_dir: Path, delay: float = 1.5) -> list[dict]:
     out_dir.mkdir(parents=True, exist_ok=True)
     results = []
 
-    async with httpx.AsyncClient(headers=HEADERS) as client:
+    async with async_playwright() as pw:
+        browser = await pw.chromium.launch(headless=True)
+        ctx = await browser.new_context(user_agent=UA, viewport=VP)
+        page = await ctx.new_page()
+
         for i, url in enumerate(urls):
             print(f"[{i+1}/{len(urls)}] {url}")
-            _, html, error = await fetch_page(client, url)
+            html, error = await fetch_page(page, url)
 
             if error:
                 print(f"  ✗ {error}", file=sys.stderr)
                 results.append({"url": url, "error": error})
-                continue
+            else:
+                filename = url_to_filename(url)
+                filepath = out_dir / filename
+                filepath.write_text(html, encoding="utf-8")
+                size_kb = len(html) / 1024
+                print(f"  ✓ {filename} ({size_kb:.0f} KB)")
+                results.append({"url": url, "file": str(filepath), "size_bytes": len(html)})
 
-            filename = url_to_filename(url)
-            filepath = out_dir / filename
-            filepath.write_text(html, encoding="utf-8")
-            size_kb = len(html) / 1024
-            print(f"  ✓ {filename} ({size_kb:.0f} KB)")
-            results.append({"url": url, "file": str(filepath), "size_bytes": len(html)})
-
-            # Polite delay between requests
             if i < len(urls) - 1:
                 await asyncio.sleep(delay)
+
+        await browser.close()
 
     return results
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Download HTML snapshots for AEO analysis")
-    parser.add_argument("--urls", type=str, help="JSON array of URLs to crawl")
-    parser.add_argument("--out", type=str, help="Output directory (default: site-snapshots/<domain>)")
-    parser.add_argument("--delay", type=float, default=1.0, help="Seconds between requests (default: 1.0)")
+    parser = argparse.ArgumentParser(description="Crawl HTML snapshots for AEO analysis")
+    parser.add_argument("--urls", type=str, help="JSON array of URLs")
+    parser.add_argument("--out", type=str, help="Output directory")
+    parser.add_argument("--delay", type=float, default=1.5, help="Seconds between requests")
     args = parser.parse_args()
 
     if args.urls:
@@ -115,7 +119,6 @@ def main():
         print("No URLs to crawl", file=sys.stderr)
         sys.exit(1)
 
-    # Derive output directory from first URL's domain
     if args.out:
         out_dir = Path(args.out)
     else:
@@ -123,15 +126,14 @@ def main():
         out_dir = Path("site-snapshots") / domain
 
     print(f"\nCrawling {len(urls)} URL(s) → {out_dir}/\n")
-    results = asyncio.run(crawl(urls, out_dir, delay=args.delay))
+    results = asyncio.run(crawl(urls, out_dir, args.delay))
 
     saved = [r for r in results if "file" in r]
     failed = [r for r in results if "error" in r]
 
     print(f"\nDone: {len(saved)} saved, {len(failed)} failed")
-    print(f"\nRun AEO local audit:")
-    print(f"  node .claude/optional/agentic-seo/repo/bin/aeo.js {out_dir}/")
-    print(f"  node .claude/optional/agentic-seo/repo/bin/aeo.js --json {out_dir}/ > seo/outputs/aeo/local-audit.json")
+    print(f"\nNext step — run local AEO audit:")
+    print(f"  AEO_DIR={out_dir} AEO_LABEL='TGG' python run_aeo_local.py")
 
     if failed:
         for r in failed:
