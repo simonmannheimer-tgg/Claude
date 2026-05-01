@@ -210,8 +210,8 @@ After every pipeline run, note any step that needed manual correction under `## 
 - **CONNECTIONS REVIEW:** Audit what tools/MCPs should connect to the pipeline to make skills better. Trigger: "what should we connect" or "connections review".
 - **AUTOMATED WEEKLY SEO REPORT:** `seo-weekly-report.yml` was removed (cost/quality not ready). Goal: wire the seo-reporter agent to pull from GSC MCP + Semrush automatically and produce a weekly digest that's genuinely useful without manual prompting. Needs: GSC MCP connected, Semrush report templates defined, output format agreed. Trigger: "build the weekly report workflow".
 - **SHOPPING AUDIT TOOL (in progress):** `seo/scripts/product-shopping-audit.py` — fetches TGG sitemap, extracts all product titles, runs organic Google Shopping scraper for each. Next steps: (1) validate title-cleaning logic against real sitemap, (2) add TGG price comparison from GMC feed, (3) add category roll-up so results map to deals/ URLs, (4) schedule via shopping-scraper.yml once stable.
+- **PROCESS FILE RECONCILIATION (blocked — waiting on new skill versions):** Content skills are being redone externally. Once new versions land, re-audit 00–09 against them and resolve these known conflicts: (1) PLP char count — Process 01 says 220–250, current skills say 230–260; (2) meta description length — Process 02 says 140–155, skills say 145–160; (3) title tag brand inclusion — Process 02 bans TGG in titles, skills permit `| The Good Guys`; (4) Process 05 Task 5C unit clarity — says 230–260 words (not chars). Do not update process files until new skills are available to compare against.
 - **RULE CONFLICTS (open questions for Simon):**
-  - PLP char count: Process 01 says **220–250**; `tgg-seo-specialist` skill says 230–260. Which is correct?
   - Execution path: For production copy, do you prefer agents (via seo-team-lead) or skills (e.g. tgg-copywriting, tgg-category-pipeline)?
 
 ### Writing philosophy
