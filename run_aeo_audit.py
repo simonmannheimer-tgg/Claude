@@ -26,23 +26,41 @@ from pathlib import Path
 import httpx
 
 DEFAULT_URLS = [
-    # TGG — all page types
-    {"url": "https://www.thegoodguys.com.au",                              "label": "TGG · Home"},
-    {"url": "https://www.thegoodguys.com.au/televisions",                  "label": "TGG · Category"},
-    {"url": "https://www.thegoodguys.com.au/buying-guide/best-tvs",        "label": "TGG · Buying Guide"},
-    {"url": "https://www.thegoodguys.com.au/whats-new",                    "label": "TGG · News Hub"},
-    # JB Hi-Fi — equivalent page types
-    {"url": "https://www.jbhifi.com.au",                                               "label": "JB Hi-Fi · Home"},
-    {"url": "https://www.jbhifi.com.au/collections/tvs",                               "label": "JB Hi-Fi · Category"},
-    {"url": "https://www.jbhifi.com.au/collections/headphones",                        "label": "JB Hi-Fi · Category 2"},
-    # Harvey Norman — equivalent page types
-    {"url": "https://www.harveynorman.com.au",                                                          "label": "Harvey Norman · Home"},
-    {"url": "https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-screen-size/all-tvs",       "label": "Harvey Norman · Category"},
-    {"url": "https://www.harveynorman.com.au/buying-guides/security-camera-buying-guide",               "label": "Harvey Norman · Guide"},
-    # Appliances Online — note: uses /category/[dept]/[sub]/ structure, no flat slugs
-    {"url": "https://www.appliancesonline.com.au",                                         "label": "Appliances Online · Home"},
-    {"url": "https://www.appliancesonline.com.au/category/refrigeration/fridges/",         "label": "Appliances Online · Category"},
-    {"url": "https://www.appliancesonline.com.au/article/refrigerator-size-guide/",        "label": "Appliances Online · Guide"},
+    # ── TGG — one URL per distinct page type from sitemap ───────────────────────
+    # category_sitemap: top-level PLP
+    {"url": "https://www.thegoodguys.com.au/televisions",                                   "label": "TGG · Category"},
+    # category_sitemap: sub-category PLP
+    {"url": "https://www.thegoodguys.com.au/televisions/smart-tvs",                         "label": "TGG · Sub-category"},
+    # product_sitemap: PDP
+    {"url": "https://www.thegoodguys.com.au/lg-12kg-8kg-combo-washer-dryer-wvc9-1412w",     "label": "TGG · Product"},
+    # content_sitemap: buying guide
+    {"url": "https://www.thegoodguys.com.au/buying-guide/television-buying-guide",          "label": "TGG · Buying Guide"},
+    # brand_sitemap: brand hub
+    {"url": "https://www.thegoodguys.com.au/samsung",                                       "label": "TGG · Brand Hub"},
+    # content_sitemap: news/editorial hub
+    {"url": "https://www.thegoodguys.com.au/whats-new",                                     "label": "TGG · News Hub"},
+    # home
+    {"url": "https://www.thegoodguys.com.au",                                               "label": "TGG · Home"},
+
+    # ── JB Hi-Fi — matching types ────────────────────────────────────────────────
+    {"url": "https://www.jbhifi.com.au",                                                    "label": "JB Hi-Fi · Home"},
+    {"url": "https://www.jbhifi.com.au/collections/tvs",                                    "label": "JB Hi-Fi · Category"},
+    # JB Hi-Fi uses /pages/[brand] for brand hubs
+    {"url": "https://www.jbhifi.com.au/pages/samsung",                                     "label": "JB Hi-Fi · Brand Hub"},
+    # JB Hi-Fi buying advice lives under /blogs/
+    {"url": "https://www.jbhifi.com.au/blogs/buying-advice/tv-buying-guide",               "label": "JB Hi-Fi · Buying Guide"},
+
+    # ── Harvey Norman — matching types ───────────────────────────────────────────
+    {"url": "https://www.harveynorman.com.au",                                                         "label": "Harvey Norman · Home"},
+    {"url": "https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-screen-size/all-tvs",      "label": "Harvey Norman · Category"},
+    # HN brand pages: /[brand]
+    {"url": "https://www.harveynorman.com.au/samsung",                                                 "label": "Harvey Norman · Brand Hub"},
+    {"url": "https://www.harveynorman.com.au/buying-guides/tv-buying-guide",                           "label": "Harvey Norman · Buying Guide"},
+
+    # ── Appliances Online — matching types (/category/[dept]/[sub]/ structure) ──
+    {"url": "https://www.appliancesonline.com.au",                                          "label": "Appliances Online · Home"},
+    {"url": "https://www.appliancesonline.com.au/category/refrigeration/fridges/",          "label": "Appliances Online · Category"},
+    {"url": "https://www.appliancesonline.com.au/article/refrigerator-size-guide/",         "label": "Appliances Online · Guide"},
 ]
 
 # Ecommerce-relevant categories: discovery, content-structure, token-economics.
