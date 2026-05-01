@@ -1,7 +1,7 @@
 """
 AEO Audit Report Generator
 
-Reads JSON outputs from all three audit phases and generates a rich HTML report
+Reads JSON outputs from all audit phases and generates a rich HTML report
 with embedded Chart.js charts, score cards, competitor comparison, and issue tables.
 
 Usage:
@@ -10,7 +10,7 @@ Usage:
 
 Writes:
     seo/outputs/aeo/report-YYYYMMDD-HHMM.html  — self-contained HTML (no external deps)
-    seo/outputs/aeo/report-latest.html           — symlink/copy for easy access
+    seo/outputs/aeo/report-latest.html           — copy for easy access
     Committed to repo via GitHub API
 """
 
@@ -31,11 +31,18 @@ GRADE_COLOR = {"A": "#22c55e", "B": "#4ade80", "C": "#eab308", "D": "#f97316", "
 GRADE_BG    = {"A": "#dcfce7", "B": "#dcfce7", "C": "#fef9c3", "D": "#fff7ed", "F": "#fee2e2"}
 GRADE_EMOJI = {"A": "🟢", "B": "🟢", "C": "🟡", "D": "🟠", "F": "🔴"}
 
-PHASE1_CATS = [
-    ("discovery",         "Discovery",        25),
-    ("content-structure", "Content Structure", 25),
-    ("token-economics",   "Token Economics",   25),
+# Checks produced by run_aeo_crawl.py
+CRAWL_CHECKS = [
+    ("robots_ai",  "Robots (AI bots)",  30),
+    ("llms_txt",   "llms.txt",          20),
+    ("http_access","HTTP Access",        10),
+    ("meta_tags",  "Meta Tags",          20),
+    ("headings",   "Headings",           20),
+    ("schema_type","Schema / JSON-LD",   20),
+    ("content",    "Content Signals",    20),
+    ("js_depend",  "JS Dependency",      20),
 ]
+CRAWL_MAX = 160
 
 PHASE3_CATS = [
     ("schema",            "Schema / Structured Data",     30),
@@ -67,7 +74,7 @@ PHASE4_CATS = [
 ]
 
 
-def load_latest(*patterns: str) -> dict | None:
+def load_latest(*patterns: str) -> dict | list | None:
     """Load the most recent file matching any of the given glob patterns."""
     files = []
     for p in patterns:
@@ -98,13 +105,20 @@ def grade_badge(grade: str, pct: int) -> str:
     )
 
 
+def _grade(pct: int) -> str:
+    if pct >= 80: return "A"
+    if pct >= 65: return "B"
+    if pct >= 50: return "C"
+    if pct >= 35: return "D"
+    return "F"
+
+
 # ── Data Loading ───────────────────────────────────────────────────────────────
 
 def load_all_data(out_dir: str) -> dict:
     d = out_dir.rstrip("/")
     return {
-        "phase1":          load_latest(f"{d}/aeo-results-*.json"),
-        "phase2":          load_latest(f"{d}/aeo-local-*.json"),
+        "crawl":           load_latest(f"{d}/crawl-*.json"),
         "phase3":          load_latest(f"{d}/ecommerce-aeo-*.json", f"{d}/ecommerce-latest-*.json"),
         "phase4":          load_latest(f"{d}/content-aeo-*.json",  f"{d}/content-latest-*.json"),
         "recommendations": load_latest(f"{d}/recommendations-*.json"),
@@ -115,74 +129,43 @@ def load_all_data(out_dir: str) -> dict:
     }
 
 
-# ── Chart Data Builders ────────────────────────────────────────────────────────
+# ── Hero cards ─────────────────────────────────────────────────────────────────
 
-def phase1_chart_data(phase1: list[dict]) -> dict:
-    """Horizontal grouped bar: sites × categories."""
-    labels = [e.get("label", e.get("url", "?")) for e in phase1 if "error" not in e.get("result", {})]
-    cat_labels = [c[1] for c in PHASE1_CATS]
-    datasets = []
-    colors = ["#6366f1", "#22c55e", "#eab308", "#f97316", "#ec4899"]
-    for i, (key, name, max_pts) in enumerate(PHASE1_CATS):
-        data = []
-        for e in phase1:
-            r = e.get("result", {})
-            if "error" in r:
-                continue
-            c = r.get("categories", {}).get(key, {})
-            data.append(round(c.get("score", 0) / max_pts * 100))
-        datasets.append({"label": name, "data": data, "backgroundColor": colors[i % len(colors)]})
-    return {"labels": labels, "datasets": datasets}
+def _tgg_crawl_grade(crawl: list) -> tuple[str, int]:
+    """Average grade across TGG pages only."""
+    tgg_pages = [r for r in crawl if "thegoodguys" in r.get("domain", "")]
+    if not tgg_pages:
+        return "?", 0
+    avg = round(sum(p["percentage"] for p in tgg_pages) / len(tgg_pages))
+    return _grade(avg), avg
 
-
-def phase1_overall_data(phase1: list[dict]) -> dict:
-    """Radar chart: overall % per site."""
-    labels = [e.get("label", e.get("url", "?")) for e in phase1]
-    scores = []
-    for e in phase1:
-        r = e.get("result", {})
-        scores.append(r.get("percentage", 0) if "error" not in r else 0)
-    return {"labels": labels, "scores": scores}
-
-
-def phase3_chart_data(phase3: dict) -> dict:
-    """Donut segments for each Phase 3 check."""
-    checks = phase3.get("checks", {})
-    labels, data, colors = [], [], []
-    for key, name, _ in PHASE3_CATS:
-        c = checks.get(key, {})
-        pct = c.get("percentage", 0) if "error" not in c else 0
-        labels.append(name)
-        data.append(pct)
-        colors.append(pct_bar_color(pct))
-    return {"labels": labels, "data": data, "colors": colors}
-
-
-# ── Section Builders ───────────────────────────────────────────────────────────
 
 def section_hero(data: dict) -> str:
-    p1 = data["phase1"] or []
-    p2 = data["phase2"]
-    p3 = data["phase3"]
+    crawl = data.get("crawl") or []
+    p3    = data["phase3"]
+    p4    = data.get("phase4")
 
-    p4 = data.get("phase4")
-    tgg_p1 = next((e for e in p1 if "tgg" in e.get("label", "").lower()), p1[0] if p1 else None)
-    p1_grade = tgg_p1["result"].get("grade", "?") if tgg_p1 and "error" not in tgg_p1.get("result", {}) else "?"
-    p1_pct   = tgg_p1["result"].get("percentage", 0) if tgg_p1 and "error" not in tgg_p1.get("result", {}) else 0
-
-    p2_grade = p2["report"].get("grade", "?") if p2 else "?"
-    p2_pct   = p2["report"].get("percentage", 0) if p2 else 0
+    crawl_grade, crawl_pct = _tgg_crawl_grade(crawl) if crawl else ("?", 0)
 
     p3_grade = p3.get("grade", "?") if p3 else "?"
     p3_pct   = p3.get("percentage", 0) if p3 else 0
-
     p4_grade = p4.get("grade", "?") if p4 else "?"
     p4_pct   = p4.get("percentage", 0) if p4 else 0
+
+    # Competitor average for the 4th card
+    if crawl:
+        comp_pages = [r for r in crawl if "thegoodguys" not in r.get("domain", "")]
+        comp_avg = round(sum(p["percentage"] for p in comp_pages) / len(comp_pages)) if comp_pages else 0
+        comp_grade = _grade(comp_avg)
+        comp_sub = f"{len(set(r['domain'] for r in comp_pages))} competitors benchmarked"
+    else:
+        comp_grade, comp_avg, comp_sub = "?", 0, "No crawl data"
+
     cards = [
-        ("Phase 1 · Discovery",  p1_grade, p1_pct, "Robots, llms.txt, meta signals"),
-        ("Phase 2 · Deep Scan",  p2_grade, p2_pct, "Content, tokens, structure"),
-        ("Phase 3 · Ecommerce",  p3_grade, p3_pct, "Schema, UA, DOM, sitemap"),
-        ("Phase 4 · Content IQ", p4_grade, p4_pct, "Entities, chunking, semantics"),
+        ("AEO Crawl · TGG",       crawl_grade, crawl_pct,   "robots, llms.txt, schema, JS, meta"),
+        ("Ecommerce AEO",          p3_grade,    p3_pct,      "schema, render diff, UA, signals"),
+        ("Content Intelligence",   p4_grade,    p4_pct,      "entities, chunking, semantics"),
+        ("Competitor Avg",         comp_grade,  comp_avg,    comp_sub),
     ]
 
     html = '<div class="hero-cards">'
@@ -200,125 +183,138 @@ def section_hero(data: dict) -> str:
     return html
 
 
-def section_phase1(phase1: list[dict]) -> str:
-    if not phase1:
-        return "<p class='empty'>No Phase 1 data found.</p>"
+# ── AEO Crawl section ──────────────────────────────────────────────────────────
 
-    # Summary table
-    rows = ""
-    for e in phase1:
-        label = e.get("label", e.get("url", "?"))
-        r = e.get("result", {})
-        if "error" in r:
-            rows += f'<tr><td>{label}</td><td colspan="7" class="error">✗ {r["error"][:80]}</td></tr>'
-            continue
-        g = r.get("grade", "?")
-        pct = r.get("percentage", 0)
-        color = GRADE_COLOR.get(g, "#94a3b8")
-        cats = ""
-        for key, _, max_pts in PHASE1_CATS:
-            c = r.get("categories", {}).get(key, {})
-            s = c.get("score", 0)
-            cat_pct = round(s / max_pts * 100)
-            bar_c = pct_bar_color(cat_pct)
-            cats += f'<td><span style="color:{bar_c};font-weight:600">{s}/{max_pts}</span></td>'
-        s = r.get("summary", {})
-        failed = s.get("failed", s.get("errors", "?"))
-        warned = s.get("warned", s.get("warnings", "?"))
-        rows += f"""<tr>
-            <td><strong>{label}</strong></td>
-            <td><span style="color:{color};font-weight:700">{g}</span></td>
-            <td><div class="pct-bar"><div style="width:{pct}%;background:{pct_bar_color(pct)}"></div></div><span>{pct}%</span></td>
-            {cats}
-            <td class="fail">{failed}</td>
-            <td class="warn">{warned}</td>
+def _check_icon(c: dict | None) -> str:
+    if not c or c.get("score") is None:
+        return "–"
+    p = c.get("percentage", 0)
+    return "✅" if p >= 80 else "⚠️" if p >= 50 else "❌"
+
+
+def section_crawl(crawl: list) -> str:
+    if not crawl:
+        return "<p class='empty'>No AEO Crawl data found. Run the workflow with AEO Crawl enabled.</p>"
+
+    # ── Domain-level summary ─────────────────────────────────────────────────
+    by_domain: dict[str, list] = {}
+    for r in crawl:
+        by_domain.setdefault(r["domain"], []).append(r)
+
+    domain_rows = ""
+    for domain, pages in sorted(by_domain.items()):
+        avg = round(sum(p["percentage"] for p in pages) / len(pages))
+        g   = _grade(avg)
+        c   = GRADE_COLOR.get(g, "#94a3b8")
+        is_tgg = "thegoodguys" in domain
+        domain_rows += f"""<tr style="{'background:#f0fdf4' if is_tgg else ''}">
+            <td><strong>{'⭐ ' if is_tgg else ''}{domain}</strong></td>
+            <td><span style="color:{c};font-weight:700">{g}</span></td>
+            <td><div class="pct-bar"><div style="width:{avg}%;background:{pct_bar_color(avg)}"></div></div><span>{avg}%</span></td>
+            <td style="color:#64748b">{len(pages)} pages</td>
         </tr>"""
 
-    cat_headers = "".join(f"<th>{c[1]}<br><small>/{c[2]}</small></th>" for c in PHASE1_CATS)
-
     html = f"""
-    <table class="data-table">
-        <thead><tr>
-            <th>Site</th><th>Grade</th><th>Score %</th>
-            {cat_headers}
-            <th>Errors</th><th>Warns</th>
-        </tr></thead>
-        <tbody>{rows}</tbody>
+    <h3>Domain Comparison</h3>
+    <table class="data-table" style="margin-bottom:24px">
+        <thead><tr><th>Domain</th><th>Grade</th><th>Avg Score</th><th>Pages</th></tr></thead>
+        <tbody>{domain_rows}</tbody>
     </table>"""
 
-    # Issues for TGG
-    tgg = next((e for e in phase1 if "tgg" in e.get("label","").lower()), None)
-    if tgg and "error" not in tgg.get("result", {}):
-        findings = tgg["result"].get("findings", {})
-        errors = findings.get("errors", [])
-        warnings = findings.get("warnings", [])
-        if errors or warnings:
-            html += '<h3>TGG Issues &amp; Fixes</h3><table class="issues-table"><thead><tr><th>Severity</th><th>Check</th><th>Issue</th><th>Fix</th></tr></thead><tbody>'
-            for f in errors[:10]:
-                fix = f.get("fix", "").split("\n")[0][:100]
-                html += f'<tr><td class="sev-error">Error</td><td>{f.get("checkerName","")}</td><td>{f.get("message","")}</td><td><code>{fix}</code></td></tr>'
-            for f in warnings[:10]:
-                fix = f.get("fix", "").split("\n")[0][:100]
-                html += f'<tr><td class="sev-warn">Warning</td><td>{f.get("checkerName","")}</td><td>{f.get("message","")}</td><td>{fix}</td></tr>'
-            html += "</tbody></table>"
+    # ── Per-URL check table ──────────────────────────────────────────────────
+    check_headers = "".join(
+        f'<th title="{name} (max {mx} pts)">{name.split("/")[0].strip()}<br><small>/{mx}</small></th>'
+        for _, name, mx in CRAWL_CHECKS
+    )
 
-    return html
-
-
-def section_phase2(phase2: dict) -> str:
-    if not phase2:
-        return "<p class='empty'>No Phase 2 data found.</p>"
-
-    report = phase2.get("report", {})
-    g = report.get("grade", "?")
-    pct = report.get("percentage", 0)
-    color = GRADE_COLOR.get(g, "#94a3b8")
-
-    rows = ""
-    for key, name, max_pts in PHASE1_CATS:
-        c = report.get("categories", {}).get(key, {})
-        score = c.get("score", 0)
-        cat_pct = c.get("percentage", 0)
-        bar_w = cat_pct
-        bar_c = pct_bar_color(cat_pct)
-        rows += f"""<tr>
-            <td>{name}</td>
-            <td><div class="pct-bar"><div style="width:{bar_w}%;background:{bar_c}"></div></div></td>
-            <td style="color:{bar_c};font-weight:600">{score}/{max_pts}</td>
-            <td>{cat_pct}%</td>
+    url_rows = ""
+    for r in crawl:
+        g    = r.get("grade", "?")
+        pct  = r.get("percentage", 0)
+        c    = GRADE_COLOR.get(g, "#94a3b8")
+        ch   = r.get("checks", {})
+        is_tgg = "thegoodguys" in r.get("domain", "")
+        icons = "".join(f"<td style='text-align:center'>{_check_icon(ch.get(k))}</td>" for k, _, _ in CRAWL_CHECKS)
+        short_label = r["label"].split(" · ", 1)[-1] if " · " in r["label"] else r["label"]
+        domain_tag = r["domain"].replace("thegoodguys.com.au", "TGG").replace("jbhifi.com.au", "JB").replace("harveynorman.com.au", "HN").replace("appliancesonline.com.au", "AO")
+        url_rows += f"""<tr style="{'background:#f0fdf4' if is_tgg else ''}">
+            <td style="white-space:nowrap"><small style="color:#94a3b8">{domain_tag}</small><br><a href="{r['url']}" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">{short_label}</a></td>
+            <td style="text-align:center"><span style="color:{c};font-weight:700">{g}</span></td>
+            <td style="text-align:center">{pct}%</td>
+            {icons}
         </tr>"""
 
-    findings = report.get("findings", {})
-    errors = findings.get("errors", [])
-    warnings = findings.get("warnings", [])
-
-    issue_rows = ""
-    for f in errors[:15]:
-        fix = f.get("fix", "").split("\n")[0][:120]
-        issue_rows += f'<tr><td class="sev-error">Error</td><td>{f.get("checkerName","")}</td><td>{f.get("message","")}</td><td><code>{fix}</code></td></tr>'
-    for f in warnings[:10]:
-        fix = f.get("fix", "").split("\n")[0][:120]
-        issue_rows += f'<tr><td class="sev-warn">Warning</td><td>{f.get("checkerName","")}</td><td>{f.get("message","")}</td><td>{fix}</td></tr>'
-
-    html = f"""
-    <div class="phase2-summary">
-        <div class="score-summary">
-            <span style="color:{color};font-size:3em;font-weight:800">{g}</span>
-            <span style="color:{color};font-size:1.5em;margin-left:8px">{pct}%</span>
-            <span class="score-label">&nbsp;overall (TGG deep scan)</span>
-        </div>
-        <table class="data-table">
-            <thead><tr><th>Category</th><th>Progress</th><th>Score</th><th>%</th></tr></thead>
-            <tbody>{rows}</tbody>
-        </table>
+    html += f"""
+    <h3>Per-URL Check Results</h3>
+    <p style="font-size:0.82em;color:#64748b;margin-top:-8px">✅ ≥80% &nbsp; ⚠️ 50–79% &nbsp; ❌ &lt;50% &nbsp; – Not scored (no snapshot)</p>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+        <thead><tr>
+            <th>Page</th><th>Grade</th><th>%</th>
+            {check_headers}
+        </tr></thead>
+        <tbody>{url_rows}</tbody>
+    </table>
     </div>"""
 
-    if issue_rows:
+    # ── Issue list ───────────────────────────────────────────────────────────
+    all_issues = [
+        (r["label"], i["check"], i["issue"])
+        for r in crawl
+        if "thegoodguys" in r.get("domain", "")
+        for i in r.get("issues", [])
+    ]
+    if all_issues:
+        issue_rows = "".join(
+            f'<tr><td style="white-space:nowrap;font-size:0.85em">{lbl}</td>'
+            f'<td><code>{chk}</code></td><td>{issue}</td></tr>'
+            for lbl, chk, issue in all_issues[:30]
+        )
         html += f"""
-        <h3>Issues &amp; Fixes</h3>
+        <h3>TGG Issues</h3>
         <table class="issues-table">
-            <thead><tr><th>Severity</th><th>Check</th><th>Issue</th><th>Fix</th></tr></thead>
+            <thead><tr><th>Page</th><th>Check</th><th>Issue</th></tr></thead>
             <tbody>{issue_rows}</tbody>
+        </table>"""
+
+    # ── Render diff visual (if crawl has js_depend data) ────────────────────
+    js_pages = [r for r in crawl if r.get("checks", {}).get("js_depend", {}).get("rendered_words") is not None]
+    if js_pages:
+        max_rend = max((r["checks"]["js_depend"].get("rendered_words", 0) or 0) for r in js_pages) or 1
+        rd_rows = ""
+        for r in js_pages:
+            jd = r["checks"]["js_depend"]
+            raw_w   = jd.get("raw_words", 0) or 0
+            rend_w  = jd.get("rendered_words", 0) or 0
+            pct_acc = jd.get("pct_accessible", 0) or 0
+            bar_c   = pct_bar_color(pct_acc)
+            raw_bar = round(raw_w  / max_rend * 100)
+            label   = r["label"].split(" · ", 1)[-1] if " · " in r["label"] else r["label"]
+            rd_rows += f"""<tr>
+                <td style="font-size:0.85em"><code>{label}</code></td>
+                <td>
+                  <div title="Raw (no JS): {raw_w:,} words" style="margin-bottom:3px">
+                    <span style="font-size:0.75em;color:#94a3b8;display:inline-block;width:60px">No JS</span>
+                    <div style="display:inline-block;width:{raw_bar}%;max-width:180px;height:10px;background:#f59e0b;border-radius:3px;vertical-align:middle"></div>
+                    <span style="font-size:0.75em;margin-left:4px">{raw_w:,}</span>
+                  </div>
+                  <div title="Rendered (JS): {rend_w:,} words">
+                    <span style="font-size:0.75em;color:#94a3b8;display:inline-block;width:60px">With JS</span>
+                    <div style="display:inline-block;width:100%;max-width:180px;height:10px;background:#3b82f6;border-radius:3px;vertical-align:middle"></div>
+                    <span style="font-size:0.75em;margin-left:4px">{rend_w:,}</span>
+                  </div>
+                </td>
+                <td style="text-align:center;color:{bar_c};font-weight:600">{pct_acc}%</td>
+            </tr>"""
+        html += f"""
+        <h3>JS Dependency — Raw vs Rendered Word Counts</h3>
+        <p style="font-size:0.85em;color:#64748b;margin-top:-8px">
+          🟡 No JS = what AI bots see via httpx &nbsp;|&nbsp; 🔵 With JS = Playwright render &nbsp;|&nbsp;
+          % = share of content accessible without JS
+        </p>
+        <table class="data-table">
+            <thead><tr><th>Page</th><th>Word counts</th><th>% accessible</th></tr></thead>
+            <tbody>{rd_rows}</tbody>
         </table>"""
 
     return html
@@ -376,7 +372,7 @@ def section_phase3(phase3: dict) -> str:
             <tbody>{issue_rows}</tbody>
         </table>"""
 
-    # Render diff visual: raw HTML vs JS-rendered comparison per page
+    # Render diff visual from Phase 3 render_diff check
     rd = checks.get("render_diff", {})
     if rd and "pages" in rd:
         rd_rows = ""
@@ -385,24 +381,19 @@ def section_phase3(phase3: dict) -> str:
                 continue
             raw_w    = p.get("raw_words", 0)
             rend_w   = p.get("rendered_words", 0)
-            js_only  = p.get("js_only_words", 0)
             pct_acc  = p.get("pct_accessible", 0)
             ssr_sc   = p.get("ssr_schema_count", 0)
             csr_sc   = p.get("csr_schema_count", 0)
             raw_pr   = p.get("price_elements_ssr", 0)
             rend_pr  = p.get("price_elements_rendered", 0)
             csr_flag = p.get("schema_injected_csr", False)
-            ssr_flag = p.get("ssr_detected", False)
             bar_c    = pct_bar_color(pct_acc)
             label    = p.get("url", "").replace("https://www.thegoodguys.com.au", "")
             csr_badge = '<span style="background:#ef4444;color:#fff;font-size:0.75em;padding:1px 5px;border-radius:3px;margin-left:4px">CSR schema</span>' if csr_flag else ''
-            ssr_badge = '<span style="background:#22c55e;color:#fff;font-size:0.75em;padding:1px 5px;border-radius:3px;margin-left:4px">SSR</span>' if ssr_flag else ''
-            # Word count bars — scale to max rendered words in this page set
             max_w = max(rend_w, 1)
-            raw_bar_w  = round(raw_w  / max_w * 100)
-            rend_bar_w = 100
+            raw_bar_w = round(raw_w / max_w * 100)
             rd_rows += f"""<tr>
-                <td style="font-size:0.85em"><code>{label or '/'}</code>{ssr_badge}{csr_badge}</td>
+                <td style="font-size:0.85em"><code>{label or '/'}</code>{csr_badge}</td>
                 <td>
                   <div title="Raw (no JS): {raw_w:,} words" style="margin-bottom:3px">
                     <span style="font-size:0.75em;color:#94a3b8;display:inline-block;width:60px">No JS</span>
@@ -411,7 +402,7 @@ def section_phase3(phase3: dict) -> str:
                   </div>
                   <div title="Rendered (JS): {rend_w:,} words">
                     <span style="font-size:0.75em;color:#94a3b8;display:inline-block;width:60px">With JS</span>
-                    <div style="display:inline-block;width:{rend_bar_w}%;max-width:180px;height:10px;background:#3b82f6;border-radius:3px;vertical-align:middle"></div>
+                    <div style="display:inline-block;width:100%;max-width:180px;height:10px;background:#3b82f6;border-radius:3px;vertical-align:middle"></div>
                     <span style="font-size:0.75em;margin-left:4px">{rend_w:,}</span>
                   </div>
                 </td>
@@ -516,7 +507,7 @@ def section_phase4(phase4: dict) -> str:
             <tbody>{issue_rows}</tbody>
         </table>"""
 
-    # Entity detail — show top entities per page
+    # Entity detail
     entity_data = checks.get("entity_signals", {})
     if entity_data and "pages" in entity_data:
         ent_rows = ""
@@ -543,25 +534,35 @@ def section_phase4(phase4: dict) -> str:
 # ── Chart.js Snippets ──────────────────────────────────────────────────────────
 
 def charts_js(data: dict) -> str:
-    phase1 = data["phase1"] or []
+    crawl  = data.get("crawl") or []
     phase3 = data["phase3"]
+    phase4 = data.get("phase4")
 
-    valid_p1 = [e for e in phase1 if "error" not in e.get("result", {})]
-    p1_labels = json.dumps([e.get("label", e.get("url","?")) for e in valid_p1])
-    p1_pcts   = json.dumps([e["result"].get("percentage", 0) for e in valid_p1])
+    # ── Crawl: domain-level bar chart ────────────────────────────────────────
+    by_domain: dict[str, list] = {}
+    for r in crawl:
+        by_domain.setdefault(r["domain"], []).append(r)
+    domain_labels = list(by_domain.keys())
+    domain_avgs   = [round(sum(p["percentage"] for p in pages) / len(pages)) for pages in by_domain.values()]
+    crawl_labels_js = json.dumps(domain_labels)
+    crawl_avgs_js   = json.dumps(domain_avgs)
 
-    # Phase 1 category breakdown per site
-    colors = ["'#6366f1'", "'#22c55e'", "'#eab308'", "'#f97316'", "'#ec4899'"]
-    p1_datasets = []
-    for i, (key, name, max_pts) in enumerate(PHASE1_CATS):
-        vals = []
-        for e in valid_p1:
-            c = e["result"].get("categories", {}).get(key, {})
-            vals.append(round(c.get("score", 0) / max_pts * 100))
-        p1_datasets.append(f'{{"label":"{name}","data":{json.dumps(vals)},"backgroundColor":{colors[i]}}}')
-    p1_datasets_js = "[" + ",".join(p1_datasets) + "]"
+    # ── Crawl: per-check radar for TGG only ─────────────────────────────────
+    tgg_pages = [r for r in crawl if "thegoodguys" in r.get("domain", "")]
+    if tgg_pages:
+        check_names = [name for _, name, _ in CRAWL_CHECKS]
+        check_avgs  = []
+        for key, _, mx in CRAWL_CHECKS:
+            scores = [r.get("checks", {}).get(key, {}).get("score") or 0 for r in tgg_pages]
+            avg_pct = round(sum(scores) / len(scores) / mx * 100) if mx else 0
+            check_avgs.append(avg_pct)
+        crawl_check_labels = json.dumps(check_names)
+        crawl_check_data   = json.dumps(check_avgs)
+    else:
+        crawl_check_labels = "[]"
+        crawl_check_data   = "[]"
 
-    # Phase 3 radar
+    # ── Phase 3 radar ────────────────────────────────────────────────────────
     if phase3:
         p3_checks = phase3.get("checks", {})
         p3_labels = json.dumps([c[1] for c in PHASE3_CATS])
@@ -570,8 +571,7 @@ def charts_js(data: dict) -> str:
         p3_labels = "[]"
         p3_data   = "[]"
 
-    # Phase 4 radar
-    phase4 = data.get("phase4")
+    # ── Phase 4 radar ────────────────────────────────────────────────────────
     if phase4:
         p4_checks = phase4.get("checks", {})
         p4_labels = json.dumps([c[1] for c in PHASE4_CATS])
@@ -580,27 +580,17 @@ def charts_js(data: dict) -> str:
         p4_labels = "[]"
         p4_data   = "[]"
 
-    # Phase 2 category bars
-    phase2 = data["phase2"]
-    if phase2:
-        report = phase2.get("report", {})
-        p2_labels = json.dumps([c[1] for c in PHASE1_CATS])
-        p2_data   = json.dumps([report.get("categories", {}).get(c[0], {}).get("percentage", 0) for c in PHASE1_CATS])
-    else:
-        p2_labels = "[]"
-        p2_data   = "[]"
-
     return f"""
 <script>
-// ── Phase 1 Overall ──────────────────────────────────────────────
-new Chart(document.getElementById('chartP1Overall'), {{
+// ── Crawl: Domain comparison ─────────────────────────────────────────
+new Chart(document.getElementById('chartCrawlDomains'), {{
     type: 'bar',
     data: {{
-        labels: {p1_labels},
+        labels: {crawl_labels_js},
         datasets: [{{
-            label: 'Overall Score %',
-            data: {p1_pcts},
-            backgroundColor: {p1_pcts}.map(v => v >= 75 ? '#22c55e' : v >= 50 ? '#eab308' : v >= 25 ? '#f97316' : '#ef4444'),
+            label: 'Avg AEO Score %',
+            data: {crawl_avgs_js},
+            backgroundColor: {crawl_avgs_js}.map(v => v >= 75 ? '#22c55e' : v >= 50 ? '#eab308' : v >= 25 ? '#f97316' : '#ef4444'),
             borderRadius: 6,
         }}]
     }},
@@ -611,53 +601,39 @@ new Chart(document.getElementById('chartP1Overall'), {{
             x: {{ min: 0, max: 100, ticks: {{ callback: v => v + '%' }} }},
             y: {{ ticks: {{ font: {{ size: 13 }} }} }}
         }},
-        plugins: {{ legend: {{ display: false }}, title: {{ display: true, text: 'AEO Score by Site — Phase 1', font: {{ size: 15 }} }} }}
+        plugins: {{ legend: {{ display: false }}, title: {{ display: true, text: 'AEO Score by Domain', font: {{ size: 15 }} }} }}
     }}
 }});
 
-// ── Phase 1 Category Breakdown ──────────────────────────────────
-new Chart(document.getElementById('chartP1Cats'), {{
-    type: 'bar',
-    data: {{ labels: {p1_labels}, datasets: {p1_datasets_js} }},
-    options: {{
-        responsive: true,
-        scales: {{
-            x: {{ stacked: false }},
-            y: {{ min: 0, max: 100, ticks: {{ callback: v => v + '%' }} }}
-        }},
-        plugins: {{
-            title: {{ display: true, text: 'Category Scores by Site — Phase 1', font: {{ size: 15 }} }}
-        }}
-    }}
-}});
-
-// ── Phase 2 Category Bars ─────────────────────────────────────────
-new Chart(document.getElementById('chartP2'), {{
-    type: 'bar',
+// ── Crawl: TGG check radar ────────────────────────────────────────────
+new Chart(document.getElementById('chartCrawlChecks'), {{
+    type: 'radar',
     data: {{
-        labels: {p2_labels},
+        labels: {crawl_check_labels},
         datasets: [{{
-            label: 'Score %',
-            data: {p2_data},
-            backgroundColor: {p2_data}.map(v => v >= 75 ? '#22c55e' : v >= 50 ? '#eab308' : v >= 25 ? '#f97316' : '#ef4444'),
-            borderRadius: 6,
+            label: 'TGG AEO Crawl',
+            data: {crawl_check_data},
+            backgroundColor: 'rgba(99,102,241,0.2)',
+            borderColor: '#6366f1',
+            pointBackgroundColor: '#6366f1',
+            pointRadius: 4,
         }}]
     }},
     options: {{
         responsive: true,
-        scales: {{ y: {{ min: 0, max: 100, ticks: {{ callback: v => v + '%' }} }} }},
-        plugins: {{ legend: {{ display: false }}, title: {{ display: true, text: 'Deep Scan Categories — Phase 2 (TGG)', font: {{ size: 15 }} }} }}
+        scales: {{ r: {{ min: 0, max: 100, ticks: {{ stepSize: 25 }} }} }},
+        plugins: {{ title: {{ display: true, text: 'TGG — AEO Check Scores', font: {{ size: 15 }} }} }}
     }}
 }});
 
-// ── Phase 4 Radar — Content Intelligence ─────────────────────────
-new Chart(document.getElementById('chartP4'), {{
+// ── Phase 3 Radar ─────────────────────────────────────────────────────
+new Chart(document.getElementById('chartP3'), {{
     type: 'radar',
     data: {{
-        labels: {p4_labels},
+        labels: {p3_labels},
         datasets: [{{
-            label: 'TGG Content Intelligence',
-            data: {p4_data},
+            label: 'TGG Ecommerce AEO',
+            data: {p3_data},
             backgroundColor: 'rgba(34,197,94,0.2)',
             borderColor: '#22c55e',
             pointBackgroundColor: '#22c55e',
@@ -667,34 +643,34 @@ new Chart(document.getElementById('chartP4'), {{
     options: {{
         responsive: true,
         scales: {{ r: {{ min: 0, max: 100, ticks: {{ stepSize: 25 }} }} }},
-        plugins: {{ title: {{ display: true, text: 'Content Intelligence — Phase 4 (TGG)', font: {{ size: 15 }} }} }}
+        plugins: {{ title: {{ display: true, text: 'Ecommerce AEO Checks — Phase 3 (TGG)', font: {{ size: 15 }} }} }}
     }}
 }});
 
-// ── Phase 3 Radar ─────────────────────────────────────────────────
-new Chart(document.getElementById('chartP3'), {{
+// ── Phase 4 Radar — Content Intelligence ─────────────────────────────
+new Chart(document.getElementById('chartP4'), {{
     type: 'radar',
     data: {{
-        labels: {p3_labels},
+        labels: {p4_labels},
         datasets: [{{
-            label: 'TGG Ecommerce AEO',
-            data: {p3_data},
-            backgroundColor: 'rgba(99,102,241,0.2)',
-            borderColor: '#6366f1',
-            pointBackgroundColor: '#6366f1',
+            label: 'TGG Content Intelligence',
+            data: {p4_data},
+            backgroundColor: 'rgba(249,115,22,0.2)',
+            borderColor: '#f97316',
+            pointBackgroundColor: '#f97316',
             pointRadius: 5,
         }}]
     }},
     options: {{
         responsive: true,
         scales: {{ r: {{ min: 0, max: 100, ticks: {{ stepSize: 25 }} }} }},
-        plugins: {{ title: {{ display: true, text: 'Ecommerce AEO Checks — Phase 3 (TGG)', font: {{ size: 15 }} }} }}
+        plugins: {{ title: {{ display: true, text: 'Content Intelligence — Phase 4 (TGG)', font: {{ size: 15 }} }} }}
     }}
 }});
 </script>"""
 
 
-# ── Full HTML ──────────────────────────────────────────────────────────────────
+# ── Recommendations ────────────────────────────────────────────────────────────
 
 def section_recommendations(recs: dict | None) -> str:
     if not recs:
@@ -810,7 +786,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .score-summary { margin-bottom: 16px; }
 .score-label { color: #64748b; font-size: 1em; }
 code { font-family: 'SF Mono', 'Fira Code', monospace; background: #f1f5f9; padding: 1px 5px; border-radius: 3px; font-size: 0.85em; }
-.phase2-summary {}
 .footer { text-align: center; color: #94a3b8; font-size: 0.82em; margin-top: 32px; padding: 16px; }
 @media (max-width: 768px) {
     .hero-cards { grid-template-columns: 1fr; }
@@ -820,18 +795,19 @@ code { font-family: 'SF Mono', 'Fira Code', monospace; background: #f1f5f9; padd
 
 
 def build_html(data: dict) -> str:
-    p1 = data["phase1"] or []
-    p2 = data["phase2"]
-    p3 = data["phase3"]
-    ts = data["ts"]
+    crawl  = data.get("crawl") or []
+    p3     = data["phase3"]
+    ts     = data["ts"]
     run_num = data["run_number"]
-    ref = data["ref"]
+    ref    = data["ref"]
 
     p3_grade = p3.get("grade", "?") if p3 else "?"
     p3_pct   = p3.get("percentage", 0) if p3 else 0
     p4       = data.get("phase4")
     p4_grade = p4.get("grade", "?") if p4 else "?"
     p4_pct   = p4.get("percentage", 0) if p4 else 0
+
+    crawl_grade, crawl_pct = _tgg_crawl_grade(crawl) if crawl else ("?", 0)
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -853,21 +829,15 @@ def build_html(data: dict) -> str:
   {section_hero(data)}
 
   <div class="charts-grid">
-    <div class="chart-box"><canvas id="chartP1Overall" height="220"></canvas></div>
+    <div class="chart-box"><canvas id="chartCrawlDomains" height="220"></canvas></div>
+    <div class="chart-box"><canvas id="chartCrawlChecks" height="220"></canvas></div>
     <div class="chart-box"><canvas id="chartP3" height="220"></canvas></div>
     <div class="chart-box"><canvas id="chartP4" height="220"></canvas></div>
-    <div class="chart-box"><canvas id="chartP2" height="220"></canvas></div>
-  </div>
-  <div class="chart-box-wide"><canvas id="chartP1Cats" height="120"></canvas></div>
-
-  <div class="section">
-    <h2>Phase 1 — Competitor Comparison (Discovery &amp; Signals)</h2>
-    {section_phase1(p1)}
   </div>
 
   <div class="section">
-    <h2>Phase 2 — Deep Local Scan (TGG)</h2>
-    {section_phase2(p2)}
+    <h2>AEO Crawl — Per-URL Signal Audit {grade_badge(crawl_grade, crawl_pct)}</h2>
+    {section_crawl(crawl)}
   </div>
 
   <div class="section">
@@ -930,8 +900,8 @@ def main():
     out_dir = os.getenv("AEO_OUTPUT_DIR", "seo/outputs/aeo")
     data = load_all_data(out_dir)
 
-    if not any([data["phase1"], data["phase2"], data["phase3"]]):
-        print("No AEO output data found. Run the audit phases first.", file=sys.stderr)
+    if not any([data["crawl"], data["phase3"]]):
+        print("No AEO output data found. Run the audit first.", file=sys.stderr)
         sys.exit(1)
 
     html = build_html(data)
@@ -949,9 +919,6 @@ def main():
 
     summary_path = os.getenv("GITHUB_STEP_SUMMARY")
     if summary_path:
-        p3 = data["phase3"]
-        p3_grade = p3.get("grade", "?") if p3 else "?"
-        p3_pct   = p3.get("percentage", 0) if p3 else 0
         with open(summary_path, "a") as f:
             f.write(
                 f"\n\n---\n\n## 📊 Full Interactive Report\n\n"
@@ -959,7 +926,7 @@ def main():
                 f"Updated automatically after every workflow run. Also in artifact **aeo-results-${{GITHUB_RUN_ID}}** → `{report_file.name}`.\n"
             )
 
-    push_to_repo(html, f"seo/outputs/aeo/report-latest.html")
+    push_to_repo(html, "seo/outputs/aeo/report-latest.html")
 
 
 if __name__ == "__main__":
