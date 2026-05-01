@@ -1215,7 +1215,7 @@
         },
         {
           "file": "washing-machines.html",
-          "total_words": 2995,
+          "total_words": 2882,
           "hidden_words": 158,
           "hidden_ratio_pct": 5,
           "details_collapsed_words": 0,
@@ -1499,7 +1499,7 @@
             "definition_heading"
           ],
           "h1_count": 1,
-          "h2_count": 6,
+          "h2_count": 5,
           "table_count": 0,
           "score": 21,
           "maxScore": 25,
@@ -1582,13 +1582,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 765,
+          "dom_elements": 766,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (765 elements)",
+            "lean DOM (766 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -1602,13 +1602,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 766,
+          "dom_elements": 765,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (766 elements)",
+            "lean DOM (765 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -1682,13 +1682,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 5796,
-          "aria_labels": 444,
+          "dom_elements": 5804,
+          "aria_labels": 445,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "good ARIA (444 labels)"
+            "good ARIA (445 labels)"
           ],
           "score": 20,
           "maxScore": 25,
@@ -1758,8 +1758,8 @@
           "has_article": true,
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
-          "external_scripts": 23,
-          "dom_elements": 3092,
+          "external_scripts": 24,
+          "dom_elements": 3077,
           "aria_labels": 161,
           "signals": [
             "<main>",
@@ -1769,7 +1769,7 @@
           ],
           "score": 20,
           "maxScore": 25,
-          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (23 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
         },
         {
           "file": "whats-new.html",
@@ -1778,13 +1778,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 1123,
+          "dom_elements": 1125,
           "aria_labels": 51,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (1123 elements)",
+            "lean DOM (1125 elements)",
             "good ARIA (51 labels)"
           ],
           "score": 25,
@@ -1819,13 +1819,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 765,
+          "dom_elements": 766,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (765 elements)",
+            "lean DOM (766 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -1839,13 +1839,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 766,
+          "dom_elements": 765,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (766 elements)",
+            "lean DOM (765 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -1919,13 +1919,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 5796,
-          "aria_labels": 444,
+          "dom_elements": 5804,
+          "aria_labels": 445,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "good ARIA (444 labels)"
+            "good ARIA (445 labels)"
           ],
           "score": 20,
           "maxScore": 25,
@@ -1995,8 +1995,8 @@
           "has_article": true,
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
-          "external_scripts": 23,
-          "dom_elements": 3092,
+          "external_scripts": 24,
+          "dom_elements": 3077,
           "aria_labels": 161,
           "signals": [
             "<main>",
@@ -2006,7 +2006,7 @@
           ],
           "score": 20,
           "maxScore": 25,
-          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (23 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
         },
         {
           "file": "whats-new.html",
@@ -2015,13 +2015,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 1123,
+          "dom_elements": 1125,
           "aria_labels": 51,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (1123 elements)",
+            "lean DOM (1125 elements)",
             "good ARIA (51 labels)"
           ],
           "score": 25,
