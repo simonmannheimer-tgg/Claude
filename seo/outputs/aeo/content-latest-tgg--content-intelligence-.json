@@ -2,9 +2,9 @@
   "label": "TGG (content intelligence)",
   "dir": "site-snapshots/thegoodguys.com.au",
   "grade": "D",
-  "score": 1017,
-  "maxScore": 2130,
-  "percentage": 48,
+  "score": 1201,
+  "maxScore": 2380,
+  "percentage": 50,
   "checks": {
     "boilerplate_ratio": {
       "score": 140,
@@ -74,13 +74,13 @@
         },
         {
           "file": "sale.html",
-          "total_words": 4071,
-          "main_words": 3758,
+          "total_words": 3919,
+          "main_words": 3606,
           "main_ratio_pct": 92,
-          "boilerplate_ratio_pct": 69,
+          "boilerplate_ratio_pct": 67,
           "score": 20,
           "maxScore": 20,
-          "issue": "High boilerplate (69%) \u2014 AI reads mostly nav/footer"
+          "issue": "High boilerplate (67%) \u2014 AI reads mostly nav/footer"
         },
         {
           "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
@@ -186,13 +186,13 @@
         },
         {
           "file": "sale.html",
-          "total_words": 4071,
-          "main_words": 3758,
+          "total_words": 3919,
+          "main_words": 3606,
           "main_ratio_pct": 92,
-          "boilerplate_ratio_pct": 69,
+          "boilerplate_ratio_pct": 67,
           "score": 20,
           "maxScore": 20,
-          "issue": "High boilerplate (69%) \u2014 AI reads mostly nav/footer"
+          "issue": "High boilerplate (67%) \u2014 AI reads mostly nav/footer"
         },
         {
           "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
@@ -281,14 +281,14 @@
         },
         {
           "file": "sale.html",
-          "paragraph_count": 29,
-          "avg_paragraph_words": 53,
-          "good_chunk_pct": 41,
+          "paragraph_count": 28,
+          "avg_paragraph_words": 52,
+          "good_chunk_pct": 39,
           "long_paragraphs": 0,
-          "approx_total_tokens": 5292,
+          "approx_total_tokens": 5095,
           "score": 8,
           "maxScore": 25,
-          "issue": "Only 41% of paragraphs in the ideal 50-400 word range"
+          "issue": "Only 39% of paragraphs in the ideal 50-400 word range"
         },
         {
           "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
@@ -404,14 +404,14 @@
         },
         {
           "file": "sale.html",
-          "paragraph_count": 29,
-          "avg_paragraph_words": 53,
-          "good_chunk_pct": 41,
+          "paragraph_count": 28,
+          "avg_paragraph_words": 52,
+          "good_chunk_pct": 39,
           "long_paragraphs": 0,
-          "approx_total_tokens": 5292,
+          "approx_total_tokens": 5095,
           "score": 8,
           "maxScore": 25,
-          "issue": "Only 41% of paragraphs in the ideal 50-400 word range"
+          "issue": "Only 39% of paragraphs in the ideal 50-400 word range"
         },
         {
           "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
@@ -475,18 +475,18 @@
           "category_entities": 8,
           "spec_entities": 4,
           "heading_entities": [
+            "price",
+            "air conditioner",
             "reverse cycle",
             "capacity",
-            "installation",
-            "price",
-            "air conditioner"
+            "energy rating"
           ],
           "intro_entities": [
+            "air conditioner",
+            "westinghouse",
             "split system",
             "reverse cycle",
-            "westinghouse",
-            "samsung",
-            "clearance"
+            "panasonic"
           ],
           "top_entities": [
             {
@@ -518,7 +518,7 @@
               "count": 9
             },
             {
-              "entity": "hisense",
+              "entity": "panasonic",
               "count": 7
             }
           ],
@@ -536,19 +536,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
+            "price",
+            "washing machine",
+            "soundbar",
             "laptop",
-            "coffee machine",
-            "tv",
-            "dryer",
-            "soundbar"
+            "dishwasher"
           ],
           "top_entities": [
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
@@ -556,23 +556,23 @@
               "count": 2
             },
             {
-              "entity": "laptop",
-              "count": 1
-            },
-            {
-              "entity": "coffee machine",
-              "count": 1
-            },
-            {
-              "entity": "tv",
-              "count": 1
-            },
-            {
-              "entity": "dryer",
+              "entity": "washing machine",
               "count": 1
             },
             {
               "entity": "soundbar",
+              "count": 1
+            },
+            {
+              "entity": "laptop",
+              "count": 1
+            },
+            {
+              "entity": "dishwasher",
+              "count": 1
+            },
+            {
+              "entity": "vacuum",
               "count": 1
             }
           ],
@@ -590,19 +590,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
+            "price",
+            "washing machine",
+            "soundbar",
             "laptop",
-            "coffee machine",
-            "tv",
-            "dryer",
-            "soundbar"
+            "dishwasher"
           ],
           "top_entities": [
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
@@ -610,23 +610,23 @@
               "count": 2
             },
             {
-              "entity": "laptop",
-              "count": 1
-            },
-            {
-              "entity": "coffee machine",
-              "count": 1
-            },
-            {
-              "entity": "tv",
-              "count": 1
-            },
-            {
-              "entity": "dryer",
+              "entity": "washing machine",
               "count": 1
             },
             {
               "entity": "soundbar",
+              "count": 1
+            },
+            {
+              "entity": "laptop",
+              "count": 1
+            },
+            {
+              "entity": "dishwasher",
+              "count": 1
+            },
+            {
+              "entity": "vacuum",
               "count": 1
             }
           ],
@@ -644,19 +644,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
+            "price",
+            "washing machine",
+            "soundbar",
             "laptop",
-            "coffee machine",
-            "tv",
-            "dryer",
-            "soundbar"
+            "dishwasher"
           ],
           "top_entities": [
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
@@ -664,23 +664,23 @@
               "count": 2
             },
             {
-              "entity": "laptop",
-              "count": 1
-            },
-            {
-              "entity": "coffee machine",
-              "count": 1
-            },
-            {
-              "entity": "tv",
-              "count": 1
-            },
-            {
-              "entity": "dryer",
+              "entity": "washing machine",
               "count": 1
             },
             {
               "entity": "soundbar",
+              "count": 1
+            },
+            {
+              "entity": "laptop",
+              "count": 1
+            },
+            {
+              "entity": "dishwasher",
+              "count": 1
+            },
+            {
+              "entity": "vacuum",
               "count": 1
             }
           ],
@@ -697,18 +697,18 @@
           "category_entities": 23,
           "spec_entities": 9,
           "heading_entities": [
-            "qled",
-            "split system",
+            "4k",
+            "led",
             "mini led",
-            "apple",
-            "4k"
+            "sony",
+            "kitchenaid"
           ],
           "intro_entities": [
-            "mini led",
-            "laptop",
-            "coffee machine",
             "4k",
-            "tv"
+            "washing machine",
+            "soundbar",
+            "laptop",
+            "led"
           ],
           "top_entities": [
             {
@@ -758,19 +758,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
+            "price",
+            "washing machine",
+            "soundbar",
             "laptop",
-            "coffee machine",
-            "tv",
-            "dryer",
-            "soundbar"
+            "dishwasher"
           ],
           "top_entities": [
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
@@ -778,23 +778,23 @@
               "count": 2
             },
             {
-              "entity": "laptop",
-              "count": 1
-            },
-            {
-              "entity": "coffee machine",
-              "count": 1
-            },
-            {
-              "entity": "tv",
-              "count": 1
-            },
-            {
-              "entity": "dryer",
+              "entity": "washing machine",
               "count": 1
             },
             {
               "entity": "soundbar",
+              "count": 1
+            },
+            {
+              "entity": "laptop",
+              "count": 1
+            },
+            {
+              "entity": "dishwasher",
+              "count": 1
+            },
+            {
+              "entity": "vacuum",
               "count": 1
             }
           ],
@@ -804,38 +804,38 @@
         },
         {
           "file": "sale.html",
-          "entity_count": 70,
-          "total_mentions": 400,
+          "entity_count": 69,
+          "total_mentions": 384,
           "entity_density_pct": 9.8,
           "brand_entities": 21,
-          "category_entities": 26,
+          "category_entities": 25,
           "spec_entities": 12,
           "heading_entities": [
-            "qled",
-            "apple",
-            "coffee machine",
             "4k",
-            "tv"
+            "ninja",
+            "sunbeam",
+            "dishwasher",
+            "vacuum"
           ],
           "intro_entities": [
-            "qled",
-            "laptop",
-            "coffee machine",
             "4k",
-            "tv"
+            "washing machine",
+            "soundbar",
+            "laptop",
+            "dishwasher"
           ],
           "top_entities": [
             {
               "entity": "compare",
-              "count": 73
+              "count": 69
             },
             {
               "entity": "deal",
-              "count": 57
+              "count": 54
             },
             {
               "entity": "delivery",
-              "count": 18
+              "count": 17
             },
             {
               "entity": "tv",
@@ -850,11 +850,11 @@
               "count": 13
             },
             {
-              "entity": "refrigerator",
+              "entity": "fisher & paykel",
               "count": 10
             },
             {
-              "entity": "fisher & paykel",
+              "entity": "refrigerator",
               "count": 10
             }
           ],
@@ -872,19 +872,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
+            "price",
+            "washing machine",
+            "soundbar",
             "laptop",
-            "coffee machine",
-            "tv",
-            "dryer",
-            "soundbar"
+            "dishwasher"
           ],
           "top_entities": [
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
@@ -892,23 +892,23 @@
               "count": 2
             },
             {
-              "entity": "laptop",
-              "count": 1
-            },
-            {
-              "entity": "coffee machine",
-              "count": 1
-            },
-            {
-              "entity": "tv",
-              "count": 1
-            },
-            {
-              "entity": "dryer",
+              "entity": "washing machine",
               "count": 1
             },
             {
               "entity": "soundbar",
+              "count": 1
+            },
+            {
+              "entity": "laptop",
+              "count": 1
+            },
+            {
+              "entity": "dishwasher",
+              "count": 1
+            },
+            {
+              "entity": "vacuum",
               "count": 1
             }
           ],
@@ -925,18 +925,18 @@
           "category_entities": 5,
           "spec_entities": 13,
           "heading_entities": [
-            "tv",
-            "hdr",
             "price",
+            "lg",
+            "tv",
             "energy rating",
-            "television"
+            "hdr"
           ],
           "intro_entities": [
-            "qled",
             "4k",
-            "tv",
-            "deal",
-            "soundbar"
+            "soundbar",
+            "led",
+            "sony",
+            "qled"
           ],
           "top_entities": [
             {
@@ -960,11 +960,11 @@
               "count": 20
             },
             {
-              "entity": "samsung",
+              "entity": "led",
               "count": 19
             },
             {
-              "entity": "led",
+              "entity": "samsung",
               "count": 19
             },
             {
@@ -985,18 +985,18 @@
           "category_entities": 5,
           "spec_entities": 13,
           "heading_entities": [
-            "tv",
-            "hdr",
             "price",
+            "lg",
+            "tv",
             "energy rating",
-            "television"
+            "hdr"
           ],
           "intro_entities": [
-            "qled",
             "4k",
-            "tv",
-            "deal",
-            "soundbar"
+            "soundbar",
+            "led",
+            "sony",
+            "qled"
           ],
           "top_entities": [
             {
@@ -1020,11 +1020,11 @@
               "count": 20
             },
             {
-              "entity": "samsung",
+              "entity": "led",
               "count": 19
             },
             {
-              "entity": "led",
+              "entity": "samsung",
               "count": 19
             },
             {
@@ -1045,18 +1045,18 @@
           "category_entities": 4,
           "spec_entities": 10,
           "heading_entities": [
-            "dryer",
-            "capacity",
             "price",
             "washing machine",
-            "energy rating"
+            "washer",
+            "dryer",
+            "capacity"
           ],
           "intro_entities": [
+            "washing machine",
             "top loader",
-            "dryer",
+            "fisher & paykel",
             "westinghouse",
-            "sale",
-            "samsung"
+            "washer"
           ],
           "top_entities": [
             {
@@ -1114,11 +1114,11 @@
               "count": 6
             },
             {
-              "entity": "tv",
+              "entity": "price",
               "count": 5
             },
             {
-              "entity": "price",
+              "entity": "tv",
               "count": 5
             },
             {
@@ -1126,19 +1126,19 @@
               "count": 4
             },
             {
-              "entity": "dishwasher",
-              "count": 3
-            },
-            {
-              "entity": "discount",
-              "count": 3
-            },
-            {
               "entity": "washing machine",
               "count": 3
             },
             {
+              "entity": "dishwasher",
+              "count": 3
+            },
+            {
               "entity": "oven",
+              "count": 3
+            },
+            {
+              "entity": "discount",
               "count": 3
             }
           ],
@@ -1596,7 +1596,7 @@
           "comparison_count": 0,
           "question_headings": 0,
           "ordered_lists": 1,
-          "type_token_ratio": 0.327,
+          "type_token_ratio": 0.336,
           "score": 10,
           "maxScore": 30,
           "issue": null
@@ -1799,9 +1799,9 @@
       "summary": "7/12 pages have strong semantic structure"
     },
     "anchor_quality": {
-      "score": 204,
+      "score": 210,
       "maxScore": 240,
-      "percentage": 85,
+      "percentage": 88,
       "grade": "B",
       "pages": [
         {
@@ -1898,11 +1898,11 @@
         },
         {
           "file": "sale.html",
-          "total_internal_links": 343,
-          "specific_anchors": 289,
+          "total_internal_links": 332,
+          "specific_anchors": 283,
           "generic_anchors": 14,
-          "empty_anchors": 40,
-          "specific_ratio_pct": 84,
+          "empty_anchors": 35,
+          "specific_ratio_pct": 85,
           "top_generic": [
             "here",
             "here",
@@ -1910,7 +1910,7 @@
             "here",
             "here"
           ],
-          "score": 14,
+          "score": 20,
           "maxScore": 20,
           "issue": null
         },
@@ -2005,16 +2005,16 @@
       "summary": "12/12 pages have >85% specific anchor text"
     },
     "content_similarity": {
-      "score": 130,
+      "score": 196,
       "maxScore": 300,
-      "percentage": 43,
-      "grade": "D",
+      "percentage": 65,
+      "grade": "C",
       "pages": [
         {
           "file": "air-conditioners.html",
-          "full_page_similarity": 0.547,
-          "avg_top3_similarity": 0.495,
-          "best_passage_similarity": 0.779,
+          "full_page_similarity": 0.659,
+          "avg_top3_similarity": 0.639,
+          "best_passage_similarity": 0.845,
           "best_passage_preview": "the warm air of the room, refrigerating it then pushing the cooled air back into the room whilst expelling excess heat outside. Split System ACs consi",
           "best_reference_match": "To choose the right air conditioner, measure the room size in cubic metres and match it to the unit'",
           "score": 25,
@@ -2023,43 +2023,43 @@
         },
         {
           "file": "buying-guide--best-air-conditioners.html",
-          "full_page_similarity": 0.461,
-          "avg_top3_similarity": 0.307,
-          "best_passage_similarity": 0.173,
+          "full_page_similarity": 0.652,
+          "avg_top3_similarity": 0.525,
+          "best_passage_similarity": 0.523,
           "best_passage_preview": "404 page Oops... Sorry, we can't find that page. Go back to Homepage Search Store Locator View Catalogues Looking for these products? TV Deals Washing",
           "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
-          "score": 0,
+          "score": 10,
           "maxScore": 25,
-          "issue": "Very low similarity (0.17) \u2014 content reads as promotional, not citable"
+          "issue": null
         },
         {
           "file": "buying-guide--best-tvs.html",
-          "full_page_similarity": 0.461,
-          "avg_top3_similarity": 0.307,
-          "best_passage_similarity": 0.173,
+          "full_page_similarity": 0.652,
+          "avg_top3_similarity": 0.525,
+          "best_passage_similarity": 0.523,
           "best_passage_preview": "404 page Oops... Sorry, we can't find that page. Go back to Homepage Search Store Locator View Catalogues Looking for these products? TV Deals Washing",
           "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
-          "score": 0,
+          "score": 10,
           "maxScore": 25,
-          "issue": "Very low similarity (0.17) \u2014 content reads as promotional, not citable"
+          "issue": null
         },
         {
           "file": "buying-guide--best-washing-machines.html",
-          "full_page_similarity": 0.461,
-          "avg_top3_similarity": 0.307,
-          "best_passage_similarity": 0.173,
+          "full_page_similarity": 0.652,
+          "avg_top3_similarity": 0.525,
+          "best_passage_similarity": 0.523,
           "best_passage_preview": "404 page Oops... Sorry, we can't find that page. Go back to Homepage Search Store Locator View Catalogues Looking for these products? TV Deals Washing",
           "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
-          "score": 0,
+          "score": 10,
           "maxScore": 25,
-          "issue": "Very low similarity (0.17) \u2014 content reads as promotional, not citable"
+          "issue": null
         },
         {
           "file": "index.html",
-          "full_page_similarity": 0.385,
-          "avg_top3_similarity": 0.294,
-          "best_passage_similarity": 0.544,
-          "best_passage_preview": "special order, sold out, unavailable, coming soon and shipped by \u201csupplier\u201d, all Pre-orders, digital vouchers, gaming credits and streaming services, ",
+          "full_page_similarity": 0.551,
+          "avg_top3_similarity": 0.506,
+          "best_passage_similarity": 0.591,
+          "best_passage_preview": "1000W Microwave Black Hot Buy! $ 199 Hot Buy! Hisense 3.7kW Air Q Series Reverse Cycle Split System Hot Buy! $ 999 Hot Buy! Philips 2000 Series 6.2 Li",
           "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
           "score": 10,
           "maxScore": 25,
@@ -2067,65 +2067,65 @@
         },
         {
           "file": "laptops-computers.html",
-          "full_page_similarity": 0.461,
-          "avg_top3_similarity": 0.307,
-          "best_passage_similarity": 0.173,
+          "full_page_similarity": 0.652,
+          "avg_top3_similarity": 0.525,
+          "best_passage_similarity": 0.523,
           "best_passage_preview": "404 page Oops... Sorry, we can't find that page. Go back to Homepage Search Store Locator View Catalogues Looking for these products? TV Deals Washing",
           "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
-          "score": 0,
-          "maxScore": 25,
-          "issue": "Very low similarity (0.17) \u2014 content reads as promotional, not citable"
-        },
-        {
-          "file": "sale.html",
-          "full_page_similarity": 0.331,
-          "avg_top3_similarity": 0.307,
-          "best_passage_similarity": 0.518,
-          "best_passage_preview": "address provided at the time of entry on 28/05/2026. Winners\u2019 details will be published on The Good Guys\u2019 website from 14/05/2026 for 30 days. Entrant",
-          "best_reference_match": "The Samsung QN90D features a 65-inch Neo QLED panel with a 144Hz refresh rate and AMD FreeSync Premi",
           "score": 10,
           "maxScore": 25,
           "issue": null
         },
         {
+          "file": "sale.html",
+          "full_page_similarity": 0.534,
+          "avg_top3_similarity": 0.516,
+          "best_passage_similarity": 0.675,
+          "best_passage_preview": ", Vacuum & Cleaning , and Washing Machine . Do I get these offers in store as well? Over 100 stores nationwide provide access to promotional pricing. ",
+          "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
+          "score": 18,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
           "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
-          "full_page_similarity": 0.461,
-          "avg_top3_similarity": 0.307,
-          "best_passage_similarity": 0.173,
+          "full_page_similarity": 0.652,
+          "avg_top3_similarity": 0.525,
+          "best_passage_similarity": 0.523,
           "best_passage_preview": "404 page Oops... Sorry, we can't find that page. Go back to Homepage Search Store Locator View Catalogues Looking for these products? TV Deals Washing",
           "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
-          "score": 0,
+          "score": 10,
           "maxScore": 25,
-          "issue": "Very low similarity (0.17) \u2014 content reads as promotional, not citable"
+          "issue": null
         },
         {
           "file": "televisions--smart-tvs.html",
-          "full_page_similarity": 0.498,
-          "avg_top3_similarity": 0.468,
-          "best_passage_similarity": 0.694,
-          "best_passage_preview": "Hisense 50\" Q6SAU 4K Hi-QLED Smart TV 2026 No reviews yet 50Q6SAU $ 695 TICKET \u00a4 $ 795 Top Deal Compare Showing 29 of 504 Load more Load Page 2 Televi",
-          "best_reference_match": "The Samsung QN90D features a 65-inch Neo QLED panel with a 144Hz refresh rate and AMD FreeSync Premi",
+          "full_page_similarity": 0.607,
+          "avg_top3_similarity": 0.588,
+          "best_passage_similarity": 0.722,
+          "best_passage_preview": "QNED80B has 6 products Show more Samsung 75\" QN80H NEO QLED 4K Mini LED Smart AI TV 2026 No reviews yet QA75QN80HAWXXY $ 2695 TICKET \u00a4 $ 2995 DEAL DAY",
+          "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
           "score": 25,
           "maxScore": 25,
           "issue": null
         },
         {
           "file": "televisions.html",
-          "full_page_similarity": 0.498,
-          "avg_top3_similarity": 0.468,
-          "best_passage_similarity": 0.694,
-          "best_passage_preview": "Hisense 50\" Q6SAU 4K Hi-QLED Smart TV 2026 No reviews yet 50Q6SAU $ 695 TICKET \u00a4 $ 795 Top Deal Compare Showing 29 of 504 Load more Load Page 2 Televi",
-          "best_reference_match": "The Samsung QN90D features a 65-inch Neo QLED panel with a 144Hz refresh rate and AMD FreeSync Premi",
+          "full_page_similarity": 0.607,
+          "avg_top3_similarity": 0.588,
+          "best_passage_similarity": 0.722,
+          "best_passage_preview": "QNED80B has 6 products Show more Samsung 75\" QN80H NEO QLED 4K Mini LED Smart AI TV 2026 No reviews yet QA75QN80HAWXXY $ 2695 TICKET \u00a4 $ 2995 DEAL DAY",
+          "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
           "score": 25,
           "maxScore": 25,
           "issue": null
         },
         {
           "file": "washing-machines.html",
-          "full_page_similarity": 0.68,
-          "avg_top3_similarity": 0.578,
-          "best_passage_similarity": 0.771,
-          "best_passage_preview": "to a top loader , I\u2019d be a very wealthy man. But, seriously, choosing a new washing machine can be a big call. And like every major home appliance pur",
+          "full_page_similarity": 0.691,
+          "avg_top3_similarity": 0.644,
+          "best_passage_similarity": 0.824,
+          "best_passage_preview": "Budget Considerations Entry-level top loaders start lower in price compared to front loaders, making them suitable for households with minimal washing",
           "best_reference_match": "Front-load washing machines are more energy and water efficient than top-loaders and typically achie",
           "score": 25,
           "maxScore": 25,
@@ -2133,102 +2133,46 @@
         },
         {
           "file": "whats-new.html",
-          "full_page_similarity": 0.305,
-          "avg_top3_similarity": 0.22,
-          "best_passage_similarity": 0.507,
+          "full_page_similarity": 0.53,
+          "avg_top3_similarity": 0.499,
+          "best_passage_similarity": 0.65,
           "best_passage_preview": "bringing you joy and you\u2019ve decided it\u2019s time for an upgrade, we\u2019ve got all the info you\u2019ll need to find the best washing machine. From knowing what t",
           "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
-          "score": 10,
+          "score": 18,
           "maxScore": 25,
           "issue": null
         }
       ],
-      "errors": [
-        {
-          "file": "buying-guide--best-air-conditioners.html",
-          "full_page_similarity": 0.461,
-          "avg_top3_similarity": 0.307,
-          "best_passage_similarity": 0.173,
-          "best_passage_preview": "404 page Oops... Sorry, we can't find that page. Go back to Homepage Search Store Locator View Catalogues Looking for these products? TV Deals Washing",
-          "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
-          "score": 0,
-          "maxScore": 25,
-          "issue": "Very low similarity (0.17) \u2014 content reads as promotional, not citable"
-        },
-        {
-          "file": "buying-guide--best-tvs.html",
-          "full_page_similarity": 0.461,
-          "avg_top3_similarity": 0.307,
-          "best_passage_similarity": 0.173,
-          "best_passage_preview": "404 page Oops... Sorry, we can't find that page. Go back to Homepage Search Store Locator View Catalogues Looking for these products? TV Deals Washing",
-          "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
-          "score": 0,
-          "maxScore": 25,
-          "issue": "Very low similarity (0.17) \u2014 content reads as promotional, not citable"
-        },
-        {
-          "file": "buying-guide--best-washing-machines.html",
-          "full_page_similarity": 0.461,
-          "avg_top3_similarity": 0.307,
-          "best_passage_similarity": 0.173,
-          "best_passage_preview": "404 page Oops... Sorry, we can't find that page. Go back to Homepage Search Store Locator View Catalogues Looking for these products? TV Deals Washing",
-          "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
-          "score": 0,
-          "maxScore": 25,
-          "issue": "Very low similarity (0.17) \u2014 content reads as promotional, not citable"
-        },
-        {
-          "file": "laptops-computers.html",
-          "full_page_similarity": 0.461,
-          "avg_top3_similarity": 0.307,
-          "best_passage_similarity": 0.173,
-          "best_passage_preview": "404 page Oops... Sorry, we can't find that page. Go back to Homepage Search Store Locator View Catalogues Looking for these products? TV Deals Washing",
-          "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
-          "score": 0,
-          "maxScore": 25,
-          "issue": "Very low similarity (0.17) \u2014 content reads as promotional, not citable"
-        },
-        {
-          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
-          "full_page_similarity": 0.461,
-          "avg_top3_similarity": 0.307,
-          "best_passage_similarity": 0.173,
-          "best_passage_preview": "404 page Oops... Sorry, we can't find that page. Go back to Homepage Search Store Locator View Catalogues Looking for these products? TV Deals Washing",
-          "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
-          "score": 0,
-          "maxScore": 25,
-          "issue": "Very low similarity (0.17) \u2014 content reads as promotional, not citable"
-        }
-      ],
-      "avg_similarity": 0.448,
-      "similarity_method": "all-MiniLM-L6-v2",
+      "errors": [],
+      "avg_similarity": 0.637,
+      "similarity_method": "BGE-M3",
       "qdrant_corpus_used": false,
-      "summary": "7/12 pages have strong AI-citable content (avg: 0.448, method: all-MiniLM-L6-v2)"
+      "summary": "12/12 pages have strong AI-citable content (avg: 0.637, method: BGE-M3)"
     },
     "entity_gap": {
       "score": 66,
       "maxScore": 150,
       "percentage": 44,
       "grade": "D",
-      "method": "regex (install spaCy for better accuracy)",
+      "method": "spaCy NER",
       "pages": [
         {
           "file": "air-conditioners.html",
-          "tgg_entity_count": 97,
+          "tgg_entity_count": 80,
           "competitor_entity_count": 0,
           "shared_count": 0,
-          "tgg_only_count": 97,
+          "tgg_only_count": 80,
           "competitor_only_count": 0,
           "coverage_pct": 50,
           "tgg_only_sample": [
+            "1.6 kW",
+            "AC Units Reverse",
+            "AGL",
+            "AIRAH",
+            "Agency",
             "Air Conditioner",
-            "Air Conditioner Unit Since April",
-            "Air Conditioners",
-            "Air Conditioning",
-            "Air Cons",
-            "Air Purifier",
-            "Aircon February",
-            "All Air Conditioning"
+            "Air Conditioner & Fan",
+            "Air Conditioner Unit"
           ],
           "missing_from_tgg": [],
           "score": 15,
@@ -2237,21 +2181,21 @@
         },
         {
           "file": "buying-guide--best-air-conditioners.html",
-          "tgg_entity_count": 31,
+          "tgg_entity_count": 15,
           "competitor_entity_count": 0,
           "shared_count": 0,
-          "tgg_only_count": 31,
+          "tgg_only_count": 15,
           "competitor_only_count": 0,
           "coverage_pct": 50,
           "tgg_only_sample": [
-            "Bonus Competition Winners Ad Corrections",
-            "Broadband Plans",
-            "Claim Offer Help Centre Stores",
-            "Collect Claim",
-            "Deals Washing Machine Deals Vacuum Cleaner Deals Fridge Deals Phone",
+            "AGL",
+            "Agency",
             "Digital Wallet",
+            "Earn",
             "Email Submit Shop",
-            "Homepage Search Store Locator View Catalogues Looking"
+            "Good Guys",
+            "Homepage Search Store",
+            "Kinsman Kitchens"
           ],
           "missing_from_tgg": [],
           "score": 15,
@@ -2260,46 +2204,46 @@
         },
         {
           "file": "buying-guide--best-tvs.html",
-          "tgg_entity_count": 31,
+          "tgg_entity_count": 15,
           "competitor_entity_count": 1,
           "shared_count": 0,
-          "tgg_only_count": 31,
+          "tgg_only_count": 15,
           "competitor_only_count": 1,
           "coverage_pct": 0,
           "tgg_only_sample": [
-            "Bonus Competition Winners Ad Corrections",
-            "Broadband Plans",
-            "Claim Offer Help Centre Stores",
-            "Collect Claim",
-            "Deals Washing Machine Deals Vacuum Cleaner Deals Fridge Deals Phone",
+            "AGL",
+            "Agency",
             "Digital Wallet",
+            "Earn",
             "Email Submit Shop",
-            "Homepage Search Store Locator View Catalogues Looking"
+            "Good Guys",
+            "Homepage Search Store",
+            "Kinsman Kitchens"
           ],
           "missing_from_tgg": [
-            "Largest Home Entertainment Retailer Warning Your"
+            "Largest Home Entertainment"
           ],
           "score": 3,
           "maxScore": 25,
-          "issue": "TGG missing 1 entities vs competitor \u2014 consider adding: Largest Home Entertainment Retailer Warning Your"
+          "issue": "TGG missing 1 entities vs competitor \u2014 consider adding: Largest Home Entertainment"
         },
         {
           "file": "buying-guide--best-washing-machines.html",
-          "tgg_entity_count": 31,
+          "tgg_entity_count": 15,
           "competitor_entity_count": 0,
           "shared_count": 0,
-          "tgg_only_count": 31,
+          "tgg_only_count": 15,
           "competitor_only_count": 0,
           "coverage_pct": 50,
           "tgg_only_sample": [
-            "Bonus Competition Winners Ad Corrections",
-            "Broadband Plans",
-            "Claim Offer Help Centre Stores",
-            "Collect Claim",
-            "Deals Washing Machine Deals Vacuum Cleaner Deals Fridge Deals Phone",
+            "AGL",
+            "Agency",
             "Digital Wallet",
+            "Earn",
             "Email Submit Shop",
-            "Homepage Search Store Locator View Catalogues Looking"
+            "Good Guys",
+            "Homepage Search Store",
+            "Kinsman Kitchens"
           ],
           "missing_from_tgg": [],
           "score": 15,
@@ -2308,46 +2252,46 @@
         },
         {
           "file": "index.html",
-          "tgg_entity_count": 99,
+          "tgg_entity_count": 79,
           "competitor_entity_count": 1,
           "shared_count": 0,
-          "tgg_only_count": 99,
+          "tgg_only_count": 79,
           "competitor_only_count": 1,
           "coverage_pct": 0,
           "tgg_only_sample": [
+            "03/07/2026",
+            "243L",
+            "31L 1000W",
+            "AGL",
             "Acer Nitro",
-            "Airfryer Black Hot Buy",
-            "Alice Zaslavsky This",
-            "Artisan Stand Mixer Porcelain Ticket",
-            "Black Hot Buy",
-            "Black Ticket",
-            "Bonus Competition Winners Ad Corrections",
-            "Bosch Series"
+            "Agency",
+            "Alice",
+            "Alice Zaslavsky"
           ],
           "missing_from_tgg": [
-            "Largest Home Entertainment Retailer Warning Your"
+            "Largest Home Entertainment"
           ],
           "score": 3,
           "maxScore": 25,
-          "issue": "TGG missing 1 entities vs competitor \u2014 consider adding: Largest Home Entertainment Retailer Warning Your"
+          "issue": "TGG missing 1 entities vs competitor \u2014 consider adding: Largest Home Entertainment"
         },
         {
           "file": "laptops-computers.html",
-          "tgg_entity_count": 31,
+          "tgg_entity_count": 15,
           "competitor_entity_count": 0,
           "shared_count": 0,
-          "tgg_only_count": 31,
+          "tgg_only_count": 15,
           "competitor_only_count": 0,
           "coverage_pct": 50,
           "tgg_only_sample": [
-            "Bonus Competition Winners Ad Corrections",
-            "Broadband Plans",
-            "Claim Offer Help Centre Stores",
-            "Collect Claim",
-            "Deals Washing Machine Deals Vacuum Cleaner Deals Fridge Deals Phone",
+            "AGL",
+            "Agency",
             "Digital Wallet",
+            "Earn",
             "Email Submit Shop",
-            "Homepage Search Store Locator View Catalogues Looking"
+            "Good Guys",
+            "Homepage Search Store",
+            "Kinsman Kitchens"
           ],
           "missing_from_tgg": [],
           "score": 15,
@@ -2358,66 +2302,291 @@
       "errors": [
         {
           "file": "buying-guide--best-tvs.html",
-          "tgg_entity_count": 31,
+          "tgg_entity_count": 15,
           "competitor_entity_count": 1,
           "shared_count": 0,
-          "tgg_only_count": 31,
+          "tgg_only_count": 15,
           "competitor_only_count": 1,
           "coverage_pct": 0,
           "tgg_only_sample": [
-            "Bonus Competition Winners Ad Corrections",
-            "Broadband Plans",
-            "Claim Offer Help Centre Stores",
-            "Collect Claim",
-            "Deals Washing Machine Deals Vacuum Cleaner Deals Fridge Deals Phone",
+            "AGL",
+            "Agency",
             "Digital Wallet",
+            "Earn",
             "Email Submit Shop",
-            "Homepage Search Store Locator View Catalogues Looking"
+            "Good Guys",
+            "Homepage Search Store",
+            "Kinsman Kitchens"
           ],
           "missing_from_tgg": [
-            "Largest Home Entertainment Retailer Warning Your"
+            "Largest Home Entertainment"
           ],
           "score": 3,
           "maxScore": 25,
-          "issue": "TGG missing 1 entities vs competitor \u2014 consider adding: Largest Home Entertainment Retailer Warning Your"
+          "issue": "TGG missing 1 entities vs competitor \u2014 consider adding: Largest Home Entertainment"
         },
         {
           "file": "index.html",
-          "tgg_entity_count": 99,
+          "tgg_entity_count": 79,
           "competitor_entity_count": 1,
           "shared_count": 0,
-          "tgg_only_count": 99,
+          "tgg_only_count": 79,
           "competitor_only_count": 1,
           "coverage_pct": 0,
           "tgg_only_sample": [
+            "03/07/2026",
+            "243L",
+            "31L 1000W",
+            "AGL",
             "Acer Nitro",
-            "Airfryer Black Hot Buy",
-            "Alice Zaslavsky This",
-            "Artisan Stand Mixer Porcelain Ticket",
-            "Black Hot Buy",
-            "Black Ticket",
-            "Bonus Competition Winners Ad Corrections",
-            "Bosch Series"
+            "Agency",
+            "Alice",
+            "Alice Zaslavsky"
           ],
           "missing_from_tgg": [
-            "Largest Home Entertainment Retailer Warning Your"
+            "Largest Home Entertainment"
           ],
           "score": 3,
           "maxScore": 25,
-          "issue": "TGG missing 1 entities vs competitor \u2014 consider adding: Largest Home Entertainment Retailer Warning Your"
+          "issue": "TGG missing 1 entities vs competitor \u2014 consider adding: Largest Home Entertainment"
         }
       ],
-      "summary": "6 pages analysed | avg coverage 33% vs competitor | method: regex (install spaCy for better accuracy)"
+      "summary": "6 pages analysed | avg coverage 33% vs competitor | method: spaCy NER"
     },
     "llm_quality": {
-      "score": 0,
-      "maxScore": 0,
-      "percentage": 0,
-      "grade": "F",
-      "pages": [],
-      "errors": [],
-      "summary": "LLM judge skipped \u2014 Ollama not running (self-hosted runner only)",
-      "skipped": true
+      "score": 112,
+      "maxScore": 250,
+      "percentage": 45,
+      "grade": "D",
+      "pages": [
+        {
+          "file": "air-conditioners.html",
+          "page_type": "category",
+          "method": "heuristic",
+          "clarity": 4,
+          "specificity": 10,
+          "schema_alignment": 10,
+          "query_answerability": 5,
+          "llm_overall": 7.2,
+          "score": 18,
+          "maxScore": 25,
+          "reasoning": "clarity: Flesch reading ease 40, avg sentence 31 words; specificity: 189 numbers, 183 entities, 17 prices in 2586 words; schema: 10/10 schema entities visible in text; query: 6 questions, 6 definitions, intro_answer=False",
+          "issue": null
+        },
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "page_type": "guide",
+          "method": "heuristic",
+          "clarity": 10,
+          "specificity": 0,
+          "schema_alignment": 0,
+          "query_answerability": 0,
+          "llm_overall": 2.5,
+          "score": 6,
+          "maxScore": 25,
+          "reasoning": "clarity: Flesch reading ease 79, avg sentence 6 words; specificity: Only 18 words \u2014 too thin to score; schema: No schema entities found \u2014 cannot align; query: Content too thin for question-answering",
+          "issue": "Low quality score (2.5/10) \u2014 improve clarity, specificity, or schema alignment"
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "page_type": "guide",
+          "method": "heuristic",
+          "clarity": 10,
+          "specificity": 0,
+          "schema_alignment": 0,
+          "query_answerability": 0,
+          "llm_overall": 2.5,
+          "score": 6,
+          "maxScore": 25,
+          "reasoning": "clarity: Flesch reading ease 79, avg sentence 6 words; specificity: Only 18 words \u2014 too thin to score; schema: No schema entities found \u2014 cannot align; query: Content too thin for question-answering",
+          "issue": "Low quality score (2.5/10) \u2014 improve clarity, specificity, or schema alignment"
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "page_type": "guide",
+          "method": "heuristic",
+          "clarity": 10,
+          "specificity": 0,
+          "schema_alignment": 0,
+          "query_answerability": 0,
+          "llm_overall": 2.5,
+          "score": 6,
+          "maxScore": 25,
+          "reasoning": "clarity: Flesch reading ease 79, avg sentence 6 words; specificity: Only 18 words \u2014 too thin to score; schema: No schema entities found \u2014 cannot align; query: Content too thin for question-answering",
+          "issue": "Low quality score (2.5/10) \u2014 improve clarity, specificity, or schema alignment"
+        },
+        {
+          "file": "index.html",
+          "page_type": "home",
+          "method": "heuristic",
+          "clarity": 6,
+          "specificity": 8,
+          "schema_alignment": 1,
+          "query_answerability": 0,
+          "llm_overall": 3.8,
+          "score": 10,
+          "maxScore": 25,
+          "reasoning": "clarity: Flesch reading ease 50, avg sentence 33 words; specificity: 25 numbers, 81 entities, 4 prices in 849 words; schema: 1/9 schema entities visible in text; query: 0 questions, 0 definitions, intro_answer=False",
+          "issue": "Low quality score (3.8/10) \u2014 improve clarity, specificity, or schema alignment"
+        },
+        {
+          "file": "laptops-computers.html",
+          "page_type": "category",
+          "method": "heuristic",
+          "clarity": 10,
+          "specificity": 0,
+          "schema_alignment": 0,
+          "query_answerability": 0,
+          "llm_overall": 2.5,
+          "score": 6,
+          "maxScore": 25,
+          "reasoning": "clarity: Flesch reading ease 79, avg sentence 6 words; specificity: Only 18 words \u2014 too thin to score; schema: No schema entities found \u2014 cannot align; query: Content too thin for question-answering",
+          "issue": "Low quality score (2.5/10) \u2014 improve clarity, specificity, or schema alignment"
+        },
+        {
+          "file": "sale.html",
+          "page_type": "category",
+          "method": "heuristic",
+          "clarity": 4,
+          "specificity": 9,
+          "schema_alignment": 10,
+          "query_answerability": 5,
+          "llm_overall": 7.0,
+          "score": 18,
+          "maxScore": 25,
+          "reasoning": "clarity: Flesch reading ease 39, avg sentence 17 words; specificity: 52 numbers, 74 entities, 0 prices in 1211 words; schema: 9/9 schema entities visible in text; query: 6 questions, 0 definitions, intro_answer=False",
+          "issue": null
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "page_type": "category",
+          "method": "heuristic",
+          "clarity": 10,
+          "specificity": 0,
+          "schema_alignment": 0,
+          "query_answerability": 0,
+          "llm_overall": 2.5,
+          "score": 6,
+          "maxScore": 25,
+          "reasoning": "clarity: Flesch reading ease 79, avg sentence 6 words; specificity: Only 18 words \u2014 too thin to score; schema: No schema entities found \u2014 cannot align; query: Content too thin for question-answering",
+          "issue": "Low quality score (2.5/10) \u2014 improve clarity, specificity, or schema alignment"
+        },
+        {
+          "file": "televisions--smart-tvs.html",
+          "page_type": "category",
+          "method": "heuristic",
+          "clarity": 4,
+          "specificity": 10,
+          "schema_alignment": 10,
+          "query_answerability": 5,
+          "llm_overall": 7.2,
+          "score": 18,
+          "maxScore": 25,
+          "reasoning": "clarity: Flesch reading ease 43, avg sentence 40 words; specificity: 267 numbers, 171 entities, 13 prices in 2924 words; schema: 5/5 schema entities visible in text; query: 7 questions, 5 definitions, intro_answer=False",
+          "issue": null
+        },
+        {
+          "file": "televisions.html",
+          "page_type": "category",
+          "method": "heuristic",
+          "clarity": 4,
+          "specificity": 10,
+          "schema_alignment": 10,
+          "query_answerability": 5,
+          "llm_overall": 7.2,
+          "score": 18,
+          "maxScore": 25,
+          "reasoning": "clarity: Flesch reading ease 43, avg sentence 40 words; specificity: 267 numbers, 171 entities, 13 prices in 2924 words; schema: 5/5 schema entities visible in text; query: 7 questions, 5 definitions, intro_answer=False",
+          "issue": null
+        }
+      ],
+      "errors": [
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "page_type": "guide",
+          "method": "heuristic",
+          "clarity": 10,
+          "specificity": 0,
+          "schema_alignment": 0,
+          "query_answerability": 0,
+          "llm_overall": 2.5,
+          "score": 6,
+          "maxScore": 25,
+          "reasoning": "clarity: Flesch reading ease 79, avg sentence 6 words; specificity: Only 18 words \u2014 too thin to score; schema: No schema entities found \u2014 cannot align; query: Content too thin for question-answering",
+          "issue": "Low quality score (2.5/10) \u2014 improve clarity, specificity, or schema alignment"
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "page_type": "guide",
+          "method": "heuristic",
+          "clarity": 10,
+          "specificity": 0,
+          "schema_alignment": 0,
+          "query_answerability": 0,
+          "llm_overall": 2.5,
+          "score": 6,
+          "maxScore": 25,
+          "reasoning": "clarity: Flesch reading ease 79, avg sentence 6 words; specificity: Only 18 words \u2014 too thin to score; schema: No schema entities found \u2014 cannot align; query: Content too thin for question-answering",
+          "issue": "Low quality score (2.5/10) \u2014 improve clarity, specificity, or schema alignment"
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "page_type": "guide",
+          "method": "heuristic",
+          "clarity": 10,
+          "specificity": 0,
+          "schema_alignment": 0,
+          "query_answerability": 0,
+          "llm_overall": 2.5,
+          "score": 6,
+          "maxScore": 25,
+          "reasoning": "clarity: Flesch reading ease 79, avg sentence 6 words; specificity: Only 18 words \u2014 too thin to score; schema: No schema entities found \u2014 cannot align; query: Content too thin for question-answering",
+          "issue": "Low quality score (2.5/10) \u2014 improve clarity, specificity, or schema alignment"
+        },
+        {
+          "file": "index.html",
+          "page_type": "home",
+          "method": "heuristic",
+          "clarity": 6,
+          "specificity": 8,
+          "schema_alignment": 1,
+          "query_answerability": 0,
+          "llm_overall": 3.8,
+          "score": 10,
+          "maxScore": 25,
+          "reasoning": "clarity: Flesch reading ease 50, avg sentence 33 words; specificity: 25 numbers, 81 entities, 4 prices in 849 words; schema: 1/9 schema entities visible in text; query: 0 questions, 0 definitions, intro_answer=False",
+          "issue": "Low quality score (3.8/10) \u2014 improve clarity, specificity, or schema alignment"
+        },
+        {
+          "file": "laptops-computers.html",
+          "page_type": "category",
+          "method": "heuristic",
+          "clarity": 10,
+          "specificity": 0,
+          "schema_alignment": 0,
+          "query_answerability": 0,
+          "llm_overall": 2.5,
+          "score": 6,
+          "maxScore": 25,
+          "reasoning": "clarity: Flesch reading ease 79, avg sentence 6 words; specificity: Only 18 words \u2014 too thin to score; schema: No schema entities found \u2014 cannot align; query: Content too thin for question-answering",
+          "issue": "Low quality score (2.5/10) \u2014 improve clarity, specificity, or schema alignment"
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "page_type": "category",
+          "method": "heuristic",
+          "clarity": 10,
+          "specificity": 0,
+          "schema_alignment": 0,
+          "query_answerability": 0,
+          "llm_overall": 2.5,
+          "score": 6,
+          "maxScore": 25,
+          "reasoning": "clarity: Flesch reading ease 79, avg sentence 6 words; specificity: Only 18 words \u2014 too thin to score; schema: No schema entities found \u2014 cannot align; query: Content too thin for question-answering",
+          "issue": "Low quality score (2.5/10) \u2014 improve clarity, specificity, or schema alignment"
+        }
+      ],
+      "summary": "10 pages scored (heuristic judge) | avg 4.5/10"
     }
   }
 }
