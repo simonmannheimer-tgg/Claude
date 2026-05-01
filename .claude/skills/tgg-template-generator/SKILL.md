@@ -1,6 +1,6 @@
 ---
 name: tgg-template-generator
-description: Full-context template and scaffolding skill for The Good Guys SEO workflow. Use when asked to generate a template, scaffold a new document structure, create a brief, or produce a starter format for any repeatable TGG SEO task — including copy briefs, process docs, campaign planning, analytics reports, and meeting/stakeholder documents.
+description: Full-context template and scaffolding skill for The Good Guys SEO workflow. Use ONLY for blank-slate scaffolding when no existing artefact or process pattern exists, when a new repeatable structure is being defined for the first time. Use when asked to generate a template, scaffold a new document structure, create a brief, or produce a starter format for any repeatable TGG SEO task, including copy briefs, process docs, campaign planning, analytics reports, and meeting/stakeholder documents. Do NOT use for: campaign briefs (use tgg-seo strategy mode), monthly report briefs (use tgg-monthly-seo-report), or copy briefs where the brief structure already exists.
 ---
 
 # TGG Template Generator

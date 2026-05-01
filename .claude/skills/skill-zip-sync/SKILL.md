@@ -1,6 +1,6 @@
 ---
 name: skill-zip-sync
-description: Syncs skill ZIPs from Google Drive to the GitHub repo. Finds timestamped skill ZIPs (format: skill-name_YYYYMMDD-HHMM.zip), picks the latest per skill, extracts to .claude/skills/, commits with metadata, pushes to GitHub, then deletes all processed ZIPs from Drive. Run on a routine schedule or manually.
+description: Syncs skill ZIPs from Google Drive to the GitHub repo. Runs in Claude Code only. Claude.ai produces and uploads the timestamped ZIPs; Claude Code processes them. Finds timestamped skill ZIPs (format: skill-name_YYYYMMDD-HHMM.zip), picks the latest per skill, extracts to .claude/skills/, commits with metadata, pushes to GitHub, then deletes all processed ZIPs from Drive. Run on a routine schedule or manually.
 ---
 
 # skill-zip-sync

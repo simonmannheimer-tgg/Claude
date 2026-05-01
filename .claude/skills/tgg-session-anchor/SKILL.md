@@ -42,10 +42,11 @@ State the skill name once at the start of any response where you actively invoke
 
 ### When NOT to trigger
 
-- User opens with a clear, scoped, single-task request ("fix the meta title for /samsung/fridges to 58 chars")
-- User is continuing a chat from earlier in the same day on the same topic
-- User explicitly asks to skip ("just do the thing", "no preamble")
-- Quick lookups, regex requests, character counts, or other 30-second tasks
+- User explicitly asks to skip ("just do the thing", "no preamble", "skip the anchor")
+- Provably sub-5-minute, single-output tasks: regex, character count, formula, unit conversion, quick lookup — tasks where the full deliverable fits in one response and requires no project context
+- User is continuing the same chat mid-session (anchor:start already fired)
+
+**Do NOT skip because the request sounds scoped or work-like.** "Run the indexer", "fix the Breville schema", "write 5 PLP intros" — all of these open a session and all should trigger anchor:start. The only safe skips are the three above. When in doubt, run anchor:start.
 
 ### How to run
 

@@ -1,6 +1,6 @@
 ---
 name: tgg-conversation-indexer
-description: Weekly conversation indexer for Simon Mannheimer's TGG SEO work. Scans recent Claude conversations, scores them for significance, appends significant ones to the master index file, and writes abandoned high-upside projects to a todo markdown file. Also tracks skills export cadence and outputs an aside prompt when a weekly export is due. Trigger when asked to "update conversation index", "run indexer", "check abandoned projects", or "what have I left unfinished". Also trigger on any scheduled indexer run prompt. This skill must be used for any task involving conversation history indexing, project abandonment detection, or todo generation from past chats.
+description: Weekly conversation indexer for Simon Mannheimer's TGG SEO work. Scans recent Claude conversations, scores them for significance, appends significant ones to the master index file, and writes abandoned high-upside projects to a todo markdown file. Also tracks skills export cadence and outputs an aside prompt when a weekly export is due. Trigger when asked to "update conversation index", "run indexer", "check abandoned projects", or "what have I left unfinished". Also trigger on any scheduled indexer run prompt. This skill must be used for any task involving conversation history indexing, project abandonment detection, or todo generation from past chats. Depends on skill-zip-sync filename pattern (skill-name_YYYYMMDD-HHMM.zip) for auto-sync of skill changes. Reads/writes 5 hardcoded Drive files (TGG SEO — Indexer Last Run, TGG SEO — Skills Export Last Date, TGG SEO — Active Sprint, TGG SEO — Claude Session Index [Month YYYY], TGG SEO — Abandoned Projects Todo).
 ---
 
 # TGG Conversation Indexer
@@ -208,7 +208,7 @@ a fresh skills_reference.zip is uploaded with each run.
 Open a new Claude window and paste this prompt:
 ───────────────────────────────────────
 Zip all skills from /mnt/skills/user/ into a single skills_reference.zip.
-Include SKILL.md and example_conversations.md for each skill. Name the
+Include all files that exist within each skill directory. Name the
 output skills_reference.zip and present it for download.
 ───────────────────────────────────────
 
