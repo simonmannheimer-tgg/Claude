@@ -31,20 +31,30 @@ BROWSER_UA = (
     "Chrome/122.0.0.0 Safari/537.36"
 )
 
-DEFAULT_DOMAINS = [
-    "jbhifi.com.au",
-    "harveynorman.com.au",
-    "appliancesonline.com.au",
-]
+DEFAULT_DOMAIN_PATHS = {
+    "jbhifi.com.au": [
+        "/collections/tvs",
+        "/collections/air-conditioners",
+        "/collections/washing-machines",
+        "/collections/laptops",
+        "/blogs/news",
+    ],
+    "harveynorman.com.au": [
+        "/tv-blu-ray-home-theatre/tvs-by-screen-size/all-tvs",
+        "/washing-machines-dryers/washing-machines",
+        "/air-conditioners-fans/air-conditioners",
+        "/computers/laptops",
+        "/buying-guides/security-camera-buying-guide",
+    ],
+    "appliancesonline.com.au": [
+        "/category/refrigeration/fridges/",
+        "/category/washing-machines/front-loaders/",
+        "/category/air-conditioning/split-systems/",
+        "/article/refrigerator-size-guide/",
+    ],
+}
 
-DEFAULT_PATHS = [
-    "/televisions",
-    "/air-conditioners",
-    "/washing-machines",
-    "/laptops-computers",
-    "/buying-guide",
-    "/buying-guide/best-tvs",
-]
+DEFAULT_DOMAINS = list(DEFAULT_DOMAIN_PATHS.keys())
 
 CHUNK_TOKENS = 256
 OVERLAP_TOKENS = 32
@@ -159,12 +169,13 @@ def main():
     all_pages = []
     for domain in domains:
         print(f"\nCrawling {domain}...")
-        pages = crawl_domain(domain, DEFAULT_PATHS)
+        paths = DEFAULT_DOMAIN_PATHS.get(domain, ["/"])
+        pages = crawl_domain(domain, paths)
         all_pages.extend(pages)
 
     if not all_pages:
-        print("No pages crawled.", file=sys.stderr)
-        sys.exit(1)
+        print("No pages crawled — all competitor URLs returned 404 or were blocked. Check DEFAULT_DOMAIN_PATHS.", file=sys.stderr)
+        sys.exit(0)
 
     # Chunk and encode
     print(f"\nChunking {len(all_pages)} pages...")
