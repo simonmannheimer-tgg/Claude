@@ -1,15 +1,15 @@
 {
   "label": "TGG (ecommerce)",
   "dir": "site-snapshots/thegoodguys.com.au",
-  "grade": "D",
-  "score": 492,
-  "maxScore": 910,
-  "percentage": 54,
+  "grade": "C",
+  "score": 1161,
+  "maxScore": 1705,
+  "percentage": 68,
   "checks": {
     "schema": {
-      "score": 110,
-      "maxScore": 340,
-      "percentage": 32,
+      "score": 135,
+      "maxScore": 390,
+      "percentage": 35,
       "grade": "F",
       "pages": [
         {
@@ -143,32 +143,74 @@
           "maxScore": 30
         },
         {
+          "file": "sale.html",
+          "page_type": "category",
+          "found_types": [
+            "BreadcrumbList",
+            "FAQPage"
+          ],
+          "required": [
+            "ItemList",
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "present": [
+            "BreadcrumbList"
+          ],
+          "missing": [
+            "ItemList",
+            "CollectionPage"
+          ],
+          "bonus": [
+            "FAQPage"
+          ],
+          "score": 15,
+          "maxScore": 30
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "page_type": "category",
+          "found_types": [],
+          "required": [
+            "ItemList",
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "present": [],
+          "missing": [
+            "ItemList",
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "bonus": [],
+          "score": 0,
+          "maxScore": 30
+        },
+        {
           "file": "televisions--smart-tvs.html",
-          "page_type": "product",
+          "page_type": "category",
           "found_types": [
             "BreadcrumbList",
             "CollectionPage",
             "FAQPage"
           ],
           "required": [
-            "Product",
-            "Offer",
-            "AggregateRating",
-            "BreadcrumbList"
+            "ItemList",
+            "BreadcrumbList",
+            "CollectionPage"
           ],
           "present": [
-            "BreadcrumbList"
+            "BreadcrumbList",
+            "CollectionPage"
           ],
           "missing": [
-            "Product",
-            "Offer",
-            "AggregateRating"
+            "ItemList"
           ],
           "bonus": [
             "FAQPage"
           ],
-          "score": 15,
-          "maxScore": 40
+          "score": 25,
+          "maxScore": 30
         },
         {
           "file": "televisions.html",
@@ -377,32 +419,74 @@
           "maxScore": 30
         },
         {
+          "file": "sale.html",
+          "page_type": "category",
+          "found_types": [
+            "BreadcrumbList",
+            "FAQPage"
+          ],
+          "required": [
+            "ItemList",
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "present": [
+            "BreadcrumbList"
+          ],
+          "missing": [
+            "ItemList",
+            "CollectionPage"
+          ],
+          "bonus": [
+            "FAQPage"
+          ],
+          "score": 15,
+          "maxScore": 30
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "page_type": "category",
+          "found_types": [],
+          "required": [
+            "ItemList",
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "present": [],
+          "missing": [
+            "ItemList",
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "bonus": [],
+          "score": 0,
+          "maxScore": 30
+        },
+        {
           "file": "televisions--smart-tvs.html",
-          "page_type": "product",
+          "page_type": "category",
           "found_types": [
             "BreadcrumbList",
             "CollectionPage",
             "FAQPage"
           ],
           "required": [
-            "Product",
-            "Offer",
-            "AggregateRating",
-            "BreadcrumbList"
+            "ItemList",
+            "BreadcrumbList",
+            "CollectionPage"
           ],
           "present": [
-            "BreadcrumbList"
+            "BreadcrumbList",
+            "CollectionPage"
           ],
           "missing": [
-            "Product",
-            "Offer",
-            "AggregateRating"
+            "ItemList"
           ],
           "bonus": [
             "FAQPage"
           ],
-          "score": 15,
-          "maxScore": 40
+          "score": 25,
+          "maxScore": 30
         },
         {
           "file": "televisions.html",
@@ -479,11 +563,192 @@
           "maxScore": 30
         }
       ],
-      "summary": "0/10 pages have all required schema"
+      "summary": "0/12 pages have all required schema"
+    },
+    "schema_validity": {
+      "score": 105,
+      "maxScore": 180,
+      "percentage": 58,
+      "grade": "D",
+      "pages": [
+        {
+          "file": "air-conditioners.html",
+          "schema_count": 3,
+          "valid": 3,
+          "invalid": 0,
+          "score": 15,
+          "maxScore": 15,
+          "issues": [],
+          "issue": null
+        },
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "schema_count": 0,
+          "valid": 0,
+          "invalid": 0,
+          "score": 0,
+          "maxScore": 15,
+          "issues": [],
+          "issue": "No JSON-LD found"
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "schema_count": 0,
+          "valid": 0,
+          "invalid": 0,
+          "score": 0,
+          "maxScore": 15,
+          "issues": [],
+          "issue": "No JSON-LD found"
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "schema_count": 0,
+          "valid": 0,
+          "invalid": 0,
+          "score": 0,
+          "maxScore": 15,
+          "issues": [],
+          "issue": "No JSON-LD found"
+        },
+        {
+          "file": "index.html",
+          "schema_count": 1,
+          "valid": 1,
+          "invalid": 0,
+          "score": 15,
+          "maxScore": 15,
+          "issues": [],
+          "issue": null
+        },
+        {
+          "file": "laptops-computers.html",
+          "schema_count": 0,
+          "valid": 0,
+          "invalid": 0,
+          "score": 0,
+          "maxScore": 15,
+          "issues": [],
+          "issue": "No JSON-LD found"
+        },
+        {
+          "file": "sale.html",
+          "schema_count": 2,
+          "valid": 2,
+          "invalid": 0,
+          "score": 15,
+          "maxScore": 15,
+          "issues": [],
+          "issue": null
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "schema_count": 0,
+          "valid": 0,
+          "invalid": 0,
+          "score": 0,
+          "maxScore": 15,
+          "issues": [],
+          "issue": "No JSON-LD found"
+        },
+        {
+          "file": "televisions--smart-tvs.html",
+          "schema_count": 3,
+          "valid": 3,
+          "invalid": 0,
+          "score": 15,
+          "maxScore": 15,
+          "issues": [],
+          "issue": null
+        },
+        {
+          "file": "televisions.html",
+          "schema_count": 3,
+          "valid": 3,
+          "invalid": 0,
+          "score": 15,
+          "maxScore": 15,
+          "issues": [],
+          "issue": null
+        },
+        {
+          "file": "washing-machines.html",
+          "schema_count": 3,
+          "valid": 3,
+          "invalid": 0,
+          "score": 15,
+          "maxScore": 15,
+          "issues": [],
+          "issue": null
+        },
+        {
+          "file": "whats-new.html",
+          "schema_count": 1,
+          "valid": 1,
+          "invalid": 0,
+          "score": 15,
+          "maxScore": 15,
+          "issues": [],
+          "issue": null
+        }
+      ],
+      "errors": [
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "schema_count": 0,
+          "valid": 0,
+          "invalid": 0,
+          "score": 0,
+          "maxScore": 15,
+          "issues": [],
+          "issue": "No JSON-LD found"
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "schema_count": 0,
+          "valid": 0,
+          "invalid": 0,
+          "score": 0,
+          "maxScore": 15,
+          "issues": [],
+          "issue": "No JSON-LD found"
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "schema_count": 0,
+          "valid": 0,
+          "invalid": 0,
+          "score": 0,
+          "maxScore": 15,
+          "issues": [],
+          "issue": "No JSON-LD found"
+        },
+        {
+          "file": "laptops-computers.html",
+          "schema_count": 0,
+          "valid": 0,
+          "invalid": 0,
+          "score": 0,
+          "maxScore": 15,
+          "issues": [],
+          "issue": "No JSON-LD found"
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "schema_count": 0,
+          "valid": 0,
+          "invalid": 0,
+          "score": 0,
+          "maxScore": 15,
+          "issues": [],
+          "issue": "No JSON-LD found"
+        }
+      ],
+      "summary": "7/12 pages have fully valid schema"
     },
     "render_diff": {
-      "score": 60,
-      "maxScore": 60,
+      "score": 80,
+      "maxScore": 80,
       "percentage": 100,
       "grade": "A",
       "pages": [
@@ -491,44 +756,63 @@
           "url": "https://www.thegoodguys.com.au",
           "status_code": 200,
           "raw_words": 6646,
-          "rendered_words": 2225,
-          "pct_accessible": 299,
-          "hidden_words": 0,
+          "rendered_words": 4753,
+          "pct_accessible": 100,
+          "ssr_detected": true,
+          "js_only_words": 0,
           "score": 20,
           "maxScore": 20,
+          "note": "SSR detected \u2014 raw HTML contains full content",
           "issue": null
         },
         {
           "url": "https://www.thegoodguys.com.au/televisions",
           "status_code": 200,
           "raw_words": 5878,
-          "rendered_words": 3291,
-          "pct_accessible": 179,
-          "hidden_words": 0,
+          "rendered_words": 3292,
+          "pct_accessible": 100,
+          "ssr_detected": true,
+          "js_only_words": 0,
           "score": 20,
           "maxScore": 20,
+          "note": "SSR detected \u2014 raw HTML contains full content",
           "issue": null
         },
         {
-          "url": "https://www.thegoodguys.com.au/air-conditioners",
+          "url": "https://www.thegoodguys.com.au/televisions/smart-tvs",
           "status_code": 200,
-          "raw_words": 5509,
-          "rendered_words": 2931,
-          "pct_accessible": 188,
-          "hidden_words": 0,
+          "raw_words": 5878,
+          "rendered_words": 3292,
+          "pct_accessible": 100,
+          "ssr_detected": true,
+          "js_only_words": 0,
           "score": 20,
           "maxScore": 20,
+          "note": "SSR detected \u2014 raw HTML contains full content",
+          "issue": null
+        },
+        {
+          "url": "https://www.thegoodguys.com.au/buying-guide/best-tvs",
+          "status_code": 404,
+          "raw_words": 2857,
+          "rendered_words": 426,
+          "pct_accessible": 100,
+          "ssr_detected": true,
+          "js_only_words": 0,
+          "score": 20,
+          "maxScore": 20,
+          "note": "SSR detected \u2014 raw HTML contains full content",
           "issue": null
         }
       ],
       "errors": [],
-      "summary": "3/3 pages \u226580% content accessible without JS"
+      "summary": "4/4 pages \u226580% content accessible without JS"
     },
     "user_agents": {
       "score": 60,
-      "maxScore": 60,
-      "percentage": 100,
-      "grade": "A",
+      "maxScore": 80,
+      "percentage": 75,
+      "grade": "B",
       "pages": [
         {
           "url": "https://www.thegoodguys.com.au",
@@ -552,6 +836,12 @@
               "status": 200,
               "allowed": true,
               "score": 5
+            },
+            "Googlebot (info)": {
+              "status": 200,
+              "allowed": true,
+              "score": null,
+              "note": "informational \u2014 not scored"
             }
           },
           "blocked": [],
@@ -579,13 +869,19 @@
               "status": 200,
               "allowed": true,
               "score": 5
+            },
+            "Googlebot (info)": {
+              "status": 200,
+              "allowed": true,
+              "score": null,
+              "note": "informational \u2014 not scored"
             }
           },
           "blocked": [],
           "issue": null
         },
         {
-          "url": "https://www.thegoodguys.com.au/air-conditioners",
+          "url": "https://www.thegoodguys.com.au/televisions/smart-tvs",
           "bots": {
             "ClaudeBot": {
               "status": 200,
@@ -606,667 +902,380 @@
               "status": 200,
               "allowed": true,
               "score": 5
+            },
+            "Googlebot (info)": {
+              "status": 200,
+              "allowed": true,
+              "score": null,
+              "note": "informational \u2014 not scored"
             }
           },
           "blocked": [],
           "issue": null
+        },
+        {
+          "url": "https://www.thegoodguys.com.au/buying-guide/best-tvs",
+          "bots": {
+            "ClaudeBot": {
+              "status": 404,
+              "allowed": false,
+              "score": 0
+            },
+            "GPTBot": {
+              "status": 404,
+              "allowed": false,
+              "score": 0
+            },
+            "PerplexityBot": {
+              "status": 404,
+              "allowed": false,
+              "score": 0
+            },
+            "Google-Extended": {
+              "status": 404,
+              "allowed": false,
+              "score": 0
+            },
+            "Googlebot (info)": {
+              "status": 404,
+              "allowed": false,
+              "score": null,
+              "note": "informational \u2014 not scored"
+            }
+          },
+          "blocked": [
+            "ClaudeBot",
+            "GPTBot",
+            "PerplexityBot",
+            "Google-Extended"
+          ],
+          "issue": "Blocked for: ClaudeBot, GPTBot, PerplexityBot, Google-Extended"
         }
       ],
-      "errors": [],
-      "summary": "3/3 pages accessible to all AI bots"
+      "errors": [
+        {
+          "url": "https://www.thegoodguys.com.au/buying-guide/best-tvs",
+          "bots": {
+            "ClaudeBot": {
+              "status": 404,
+              "allowed": false,
+              "score": 0
+            },
+            "GPTBot": {
+              "status": 404,
+              "allowed": false,
+              "score": 0
+            },
+            "PerplexityBot": {
+              "status": 404,
+              "allowed": false,
+              "score": 0
+            },
+            "Google-Extended": {
+              "status": 404,
+              "allowed": false,
+              "score": 0
+            },
+            "Googlebot (info)": {
+              "status": 404,
+              "allowed": false,
+              "score": null,
+              "note": "informational \u2014 not scored"
+            }
+          },
+          "blocked": [
+            "ClaudeBot",
+            "GPTBot",
+            "PerplexityBot",
+            "Google-Extended"
+          ],
+          "issue": "Blocked for: ClaudeBot, GPTBot, PerplexityBot, Google-Extended"
+        }
+      ],
+      "summary": "3/4 pages accessible to all AI bots"
     },
     "hidden_content": {
-      "score": 100,
-      "maxScore": 200,
-      "percentage": 50,
-      "grade": "D",
+      "score": 240,
+      "maxScore": 240,
+      "percentage": 100,
+      "grade": "A",
       "pages": [
         {
           "file": "air-conditioners.html",
           "total_words": 2931,
-          "hidden_words": 323,
-          "hidden_ratio_pct": 11,
+          "hidden_words": 159,
+          "hidden_ratio_pct": 5,
           "details_collapsed_words": 0,
-          "hidden_elements_count": 4,
+          "hidden_elements_count": 6,
           "top_hidden": [
             {
               "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 29,
-              "reason": "display:none"
+              "class": "refinementListWrapper collapsed",
+              "words": 35,
+              "reason": "CSS class"
             },
             {
               "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "class": "refinementListWrapper collapsed",
               "words": 36,
-              "reason": "display:none"
+              "reason": "CSS class"
             },
             {
               "tag": "div",
-              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
+              "class": "refinementListWrapper collapsed",
               "words": 22,
               "reason": "CSS class"
             },
             {
               "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 236,
-              "reason": "display:none"
-            }
-          ],
-          "score": 10,
-          "maxScore": 20,
-          "issue": "11% of content hidden from AI crawlers"
-        },
-        {
-          "file": "buying-guide--best-air-conditioners.html",
-          "total_words": 426,
-          "hidden_words": 116,
-          "hidden_ratio_pct": 27,
-          "details_collapsed_words": 0,
-          "hidden_elements_count": 3,
-          "top_hidden": [
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 29,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
-              "words": 36,
+              "class": "refinementListWrapper collapsed",
+              "words": 22,
               "reason": "CSS class"
             },
             {
               "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 51,
-              "reason": "display:none"
-            }
-          ],
-          "score": 10,
-          "maxScore": 20,
-          "issue": "27% of content hidden from AI crawlers"
-        },
-        {
-          "file": "buying-guide--best-tvs.html",
-          "total_words": 426,
-          "hidden_words": 116,
-          "hidden_ratio_pct": 27,
-          "details_collapsed_words": 0,
-          "hidden_elements_count": 3,
-          "top_hidden": [
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 29,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
-              "words": 36,
+              "class": "refinementListWrapper collapsed",
+              "words": 22,
               "reason": "CSS class"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 51,
-              "reason": "display:none"
-            }
-          ],
-          "score": 10,
-          "maxScore": 20,
-          "issue": "27% of content hidden from AI crawlers"
-        },
-        {
-          "file": "buying-guide--best-washing-machines.html",
-          "total_words": 426,
-          "hidden_words": 116,
-          "hidden_ratio_pct": 27,
-          "details_collapsed_words": 0,
-          "hidden_elements_count": 3,
-          "top_hidden": [
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 29,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
-              "words": 36,
-              "reason": "CSS class"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 51,
-              "reason": "display:none"
-            }
-          ],
-          "score": 10,
-          "maxScore": 20,
-          "issue": "27% of content hidden from AI crawlers"
-        },
-        {
-          "file": "index.html",
-          "total_words": 2225,
-          "hidden_words": 1940,
-          "hidden_ratio_pct": 87,
-          "details_collapsed_words": 0,
-          "hidden_elements_count": 4,
-          "top_hidden": [
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 29,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 94,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 390,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 1427,
-              "reason": "display:none"
-            }
-          ],
-          "score": 0,
-          "maxScore": 20,
-          "issue": "87% of content hidden from AI crawlers"
-        },
-        {
-          "file": "laptops-computers.html",
-          "total_words": 426,
-          "hidden_words": 116,
-          "hidden_ratio_pct": 27,
-          "details_collapsed_words": 0,
-          "hidden_elements_count": 3,
-          "top_hidden": [
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 29,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
-              "words": 36,
-              "reason": "CSS class"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 51,
-              "reason": "display:none"
-            }
-          ],
-          "score": 10,
-          "maxScore": 20,
-          "issue": "27% of content hidden from AI crawlers"
-        },
-        {
-          "file": "televisions--smart-tvs.html",
-          "total_words": 3292,
-          "hidden_words": 412,
-          "hidden_ratio_pct": 13,
-          "details_collapsed_words": 0,
-          "hidden_elements_count": 4,
-          "top_hidden": [
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 29,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 44,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
-              "words": 54,
-              "reason": "CSS class"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 285,
-              "reason": "display:none"
-            }
-          ],
-          "score": 10,
-          "maxScore": 20,
-          "issue": "13% of content hidden from AI crawlers"
-        },
-        {
-          "file": "televisions.html",
-          "total_words": 3291,
-          "hidden_words": 412,
-          "hidden_ratio_pct": 13,
-          "details_collapsed_words": 0,
-          "hidden_elements_count": 4,
-          "top_hidden": [
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 29,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 44,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
-              "words": 54,
-              "reason": "CSS class"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 285,
-              "reason": "display:none"
-            }
-          ],
-          "score": 10,
-          "maxScore": 20,
-          "issue": "13% of content hidden from AI crawlers"
-        },
-        {
-          "file": "washing-machines.html",
-          "total_words": 2995,
-          "hidden_words": 376,
-          "hidden_ratio_pct": 13,
-          "details_collapsed_words": 0,
-          "hidden_elements_count": 4,
-          "top_hidden": [
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 29,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 43,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
-              "words": 31,
-              "reason": "CSS class"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 273,
-              "reason": "display:none"
-            }
-          ],
-          "score": 10,
-          "maxScore": 20,
-          "issue": "13% of content hidden from AI crawlers"
-        },
-        {
-          "file": "whats-new.html",
-          "total_words": 2419,
-          "hidden_words": 29,
-          "hidden_ratio_pct": 1,
-          "details_collapsed_words": 0,
-          "hidden_elements_count": 1,
-          "top_hidden": [
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 29,
-              "reason": "display:none"
             }
           ],
           "score": 20,
           "maxScore": 20,
           "issue": null
-        }
-      ],
-      "errors": [
+        },
         {
-          "file": "air-conditioners.html",
-          "total_words": 2931,
-          "hidden_words": 323,
-          "hidden_ratio_pct": 11,
+          "file": "buying-guide--best-air-conditioners.html",
+          "total_words": 426,
+          "hidden_words": 0,
+          "hidden_ratio_pct": 0,
           "details_collapsed_words": 0,
-          "hidden_elements_count": 4,
+          "hidden_elements_count": 0,
+          "top_hidden": [],
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "total_words": 426,
+          "hidden_words": 0,
+          "hidden_ratio_pct": 0,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 0,
+          "top_hidden": [],
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "total_words": 426,
+          "hidden_words": 0,
+          "hidden_ratio_pct": 0,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 0,
+          "top_hidden": [],
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "index.html",
+          "total_words": 4753,
+          "hidden_words": 0,
+          "hidden_ratio_pct": 0,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 0,
+          "top_hidden": [],
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "laptops-computers.html",
+          "total_words": 426,
+          "hidden_words": 0,
+          "hidden_ratio_pct": 0,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 0,
+          "top_hidden": [],
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "sale.html",
+          "total_words": 4071,
+          "hidden_words": 0,
+          "hidden_ratio_pct": 0,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 0,
+          "top_hidden": [],
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "total_words": 426,
+          "hidden_words": 0,
+          "hidden_ratio_pct": 0,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 0,
+          "top_hidden": [],
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "televisions--smart-tvs.html",
+          "total_words": 3292,
+          "hidden_words": 247,
+          "hidden_ratio_pct": 8,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 8,
           "top_hidden": [
             {
               "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 29,
-              "reason": "display:none"
+              "class": "refinementListWrapper collapsed",
+              "words": 21,
+              "reason": "CSS class"
             },
             {
               "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 36,
-              "reason": "display:none"
+              "class": "refinementListWrapper collapsed",
+              "words": 37,
+              "reason": "CSS class"
             },
             {
               "tag": "div",
-              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
+              "class": "refinementListWrapper collapsed",
+              "words": 62,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "refinementListWrapper collapsed",
+              "words": 26,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "refinementListWrapper collapsed",
+              "words": 25,
+              "reason": "CSS class"
+            }
+          ],
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "televisions.html",
+          "total_words": 3292,
+          "hidden_words": 247,
+          "hidden_ratio_pct": 8,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 8,
+          "top_hidden": [
+            {
+              "tag": "div",
+              "class": "refinementListWrapper collapsed",
+              "words": 21,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "refinementListWrapper collapsed",
+              "words": 37,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "refinementListWrapper collapsed",
+              "words": 62,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "refinementListWrapper collapsed",
+              "words": 26,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "refinementListWrapper collapsed",
+              "words": 25,
+              "reason": "CSS class"
+            }
+          ],
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "washing-machines.html",
+          "total_words": 2995,
+          "hidden_words": 158,
+          "hidden_ratio_pct": 5,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 6,
+          "top_hidden": [
+            {
+              "tag": "div",
+              "class": "refinementListWrapper collapsed",
+              "words": 37,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "refinementListWrapper collapsed",
               "words": 22,
               "reason": "CSS class"
             },
             {
               "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 236,
-              "reason": "display:none"
-            }
-          ],
-          "score": 10,
-          "maxScore": 20,
-          "issue": "11% of content hidden from AI crawlers"
-        },
-        {
-          "file": "buying-guide--best-air-conditioners.html",
-          "total_words": 426,
-          "hidden_words": 116,
-          "hidden_ratio_pct": 27,
-          "details_collapsed_words": 0,
-          "hidden_elements_count": 3,
-          "top_hidden": [
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 29,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
-              "words": 36,
+              "class": "refinementListWrapper collapsed",
+              "words": 22,
               "reason": "CSS class"
             },
             {
               "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 51,
-              "reason": "display:none"
-            }
-          ],
-          "score": 10,
-          "maxScore": 20,
-          "issue": "27% of content hidden from AI crawlers"
-        },
-        {
-          "file": "buying-guide--best-tvs.html",
-          "total_words": 426,
-          "hidden_words": 116,
-          "hidden_ratio_pct": 27,
-          "details_collapsed_words": 0,
-          "hidden_elements_count": 3,
-          "top_hidden": [
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 29,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
-              "words": 36,
+              "class": "refinementListWrapper collapsed",
+              "words": 23,
               "reason": "CSS class"
             },
             {
               "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 51,
-              "reason": "display:none"
-            }
-          ],
-          "score": 10,
-          "maxScore": 20,
-          "issue": "27% of content hidden from AI crawlers"
-        },
-        {
-          "file": "buying-guide--best-washing-machines.html",
-          "total_words": 426,
-          "hidden_words": 116,
-          "hidden_ratio_pct": 27,
-          "details_collapsed_words": 0,
-          "hidden_elements_count": 3,
-          "top_hidden": [
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 29,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
-              "words": 36,
+              "class": "refinementListWrapper collapsed",
+              "words": 21,
               "reason": "CSS class"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 51,
-              "reason": "display:none"
             }
           ],
-          "score": 10,
+          "score": 20,
           "maxScore": 20,
-          "issue": "27% of content hidden from AI crawlers"
+          "issue": null
         },
         {
-          "file": "index.html",
-          "total_words": 2225,
-          "hidden_words": 1940,
-          "hidden_ratio_pct": 87,
+          "file": "whats-new.html",
+          "total_words": 2419,
+          "hidden_words": 0,
+          "hidden_ratio_pct": 0,
           "details_collapsed_words": 0,
-          "hidden_elements_count": 4,
-          "top_hidden": [
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 29,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 94,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 390,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 1427,
-              "reason": "display:none"
-            }
-          ],
-          "score": 0,
+          "hidden_elements_count": 0,
+          "top_hidden": [],
+          "score": 20,
           "maxScore": 20,
-          "issue": "87% of content hidden from AI crawlers"
-        },
-        {
-          "file": "laptops-computers.html",
-          "total_words": 426,
-          "hidden_words": 116,
-          "hidden_ratio_pct": 27,
-          "details_collapsed_words": 0,
-          "hidden_elements_count": 3,
-          "top_hidden": [
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 29,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
-              "words": 36,
-              "reason": "CSS class"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 51,
-              "reason": "display:none"
-            }
-          ],
-          "score": 10,
-          "maxScore": 20,
-          "issue": "27% of content hidden from AI crawlers"
-        },
-        {
-          "file": "televisions--smart-tvs.html",
-          "total_words": 3292,
-          "hidden_words": 412,
-          "hidden_ratio_pct": 13,
-          "details_collapsed_words": 0,
-          "hidden_elements_count": 4,
-          "top_hidden": [
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 29,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 44,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
-              "words": 54,
-              "reason": "CSS class"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 285,
-              "reason": "display:none"
-            }
-          ],
-          "score": 10,
-          "maxScore": 20,
-          "issue": "13% of content hidden from AI crawlers"
-        },
-        {
-          "file": "televisions.html",
-          "total_words": 3291,
-          "hidden_words": 412,
-          "hidden_ratio_pct": 13,
-          "details_collapsed_words": 0,
-          "hidden_elements_count": 4,
-          "top_hidden": [
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 29,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 44,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
-              "words": 54,
-              "reason": "CSS class"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 285,
-              "reason": "display:none"
-            }
-          ],
-          "score": 10,
-          "maxScore": 20,
-          "issue": "13% of content hidden from AI crawlers"
-        },
-        {
-          "file": "washing-machines.html",
-          "total_words": 2995,
-          "hidden_words": 376,
-          "hidden_ratio_pct": 13,
-          "details_collapsed_words": 0,
-          "hidden_elements_count": 4,
-          "top_hidden": [
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 29,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 43,
-              "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
-              "words": 31,
-              "reason": "CSS class"
-            },
-            {
-              "tag": "div",
-              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 273,
-              "reason": "display:none"
-            }
-          ],
-          "score": 10,
-          "maxScore": 20,
-          "issue": "13% of content hidden from AI crawlers"
+          "issue": null
         }
       ],
-      "summary": "1/10 pages have <10% content hidden"
+      "errors": [],
+      "summary": "12/12 pages have <10% content hidden"
     },
     "ai_signals": {
-      "score": 162,
-      "maxScore": 250,
-      "percentage": 65,
+      "score": 192,
+      "maxScore": 300,
+      "percentage": 64,
       "grade": "C",
       "pages": [
         {
@@ -1282,9 +1291,7 @@
             "structured_lists",
             "intro_answer_present"
           ],
-          "signals_missing": [
-            "comparison_table"
-          ],
+          "signals_missing": [],
           "h1_count": 1,
           "h2_count": 6,
           "table_count": 0,
@@ -1303,7 +1310,6 @@
           ],
           "signals_missing": [
             "numbered_list",
-            "comparison_table",
             "definition_heading"
           ],
           "h1_count": 1,
@@ -1324,7 +1330,6 @@
           ],
           "signals_missing": [
             "numbered_list",
-            "comparison_table",
             "definition_heading"
           ],
           "h1_count": 1,
@@ -1345,7 +1350,6 @@
           ],
           "signals_missing": [
             "numbered_list",
-            "comparison_table",
             "definition_heading"
           ],
           "h1_count": 1,
@@ -1365,7 +1369,6 @@
           ],
           "signals_missing": [
             "numbered_list",
-            "comparison_table",
             "definition_heading"
           ],
           "h1_count": 0,
@@ -1386,7 +1389,47 @@
           ],
           "signals_missing": [
             "numbered_list",
-            "comparison_table",
+            "definition_heading"
+          ],
+          "h1_count": 1,
+          "h2_count": 1,
+          "table_count": 0,
+          "score": 12,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "sale.html",
+          "page_type": "category",
+          "signals_found": [
+            "direct_answer_paragraph",
+            "numbered_list",
+            "h1_present",
+            "ordered_lists",
+            "structured_lists",
+            "intro_answer_present"
+          ],
+          "signals_missing": [
+            "definition_heading"
+          ],
+          "h1_count": 1,
+          "h2_count": 2,
+          "table_count": 0,
+          "score": 18,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "page_type": "category",
+          "signals_found": [
+            "direct_answer_paragraph",
+            "h1_present",
+            "structured_lists",
+            "intro_answer_present"
+          ],
+          "signals_missing": [
+            "numbered_list",
             "definition_heading"
           ],
           "h1_count": 1,
@@ -1398,7 +1441,7 @@
         },
         {
           "file": "televisions--smart-tvs.html",
-          "page_type": "product",
+          "page_type": "category",
           "signals_found": [
             "direct_answer_paragraph",
             "numbered_list",
@@ -1409,7 +1452,6 @@
             "intro_answer_present"
           ],
           "signals_missing": [
-            "comparison_table",
             "definition_heading"
           ],
           "h1_count": 1,
@@ -1432,7 +1474,6 @@
             "intro_answer_present"
           ],
           "signals_missing": [
-            "comparison_table",
             "definition_heading"
           ],
           "h1_count": 1,
@@ -1455,7 +1496,6 @@
             "intro_answer_present"
           ],
           "signals_missing": [
-            "comparison_table",
             "definition_heading"
           ],
           "h1_count": 1,
@@ -1477,7 +1517,6 @@
             "intro_answer_present"
           ],
           "signals_missing": [
-            "comparison_table",
             "definition_heading"
           ],
           "h1_count": 1,
@@ -1499,7 +1538,6 @@
           ],
           "signals_missing": [
             "numbered_list",
-            "comparison_table",
             "definition_heading"
           ],
           "h1_count": 0,
@@ -1510,7 +1548,627 @@
           "issue": "Low AI content signals \u2014 few patterns AI models cite"
         }
       ],
-      "summary": "9/10 pages have strong AI content signals"
+      "summary": "11/12 pages have strong AI content signals"
+    },
+    "dom_structure": {
+      "score": 275,
+      "maxScore": 300,
+      "percentage": 92,
+      "grade": "A",
+      "pages": [
+        {
+          "file": "air-conditioners.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 24,
+          "dom_elements": 3238,
+          "aria_labels": 166,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "good ARIA (166 labels)"
+          ],
+          "score": 20,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
+        },
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 25,
+          "dom_elements": 765,
+          "aria_labels": 49,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "lean DOM (765 elements)",
+            "good ARIA (49 labels)"
+          ],
+          "score": 25,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (25 scripts)"
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 25,
+          "dom_elements": 765,
+          "aria_labels": 49,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "lean DOM (765 elements)",
+            "good ARIA (49 labels)"
+          ],
+          "score": 25,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (25 scripts)"
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 25,
+          "dom_elements": 766,
+          "aria_labels": 49,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "lean DOM (766 elements)",
+            "good ARIA (49 labels)"
+          ],
+          "score": 25,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (25 scripts)"
+        },
+        {
+          "file": "index.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": true,
+          "external_scripts": 17,
+          "dom_elements": 6503,
+          "aria_labels": 228,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "clean heading hierarchy",
+            "good ARIA (228 labels)"
+          ],
+          "score": 25,
+          "maxScore": 25,
+          "issue": "very large DOM (6503 elements)"
+        },
+        {
+          "file": "laptops-computers.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 24,
+          "dom_elements": 764,
+          "aria_labels": 49,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "lean DOM (764 elements)",
+            "good ARIA (49 labels)"
+          ],
+          "score": 25,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
+        },
+        {
+          "file": "sale.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 24,
+          "dom_elements": 5806,
+          "aria_labels": 445,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "good ARIA (445 labels)"
+          ],
+          "score": 20,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 23,
+          "dom_elements": 763,
+          "aria_labels": 49,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "lean DOM (763 elements)",
+            "good ARIA (49 labels)"
+          ],
+          "score": 25,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (23 scripts)"
+        },
+        {
+          "file": "televisions--smart-tvs.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 23,
+          "dom_elements": 3083,
+          "aria_labels": 150,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "good ARIA (150 labels)"
+          ],
+          "score": 20,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (23 scripts)"
+        },
+        {
+          "file": "televisions.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 24,
+          "dom_elements": 3084,
+          "aria_labels": 150,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "good ARIA (150 labels)"
+          ],
+          "score": 20,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
+        },
+        {
+          "file": "washing-machines.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 22,
+          "dom_elements": 3047,
+          "aria_labels": 159,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "good ARIA (159 labels)"
+          ],
+          "score": 20,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (22 scripts)"
+        },
+        {
+          "file": "whats-new.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 25,
+          "dom_elements": 1123,
+          "aria_labels": 51,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "lean DOM (1123 elements)",
+            "good ARIA (51 labels)"
+          ],
+          "score": 25,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (25 scripts)"
+        }
+      ],
+      "errors": [
+        {
+          "file": "air-conditioners.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 24,
+          "dom_elements": 3238,
+          "aria_labels": 166,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "good ARIA (166 labels)"
+          ],
+          "score": 20,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
+        },
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 25,
+          "dom_elements": 765,
+          "aria_labels": 49,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "lean DOM (765 elements)",
+            "good ARIA (49 labels)"
+          ],
+          "score": 25,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (25 scripts)"
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 25,
+          "dom_elements": 765,
+          "aria_labels": 49,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "lean DOM (765 elements)",
+            "good ARIA (49 labels)"
+          ],
+          "score": 25,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (25 scripts)"
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 25,
+          "dom_elements": 766,
+          "aria_labels": 49,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "lean DOM (766 elements)",
+            "good ARIA (49 labels)"
+          ],
+          "score": 25,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (25 scripts)"
+        },
+        {
+          "file": "index.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": true,
+          "external_scripts": 17,
+          "dom_elements": 6503,
+          "aria_labels": 228,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "clean heading hierarchy",
+            "good ARIA (228 labels)"
+          ],
+          "score": 25,
+          "maxScore": 25,
+          "issue": "very large DOM (6503 elements)"
+        },
+        {
+          "file": "laptops-computers.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 24,
+          "dom_elements": 764,
+          "aria_labels": 49,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "lean DOM (764 elements)",
+            "good ARIA (49 labels)"
+          ],
+          "score": 25,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
+        },
+        {
+          "file": "sale.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 24,
+          "dom_elements": 5806,
+          "aria_labels": 445,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "good ARIA (445 labels)"
+          ],
+          "score": 20,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 23,
+          "dom_elements": 763,
+          "aria_labels": 49,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "lean DOM (763 elements)",
+            "good ARIA (49 labels)"
+          ],
+          "score": 25,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (23 scripts)"
+        },
+        {
+          "file": "televisions--smart-tvs.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 23,
+          "dom_elements": 3083,
+          "aria_labels": 150,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "good ARIA (150 labels)"
+          ],
+          "score": 20,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (23 scripts)"
+        },
+        {
+          "file": "televisions.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 24,
+          "dom_elements": 3084,
+          "aria_labels": 150,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "good ARIA (150 labels)"
+          ],
+          "score": 20,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
+        },
+        {
+          "file": "washing-machines.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 22,
+          "dom_elements": 3047,
+          "aria_labels": 159,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "good ARIA (159 labels)"
+          ],
+          "score": 20,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (22 scripts)"
+        },
+        {
+          "file": "whats-new.html",
+          "has_main": true,
+          "has_article": true,
+          "landmark_count": 5,
+          "heading_hierarchy_ok": false,
+          "external_scripts": 25,
+          "dom_elements": 1123,
+          "aria_labels": 51,
+          "signals": [
+            "<main>",
+            "<article>",
+            "5 semantic landmarks",
+            "lean DOM (1123 elements)",
+            "good ARIA (51 labels)"
+          ],
+          "score": 25,
+          "maxScore": 25,
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (25 scripts)"
+        }
+      ],
+      "summary": "0/12 pages have strong DOM structure"
+    },
+    "robots_content": {
+      "robots": {
+        "ClaudeBot": {
+          "allow": [],
+          "disallow": [],
+          "blocked": false
+        },
+        "GPTBot": {
+          "allow": [],
+          "disallow": [],
+          "blocked": false
+        },
+        "PerplexityBot": {
+          "allow": [],
+          "disallow": [],
+          "blocked": false
+        },
+        "Google-Extended": {
+          "allow": [],
+          "disallow": [],
+          "blocked": false
+        },
+        "Googlebot": {
+          "allow": [],
+          "disallow": [],
+          "blocked": false
+        }
+      },
+      "llms_txt": {
+        "exists": false
+      },
+      "score": 24,
+      "maxScore": 50,
+      "issues": [
+        "No llms.txt \u2014 AI agents cannot get a structured site overview"
+      ],
+      "signals": [
+        "ClaudeBot accessible via robots.txt",
+        "GPTBot accessible via robots.txt",
+        "PerplexityBot accessible via robots.txt",
+        "Google-Extended accessible via robots.txt"
+      ],
+      "percentage": 48,
+      "grade": "D",
+      "errors": [
+        {
+          "issue": "No llms.txt \u2014 AI agents cannot get a structured site overview"
+        }
+      ],
+      "summary": "4/4 AI bots accessible | llms.txt: no"
+    },
+    "sitemap_coverage": {
+      "score": 10,
+      "maxScore": 40,
+      "issues": [
+        "category_pages not found in sitemap",
+        "buying_guides not found in sitemap",
+        "content_pages not found in sitemap"
+      ],
+      "signals": [
+        "sitemap found (/sitemap.xml): 11287 URLs",
+        "product_pages in sitemap"
+      ],
+      "url_count": 11287,
+      "coverage": {
+        "category_pages": false,
+        "buying_guides": false,
+        "product_pages": true,
+        "content_pages": false
+      },
+      "percentage": 25,
+      "grade": "F",
+      "errors": [
+        {
+          "issue": "category_pages not found in sitemap"
+        },
+        {
+          "issue": "buying_guides not found in sitemap"
+        },
+        {
+          "issue": "content_pages not found in sitemap"
+        }
+      ],
+      "summary": "1/4 content types in sitemap | 11287 total URLs"
+    },
+    "competitor_schema": {
+      "score": 40,
+      "maxScore": 45,
+      "percentage": 89,
+      "grade": "B",
+      "tgg_schema_types": [
+        "BreadcrumbList",
+        "CollectionPage",
+        "FAQPage",
+        "Organization"
+      ],
+      "tgg_schema_count": 4,
+      "competitors": [
+        {
+          "label": "JB Hi-Fi",
+          "url": "https://www.jbhifi.com.au",
+          "schema_types": [
+            "WebSite"
+          ],
+          "count": 1
+        },
+        {
+          "label": "Harvey Norman",
+          "url": "https://www.harveynorman.com.au",
+          "schema_types": [],
+          "count": 0
+        },
+        {
+          "label": "Appliances Online",
+          "url": "https://www.appliancesonline.com.au",
+          "schema_types": [],
+          "count": 0
+        }
+      ],
+      "tgg_advantages": [
+        "BreadcrumbList",
+        "CollectionPage",
+        "FAQPage",
+        "Organization"
+      ],
+      "tgg_gaps": [
+        "WebSite"
+      ],
+      "signals": [
+        "TGG leads on schema breadth (4 vs avg 0)",
+        "TGG-unique schema: BreadcrumbList, CollectionPage, FAQPage, Organization"
+      ],
+      "errors": [
+        {
+          "issue": "Competitors have WebSite schema \u2014 TGG doesn't"
+        }
+      ],
+      "summary": "TGG: 4 schema types | 1 gaps vs competitors"
     }
   }
 }
