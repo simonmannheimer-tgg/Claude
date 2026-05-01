@@ -50,6 +50,7 @@ PHASE3_CATS = [
     ("robots_content",    "Robots.txt & llms.txt",        50),
     ("sitemap_coverage",  "Sitemap Coverage",             40),
     ("competitor_schema", "Competitor Schema Comparison", 45),
+    ("au_signals",        "AU Content Signals",           20),
 ]
 
 PHASE4_CATS = [
@@ -94,14 +95,15 @@ def grade_badge(grade: str, pct: int) -> str:
 def load_all_data(out_dir: str) -> dict:
     d = out_dir.rstrip("/")
     return {
-        "phase1":     load_latest(f"{d}/aeo-results-*.json"),
-        "phase2":     load_latest(f"{d}/aeo-local-*.json"),
-        "phase3":     load_latest(f"{d}/ecommerce-aeo-*.json"),
-        "phase4":     load_latest(f"{d}/content-aeo-*.json"),
-        "run_id":     os.getenv("GITHUB_RUN_ID", "local"),
-        "run_number": os.getenv("GITHUB_RUN_NUMBER", "?"),
-        "ref":        os.getenv("GITHUB_REF_NAME", "main"),
-        "ts":         datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
+        "phase1":          load_latest(f"{d}/aeo-results-*.json"),
+        "phase2":          load_latest(f"{d}/aeo-local-*.json"),
+        "phase3":          load_latest(f"{d}/ecommerce-aeo-*.json"),
+        "phase4":          load_latest(f"{d}/content-aeo-*.json"),
+        "recommendations": load_latest(f"{d}/recommendations-*.json"),
+        "run_id":          os.getenv("GITHUB_RUN_ID", "local"),
+        "run_number":      os.getenv("GITHUB_RUN_NUMBER", "?"),
+        "ref":             os.getenv("GITHUB_REF_NAME", "main"),
+        "ts":              datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
     }
 
 
@@ -617,6 +619,82 @@ new Chart(document.getElementById('chartP3'), {{
 
 # ── Full HTML ──────────────────────────────────────────────────────────────────
 
+def section_recommendations(recs: dict | None) -> str:
+    if not recs:
+        return "<p class='empty'>No recommendations data found. Run generate_recommendations.py after Phase 3.</p>"
+
+    summary = recs.get("summary", {})
+    pages = recs.get("pages", [])
+    global_fixes = recs.get("global_fixes", [])
+    robots_additions = recs.get("robots_additions", [])
+
+    priority_color = {"critical": "#dc2626", "high": "#f97316", "medium": "#eab308", "low": "#22c55e"}
+
+    html = f"""
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
+        <div style="background:#fee2e2;padding:16px;border-radius:8px;text-align:center">
+            <div style="font-size:2em;font-weight:800;color:#dc2626">{summary.get('critical_pages',0)}</div>
+            <div style="font-size:0.85em;color:#9a3412">Critical pages</div>
+        </div>
+        <div style="background:#fff7ed;padding:16px;border-radius:8px;text-align:center">
+            <div style="font-size:2em;font-weight:800;color:#f97316">{summary.get('high_pages',0)}</div>
+            <div style="font-size:0.85em;color:#9a3412">High priority</div>
+        </div>
+        <div style="background:#fef9c3;padding:16px;border-radius:8px;text-align:center">
+            <div style="font-size:2em;font-weight:800;color:#ca8a04">{summary.get('pages_with_fixes',0)}</div>
+            <div style="font-size:0.85em;color:#713f12">Pages needing fixes</div>
+        </div>
+        <div style="background:#dcfce7;padding:16px;border-radius:8px;text-align:center">
+            <div style="font-size:2em;font-weight:800;color:#16a34a">{summary.get('total_fixes',0)}</div>
+            <div style="font-size:0.85em;color:#14532d">Total fixes</div>
+        </div>
+    </div>"""
+
+    if global_fixes:
+        html += "<h3>Global Fixes</h3><ul style='margin:0 0 16px 20px'>"
+        for fix in global_fixes:
+            html += f"<li style='margin-bottom:6px'>{fix}</li>"
+        html += "</ul>"
+
+    if pages:
+        html += "<h3>Per-Page Fixes</h3>"
+        for page in pages[:20]:
+            prio = page.get("priority", "medium")
+            pcolor = priority_color.get(prio, "#94a3b8")
+            html += f"""<details style="margin-bottom:10px;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden">
+            <summary style="padding:12px 16px;cursor:pointer;background:#f8fafc;display:flex;align-items:center;gap:12px">
+                <span style="background:{pcolor};color:white;padding:2px 10px;border-radius:12px;font-size:0.78em;font-weight:700;text-transform:uppercase">{prio}</span>
+                <code style="font-size:0.9em">{page.get('file','')}</code>
+                <span style="color:#64748b;font-size:0.85em">({page.get('page_type','')}) — {page.get('fix_count',0)} fix(es)</span>
+            </summary>
+            <div style="padding:16px">"""
+            for fix in page.get("fixes", []):
+                impact_badge = f'<span style="background:#dcfce7;color:#166534;padding:1px 8px;border-radius:10px;font-size:0.75em;font-weight:600">{fix.get("impact","").upper()}</span>'
+                effort_badge = f'<span style="background:#f1f5f9;color:#475569;padding:1px 8px;border-radius:10px;font-size:0.75em">{fix.get("effort","").upper()} effort</span>'
+                html += f"""<div style="margin-bottom:14px;padding:12px;background:#fffbeb;border-left:3px solid {pcolor};border-radius:4px">
+                    <div style="font-weight:600;margin-bottom:4px">{fix.get('issue','')} &nbsp;{impact_badge} {effort_badge}</div>
+                    <div style="font-size:0.88em;color:#374151;margin-bottom:8px">{fix.get('fix','')}</div>"""
+                if fix.get("snippet"):
+                    html += f'<details style="margin-top:6px"><summary style="cursor:pointer;font-size:0.82em;color:#6366f1">Show code snippet</summary><pre style="background:#1e293b;color:#e2e8f0;padding:12px;border-radius:6px;overflow-x:auto;font-size:0.82em;margin-top:6px">{fix["snippet"]}</pre></details>'
+                html += "</div>"
+            html += "</div></details>"
+
+    if robots_additions:
+        html += "<h3>robots.txt Additions</h3>"
+        for addition in robots_additions:
+            html += f'<pre style="background:#1e293b;color:#e2e8f0;padding:12px;border-radius:6px;font-size:0.82em;margin-bottom:8px">{addition}</pre>'
+
+    llms_txt = recs.get("llms_txt_template", "")
+    if llms_txt:
+        html += f"""<h3>llms.txt Template</h3>
+        <details>
+            <summary style="cursor:pointer;color:#6366f1;font-weight:600">Show llms.txt template for thegoodguys.com.au</summary>
+            <pre style="background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;overflow-x:auto;font-size:0.82em;margin-top:8px;white-space:pre-wrap">{llms_txt}</pre>
+        </details>"""
+
+    return html
+
+
 CSS = """
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; }
@@ -723,6 +801,11 @@ def build_html(data: dict) -> str:
   <div class="section">
     <h2>Phase 4 — Content Intelligence {grade_badge(p4_grade, p4_pct)}</h2>
     {section_phase4(p4)}
+  </div>
+
+  <div class="section">
+    <h2>Recommendations — Prioritised Fix List</h2>
+    {section_recommendations(data.get('recommendations'))}
   </div>
 
   <div class="footer">

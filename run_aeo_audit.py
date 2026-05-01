@@ -82,6 +82,34 @@ def run_aeo(url: str, checks: str | None = None) -> dict:
         return {"url": url, "error": str(e)}
 
 
+def apply_retail_adjustment(result: dict) -> dict:
+    """
+    Remove points for capability-signaling and ux-bridge categories — these reward
+    repo-specific artifacts (skill.md, agent-permissions.json, copy-to-clipboard buttons)
+    that are irrelevant for retail ecommerce pages. Recalculates percentage over
+    the remaining 75-point retail-relevant score.
+    """
+    if "error" in result or "categories" not in result:
+        return result
+
+    excluded = {"capability-signaling", "ux-bridge"}
+    cats = result.get("categories", {})
+    retail_max = sum(m for k, m in CATEGORIES if k not in excluded)  # 75
+    retail_score = sum(
+        cats.get(k, {}).get("score", 0)
+        for k, _ in CATEGORIES
+        if k not in excluded
+    )
+    adjusted_pct = round(retail_score / retail_max * 100) if retail_max else 0
+
+    result["retail_adjusted"] = True
+    result["excluded_categories"] = sorted(excluded)
+    result["retail_score"] = retail_score
+    result["retail_max"] = retail_max
+    result["retail_percentage"] = adjusted_pct
+    return result
+
+
 def cat_cell(report: dict, key: str, max_pts: int) -> str:
     c = report.get("categories", {}).get(key, {})
     return f"{c.get('score', '?')}/{max_pts}"
@@ -201,13 +229,16 @@ def main():
         label = e.get("label", url)
         print(f"  [{label}] {url}")
         r = run_aeo(url, checks)
+        r = apply_retail_adjustment(r)
         e["result"] = r
         if "error" in r:
             print(f"  ✗ {r['error']}", file=sys.stderr)
         else:
             s = r.get("summary", {})
+            retail_pct = r.get("retail_percentage", r.get("percentage", 0))
             print(
-                f"  ✓ Grade {r.get('grade', '?')} ({r.get('percentage', 0)}%)"
+                f"  ✓ Grade {r.get('grade', '?')} ({r.get('percentage', 0)}% raw"
+                f" / {retail_pct}% retail-adjusted)"
                 f" | {s.get('failed', s.get('errors', '?'))} errors, {s.get('warned', s.get('warnings', '?'))} warnings"
             )
 
