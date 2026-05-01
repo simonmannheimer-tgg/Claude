@@ -14,8 +14,8 @@
       "pages": [
         {
           "file": "air-conditioners.html",
-          "total_words": 2931,
-          "main_words": 2616,
+          "total_words": 2932,
+          "main_words": 2617,
           "main_ratio_pct": 89,
           "boilerplate_ratio_pct": 9,
           "score": 20,
@@ -219,7 +219,7 @@
           "avg_paragraph_words": 52,
           "good_chunk_pct": 48,
           "long_paragraphs": 0,
-          "approx_total_tokens": 3810,
+          "approx_total_tokens": 3812,
           "score": 8,
           "maxScore": 25,
           "issue": "Only 48% of paragraphs in the ideal 50-400 word range"
@@ -353,7 +353,7 @@
           "avg_paragraph_words": 52,
           "good_chunk_pct": 48,
           "long_paragraphs": 0,
-          "approx_total_tokens": 3810,
+          "approx_total_tokens": 3812,
           "score": 8,
           "maxScore": 25,
           "issue": "Only 48% of paragraphs in the ideal 50-400 word range"
@@ -469,29 +469,29 @@
         {
           "file": "air-conditioners.html",
           "entity_count": 26,
-          "total_mentions": 222,
+          "total_mentions": 223,
           "entity_density_pct": 7.6,
           "brand_entities": 5,
           "category_entities": 8,
           "spec_entities": 4,
           "heading_entities": [
-            "price",
+            "energy rating",
             "air conditioner",
-            "reverse cycle",
-            "capacity",
-            "energy rating"
+            "price",
+            "installation",
+            "capacity"
           ],
           "intro_entities": [
+            "panasonic",
             "air conditioner",
             "westinghouse",
-            "split system",
-            "reverse cycle",
-            "panasonic"
+            "fujitsu",
+            "split system"
           ],
           "top_entities": [
             {
               "entity": "reverse cycle",
-              "count": 36
+              "count": 37
             },
             {
               "entity": "air conditioner",
@@ -515,11 +515,11 @@
             },
             {
               "entity": "fujitsu",
-              "count": 9
+              "count": 8
             },
             {
-              "entity": "panasonic",
-              "count": 7
+              "entity": "hisense",
+              "count": 8
             }
           ],
           "score": 25,
@@ -536,19 +536,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "price",
-            "washing machine",
             "soundbar",
+            "vacuum",
             "laptop",
-            "dishwasher"
+            "discount",
+            "tv"
           ],
           "top_entities": [
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
@@ -556,11 +556,11 @@
               "count": 2
             },
             {
-              "entity": "washing machine",
+              "entity": "soundbar",
               "count": 1
             },
             {
-              "entity": "soundbar",
+              "entity": "vacuum",
               "count": 1
             },
             {
@@ -568,11 +568,11 @@
               "count": 1
             },
             {
-              "entity": "dishwasher",
+              "entity": "tv",
               "count": 1
             },
             {
-              "entity": "vacuum",
+              "entity": "fridge",
               "count": 1
             }
           ],
@@ -590,19 +590,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "price",
-            "washing machine",
             "soundbar",
+            "vacuum",
             "laptop",
-            "dishwasher"
+            "discount",
+            "tv"
           ],
           "top_entities": [
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
@@ -610,11 +610,11 @@
               "count": 2
             },
             {
-              "entity": "washing machine",
+              "entity": "soundbar",
               "count": 1
             },
             {
-              "entity": "soundbar",
+              "entity": "vacuum",
               "count": 1
             },
             {
@@ -622,11 +622,11 @@
               "count": 1
             },
             {
-              "entity": "dishwasher",
+              "entity": "tv",
               "count": 1
             },
             {
-              "entity": "vacuum",
+              "entity": "fridge",
               "count": 1
             }
           ],
@@ -644,19 +644,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "price",
-            "washing machine",
             "soundbar",
+            "vacuum",
             "laptop",
-            "dishwasher"
+            "discount",
+            "tv"
           ],
           "top_entities": [
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
@@ -664,11 +664,11 @@
               "count": 2
             },
             {
-              "entity": "washing machine",
+              "entity": "soundbar",
               "count": 1
             },
             {
-              "entity": "soundbar",
+              "entity": "vacuum",
               "count": 1
             },
             {
@@ -676,11 +676,11 @@
               "count": 1
             },
             {
-              "entity": "dishwasher",
+              "entity": "tv",
               "count": 1
             },
             {
-              "entity": "vacuum",
+              "entity": "fridge",
               "count": 1
             }
           ],
@@ -697,18 +697,18 @@
           "category_entities": 23,
           "spec_entities": 9,
           "heading_entities": [
-            "4k",
-            "led",
-            "mini led",
-            "sony",
-            "kitchenaid"
+            "kitchenaid",
+            "monitor",
+            "vacuum",
+            "bosch",
+            "mixer"
           ],
           "intro_entities": [
-            "4k",
-            "washing machine",
             "soundbar",
+            "vacuum",
+            "bosch",
             "laptop",
-            "led"
+            "tv"
           ],
           "top_entities": [
             {
@@ -736,11 +736,11 @@
               "count": 7
             },
             {
-              "entity": "4k",
+              "entity": "price",
               "count": 6
             },
             {
-              "entity": "price",
+              "entity": "4k",
               "count": 6
             }
           ],
@@ -758,19 +758,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "price",
-            "washing machine",
             "soundbar",
+            "vacuum",
             "laptop",
-            "dishwasher"
+            "discount",
+            "tv"
           ],
           "top_entities": [
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
@@ -778,11 +778,11 @@
               "count": 2
             },
             {
-              "entity": "washing machine",
+              "entity": "soundbar",
               "count": 1
             },
             {
-              "entity": "soundbar",
+              "entity": "vacuum",
               "count": 1
             },
             {
@@ -790,11 +790,11 @@
               "count": 1
             },
             {
-              "entity": "dishwasher",
+              "entity": "tv",
               "count": 1
             },
             {
-              "entity": "vacuum",
+              "entity": "fridge",
               "count": 1
             }
           ],
@@ -811,18 +811,18 @@
           "category_entities": 25,
           "spec_entities": 12,
           "heading_entities": [
-            "4k",
-            "ninja",
             "sunbeam",
-            "dishwasher",
-            "vacuum"
+            "ninja",
+            "vacuum",
+            "espresso",
+            "dyson"
           ],
           "intro_entities": [
-            "4k",
-            "washing machine",
             "soundbar",
+            "vacuum",
             "laptop",
-            "dishwasher"
+            "microwave",
+            "dyson"
           ],
           "top_entities": [
             {
@@ -872,19 +872,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "price",
-            "washing machine",
             "soundbar",
+            "vacuum",
             "laptop",
-            "dishwasher"
+            "discount",
+            "tv"
           ],
           "top_entities": [
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
@@ -892,11 +892,11 @@
               "count": 2
             },
             {
-              "entity": "washing machine",
+              "entity": "soundbar",
               "count": 1
             },
             {
-              "entity": "soundbar",
+              "entity": "vacuum",
               "count": 1
             },
             {
@@ -904,11 +904,11 @@
               "count": 1
             },
             {
-              "entity": "dishwasher",
+              "entity": "tv",
               "count": 1
             },
             {
-              "entity": "vacuum",
+              "entity": "fridge",
               "count": 1
             }
           ],
@@ -925,18 +925,18 @@
           "category_entities": 5,
           "spec_entities": 13,
           "heading_entities": [
-            "price",
-            "lg",
-            "tv",
             "energy rating",
+            "television",
+            "tv",
+            "price",
             "hdr"
           ],
           "intro_entities": [
-            "4k",
             "soundbar",
-            "led",
-            "sony",
-            "qled"
+            "television",
+            "qled",
+            "tv",
+            "sony"
           ],
           "top_entities": [
             {
@@ -985,18 +985,18 @@
           "category_entities": 5,
           "spec_entities": 13,
           "heading_entities": [
-            "price",
-            "lg",
-            "tv",
             "energy rating",
+            "television",
+            "tv",
+            "price",
             "hdr"
           ],
           "intro_entities": [
-            "4k",
             "soundbar",
-            "led",
-            "sony",
-            "qled"
+            "television",
+            "qled",
+            "tv",
+            "sony"
           ],
           "top_entities": [
             {
@@ -1045,18 +1045,18 @@
           "category_entities": 4,
           "spec_entities": 10,
           "heading_entities": [
-            "price",
+            "energy rating",
             "washing machine",
-            "washer",
-            "dryer",
-            "capacity"
+            "price",
+            "capacity",
+            "dryer"
           ],
           "intro_entities": [
+            "bosch",
             "washing machine",
-            "top loader",
-            "fisher & paykel",
             "westinghouse",
-            "washer"
+            "fisher & paykel",
+            "sale"
           ],
           "top_entities": [
             {
@@ -1114,11 +1114,11 @@
               "count": 6
             },
             {
-              "entity": "price",
+              "entity": "tv",
               "count": 5
             },
             {
-              "entity": "tv",
+              "entity": "price",
               "count": 5
             },
             {
@@ -1126,11 +1126,7 @@
               "count": 4
             },
             {
-              "entity": "washing machine",
-              "count": 3
-            },
-            {
-              "entity": "dishwasher",
+              "entity": "discount",
               "count": 3
             },
             {
@@ -1138,7 +1134,11 @@
               "count": 3
             },
             {
-              "entity": "discount",
+              "entity": "washing machine",
+              "count": 3
+            },
+            {
+              "entity": "dishwasher",
               "count": 3
             }
           ],
@@ -1866,11 +1866,11 @@
         },
         {
           "file": "index.html",
-          "total_internal_links": 195,
+          "total_internal_links": 194,
           "specific_anchors": 149,
           "generic_anchors": 17,
-          "empty_anchors": 29,
-          "specific_ratio_pct": 76,
+          "empty_anchors": 28,
+          "specific_ratio_pct": 77,
           "top_generic": [
             "here",
             "shop now",
@@ -2014,8 +2014,8 @@
           "file": "air-conditioners.html",
           "full_page_similarity": 0.659,
           "avg_top3_similarity": 0.639,
-          "best_passage_similarity": 0.845,
-          "best_passage_preview": "the warm air of the room, refrigerating it then pushing the cooled air back into the room whilst expelling excess heat outside. Split System ACs consi",
+          "best_passage_similarity": 0.842,
+          "best_passage_preview": "in the warm air of the room, refrigerating it then pushing the cooled air back into the room whilst expelling excess heat outside. Split System ACs co",
           "best_reference_match": "To choose the right air conditioner, measure the room size in cubic metres and match it to the unit'",
           "score": 25,
           "maxScore": 25,
@@ -2158,10 +2158,10 @@
       "pages": [
         {
           "file": "air-conditioners.html",
-          "tgg_entity_count": 80,
+          "tgg_entity_count": 81,
           "competitor_entity_count": 0,
           "shared_count": 0,
-          "tgg_only_count": 80,
+          "tgg_only_count": 81,
           "competitor_only_count": 0,
           "coverage_pct": 50,
           "tgg_only_sample": [
@@ -2370,7 +2370,7 @@
           "llm_overall": 7.2,
           "score": 18,
           "maxScore": 25,
-          "reasoning": "clarity: Flesch reading ease 40, avg sentence 31 words; specificity: 189 numbers, 183 entities, 17 prices in 2586 words; schema: 10/10 schema entities visible in text; query: 6 questions, 6 definitions, intro_answer=False",
+          "reasoning": "clarity: Flesch reading ease 40, avg sentence 31 words; specificity: 189 numbers, 182 entities, 16 prices in 2587 words; schema: 10/10 schema entities visible in text; query: 6 questions, 6 definitions, intro_answer=False",
           "issue": null
         },
         {
