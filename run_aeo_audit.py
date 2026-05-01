@@ -25,42 +25,39 @@ from pathlib import Path
 
 import httpx
 
+# Checks that apply to every page type (structure, tokens, meta).
+# robots-txt and llms-txt are site-wide — run once per domain via the Home URL.
+_PAGE_CHECKS = "content-structure,token-budget,meta-tags"
+
 DEFAULT_URLS = [
-    # ── TGG — one URL per distinct page type from sitemap ───────────────────────
-    # category_sitemap: top-level PLP
-    {"url": "https://www.thegoodguys.com.au/televisions",                                   "label": "TGG · Category"},
-    # category_sitemap: sub-category PLP
-    {"url": "https://www.thegoodguys.com.au/televisions/smart-tvs",                         "label": "TGG · Sub-category"},
-    # product_sitemap: PDP
-    {"url": "https://www.thegoodguys.com.au/lg-12kg-8kg-combo-washer-dryer-wvc9-1412w",     "label": "TGG · Product"},
-    # content_sitemap: buying guide
-    {"url": "https://www.thegoodguys.com.au/buying-guide/television-buying-guide",          "label": "TGG · Buying Guide"},
-    # brand_sitemap: brand hub
-    {"url": "https://www.thegoodguys.com.au/samsung",                                       "label": "TGG · Brand Hub"},
-    # content_sitemap: news/editorial hub
-    {"url": "https://www.thegoodguys.com.au/whats-new",                                     "label": "TGG · News Hub"},
-    # home
+    # ── TGG — Home runs full checks (robots + llms + page-level) ────────────────
     {"url": "https://www.thegoodguys.com.au",                                               "label": "TGG · Home"},
+    {"url": "https://www.thegoodguys.com.au/televisions",                                   "label": "TGG · Category",     "checks": _PAGE_CHECKS},
+    {"url": "https://www.thegoodguys.com.au/televisions/smart-tvs",                         "label": "TGG · Sub-category", "checks": _PAGE_CHECKS},
+    {"url": "https://www.thegoodguys.com.au/lg-12kg-8kg-combo-washer-dryer-wvc9-1412w",     "label": "TGG · Product",      "checks": _PAGE_CHECKS},
+    {"url": "https://www.thegoodguys.com.au/buying-guide/television-buying-guide",          "label": "TGG · Buying Guide", "checks": _PAGE_CHECKS},
+    {"url": "https://www.thegoodguys.com.au/samsung",                                       "label": "TGG · Brand Hub",    "checks": _PAGE_CHECKS},
+    {"url": "https://www.thegoodguys.com.au/whats-new",                                     "label": "TGG · News Hub",     "checks": _PAGE_CHECKS},
 
-    # ── JB Hi-Fi — matching types ────────────────────────────────────────────────
+    # ── JB Hi-Fi — Home runs full checks ────────────────────────────────────────
     {"url": "https://www.jbhifi.com.au",                                                    "label": "JB Hi-Fi · Home"},
-    {"url": "https://www.jbhifi.com.au/collections/tvs",                                    "label": "JB Hi-Fi · Category"},
-    # JB Hi-Fi uses /pages/[brand] for brand hubs
-    {"url": "https://www.jbhifi.com.au/pages/samsung",                                     "label": "JB Hi-Fi · Brand Hub"},
-    # JB Hi-Fi buying advice lives under /blogs/
-    {"url": "https://www.jbhifi.com.au/blogs/buying-advice/tv-buying-guide",               "label": "JB Hi-Fi · Buying Guide"},
+    {"url": "https://www.jbhifi.com.au/collections/tvs",                                    "label": "JB Hi-Fi · Category",     "checks": _PAGE_CHECKS},
+    {"url": "https://www.jbhifi.com.au/pages/samsung",                                      "label": "JB Hi-Fi · Brand Hub",    "checks": _PAGE_CHECKS},
+    {"url": "https://www.jbhifi.com.au/pages/tv-buying-guide",                              "label": "JB Hi-Fi · Buying Guide", "checks": _PAGE_CHECKS},
+    {"url": "https://www.jbhifi.com.au/blogs/guides-tips",                                  "label": "JB Hi-Fi · Editorial Hub","checks": _PAGE_CHECKS},
 
-    # ── Harvey Norman — matching types ───────────────────────────────────────────
-    {"url": "https://www.harveynorman.com.au",                                                         "label": "Harvey Norman · Home"},
-    {"url": "https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-screen-size/all-tvs",      "label": "Harvey Norman · Category"},
-    # HN brand pages: /[brand]
-    {"url": "https://www.harveynorman.com.au/samsung",                                                 "label": "Harvey Norman · Brand Hub"},
-    {"url": "https://www.harveynorman.com.au/buying-guides/tv-buying-guide",                           "label": "Harvey Norman · Buying Guide"},
+    # ── Harvey Norman — Home runs full checks ───────────────────────────────────
+    {"url": "https://www.harveynorman.com.au",                                                                "label": "Harvey Norman · Home"},
+    {"url": "https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-screen-size/all-tvs",             "label": "Harvey Norman · Category",     "checks": _PAGE_CHECKS},
+    {"url": "https://www.harveynorman.com.au/hisense-65-inch-q6nau-4k-qled-smart-tv.html",                    "label": "Harvey Norman · Product",      "checks": _PAGE_CHECKS},
+    {"url": "https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-brand/samsung-tvs",               "label": "Harvey Norman · Brand Page",   "checks": _PAGE_CHECKS},
+    {"url": "https://www.harveynorman.com.au/buying-guides/television-buying-guide",                          "label": "Harvey Norman · Buying Guide", "checks": _PAGE_CHECKS},
 
-    # ── Appliances Online — matching types (/category/[dept]/[sub]/ structure) ──
+    # ── Appliances Online — Home runs full checks (/category/[dept]/[sub]/ URLs)
     {"url": "https://www.appliancesonline.com.au",                                          "label": "Appliances Online · Home"},
-    {"url": "https://www.appliancesonline.com.au/category/refrigeration/fridges/",          "label": "Appliances Online · Category"},
-    {"url": "https://www.appliancesonline.com.au/article/refrigerator-size-guide/",         "label": "Appliances Online · Guide"},
+    {"url": "https://www.appliancesonline.com.au/category/refrigeration/fridges/",          "label": "Appliances Online · Category",  "checks": _PAGE_CHECKS},
+    {"url": "https://www.appliancesonline.com.au/brand/samsung/",                           "label": "Appliances Online · Brand Hub", "checks": _PAGE_CHECKS},
+    {"url": "https://www.appliancesonline.com.au/article/refrigerator-size-guide/",         "label": "Appliances Online · Guide",     "checks": _PAGE_CHECKS},
 ]
 
 # Ecommerce-relevant categories: discovery, content-structure, token-economics.
@@ -242,8 +239,11 @@ def main():
     for e in entries:
         url = e["url"]
         label = e.get("label", url)
+        # Global AEO_CHECKS env var overrides; otherwise use per-entry default.
+        # Home URLs have no per-entry checks → run full set (robots+llms+page).
+        entry_checks = checks if checks else e.get("checks")
         print(f"  [{label}] {url}")
-        r = run_aeo(url, checks)
+        r = run_aeo(url, entry_checks)
         r = apply_retail_adjustment(r)
         e["result"] = r
         if "error" in r:
