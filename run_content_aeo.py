@@ -5,19 +5,24 @@ Content-level checks for AI discoverability, entity prominence, and LLM retrieva
 Operates entirely on HTML snapshots — no network required after Phase 2 crawl.
 
 Checks:
-  1. boilerplate_ratio    — nav/header/footer words vs substantive main content
-  2. content_chunking     — paragraph/section length distribution for LLM retrieval
-  3. entity_signals       — brand/category/spec entity frequency, placement, density
-  4. knowledge_graph      — sameAs links, authority references, external entity signals
-  5. semantic_structure   — Q&A, definitions, comparisons, how-to patterns, lexical richness
-  6. anchor_quality       — internal link anchor text specificity vs generic terms
+  1. boilerplate_ratio      — nav/header/footer words vs substantive main content
+  2. content_chunking       — paragraph/section length distribution for LLM retrieval
+  3. entity_signals         — brand/category/spec entity frequency, placement, density
+  4. knowledge_graph        — sameAs links, authority references, external entity signals
+  5. semantic_structure     — Q&A, definitions, comparisons, how-to patterns, lexical richness
+  6. anchor_quality         — internal link anchor text specificity vs generic terms
+  7. content_similarity     — semantic embedding similarity against ideal AI-citable passages
 
-Note on embedding checks: true semantic embedding similarity requires an embedding model
-(sentence-transformers, Anthropic embeddings API, etc.). The checks here use proxy metrics
-(entity density, type-token ratio, pattern matching) that correlate with embedding-based
-relevance without needing a model or API key. To extend with real embeddings, pipe
-page text through the Anthropic embeddings API and compare cosine similarity against a
-reference set of ideal ecommerce buying-guide passages.
+Similarity implementation:
+  Check 7 uses sentence-transformers (all-MiniLM-L6-v2 from HuggingFace) to embed both
+  page content chunks and a reference corpus of ~20 ideal ecommerce AI-citation passages,
+  then scores via cosine similarity. Falls back to TF-IDF bag-of-words if the model
+  is not installed (pip install sentence-transformers).
+
+  TODO — upgrade options when API access is available:
+    Option A (OpenAI):    text-embedding-3-small via OPENAI_API_KEY env var (best accuracy)
+    Option B (Cohere):    embed-english-v3.0 via COHERE_API_KEY env var
+    Option C (Anthropic): no embeddings API yet — use Claude to score passage quality instead
 
 Usage:
     SNAPSHOT_DIR=site-snapshots/thegoodguys.com.au python run_content_aeo.py
@@ -25,14 +30,26 @@ Usage:
 """
 
 import json
+import math
 import os
 import re
 import sys
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
 import httpx
 from bs4 import BeautifulSoup
+
+# sentence-transformers for semantic similarity (Check 7).
+# Falls back to TF-IDF cosine if not installed.
+try:
+    from sentence_transformers import SentenceTransformer
+    import numpy as np
+    _ST_MODEL: SentenceTransformer | None = None
+    _ST_AVAILABLE = True
+except ImportError:
+    _ST_AVAILABLE = False
 
 GRADE_EMOJI = {"A": "🟢", "B": "🟢", "C": "🟡", "D": "🟠", "F": "🔴"}
 
@@ -111,6 +128,130 @@ def get_main_content(soup: BeautifulSoup) -> BeautifulSoup | None:
         or soup.find("article")
         or soup.find(id=re.compile(r"content|main|body", re.I))
     )
+
+
+# ── Similarity: reference corpus & embedding/TF-IDF cosine ────────────────────
+#
+# These passages represent the kind of content AI Answer Engines (Google AI Overviews,
+# ChatGPT, Perplexity) preferentially cite. They are direct, factual, entity-rich,
+# and structured as standalone answers — not marketing copy.
+#
+# Similarity is computed with sentence-transformers (all-MiniLM-L6-v2) when available,
+# falling back to TF-IDF bag-of-words cosine otherwise.
+# TODO: swap to OpenAI/Cohere embeddings API for higher accuracy — see module docstring.
+
+REFERENCE_CORPUS = [
+    # Buying guide — direct answer format
+    "A 4K OLED television offers exceptional contrast by turning off individual pixels to produce true blacks. OLED is ideal for dark home theatre rooms and delivers the best picture quality currently available in consumer televisions.",
+    "To choose the right air conditioner, measure the room size in cubic metres and match it to the unit's cooling capacity in kilowatts. A 2.5kW split system suits rooms up to 20 square metres, while larger living areas need 5-7kW.",
+    "Front-load washing machines are more energy and water efficient than top-loaders and typically achieve better wash results at lower temperatures. Top-loaders are faster and gentler on clothes that require hand-wash care.",
+    "An inverter air conditioner varies its compressor speed to maintain a set temperature, using up to 30% less energy than a fixed-speed unit. All reverse-cycle models can both heat and cool, making them suitable for Australian climates year-round.",
+    "When choosing a refrigerator, allow 15-20cm clearance on all sides for ventilation. French door models offer the largest usable capacity for families, while bottom-mount designs put the main fridge compartment at eye level for easier access.",
+    # Product comparison — spec-driven
+    "The Samsung QN90D features a 65-inch Neo QLED panel with a 144Hz refresh rate and AMD FreeSync Premium Pro, making it one of the best gaming televisions available in 2024. Quantum Mini LEDs improve local dimming precision over standard QLED.",
+    "LG's C-series OLED and Samsung's QN90 QLED target different buyers: OLED delivers perfect blacks and wider viewing angles, while QLED offers higher peak brightness for HDR content in bright rooms and a longer lifespan.",
+    "Dyson V15 Detect uses a laser to reveal microscopic dust invisible to the naked eye and automatically adjusts suction power based on detected debris. Its HEPA filtration captures 99.97% of particles as small as 0.3 microns.",
+    "Bosch Series 8 washing machines use ActiveOxygen technology to remove bacteria and allergens at 20°C, achieving a 60°C wash result with less energy. The i-DOS system automatically dispenses the exact amount of detergent required.",
+    # How-to / educational
+    "To set up a split-system air conditioner, the indoor unit must be installed on an interior wall with access to an exterior wall for the refrigerant pipe and drain hose. Minimum recommended installation height is 2.1 metres from the floor.",
+    "To clean a dishwasher filter, remove the cylindrical filter from the base, rinse under warm running water, and use a soft brush to clear any debris. Clean the filter monthly to maintain washing performance and prevent odours.",
+    "OLED burn-in occurs when static elements display for extended periods at high brightness. Modern OLED panels include pixel-shift and screen-saver features that significantly reduce this risk in normal home viewing conditions.",
+    "Energy star ratings in Australia use a red-orange label with stars and annual electricity consumption in kWh. Each additional star represents approximately 10% lower energy use. A 5-star refrigerator uses roughly half the energy of a 2-star equivalent.",
+    # FAQ-style direct answers
+    "What is the difference between ducted and split-system air conditioning? Ducted air conditioning conditions the entire home through concealed ductwork from a central unit, while split systems heat or cool individual rooms with a visible wall unit. Ducted systems cost more to install but offer whole-home climate control.",
+    "How long does a washing machine last? Most washing machines last 10-14 years with regular maintenance. Front-loaders tend to have longer lifespans than top-loaders but require door seal cleaning to prevent mould build-up.",
+    "Can I run a portable air conditioner without a window? Portable air conditioners require a vent to exhaust hot air — typically through a window or sliding door using the included kit. Without venting, the unit recirculates hot air and provides no cooling.",
+    # Commerce / trust signals
+    "The Good Guys price match guarantee covers identical products sold by Australian retailers including online stores. Customers can claim the price match in-store by presenting proof of the lower price before or within 30 days of purchase.",
+    "Interest-free finance options through Latitude allow customers to spread payments over 6, 12, or 24 months with no interest charges when minimum monthly payments are made. Standard Latitude fees and charges apply.",
+    # Specification definitions
+    "IP44 rating on a portable speaker means the device is protected against solid objects greater than 1mm and against water splashing from any direction. IP67 means dust-tight and waterproof when submerged up to 1 metre for 30 minutes.",
+    "Refresh rate measures how many times per second a television updates its image, expressed in Hz. 60Hz is sufficient for standard viewing, while 120Hz or higher reduces motion blur for fast-paced gaming and sports content.",
+]
+
+
+# ── TF-IDF fallback (used when sentence-transformers not installed) ─────────────
+
+def _tokenize(text: str) -> list[str]:
+    return re.findall(r'\b[a-z]{3,}\b', text.lower())
+
+
+def _tfidf_vector(tokens: list[str], idf: dict[str, float]) -> dict[str, float]:
+    tf = Counter(tokens)
+    total = sum(tf.values())
+    return {w: (tf[w] / total) * idf.get(w, 1.0) for w in tf}
+
+
+def _cosine_dict(va: dict[str, float], vb: dict[str, float]) -> float:
+    common = set(va) & set(vb)
+    num = sum(va[w] * vb[w] for w in common)
+    denom = math.sqrt(sum(v**2 for v in va.values())) * math.sqrt(sum(v**2 for v in vb.values()))
+    return num / denom if denom else 0.0
+
+
+def _build_idf(corpus: list[str]) -> dict[str, float]:
+    n = len(corpus)
+    df: Counter = Counter()
+    for doc in corpus:
+        for w in set(_tokenize(doc)):
+            df[w] += 1
+    return {w: math.log((n + 1) / (c + 1)) + 1 for w, c in df.items()}
+
+
+_REF_IDF = _build_idf(REFERENCE_CORPUS)
+_REF_VECS_TFIDF = [_tfidf_vector(_tokenize(p), _REF_IDF) for p in REFERENCE_CORPUS]
+
+
+def _tfidf_similarity(text: str) -> tuple[float, float, str]:
+    tokens = _tokenize(text)
+    if not tokens:
+        return 0.0, 0.0, ""
+    vec = _tfidf_vector(tokens, _REF_IDF)
+    scored = sorted(
+        [(_cosine_dict(vec, rv), REFERENCE_CORPUS[i]) for i, rv in enumerate(_REF_VECS_TFIDF)],
+        key=lambda x: x[0], reverse=True,
+    )
+    return scored[0][0], sum(s for s, _ in scored[:3]) / 3, scored[0][1][:100]
+
+
+# ── sentence-transformers implementation ───────────────────────────────────────
+
+_REF_EMBEDDINGS = None  # lazy-initialised on first call
+
+
+def _get_st_model() -> "SentenceTransformer":
+    global _ST_MODEL
+    if _ST_MODEL is None:
+        # all-MiniLM-L6-v2: 80MB, fast, good semantic quality for English
+        _ST_MODEL = SentenceTransformer("all-MiniLM-L6-v2")
+    return _ST_MODEL
+
+
+def _st_similarity(text: str) -> tuple[float, float, str]:
+    global _REF_EMBEDDINGS
+    model = _get_st_model()
+    if _REF_EMBEDDINGS is None:
+        _REF_EMBEDDINGS = model.encode(REFERENCE_CORPUS, normalize_embeddings=True)
+    vec = model.encode([text], normalize_embeddings=True)[0]
+    sims = _REF_EMBEDDINGS @ vec  # cosine similarity (normalized dot product)
+    top_idx = int(np.argmax(sims))
+    top3_avg = float(np.mean(np.sort(sims)[-3:]))
+    return float(sims[top_idx]), top3_avg, REFERENCE_CORPUS[top_idx][:100]
+
+
+# ── Unified entry point ────────────────────────────────────────────────────────
+
+def similarity_to_corpus(text: str) -> tuple[float, float, str]:
+    """
+    Returns (max_similarity, avg_top3_similarity, best_matching_reference_snippet).
+
+    Uses sentence-transformers (semantic) when available, else TF-IDF (lexical).
+    Sentence-transformers scores: strong ecommerce content ~0.60-0.80, marketing copy ~0.30-0.45.
+    TF-IDF scores: strong content ~0.25-0.45, marketing copy <0.15 (different scale).
+    """
+    if _ST_AVAILABLE:
+        return _st_similarity(text)
+    return _tfidf_similarity(text)
 
 
 def extract_entities(text: str) -> dict[str, int]:
@@ -593,6 +734,112 @@ def check_anchor_quality(snapshot_dir: Path) -> dict:
     }
 
 
+# ── Check 7: Content Similarity ───────────────────────────────────────────────
+
+def check_content_similarity(snapshot_dir: Path) -> dict:
+    """
+    TF-IDF cosine similarity between page content and a reference corpus of ideal
+    AI-citable ecommerce passages. Measures whether page content resembles the kind
+    of direct, factual, entity-rich content AI Answer Engines prefer to cite.
+
+    Scoring thresholds (sentence-transformers / TF-IDF fallback):
+      ST  ≥0.65 | TFIDF ≥0.35 — strong: direct, factual, entity-rich content
+      ST  ≥0.55 | TFIDF ≥0.28 — moderate: good passages among marketing copy
+      ST  ≥0.45 | TFIDF ≥0.20 — weak: mostly promotional, few citable facts
+      ST  <0.45 | TFIDF <0.20 — very weak: almost no AI-citable patterns
+
+    TODO: swap similarity_to_corpus() to OpenAI/Cohere embeddings API for higher
+    accuracy — see module docstring for options.
+    """
+    # Thresholds differ between semantic (ST) and lexical (TF-IDF) backends
+    if _ST_AVAILABLE:
+        thresholds = (0.65, 0.55, 0.45, 0.38)
+        method = "sentence-transformers all-MiniLM-L6-v2"
+    else:
+        thresholds = (0.35, 0.28, 0.20, 0.12)
+        method = "TF-IDF cosine (bag-of-words) — install sentence-transformers for semantic similarity"
+
+    t_strong, t_good, t_weak, t_poor = thresholds
+
+    results = []
+    total_score = 0
+    max_score = 0
+
+    for html_file in sorted(snapshot_dir.glob("*.html")):
+        soup = parse_html(html_file)
+        full_text = soup.get_text(" ", strip=True)
+        if len(full_text.split()) < 80:
+            continue
+
+        # Use main content if available — strips nav/footer noise
+        main = get_main_content(soup)
+        content_text = main.get_text(" ", strip=True) if main else full_text
+
+        # Full-page similarity
+        best_score, avg_top3, best_ref = similarity_to_corpus(full_text)
+
+        # Passage-level: split into ~200-word chunks, find best citable passage
+        words = content_text.split()
+        chunks = [
+            " ".join(words[i:i + 200])
+            for i in range(0, len(words), 200)
+            if len(words[i:i + 200]) >= 50
+        ]
+        best_passage_score = 0.0
+        best_passage_text = ""
+        for chunk in chunks:
+            s, _, _ = similarity_to_corpus(chunk)
+            if s > best_passage_score:
+                best_passage_score = s
+                best_passage_text = chunk[:150]
+
+        page_max = 25
+        if best_passage_score >= t_strong:
+            page_score = 25
+        elif best_passage_score >= t_good:
+            page_score = 18
+        elif best_passage_score >= t_weak:
+            page_score = 10
+        elif best_passage_score >= t_poor:
+            page_score = 5
+        else:
+            page_score = 0
+
+        total_score += page_score
+        max_score += page_max
+
+        issue = None
+        if best_passage_score < t_poor:
+            issue = f"Very low similarity ({best_passage_score:.2f}) — content reads as promotional, not citable"
+        elif best_passage_score < t_weak:
+            issue = f"Low similarity ({best_passage_score:.2f}) — few factual/educational passages for AI to cite"
+
+        results.append({
+            "file": html_file.name,
+            "full_page_similarity": round(best_score, 3),
+            "avg_top3_similarity": round(avg_top3, 3),
+            "best_passage_similarity": round(best_passage_score, 3),
+            "best_passage_preview": best_passage_text,
+            "best_reference_match": best_ref,
+            "score": page_score,
+            "maxScore": page_max,
+            "issue": issue,
+        })
+
+    pct = round(total_score / max_score * 100) if max_score else 0
+    errors = [r for r in results if r.get("issue")]
+    all_scores = [r["best_passage_similarity"] for r in results]
+    avg_sim = round(sum(all_scores) / len(all_scores), 3) if all_scores else 0
+
+    return {
+        "score": total_score, "maxScore": max_score, "percentage": pct, "grade": grade(pct),
+        "pages": results, "errors": errors,
+        "avg_similarity": avg_sim,
+        "similarity_method": method,
+        "summary": f"{len(results) - len(errors)}/{len(results)} pages have strong AI-citable content (avg: {avg_sim}, method: {'ST' if _ST_AVAILABLE else 'TF-IDF'})",
+    }
+
+
 # ── Summary & output ───────────────────────────────────────────────────────────
 
 def build_summary(checks: dict, label: str, snapshot_dir: str) -> str:
@@ -618,6 +865,7 @@ def build_summary(checks: dict, label: str, snapshot_dir: str) -> str:
         "knowledge_graph":    "Knowledge Graph",
         "semantic_structure": "Semantic Structure",
         "anchor_quality":     "Anchor Text Quality",
+        "content_similarity": "Content Similarity (TF-IDF)",
     }
     for key, name in check_labels.items():
         c = checks.get(key, {})
@@ -689,18 +937,20 @@ def main():
     print(f"Content AEO audit: {snapshot_dir} ({len(html_files)} snapshots)")
 
     checks = {}
-    for i, (key, name, fn) in enumerate([
-        ("boilerplate_ratio",  "Boilerplate ratio",     lambda: check_boilerplate_ratio(snapshot_dir)),
-        ("content_chunking",   "Content chunking",      lambda: check_content_chunking(snapshot_dir)),
-        ("entity_signals",     "Entity signals",        lambda: check_entity_signals(snapshot_dir)),
-        ("knowledge_graph",    "Knowledge graph",       lambda: check_knowledge_graph(snapshot_dir)),
-        ("semantic_structure", "Semantic structure",    lambda: check_semantic_structure(snapshot_dir)),
-        ("anchor_quality",     "Anchor text quality",   lambda: check_anchor_quality(snapshot_dir)),
-    ], 1):
-        print(f"  [{i}/6] {name}...")
+    all_checks = [
+        ("boilerplate_ratio",  "Boilerplate ratio",           lambda: check_boilerplate_ratio(snapshot_dir)),
+        ("content_chunking",   "Content chunking",            lambda: check_content_chunking(snapshot_dir)),
+        ("entity_signals",     "Entity signals",              lambda: check_entity_signals(snapshot_dir)),
+        ("knowledge_graph",    "Knowledge graph",             lambda: check_knowledge_graph(snapshot_dir)),
+        ("semantic_structure", "Semantic structure",          lambda: check_semantic_structure(snapshot_dir)),
+        ("anchor_quality",     "Anchor text quality",         lambda: check_anchor_quality(snapshot_dir)),
+        ("content_similarity", "Content similarity (TF-IDF)", lambda: check_content_similarity(snapshot_dir)),
+    ]
+    for i, (key, name, fn) in enumerate(all_checks, 1):
+        print(f"  [{i}/{len(all_checks)}] {name}...")
         checks[key] = fn()
         c = checks[key]
-        print(f"        {GRADE_EMOJI.get(c['grade'], '?')} {c['grade']} ({c['percentage']}%) — {c['summary']}")
+        print(f"        {GRADE_EMOJI.get(c.get('grade','?'), '?')} {c.get('grade','?')} ({c.get('percentage',0)}%) — {c.get('summary','')}")
 
     total_score = sum(c.get("score", 0) for c in checks.values())
     total_max = sum(c.get("maxScore", 0) for c in checks.values())

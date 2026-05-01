@@ -153,7 +153,7 @@ jobs:
           FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
       - name: Install Python deps
-        run: pip install httpx playwright beautifulsoup4 lxml
+        run: pip install httpx playwright beautifulsoup4 lxml sentence-transformers
 
       - name: Install Playwright browser
         if: inputs.run_phase2 || inputs.run_phase3
@@ -339,12 +339,13 @@ jobs:
           grade = data.get('grade','?')
           print(f"Content AEO: {g.get(grade,'?')} Grade {grade} ({data.get('percentage',0)}%)")
           for key, name in [
-              ('boilerplate_ratio','Boilerplate Ratio'),
-              ('content_chunking', 'Content Chunking'),
-              ('entity_signals',   'Entity Signals'),
-              ('knowledge_graph',  'Knowledge Graph'),
-              ('semantic_structure','Semantic Structure'),
-              ('anchor_quality',   'Anchor Text Quality'),
+              ('boilerplate_ratio',  'Boilerplate Ratio'),
+              ('content_chunking',   'Content Chunking'),
+              ('entity_signals',     'Entity Signals'),
+              ('knowledge_graph',    'Knowledge Graph'),
+              ('semantic_structure', 'Semantic Structure'),
+              ('anchor_quality',     'Anchor Text Quality'),
+              ('content_similarity', 'Content Similarity'),
           ]:
               c = data.get('checks', {}).get(key, {})
               if 'error' in c:
