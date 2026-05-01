@@ -1238,7 +1238,6 @@ def check_agentic_commerce(base_url: str) -> dict:
     probe_paths = [
         ("storefront_mcp",      "/.well-known/mcp.json",                             5),
         ("agentic_capabilities","/.well-known/agent-commerce-capabilities.json",      5),
-        ("acp_feed",            "/acp-feed.json",                                    5),
         ("ucp_endpoint",        "/api/ucp",                                          5),
         ("mcp_api",             "/api/mcp",                                          5),
     ]
@@ -1260,6 +1259,55 @@ def check_agentic_commerce(base_url: str) -> dict:
             result["checks"][key] = {"url": url, "status": "error", "reachable": False,
                                      "error": str(e)[:60]}
             result["issues"].append(f"{key} unreachable: {str(e)[:40]}")
+
+    # ACP feed: probe + schema validate if found
+    ACP_REQUIRED_FIELDS = {"id", "name", "price"}
+    acp_check: dict = {"reachable": False}
+    for acp_path in ("/acp-feed.json", "/api/acp", "/.well-known/acp.json"):
+        url = base_url.rstrip("/") + acp_path
+        try:
+            resp = httpx.get(url, timeout=10, follow_redirects=True,
+                             headers={"User-Agent": BROWSER_UA})
+            if resp.status_code == 200:
+                try:
+                    data = resp.json()
+                    items = data if isinstance(data, list) else data.get("products", data.get("items", []))
+                    if items and isinstance(items, list):
+                        sample = items[0]
+                        missing = [f for f in ACP_REQUIRED_FIELDS if f not in sample]
+                        acp_check = {
+                            "url": url, "reachable": True, "status": 200,
+                            "product_count": len(items),
+                            "schema_valid": len(missing) == 0,
+                            "missing_required": missing,
+                            "sample_fields": sorted(sample.keys())[:8],
+                        }
+                        score += 5
+                        if missing:
+                            result["issues"].append(f"ACP feed found but missing fields: {', '.join(missing)}")
+                            result["signals"].append(f"ACP feed reachable ({len(items)} products) — schema incomplete")
+                        else:
+                            result["signals"].append(f"ACP feed valid ({len(items)} products, schema OK)")
+                    else:
+                        acp_check = {"url": url, "reachable": True, "status": 200,
+                                     "schema_valid": False, "error": "No product array in response"}
+                        result["issues"].append("ACP feed found but no product array in JSON")
+                except Exception:
+                    acp_check = {"url": url, "reachable": True, "status": 200,
+                                 "schema_valid": False, "error": "Response is not valid JSON"}
+                    result["issues"].append("ACP endpoint returns non-JSON response")
+                break
+            elif resp.status_code in (401, 405):
+                acp_check = {"url": url, "reachable": True, "status": resp.status_code,
+                             "schema_valid": None, "note": "Auth required — endpoint exists"}
+                score += 3  # partial credit — endpoint exists but auth required
+                result["signals"].append(f"ACP endpoint exists (HTTP {resp.status_code}) — auth required")
+                break
+        except Exception as e:
+            continue
+    if not acp_check.get("reachable"):
+        result["issues"].append("No ACP feed found at /acp-feed.json, /api/acp, /.well-known/acp.json")
+    result["checks"]["acp_feed"] = acp_check
 
     # Check <link rel="agent-endpoint"> in homepage HTML
     try:
@@ -1378,6 +1426,58 @@ def check_gtin_coverage(snapshot_dir: Path) -> dict:
     }
 
 
+# ── Check 14: GMC Feed Completeness ──────────────────────────────────────────
+
+def check_gmc_feed(feed_url: str | None = None) -> dict:
+    """
+    Imports check_gmc_feed.py logic to score Google Merchant Centre feed quality.
+    Requires GMC_FEED_URL env var or explicit feed_url argument.
+    Skipped (maxScore=0) if no feed URL is configured.
+    """
+    url = feed_url or os.getenv("GMC_FEED_URL", "").strip()
+    if not url:
+        return {
+            "score": 0, "maxScore": 0, "percentage": 0, "grade": "F",
+            "errors": [], "summary": "GMC feed check skipped — set GMC_FEED_URL env var",
+            "skipped": True,
+        }
+
+    try:
+        from check_gmc_feed import (
+            fetch_or_read, _detect_format, _extract_xml_products,
+            _extract_tsv_products, analyse_feed,
+        )
+    except ImportError:
+        return {"score": 0, "maxScore": 30, "percentage": 0, "grade": "F",
+                "errors": [{"issue": "check_gmc_feed.py not found"}],
+                "summary": "GMC feed check unavailable — check_gmc_feed.py missing"}
+
+    try:
+        content, filename = fetch_or_read(url)
+        fmt = _detect_format(content, filename)
+        if fmt == "xml":
+            products = _extract_xml_products(content)
+        else:
+            delimiter = "\t" if fmt == "tsv" else ","
+            products = _extract_tsv_products(content, delimiter)
+    except Exception as e:
+        return {"score": 0, "maxScore": 30, "percentage": 0, "grade": "F",
+                "errors": [{"issue": f"Feed fetch failed: {str(e)[:80]}"}],
+                "summary": f"GMC feed fetch failed: {str(e)[:60]}"}
+
+    result = analyse_feed(products)
+    # Normalise errors key to match build_summary expectation
+    issues = []
+    for f, count in result.get("missing_required", {}).items():
+        issues.append({"issue": f"Required field '{f}' missing from {count}/{result.get('total_products',0)} products"})
+    for f, count in result.get("missing_important", {}).items():
+        issues.append({"issue": f"Important field '{f}' missing from {count}/{result.get('total_products',0)} products"})
+    if result.get("gtin_invalid", 0):
+        issues.append({"issue": f"{result['gtin_invalid']} products have invalid GTIN check digits"})
+    result["errors"] = issues
+    return result
+
+
 # ── Report builder ─────────────────────────────────────────────────────────────
 
 def build_summary(checks: dict, label: str, snapshot_dir: str) -> str:
@@ -1410,6 +1510,7 @@ def build_summary(checks: dict, label: str, snapshot_dir: str) -> str:
         "au_signals":          ("Australian Content Signals",      20),
         "agentic_commerce":    ("Agentic Commerce Readiness",      30),
         "gtin_coverage":       ("GTIN Coverage",                   20),
+        "gmc_feed":            ("GMC Feed Completeness",           30),
     }
 
     for key, (name, weight) in check_labels.items():
@@ -1516,7 +1617,7 @@ def main():
     competitor_urls_raw = os.getenv("COMPETITOR_URLS", "").strip()
     competitor_urls = json.loads(competitor_urls_raw) if competitor_urls_raw else None
 
-    default_checks = "schema,schema_validity,render_diff,user_agents,hidden_content,ai_signals,dom_structure,robots_content,sitemap_coverage,competitor_schema,au_signals,agentic_commerce,gtin_coverage"
+    default_checks = "schema,schema_validity,render_diff,user_agents,hidden_content,ai_signals,dom_structure,robots_content,sitemap_coverage,competitor_schema,au_signals,agentic_commerce,gtin_coverage,gmc_feed"
     checks_to_run = set((os.getenv("AEO_CHECKS") or default_checks).split(","))
     checks_to_run = {c.strip() for c in checks_to_run}
 
@@ -1547,6 +1648,7 @@ def main():
     run_check("au_signals",         "Australian content signals",         lambda: check_au_signals(snapshot_dir))
     run_check("agentic_commerce",   "Agentic commerce readiness",         lambda: check_agentic_commerce(base_url))
     run_check("gtin_coverage",      "GTIN coverage",                      lambda: check_gtin_coverage(snapshot_dir))
+    run_check("gmc_feed",           "GMC feed completeness",               lambda: check_gmc_feed())
 
     # Totals
     total_score = sum(c.get("score", 0) for c in checks.values() if isinstance(c, dict))
