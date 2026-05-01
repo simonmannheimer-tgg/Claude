@@ -38,6 +38,17 @@ on:
         type: boolean
         default: true
 
+      run_phase3:
+        description: |
+          ☑ PHASE 3 — Ecommerce AEO checks (~10 min, requires Phase 2 snapshots)
+          Schema/structured data: Product, FAQ, BreadcrumbList, AggregateRating
+          Render diff: httpx raw vs Playwright snapshot (what bots see vs browsers)
+          User agent behaviour: ClaudeBot, GPTBot, PerplexityBot vs 200/403
+          Hidden content: display:none / aria-hidden / collapsed accordions
+          AI content signals: FAQ blocks, comparison tables, direct answers
+        type: boolean
+        default: true
+
       # ── Check groups (apply to both phases where relevant) ──────────────────
       check_discovery:
         description: |
@@ -102,6 +113,14 @@ on:
         required: false
         default: ''
 
+      live_urls:
+        description: |
+          Phase 3 live URLs for user-agent and render-diff checks (optional).
+          JSON array of TGG URLs to test live. Defaults: TGG home + 2 categories.
+          Keep to 3-5 URLs — each URL is tested with 5 different bot User-Agents.
+        required: false
+        default: ''
+
   # Uncomment to run weekly (Sunday 22:00 UTC = Monday 08:00 AEST):
   # schedule:
   #   - cron: '0 22 * * 0'
@@ -109,7 +128,7 @@ on:
 jobs:
   aeo-audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 50
     permissions:
       contents: write
 
@@ -134,10 +153,10 @@ jobs:
           FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
       - name: Install Python deps
-        run: pip install httpx playwright
+        run: pip install httpx playwright beautifulsoup4
 
       - name: Install Playwright browser
-        if: inputs.run_phase2
+        if: inputs.run_phase2 || inputs.run_phase3
         run: playwright install chromium --with-deps
 
       # ── Build AEO_CHECKS string from checkbox inputs ────────────────────────
@@ -241,6 +260,46 @@ jobs:
           for k, c in r.get('categories', {}).items():
               bar = '█' * round(c['percentage']/5) + '░' * (20-round(c['percentage']/5))
               print(f"  {c['name']:<22} {bar} {c['score']}/{c['maxScore']} ({c['percentage']}%)")
+          EOF
+          fi
+
+      # ── Phase 3: Ecommerce-specific AEO checks ──────────────────────────────
+      - name: "Phase 3 — Ecommerce AEO checks (~10 min)"
+        if: inputs.run_phase3
+        continue-on-error: true
+        env:
+          SNAPSHOT_DIR: site-snapshots/thegoodguys.com.au
+          AEO_LABEL: TGG (ecommerce)
+          LIVE_URLS: ${{ inputs.live_urls }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python run_ecommerce_aeo.py 2>&1
+
+      - name: "Phase 3 — Results"
+        if: inputs.run_phase3 && always()
+        run: |
+          if ls seo/outputs/aeo/ecommerce-aeo-*.json 1>/dev/null 2>&1; then
+            python3 - <<'EOF'
+          import json, glob
+          files = sorted(glob.glob('seo/outputs/aeo/ecommerce-aeo-*.json'))
+          data = json.loads(open(files[-1]).read())
+          g = {'A':'🟢','B':'🟢','C':'🟡','D':'🟠','F':'🔴'}
+          grade = data.get('grade','?')
+          pct = data.get('percentage',0)
+          print(f"Ecommerce AEO: {g.get(grade,'?')} Grade {grade} ({pct}%)")
+          check_names = {
+              'schema':         'Schema / Structured Data',
+              'render_diff':    'Render Diff',
+              'user_agents':    'User Agent Behaviour',
+              'hidden_content': 'Hidden Content',
+              'ai_signals':     'AI Content Signals',
+          }
+          for key, name in check_names.items():
+              c = data.get('checks', {}).get(key, {})
+              if 'error' in c:
+                  print(f"  ✗ {name:<28} {c['error'][:50]}")
+              else:
+                  bar = '█' * round(c.get('percentage',0)/5) + '░' * (20-round(c.get('percentage',0)/5))
+                  print(f"  {name:<28} {bar} {c.get('score',0)}/{c.get('maxScore',0)} ({c.get('percentage',0)}%)")
           EOF
           fi
 
