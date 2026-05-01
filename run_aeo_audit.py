@@ -35,7 +35,7 @@ DEFAULT_URLS = [
     # JB Hi-Fi — equivalent page types
     {"url": "https://www.jbhifi.com.au",                                               "label": "JB Hi-Fi · Home"},
     {"url": "https://www.jbhifi.com.au/collections/tvs",                               "label": "JB Hi-Fi · Category"},
-    {"url": "https://www.jbhifi.com.au/blogs/news",                                    "label": "JB Hi-Fi · Blog"},
+    {"url": "https://www.jbhifi.com.au/collections/headphones",                        "label": "JB Hi-Fi · Category 2"},
     # Harvey Norman — equivalent page types
     {"url": "https://www.harveynorman.com.au",                                                          "label": "Harvey Norman · Home"},
     {"url": "https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-screen-size/all-tvs",       "label": "Harvey Norman · Category"},

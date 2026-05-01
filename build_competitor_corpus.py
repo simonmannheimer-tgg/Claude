@@ -37,7 +37,7 @@ DEFAULT_DOMAIN_PATHS = {
         "/collections/air-conditioners",
         "/collections/washing-machines",
         "/collections/laptops",
-        "/blogs/news",
+        "/collections/headphones",
     ],
     "harveynorman.com.au": [
         "/tv-blu-ray-home-theatre/tvs-by-screen-size/all-tvs",
