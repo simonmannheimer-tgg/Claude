@@ -1,0 +1,85 @@
+name: TGG Sitemap Audit (Weekly)
+
+# Runs every Sunday at 22:00 AEST (12:00 UTC) so fresh data is ready Monday.
+# Can also be triggered manually for an ad-hoc refresh.
+
+on:
+  schedule:
+    - cron: "0 12 * * 0"   # Sunday 12:00 UTC = Monday 00:00 AEST
+  workflow_dispatch:
+    inputs:
+      max_urls:
+        description: "Max URLs per sitemap (0 = all, use a small number for testing)"
+        required: false
+        default: "0"
+      workers:
+        description: "Concurrent HTTP workers"
+        required: false
+        default: "10"
+
+jobs:
+  sitemap-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120    # full audit is 30-60 min; allow headroom
+
+    permissions:
+      contents: write       # needed to commit the CSV back to the repo
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 lxml
+
+      - name: Run sitemap audit
+        env:
+          MAX_URLS: ${{ github.event.inputs.max_urls || '0' }}
+          WORKERS: ${{ github.event.inputs.workers || '10' }}
+        run: |
+          mkdir -p data
+          python tools/tgg_sitemap_audit.py \
+            --output data/sitemap_audit_latest.csv \
+            --workers "$WORKERS" \
+            --timeout 12 \
+            --max-urls "$MAX_URLS"
+
+      - name: Show row count
+        run: |
+          ROWS=$(tail -n +2 data/sitemap_audit_latest.csv | wc -l)
+          echo "Sitemap audit rows: $ROWS"
+          echo "ROWS=$ROWS" >> "$GITHUB_ENV"
+
+      - name: Commit sitemap audit to repo
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/sitemap_audit_latest.csv
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: update sitemap_audit_latest.csv (${{ env.ROWS }} rows)"
+            git push
+          fi
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sitemap-audit-${{ github.run_id }}
+          path: data/sitemap_audit_latest.csv
+          retention-days: 30
+
+      - name: Post summary
+        run: |
+          echo "## Sitemap Audit Complete" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Rows:** ${{ env.ROWS }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Output committed to:** \`data/sitemap_audit_latest.csv\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Next auto-run:** Sunday 12:00 UTC" >> "$GITHUB_STEP_SUMMARY"
