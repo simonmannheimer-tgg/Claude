@@ -67,8 +67,12 @@ PHASE4_CATS = [
 ]
 
 
-def load_latest(pattern: str) -> dict | None:
-    files = sorted(glob.glob(pattern))
+def load_latest(*patterns: str) -> dict | None:
+    """Load the most recent file matching any of the given glob patterns."""
+    files = []
+    for p in patterns:
+        files.extend(glob.glob(p))
+    files = sorted(files)
     if not files:
         return None
     try:
@@ -101,8 +105,8 @@ def load_all_data(out_dir: str) -> dict:
     return {
         "phase1":          load_latest(f"{d}/aeo-results-*.json"),
         "phase2":          load_latest(f"{d}/aeo-local-*.json"),
-        "phase3":          load_latest(f"{d}/ecommerce-aeo-*.json"),
-        "phase4":          load_latest(f"{d}/content-aeo-*.json"),
+        "phase3":          load_latest(f"{d}/ecommerce-aeo-*.json", f"{d}/ecommerce-latest-*.json"),
+        "phase4":          load_latest(f"{d}/content-aeo-*.json",  f"{d}/content-latest-*.json"),
         "recommendations": load_latest(f"{d}/recommendations-*.json"),
         "run_id":          os.getenv("GITHUB_RUN_ID", "local"),
         "run_number":      os.getenv("GITHUB_RUN_NUMBER", "?"),
@@ -371,6 +375,65 @@ def section_phase3(phase3: dict) -> str:
             <thead><tr><th>Check</th><th>Page / URL</th><th>Issue</th></tr></thead>
             <tbody>{issue_rows}</tbody>
         </table>"""
+
+    # Render diff visual: raw HTML vs JS-rendered comparison per page
+    rd = checks.get("render_diff", {})
+    if rd and "pages" in rd:
+        rd_rows = ""
+        for p in rd.get("pages", []):
+            if "error" in p:
+                continue
+            raw_w    = p.get("raw_words", 0)
+            rend_w   = p.get("rendered_words", 0)
+            js_only  = p.get("js_only_words", 0)
+            pct_acc  = p.get("pct_accessible", 0)
+            ssr_sc   = p.get("ssr_schema_count", 0)
+            csr_sc   = p.get("csr_schema_count", 0)
+            raw_pr   = p.get("price_elements_ssr", 0)
+            rend_pr  = p.get("price_elements_rendered", 0)
+            csr_flag = p.get("schema_injected_csr", False)
+            ssr_flag = p.get("ssr_detected", False)
+            bar_c    = pct_bar_color(pct_acc)
+            label    = p.get("url", "").replace("https://www.thegoodguys.com.au", "")
+            csr_badge = '<span style="background:#ef4444;color:#fff;font-size:0.75em;padding:1px 5px;border-radius:3px;margin-left:4px">CSR schema</span>' if csr_flag else ''
+            ssr_badge = '<span style="background:#22c55e;color:#fff;font-size:0.75em;padding:1px 5px;border-radius:3px;margin-left:4px">SSR</span>' if ssr_flag else ''
+            # Word count bars — scale to max rendered words in this page set
+            max_w = max(rend_w, 1)
+            raw_bar_w  = round(raw_w  / max_w * 100)
+            rend_bar_w = 100
+            rd_rows += f"""<tr>
+                <td style="font-size:0.85em"><code>{label or '/'}</code>{ssr_badge}{csr_badge}</td>
+                <td>
+                  <div title="Raw (no JS): {raw_w:,} words" style="margin-bottom:3px">
+                    <span style="font-size:0.75em;color:#94a3b8;display:inline-block;width:60px">No JS</span>
+                    <div style="display:inline-block;width:{raw_bar_w}%;max-width:180px;height:10px;background:#f59e0b;border-radius:3px;vertical-align:middle"></div>
+                    <span style="font-size:0.75em;margin-left:4px">{raw_w:,}</span>
+                  </div>
+                  <div title="Rendered (JS): {rend_w:,} words">
+                    <span style="font-size:0.75em;color:#94a3b8;display:inline-block;width:60px">With JS</span>
+                    <div style="display:inline-block;width:{rend_bar_w}%;max-width:180px;height:10px;background:#3b82f6;border-radius:3px;vertical-align:middle"></div>
+                    <span style="font-size:0.75em;margin-left:4px">{rend_w:,}</span>
+                  </div>
+                </td>
+                <td style="text-align:center;color:{bar_c};font-weight:600">{pct_acc}%</td>
+                <td style="text-align:center;font-size:0.85em">
+                  {"🟠 " if csr_flag else "🟢 "}{ssr_sc} raw / {csr_sc} rendered
+                </td>
+                <td style="text-align:center;font-size:0.85em">
+                  {"🔴 " if raw_pr == 0 and rend_pr > 0 else "🟢 "}{raw_pr} raw / {rend_pr} rendered
+                </td>
+            </tr>"""
+        if rd_rows:
+            html += f"""
+            <h3>Render Diff — Pre JS vs Post JS</h3>
+            <p style="font-size:0.85em;color:#64748b;margin-top:-8px">
+              🟡 No JS = what AI bots (httpx) see &nbsp;|&nbsp; 🔵 With JS = Playwright render &nbsp;|&nbsp;
+              % = content accessible without JS &nbsp;|&nbsp; Schema: JSON-LD blocks &nbsp;|&nbsp; Price elements
+            </p>
+            <table class="data-table">
+                <thead><tr><th>Page</th><th>Word counts</th><th>% accessible</th><th>Schema blocks</th><th>Price els</th></tr></thead>
+                <tbody>{rd_rows}</tbody>
+            </table>"""
 
     # Schema detail
     schema_data = checks.get("schema", {})
