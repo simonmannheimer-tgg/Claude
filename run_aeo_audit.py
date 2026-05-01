@@ -236,6 +236,7 @@ def main():
             print(
                 f"  ✓ Grade {r.get('grade', '?')} ({r.get('percentage', 0)}% raw"
                 f" / {retail_pct}% retail-adjusted)"
+                f" | {label} — {url}"
                 f" | {s.get('failed', s.get('errors', '?'))} errors, {s.get('warned', s.get('warnings', '?'))} warnings"
             )
 

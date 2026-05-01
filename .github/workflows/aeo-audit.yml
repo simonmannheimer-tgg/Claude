@@ -288,7 +288,8 @@ jobs:
                   print(f'  ✗ {lbl}: {r["error"][:100]}')
               else:
                   s = r.get('summary', {})
-                  print(f'  {g.get(r.get("grade","?"),"?")} {r.get("grade","?")} ({r.get("percentage",0)}%) | {lbl} | {s.get("failed",s.get("errors","?"))} errors, {s.get("warned",s.get("warnings","?"))} warns')
+                  url = e.get('url', '')
+                  print(f'  {g.get(r.get("grade","?"),"?")} {r.get("grade","?")} ({r.get("percentage",0)}%) | {lbl} — {url} | {s.get("failed",s.get("errors","?"))} errors, {s.get("warned",s.get("warnings","?"))} warns')
           EOF
           fi
 
