@@ -930,6 +930,12 @@ def check_content_similarity(snapshot_dir: Path) -> dict:
 
 # ── Check 8: LLM Quality Judge ────────────────────────────────────────────────
 
+def _llm_quality_summary(results: list[dict]) -> str:
+    scored = [r["llm_overall"] for r in results if r.get("llm_overall") is not None]
+    avg = round(sum(scored) / len(scored), 1) if scored else 0
+    return f"{len(results)} pages scored by LLM judge | avg {avg}/10"
+
+
 def check_llm_quality(snapshot_dir: Path) -> dict:
     """
     Uses local Ollama LLM (Phi-4 or Qwen2.5) to score content quality per page.
@@ -939,11 +945,11 @@ def check_llm_quality(snapshot_dir: Path) -> dict:
     try:
         from llm_judge import judge_content, _is_ollama_available
     except ImportError:
-        return {"error": "llm_judge.py not found", "score": 0, "maxScore": 25}
+        return {"error": "llm_judge.py not found", "score": 0, "maxScore": 0}
 
     if not _is_ollama_available():
         return {
-            "score": 0, "maxScore": 25, "percentage": 0, "grade": "F",
+            "score": 0, "maxScore": 0, "percentage": 0, "grade": "F",
             "pages": [], "errors": [],
             "summary": "LLM judge skipped — Ollama not running (self-hosted runner only)",
             "skipped": True,
@@ -1011,7 +1017,7 @@ def check_llm_quality(snapshot_dir: Path) -> dict:
         "grade": grade(pct),
         "pages": results,
         "errors": errors,
-        "summary": f"{len(results)} pages scored by LLM judge | avg {round(sum(r.get('llm_overall',0) for r in results if r.get('llm_overall')) / max(sum(1 for r in results if r.get('llm_overall')),1), 1)}/10",
+        "summary": _llm_quality_summary(results),
     }
 
 
