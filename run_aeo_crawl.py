@@ -671,7 +671,12 @@ def audit_url(entry: dict, domain_cache: dict, snapshot_dir: Path | None) -> dic
 
 # ── Main ───────────────────────────────────────────────────────────────────────
 
-def push_to_repo(data: list[dict], label: str) -> None:
+def push_to_repo(data: list[dict] | str, path_or_label: str, text: bool = False) -> None:
+    """
+    Push data to the repo via GitHub Contents API.
+    text=False (default): data is a list[dict] → serialised as JSON, path derived from label.
+    text=True: data is a string (e.g. Markdown), path_or_label is the full repo path.
+    """
     import base64
     token = os.getenv("GITHUB_TOKEN")
     repo  = os.getenv("GITHUB_REPOSITORY")
@@ -679,9 +684,18 @@ def push_to_repo(data: list[dict], label: str) -> None:
     run_n = os.getenv("GITHUB_RUN_NUMBER", "?")
     if not (token and repo and ref):
         return
-    slug = re.sub(r"[^a-z0-9-]", "-", label.lower())
-    path = f"seo/outputs/aeo/crawl-latest-{slug}.json"
-    b64  = base64.b64encode(json.dumps(data, indent=2).encode()).decode()
+
+    if text:
+        path = path_or_label
+        content_bytes = data.encode() if isinstance(data, str) else data
+        msg = f"AEO run log run #{run_n}"
+    else:
+        slug = re.sub(r"[^a-z0-9-]", "-", path_or_label.lower())
+        path = f"seo/outputs/aeo/crawl-latest-{slug}.json"
+        content_bytes = json.dumps(data, indent=2).encode()
+        msg = f"AEO crawl ({path_or_label}) run #{run_n}"
+
+    b64  = base64.b64encode(content_bytes).decode()
     hdrs = {
         "Authorization": f"Bearer {token}",
         "Accept": "application/vnd.github+json",
@@ -690,14 +704,14 @@ def push_to_repo(data: list[dict], label: str) -> None:
     api = "https://api.github.com"
     existing = httpx.get(f"{api}/repos/{repo}/contents/{path}?ref={ref}", headers=hdrs, timeout=20)
     sha = existing.json().get("sha") if existing.status_code == 200 else None
-    payload = {"message": f"AEO crawl ({label}) run #{run_n}", "content": b64, "branch": ref}
+    payload = {"message": msg, "content": b64, "branch": ref}
     if sha:
         payload["sha"] = sha
     r = httpx.put(f"{api}/repos/{repo}/contents/{path}", headers=hdrs, json=payload, timeout=20)
     if r.status_code in (200, 201):
         print(f"Committed to repo: {path}")
     else:
-        print(f"Warning: could not commit ({r.status_code})", file=sys.stderr)
+        print(f"Warning: could not commit {path} ({r.status_code})", file=sys.stderr)
 
 
 def main() -> None:
@@ -758,12 +772,191 @@ def main() -> None:
     out_file.write_text(json.dumps(results, indent=2))
     print(f"\nSaved {out_file}")
 
+    # Run log (comprehensive Markdown) — written and pushed to repo
+    log_file = write_run_log(results, label, out_dir, snapshot_dir)
+    push_to_repo(log_file.read_text(), f"seo/outputs/aeo/{log_file.name}", text=True)
+
     # GitHub Actions step summary
     summary_path = os.getenv("GITHUB_STEP_SUMMARY")
     if summary_path:
         _write_summary(results, summary_path, label)
 
-    push_to_repo(results, label)
+    push_to_repo(results, label)  # JSON crawl data → crawl-latest-{label}.json
+
+
+def write_run_log(results: list[dict], label: str, out_dir: Path, snapshot_dir: Path | None) -> Path:
+    """
+    Write a comprehensive Markdown run log to seo/outputs/aeo/run-log-{slug}-{ts}.md.
+
+    Captures: run metadata, tool config, per-URL check detail with scores and issues,
+    robots.txt bot access table per domain, and self-review instructions for future
+    Claude Code sessions working on this tool.
+    """
+    ts_utc     = datetime.now(timezone.utc)
+    ts_str     = ts_utc.strftime("%Y-%m-%d %H:%M UTC")
+    ts_file    = ts_utc.strftime("%Y%m%d-%H%M")
+    slug       = re.sub(r"[^a-z0-9-]", "-", label.lower())
+    run_number = os.getenv("GITHUB_RUN_NUMBER", "local")
+    run_id     = os.getenv("GITHUB_RUN_ID", "local")
+    branch     = os.getenv("GITHUB_REF_NAME", "local")
+    repo       = os.getenv("GITHUB_REPOSITORY", "simonmannheimer-tgg/Claude")
+
+    by_domain: dict[str, list] = {}
+    for r in results:
+        by_domain.setdefault(r["domain"], []).append(r)
+
+    check_keys = [
+        ("robots_ai", 30), ("llms_txt", 20), ("http_access", 10),
+        ("meta_tags", 20), ("headings", 20), ("schema_type", 20),
+        ("content", 20), ("js_depend", 20),
+    ]
+
+    L = []
+
+    # ── Header ───────────────────────────────────────────────────────────────
+    L += [
+        f"# AEO Crawl Run Log — {label}\n\n",
+        f"**Generated:** {ts_str}  \n",
+        f"**Run:** #{run_number} (ID: {run_id})  \n",
+        f"**Branch:** `{branch}`  \n",
+        f"**Repo:** `{repo}`  \n",
+        f"**URLs audited:** {len(results)}  \n",
+        f"**Snapshot dir:** `{snapshot_dir or 'none — js_depend unscored'}`  \n\n",
+    ]
+
+    # ── Tool config ──────────────────────────────────────────────────────────
+    L += [
+        "## Tool Config\n\n",
+        "| Setting | Value |\n|---|---|\n",
+        "| Script | `run_aeo_crawl.py` |\n",
+        "| Max score per URL | 160 pts (A≥80%, B≥65%, C≥50%, D≥35%, F<35%) |\n",
+        "| Domain checks | `robots_ai` 30 pts, `llms_txt` 20 pts — cached once per hostname |\n",
+        "| Page checks | `http_access` 10, `meta_tags` 20, `headings` 20, `schema_type` 20, `content` 20, `js_depend` 20 |\n",
+        "| AI bots tested | GPTBot, ClaudeBot, PerplexityBot, Google-Extended, Amazonbot, Bingbot |\n",
+        f"| js_depend | {'Playwright snapshots present — scored' if snapshot_dir else 'No snapshots — unscored'} |\n\n",
+    ]
+
+    # ── Domain summary ───────────────────────────────────────────────────────
+    L += ["## Domain Summary\n\n", "| Domain | Grade | Avg % | Pages | Top failing check |\n", "|---|---|---|---|---|\n"]
+    for domain, pages in sorted(by_domain.items()):
+        avg = round(sum(p["percentage"] for p in pages) / len(pages))
+        g   = grade(avg)
+        issue_counts: dict[str, int] = {}
+        for p in pages:
+            for iss in p.get("issues", []):
+                issue_counts[iss["check"]] = issue_counts.get(iss["check"], 0) + 1
+        top = max(issue_counts, key=issue_counts.__getitem__) if issue_counts else "—"
+        L.append(f"| `{domain}` | **{g}** | {avg}% | {len(pages)} | `{top}` |\n")
+    L.append("\n")
+
+    # ── Per-URL check detail ─────────────────────────────────────────────────
+    L.append("## Per-URL Check Detail\n\n")
+    for r in results:
+        g   = r.get("grade", "?")
+        pct = r.get("percentage", 0)
+        ch  = r.get("checks", {})
+        L += [
+            f"### {r['label']}\n\n",
+            f"`{r['url']}`  \n",
+            f"**Grade {g} · {pct}%** &nbsp;·&nbsp; type: `{r['page_type']}` &nbsp;·&nbsp; domain: `{r['domain']}`\n\n",
+            "| Check | Score | Max | % | Status | Issue |\n",
+            "|---|---|---|---|---|---|\n",
+        ]
+        for key, mx in check_keys:
+            c   = ch.get(key, {})
+            s   = c.get("score")
+            p   = c.get("percentage", round(s / mx * 100) if s is not None and mx else 0)
+            iss = (c.get("issue") or "").replace("|", "\\|")[:90]
+            if s is None:
+                icon = "–"
+            elif s >= mx * 0.8:
+                icon = "✅"
+            elif s >= mx * 0.5:
+                icon = "⚠️"
+            else:
+                icon = "❌"
+            L.append(f"| `{key}` | {s if s is not None else '–'} | {mx} | {p}% | {icon} | {iss} |\n")
+
+        # Extra detail rows
+        sc = ch.get("schema_type", {})
+        if sc.get("found_types"):
+            L.append(f"\n- **Schema found:** `{'`, `'.join(sc['found_types'][:6])}`\n")
+        if sc.get("missing_types"):
+            L.append(f"- **Schema missing:** `{'`, `'.join(sc['missing_types'])}`\n")
+        co = ch.get("content", {})
+        if co:
+            L.append(
+                f"- **Content:** {co.get('word_count', 0):,} words · "
+                f"FAQ {'✅' if co.get('has_faq') else '❌'} · "
+                f"Specs {'✅' if co.get('has_specs') else '❌'} · "
+                f"num density {co.get('num_density', 0)}/1000\n"
+            )
+        jd = ch.get("js_depend", {})
+        if jd.get("rendered_words"):
+            L.append(
+                f"- **JS dependency:** {jd.get('raw_words', 0):,} raw → "
+                f"{jd.get('rendered_words', 0):,} rendered · "
+                f"{jd.get('pct_accessible', 0)}% accessible without JS\n"
+            )
+        L.append("\n")
+
+    # ── TGG issues list ──────────────────────────────────────────────────────
+    tgg_issues = [
+        (r["label"], i["check"], i["issue"])
+        for r in results if "thegoodguys" in r.get("domain", "")
+        for i in r.get("issues", [])
+    ]
+    if tgg_issues:
+        L += ["## TGG Issues\n\n", "| Page | Check | Issue |\n", "|---|---|---|\n"]
+        for lbl, chk, iss in tgg_issues:
+            L.append(f"| {lbl} | `{chk}` | {iss.replace('|', chr(92)+'|')} |\n")
+        L.append("\n")
+
+    # ── Robots detail per domain ─────────────────────────────────────────────
+    L.append("## robots.txt — AI Bot Access by Domain\n\n")
+    seen: set[str] = set()
+    for r in results:
+        dom = r["domain"]
+        if dom in seen:
+            continue
+        seen.add(dom)
+        rb = r.get("checks", {}).get("robots_ai", {})
+        if not rb or "bots" not in rb:
+            continue
+        L += [f"### `{dom}` — {rb.get('score', 0)}/{rb.get('max', 30)} pts\n\n",
+              "| Bot | Status | Pts |\n|---|---|---|\n"]
+        for bot, info in rb.get("bots", {}).items():
+            st  = info.get("status", "?")
+            pts = info.get("pts", 0)
+            ic  = "✅" if st == "allowed" else "⚠️" if st == "not-mentioned" else "❌"
+            L.append(f"| {bot} | {ic} {st} | {pts} |\n")
+        if rb.get("tier1_blocked"):
+            L.append(f"\n> ⚠️ **Tier-1 bots blocked:** {', '.join(rb['tier1_blocked'])}\n")
+        L.append("\n")
+
+    # ── Self-review instructions ──────────────────────────────────────────────
+    L += [
+        "---\n\n",
+        "## Self-Review Instructions\n\n",
+        "> This section is for Claude Code. When working on `run_aeo_crawl.py`, "
+        "or when Simon asks for a run review, follow these steps:\n\n",
+        "1. **Find the latest log** — `glob('seo/outputs/aeo/run-log-*.md')`, sort descending, read the most recent.\n",
+        "2. **Domain summary first** — flag any domain with avg < 50% (D/F). That's the priority conversation.\n",
+        "3. **robots_ai** — if `tier1_blocked` appears for TGG, that's critical. Draft a robots.txt fix immediately.\n",
+        "4. **schema_type = 0** on TGG category or product pages → JSON-LD is JS-injected (AI bots can't see it). "
+        "Flag as high severity; recommend adding SSR schema to page templates.\n",
+        "5. **js_depend < 50%** on TGG pages → heavily client-rendered. Flag to Simon as AI crawlability risk.\n",
+        "6. **llms_txt = 0** → `/llms.txt` missing. Offer to generate it via `generate_recommendations.py`.\n",
+        "7. **Competitor gaps** — note any competitor that outscores TGG on `schema_type` or `robots_ai`. Name the domain and delta.\n",
+        "8. **Regression check** — if a second log exists, diff the domain averages. Report any drop ≥5 percentage points.\n",
+        "9. **Summary format for Simon** — domain avg table + top 3 TGG issues + one concrete next action. Keep it under 200 words.\n\n",
+        f"_Log written by `run_aeo_crawl.py` · run #{run_number} · {ts_str}_\n",
+    ]
+
+    out_file = out_dir / f"run-log-{slug}-{ts_file}.md"
+    out_file.write_text("".join(L), encoding="utf-8")
+    print(f"Run log saved: {out_file}")
+    return out_file
 
 
 def _write_summary(results: list[dict], path: str, label: str) -> None:
