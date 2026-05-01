@@ -1,0 +1,685 @@
+{
+  "label": "TGG (local deep scan)",
+  "dir": "site-snapshots/thegoodguys.com.au",
+  "report": {
+    "score": 37,
+    "maxScore": 100,
+    "percentage": 37,
+    "grade": "F",
+    "categories": {
+      "discovery": {
+        "name": "Discovery",
+        "description": "Can agents find your documentation?",
+        "score": 5,
+        "maxScore": 25,
+        "percentage": 20,
+        "results": [
+          {
+            "id": "robots-txt",
+            "name": "Robots.txt AI Access",
+            "category": "discovery",
+            "score": 5,
+            "maxScore": 10,
+            "status": "warn",
+            "findings": [
+              {
+                "severity": "info",
+                "message": "No robots.txt found. Agents can access all content by default."
+              },
+              {
+                "severity": "warning",
+                "message": "Consider adding a robots.txt that explicitly permits AI agent crawlers.",
+                "fix": "Create a robots.txt with:\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: GPTBot\nAllow: /"
+              }
+            ]
+          },
+          {
+            "id": "llms-txt",
+            "name": "llms.txt Discovery Index",
+            "category": "discovery",
+            "score": 0,
+            "maxScore": 10,
+            "status": "fail",
+            "findings": [
+              {
+                "severity": "error",
+                "message": "No llms.txt found at site root.",
+                "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification."
+              }
+            ]
+          },
+          {
+            "id": "agents-md",
+            "name": "AGENTS.md / CLAUDE.md",
+            "category": "discovery",
+            "score": 0,
+            "maxScore": 5,
+            "status": "fail",
+            "findings": [
+              {
+                "severity": "error",
+                "message": "No AGENTS.md, CLAUDE.md, or similar agent instruction file found.",
+                "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
+              }
+            ]
+          }
+        ]
+      },
+      "content-structure": {
+        "name": "Content Structure",
+        "description": "Is content machine-readable and well-organized?",
+        "score": 10,
+        "maxScore": 25,
+        "percentage": 40,
+        "results": [
+          {
+            "id": "content-structure",
+            "name": "Content Structure Quality",
+            "category": "content-structure",
+            "score": 4,
+            "maxScore": 15,
+            "status": "fail",
+            "findings": [
+              {
+                "severity": "error",
+                "message": "9 of 10 sampled pages have broken heading hierarchy.",
+                "fix": "Fix heading levels to be sequential (H1 \u2192 H2 \u2192 H3). This is critical for agent parsing."
+              },
+              {
+                "severity": "warning",
+                "message": "Few pages (0/10) contain code examples.",
+                "fix": "Code examples are critical for agents. Add runnable examples for key operations."
+              },
+              {
+                "severity": "info",
+                "message": "0 of 10 pages use tables.",
+                "fix": "Consider using tables for parameter references and comparison data. Tables compress better than prose lists for agents."
+              },
+              {
+                "severity": "info",
+                "message": "Good use of semantic HTML elements (main, article, section)."
+              },
+              {
+                "severity": "warning",
+                "message": "Many pages lack a strong opening paragraph.",
+                "fix": "Start each page with a clear statement of what the page covers and what the reader/agent will learn."
+              }
+            ]
+          },
+          {
+            "id": "markdown-availability",
+            "name": "Markdown Content Availability",
+            "category": "content-structure",
+            "score": 6,
+            "maxScore": 10,
+            "status": "warn",
+            "findings": [
+              {
+                "severity": "warning",
+                "message": "No Markdown files found. Only HTML is available.",
+                "fix": "Serve Markdown versions of documentation pages. Many static site generators can output .md files alongside .html.\nConsider adding a ?format=md query parameter or .md URL suffix support."
+              },
+              {
+                "severity": "info",
+                "message": "HTML pages have good content-to-markup ratio."
+              },
+              {
+                "severity": "info",
+                "message": "Content is accessible without JavaScript rendering."
+              }
+            ]
+          }
+        ]
+      },
+      "token-economics": {
+        "name": "Token Economics",
+        "description": "Does content fit within agent context windows?",
+        "score": 21,
+        "maxScore": 25,
+        "percentage": 84,
+        "results": [
+          {
+            "id": "token-budget",
+            "name": "Token Budget Analysis",
+            "category": "token-economics",
+            "score": 15,
+            "maxScore": 15,
+            "status": "pass",
+            "findings": [
+              {
+                "severity": "info",
+                "message": "Average page size: 2,264 tokens (excellent)."
+              },
+              {
+                "severity": "info",
+                "message": "No pages exceed 50K tokens."
+              },
+              {
+                "severity": "info",
+                "message": "100% of pages are under 30K tokens."
+              },
+              {
+                "severity": "info",
+                "message": "Analyzed 10 pages. Total: 22,644 tokens."
+              }
+            ]
+          },
+          {
+            "id": "meta-tags",
+            "name": "AI-Friendly Meta Tags",
+            "category": "token-economics",
+            "score": 6,
+            "maxScore": 10,
+            "status": "warn",
+            "findings": [
+              {
+                "severity": "warning",
+                "message": "No pages include token count meta tags.",
+                "fix": "Add <meta name=\"ai:token-count\" content=\"12500\"> to help agents estimate context cost.\nAlternatively, expose token count as an X-Token-Count HTTP header."
+              },
+              {
+                "severity": "info",
+                "message": "10 of 10 pages have meaningful meta descriptions."
+              },
+              {
+                "severity": "info",
+                "message": "2 of 10 pages have page type metadata.",
+                "fix": "Consider adding <meta name=\"ai:page-type\" content=\"api-reference|guide|tutorial|quickstart\"> to categorize pages for agents."
+              },
+              {
+                "severity": "info",
+                "message": "Pages have clean, descriptive title tags."
+              },
+              {
+                "severity": "info",
+                "message": "6 of 10 pages have canonical URLs."
+              }
+            ]
+          }
+        ]
+      },
+      "capability-signaling": {
+        "name": "Capability Signaling",
+        "description": "Can agents understand what your APIs do?",
+        "score": 1,
+        "maxScore": 15,
+        "percentage": 7,
+        "results": [
+          {
+            "id": "skill-md",
+            "name": "Capability Signaling (skill.md)",
+            "category": "capability-signaling",
+            "score": 0,
+            "maxScore": 10,
+            "status": "fail",
+            "findings": [
+              {
+                "severity": "error",
+                "message": "No skill.md files found.",
+                "fix": "Create skill.md files for your APIs and services. These tell agents what your product can DO, not just how to call it.\nInclude: capabilities list, required inputs, constraints, and links to detailed docs."
+              }
+            ]
+          },
+          {
+            "id": "agent-permissions",
+            "name": "Agent Permissions Configuration",
+            "category": "capability-signaling",
+            "score": 1,
+            "maxScore": 5,
+            "status": "warn",
+            "findings": [
+              {
+                "severity": "info",
+                "message": "No agent-permissions.json found.",
+                "fix": "Consider creating an agent-permissions.json to define access rules for automated clients.\nThis emerging standard lets you specify allowed interactions, rate limits, and human-in-the-loop requirements."
+              }
+            ]
+          }
+        ]
+      },
+      "ux-bridge": {
+        "name": "UX Bridge",
+        "description": "Does the UX support human-agent workflows?",
+        "score": 0,
+        "maxScore": 10,
+        "percentage": 0,
+        "results": [
+          {
+            "id": "copy-for-ai",
+            "name": "Copy for AI UX",
+            "category": "ux-bridge",
+            "score": 0,
+            "maxScore": 10,
+            "status": "fail",
+            "findings": [
+              {
+                "severity": "warning",
+                "message": "No \"Copy for AI\" buttons found.",
+                "fix": "Add a \"Copy for AI\" button that copies clean Markdown or plain text to clipboard.\nThis bridges human and agent workflows when developers work inside AI assistants."
+              },
+              {
+                "severity": "warning",
+                "message": "No copy-to-clipboard buttons found for code blocks.",
+                "fix": "Add copy buttons to code blocks. This is standard in modern documentation and helps both human and agent workflows."
+              },
+              {
+                "severity": "warning",
+                "message": "No links to raw or Markdown views found.",
+                "fix": "Add links to Markdown source or \"Edit on GitHub\" links. These help agents and developers access clean, parseable content."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "results": [
+      {
+        "id": "robots-txt",
+        "name": "Robots.txt AI Access",
+        "category": "discovery",
+        "score": 5,
+        "maxScore": 10,
+        "status": "warn",
+        "findings": [
+          {
+            "severity": "info",
+            "message": "No robots.txt found. Agents can access all content by default."
+          },
+          {
+            "severity": "warning",
+            "message": "Consider adding a robots.txt that explicitly permits AI agent crawlers.",
+            "fix": "Create a robots.txt with:\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: GPTBot\nAllow: /"
+          }
+        ]
+      },
+      {
+        "id": "llms-txt",
+        "name": "llms.txt Discovery Index",
+        "category": "discovery",
+        "score": 0,
+        "maxScore": 10,
+        "status": "fail",
+        "findings": [
+          {
+            "severity": "error",
+            "message": "No llms.txt found at site root.",
+            "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification."
+          }
+        ]
+      },
+      {
+        "id": "agents-md",
+        "name": "AGENTS.md / CLAUDE.md",
+        "category": "discovery",
+        "score": 0,
+        "maxScore": 5,
+        "status": "fail",
+        "findings": [
+          {
+            "severity": "error",
+            "message": "No AGENTS.md, CLAUDE.md, or similar agent instruction file found.",
+            "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions."
+          }
+        ]
+      },
+      {
+        "id": "content-structure",
+        "name": "Content Structure Quality",
+        "category": "content-structure",
+        "score": 4,
+        "maxScore": 15,
+        "status": "fail",
+        "findings": [
+          {
+            "severity": "error",
+            "message": "9 of 10 sampled pages have broken heading hierarchy.",
+            "fix": "Fix heading levels to be sequential (H1 \u2192 H2 \u2192 H3). This is critical for agent parsing."
+          },
+          {
+            "severity": "warning",
+            "message": "Few pages (0/10) contain code examples.",
+            "fix": "Code examples are critical for agents. Add runnable examples for key operations."
+          },
+          {
+            "severity": "info",
+            "message": "0 of 10 pages use tables.",
+            "fix": "Consider using tables for parameter references and comparison data. Tables compress better than prose lists for agents."
+          },
+          {
+            "severity": "info",
+            "message": "Good use of semantic HTML elements (main, article, section)."
+          },
+          {
+            "severity": "warning",
+            "message": "Many pages lack a strong opening paragraph.",
+            "fix": "Start each page with a clear statement of what the page covers and what the reader/agent will learn."
+          }
+        ]
+      },
+      {
+        "id": "markdown-availability",
+        "name": "Markdown Content Availability",
+        "category": "content-structure",
+        "score": 6,
+        "maxScore": 10,
+        "status": "warn",
+        "findings": [
+          {
+            "severity": "warning",
+            "message": "No Markdown files found. Only HTML is available.",
+            "fix": "Serve Markdown versions of documentation pages. Many static site generators can output .md files alongside .html.\nConsider adding a ?format=md query parameter or .md URL suffix support."
+          },
+          {
+            "severity": "info",
+            "message": "HTML pages have good content-to-markup ratio."
+          },
+          {
+            "severity": "info",
+            "message": "Content is accessible without JavaScript rendering."
+          }
+        ]
+      },
+      {
+        "id": "token-budget",
+        "name": "Token Budget Analysis",
+        "category": "token-economics",
+        "score": 15,
+        "maxScore": 15,
+        "status": "pass",
+        "findings": [
+          {
+            "severity": "info",
+            "message": "Average page size: 2,264 tokens (excellent)."
+          },
+          {
+            "severity": "info",
+            "message": "No pages exceed 50K tokens."
+          },
+          {
+            "severity": "info",
+            "message": "100% of pages are under 30K tokens."
+          },
+          {
+            "severity": "info",
+            "message": "Analyzed 10 pages. Total: 22,644 tokens."
+          }
+        ]
+      },
+      {
+        "id": "meta-tags",
+        "name": "AI-Friendly Meta Tags",
+        "category": "token-economics",
+        "score": 6,
+        "maxScore": 10,
+        "status": "warn",
+        "findings": [
+          {
+            "severity": "warning",
+            "message": "No pages include token count meta tags.",
+            "fix": "Add <meta name=\"ai:token-count\" content=\"12500\"> to help agents estimate context cost.\nAlternatively, expose token count as an X-Token-Count HTTP header."
+          },
+          {
+            "severity": "info",
+            "message": "10 of 10 pages have meaningful meta descriptions."
+          },
+          {
+            "severity": "info",
+            "message": "2 of 10 pages have page type metadata.",
+            "fix": "Consider adding <meta name=\"ai:page-type\" content=\"api-reference|guide|tutorial|quickstart\"> to categorize pages for agents."
+          },
+          {
+            "severity": "info",
+            "message": "Pages have clean, descriptive title tags."
+          },
+          {
+            "severity": "info",
+            "message": "6 of 10 pages have canonical URLs."
+          }
+        ]
+      },
+      {
+        "id": "skill-md",
+        "name": "Capability Signaling (skill.md)",
+        "category": "capability-signaling",
+        "score": 0,
+        "maxScore": 10,
+        "status": "fail",
+        "findings": [
+          {
+            "severity": "error",
+            "message": "No skill.md files found.",
+            "fix": "Create skill.md files for your APIs and services. These tell agents what your product can DO, not just how to call it.\nInclude: capabilities list, required inputs, constraints, and links to detailed docs."
+          }
+        ]
+      },
+      {
+        "id": "agent-permissions",
+        "name": "Agent Permissions Configuration",
+        "category": "capability-signaling",
+        "score": 1,
+        "maxScore": 5,
+        "status": "warn",
+        "findings": [
+          {
+            "severity": "info",
+            "message": "No agent-permissions.json found.",
+            "fix": "Consider creating an agent-permissions.json to define access rules for automated clients.\nThis emerging standard lets you specify allowed interactions, rate limits, and human-in-the-loop requirements."
+          }
+        ]
+      },
+      {
+        "id": "copy-for-ai",
+        "name": "Copy for AI UX",
+        "category": "ux-bridge",
+        "score": 0,
+        "maxScore": 10,
+        "status": "fail",
+        "findings": [
+          {
+            "severity": "warning",
+            "message": "No \"Copy for AI\" buttons found.",
+            "fix": "Add a \"Copy for AI\" button that copies clean Markdown or plain text to clipboard.\nThis bridges human and agent workflows when developers work inside AI assistants."
+          },
+          {
+            "severity": "warning",
+            "message": "No copy-to-clipboard buttons found for code blocks.",
+            "fix": "Add copy buttons to code blocks. This is standard in modern documentation and helps both human and agent workflows."
+          },
+          {
+            "severity": "warning",
+            "message": "No links to raw or Markdown views found.",
+            "fix": "Add links to Markdown source or \"Edit on GitHub\" links. These help agents and developers access clean, parseable content."
+          }
+        ]
+      }
+    ],
+    "summary": {
+      "errors": 4,
+      "warnings": 8,
+      "infos": 14,
+      "passed": 1,
+      "warned": 4,
+      "failed": 5,
+      "errored": 0
+    },
+    "findings": {
+      "errors": [
+        {
+          "severity": "error",
+          "message": "No llms.txt found at site root.",
+          "fix": "Create a llms.txt file at your site root. This acts as a sitemap for AI agents.\nSee: https://llmstxt.org for the specification.",
+          "checker": "llms-txt",
+          "checkerName": "llms.txt Discovery Index"
+        },
+        {
+          "severity": "error",
+          "message": "No AGENTS.md, CLAUDE.md, or similar agent instruction file found.",
+          "fix": "Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.\nInclude: project structure, key file locations, API docs links, dev environment setup, and coding conventions.",
+          "checker": "agents-md",
+          "checkerName": "AGENTS.md / CLAUDE.md"
+        },
+        {
+          "severity": "error",
+          "message": "9 of 10 sampled pages have broken heading hierarchy.",
+          "fix": "Fix heading levels to be sequential (H1 \u2192 H2 \u2192 H3). This is critical for agent parsing.",
+          "checker": "content-structure",
+          "checkerName": "Content Structure Quality"
+        },
+        {
+          "severity": "error",
+          "message": "No skill.md files found.",
+          "fix": "Create skill.md files for your APIs and services. These tell agents what your product can DO, not just how to call it.\nInclude: capabilities list, required inputs, constraints, and links to detailed docs.",
+          "checker": "skill-md",
+          "checkerName": "Capability Signaling (skill.md)"
+        }
+      ],
+      "warnings": [
+        {
+          "severity": "warning",
+          "message": "Consider adding a robots.txt that explicitly permits AI agent crawlers.",
+          "fix": "Create a robots.txt with:\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: GPTBot\nAllow: /",
+          "checker": "robots-txt",
+          "checkerName": "Robots.txt AI Access"
+        },
+        {
+          "severity": "warning",
+          "message": "Few pages (0/10) contain code examples.",
+          "fix": "Code examples are critical for agents. Add runnable examples for key operations.",
+          "checker": "content-structure",
+          "checkerName": "Content Structure Quality"
+        },
+        {
+          "severity": "warning",
+          "message": "Many pages lack a strong opening paragraph.",
+          "fix": "Start each page with a clear statement of what the page covers and what the reader/agent will learn.",
+          "checker": "content-structure",
+          "checkerName": "Content Structure Quality"
+        },
+        {
+          "severity": "warning",
+          "message": "No Markdown files found. Only HTML is available.",
+          "fix": "Serve Markdown versions of documentation pages. Many static site generators can output .md files alongside .html.\nConsider adding a ?format=md query parameter or .md URL suffix support.",
+          "checker": "markdown-availability",
+          "checkerName": "Markdown Content Availability"
+        },
+        {
+          "severity": "warning",
+          "message": "No pages include token count meta tags.",
+          "fix": "Add <meta name=\"ai:token-count\" content=\"12500\"> to help agents estimate context cost.\nAlternatively, expose token count as an X-Token-Count HTTP header.",
+          "checker": "meta-tags",
+          "checkerName": "AI-Friendly Meta Tags"
+        },
+        {
+          "severity": "warning",
+          "message": "No \"Copy for AI\" buttons found.",
+          "fix": "Add a \"Copy for AI\" button that copies clean Markdown or plain text to clipboard.\nThis bridges human and agent workflows when developers work inside AI assistants.",
+          "checker": "copy-for-ai",
+          "checkerName": "Copy for AI UX"
+        },
+        {
+          "severity": "warning",
+          "message": "No copy-to-clipboard buttons found for code blocks.",
+          "fix": "Add copy buttons to code blocks. This is standard in modern documentation and helps both human and agent workflows.",
+          "checker": "copy-for-ai",
+          "checkerName": "Copy for AI UX"
+        },
+        {
+          "severity": "warning",
+          "message": "No links to raw or Markdown views found.",
+          "fix": "Add links to Markdown source or \"Edit on GitHub\" links. These help agents and developers access clean, parseable content.",
+          "checker": "copy-for-ai",
+          "checkerName": "Copy for AI UX"
+        }
+      ],
+      "infos": [
+        {
+          "severity": "info",
+          "message": "No robots.txt found. Agents can access all content by default.",
+          "checker": "robots-txt",
+          "checkerName": "Robots.txt AI Access"
+        },
+        {
+          "severity": "info",
+          "message": "0 of 10 pages use tables.",
+          "fix": "Consider using tables for parameter references and comparison data. Tables compress better than prose lists for agents.",
+          "checker": "content-structure",
+          "checkerName": "Content Structure Quality"
+        },
+        {
+          "severity": "info",
+          "message": "Good use of semantic HTML elements (main, article, section).",
+          "checker": "content-structure",
+          "checkerName": "Content Structure Quality"
+        },
+        {
+          "severity": "info",
+          "message": "HTML pages have good content-to-markup ratio.",
+          "checker": "markdown-availability",
+          "checkerName": "Markdown Content Availability"
+        },
+        {
+          "severity": "info",
+          "message": "Content is accessible without JavaScript rendering.",
+          "checker": "markdown-availability",
+          "checkerName": "Markdown Content Availability"
+        },
+        {
+          "severity": "info",
+          "message": "Average page size: 2,264 tokens (excellent).",
+          "checker": "token-budget",
+          "checkerName": "Token Budget Analysis"
+        },
+        {
+          "severity": "info",
+          "message": "No pages exceed 50K tokens.",
+          "checker": "token-budget",
+          "checkerName": "Token Budget Analysis"
+        },
+        {
+          "severity": "info",
+          "message": "100% of pages are under 30K tokens.",
+          "checker": "token-budget",
+          "checkerName": "Token Budget Analysis"
+        },
+        {
+          "severity": "info",
+          "message": "Analyzed 10 pages. Total: 22,644 tokens.",
+          "checker": "token-budget",
+          "checkerName": "Token Budget Analysis"
+        },
+        {
+          "severity": "info",
+          "message": "10 of 10 pages have meaningful meta descriptions.",
+          "checker": "meta-tags",
+          "checkerName": "AI-Friendly Meta Tags"
+        },
+        {
+          "severity": "info",
+          "message": "2 of 10 pages have page type metadata.",
+          "fix": "Consider adding <meta name=\"ai:page-type\" content=\"api-reference|guide|tutorial|quickstart\"> to categorize pages for agents.",
+          "checker": "meta-tags",
+          "checkerName": "AI-Friendly Meta Tags"
+        },
+        {
+          "severity": "info",
+          "message": "Pages have clean, descriptive title tags.",
+          "checker": "meta-tags",
+          "checkerName": "AI-Friendly Meta Tags"
+        },
+        {
+          "severity": "info",
+          "message": "6 of 10 pages have canonical URLs.",
+          "checker": "meta-tags",
+          "checkerName": "AI-Friendly Meta Tags"
+        },
+        {
+          "severity": "info",
+          "message": "No agent-permissions.json found.",
+          "fix": "Consider creating an agent-permissions.json to define access rules for automated clients.\nThis emerging standard lets you specify allowed interactions, rate limits, and human-in-the-loop requirements.",
+          "checker": "agent-permissions",
+          "checkerName": "Agent Permissions Configuration"
+        }
+      ]
+    }
+  }
+}
