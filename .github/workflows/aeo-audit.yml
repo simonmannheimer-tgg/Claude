@@ -485,12 +485,13 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin gh-pages
           git checkout gh-pages
-          cp /tmp/aeo-report.html index.html
-          git add index.html
+          mkdir -p aeo
+          cp /tmp/aeo-report.html aeo/index.html
+          git add aeo/index.html
           git diff --staged --quiet || git commit -m "Deploy AEO report — run #${{ github.run_number }}"
           git push origin gh-pages
           git checkout -
-          echo "Report live at: https://simonmannheimer-tgg.github.io/Claude/"
+          echo "Report live at: https://simonmannheimer-tgg.github.io/Claude/aeo/"
 
       # ── Artifacts ────────────────────────────────────────────────────────────
       - name: Upload AEO results

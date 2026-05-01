@@ -892,7 +892,7 @@ def main():
         with open(summary_path, "a") as f:
             f.write(
                 f"\n\n---\n\n## 📊 Full Interactive Report\n\n"
-                f"🔗 **[View Report → simonmannheimer-tgg.github.io/Claude/](https://simonmannheimer-tgg.github.io/Claude/)**\n\n"
+                f"🔗 **[View Report → simonmannheimer-tgg.github.io/Claude/aeo/](https://simonmannheimer-tgg.github.io/Claude/aeo/)**\n\n"
                 f"Updated automatically after every workflow run. Also in artifact **aeo-results-${{GITHUB_RUN_ID}}** → `{report_file.name}`.\n"
             )
 
