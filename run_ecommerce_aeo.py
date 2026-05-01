@@ -100,7 +100,10 @@ def infer_page_type(filename: str) -> str:
         return "home"
     if any(k in name for k in ("buying-guide", "best-", "guide")):
         return "guide"
-    if any(k in name for k in ("--", "product", "sku", "/p/")):
+    # Products have SKU numbers, /p/ path segment, or "product" in name.
+    # Sub-categories use -- to join path segments (televisions--smart-tvs.html)
+    # and should NOT be classified as products.
+    if any(k in name for k in ("product", "sku")) or re.search(r"\bp\b", name):
         return "product"
     return "category"
 
@@ -299,7 +302,24 @@ def check_user_agents(test_urls: list[str]) -> dict:
             except Exception as e:
                 ua_results[bot_name] = {"status": "error", "allowed": False, "error": str(e)[:80], "score": 0}
 
-        blocked = [k for k, v in ua_results.items() if not v.get("allowed")]
+        # Googlebot: informational only, not scored (blocking is an SEO issue not AEO)
+        try:
+            resp_gb = httpx.get(
+                url,
+                headers={"User-Agent": GOOGLEBOT_UA},
+                follow_redirects=True,
+                timeout=10,
+            )
+            ua_results["Googlebot (info)"] = {
+                "status": resp_gb.status_code,
+                "allowed": resp_gb.status_code == 200,
+                "score": None,
+                "note": "informational — not scored",
+            }
+        except Exception as e:
+            ua_results["Googlebot (info)"] = {"status": "error", "note": str(e)[:80], "score": None}
+
+        blocked = [k for k, v in ua_results.items() if k != "Googlebot (info)" and not v.get("allowed")]
         results.append({
             "url": url,
             "bots": ua_results,
@@ -352,15 +372,32 @@ def check_hidden_content(snapshot_dir: Path) -> dict:
             style = el.get("style", "")
             aria_hidden = el.get("aria-hidden", "")
             hidden_attr = el.has_attr("hidden")
-            classes = " ".join(el.get("class", []))
+            el_classes = el.get("class", [])
+            classes_str = " ".join(el_classes)
+
+            # Viewport-specific responsive classes (hide at certain breakpoints only,
+            # not from all agents) — exclude these from AI-hidden detection.
+            VIEWPORT_HIDE_PATTERN = re.compile(
+                r"\bhide-(?:xxs|xs|sm|md|lg|xl)\b"
+                r"|\bd-(?:sm|md|lg|xl|xxl)-none\b"
+                r"|\bvisible-(?:xs|sm|md|lg|xl)\b",
+                re.IGNORECASE,
+            )
+            has_only_viewport_hide = (
+                any(VIEWPORT_HIDE_PATTERN.search(c) for c in el_classes)
+                and not any(c in ("hidden", "d-none", "is-hidden", "collapsed") for c in el_classes)
+            )
 
             is_hidden = (
-                "display:none" in style.replace(" ", "")
-                or "display: none" in style
-                or "visibility:hidden" in style.replace(" ", "")
-                or aria_hidden == "true"
-                or hidden_attr
-                or any(c in classes for c in ["hidden", "d-none", "hide", "collapsed", "is-hidden"])
+                not has_only_viewport_hide
+                and (
+                    "display:none" in style.replace(" ", "")
+                    or "display: none" in style
+                    or "visibility:hidden" in style.replace(" ", "")
+                    or aria_hidden == "true"
+                    or hidden_attr
+                    or any(c in el_classes for c in ("hidden", "d-none", "is-hidden", "collapsed"))
+                )
             )
 
             if is_hidden:
@@ -371,7 +408,7 @@ def check_hidden_content(snapshot_dir: Path) -> dict:
                     hidden_words += words
                     hidden_elements.append({
                         "tag": el.name,
-                        "class": classes[:60],
+                        "class": classes_str[:60],
                         "words": words,
                         "reason": (
                             "display:none" if "display" in style else
@@ -603,12 +640,12 @@ def push_to_repo(data: dict, label: str) -> None:
         "Accept": "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28",
     }
-    existing = httpx.get(f"{api}/repos/{repo}/contents/{path}?ref={ref}", headers=hdrs)
+    existing = httpx.get(f"{api}/repos/{repo}/contents/{path}?ref={ref}", headers=hdrs, timeout=30)
     sha = existing.json().get("sha") if existing.status_code == 200 else None
     payload = {"message": f"Ecommerce AEO audit ({label}) run #{run_number}", "content": b64, "branch": ref}
     if sha:
         payload["sha"] = sha
-    resp = httpx.put(f"{api}/repos/{repo}/contents/{path}", headers=hdrs, json=payload)
+    resp = httpx.put(f"{api}/repos/{repo}/contents/{path}", headers=hdrs, json=payload, timeout=30)
     if resp.status_code in (200, 201):
         print(f"Committed to repo: {path}")
     else:
