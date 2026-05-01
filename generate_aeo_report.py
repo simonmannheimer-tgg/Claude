@@ -892,7 +892,11 @@ def main():
         p3_grade = p3.get("grade", "?") if p3 else "?"
         p3_pct   = p3.get("percentage", 0) if p3 else 0
         with open(summary_path, "a") as f:
-            f.write(f"\n\n---\n\n## 📊 Full HTML Report\n\nSee artifact **aeo-results-${{GITHUB_RUN_ID}}** → `{report_file.name}` for the interactive report with charts.\n")
+            f.write(
+                f"\n\n---\n\n## 📊 Full Interactive Report\n\n"
+                f"🔗 **[View Report → simonmannheimer-tgg.github.io/Claude/](https://simonmannheimer-tgg.github.io/Claude/)**\n\n"
+                f"Updated automatically after every workflow run. Also in artifact **aeo-results-${{GITHUB_RUN_ID}}** → `{report_file.name}`.\n"
+            )
 
     push_to_repo(html, f"seo/outputs/aeo/report-latest.html")
 
