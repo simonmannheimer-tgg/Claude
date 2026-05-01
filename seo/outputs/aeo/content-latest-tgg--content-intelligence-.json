@@ -475,18 +475,18 @@
           "category_entities": 8,
           "spec_entities": 4,
           "heading_entities": [
-            "energy rating",
-            "air conditioner",
             "price",
-            "installation",
-            "capacity"
+            "reverse cycle",
+            "air conditioner",
+            "capacity",
+            "energy rating"
           ],
           "intro_entities": [
-            "panasonic",
-            "air conditioner",
-            "westinghouse",
+            "hisense",
             "fujitsu",
-            "split system"
+            "panasonic",
+            "split system",
+            "clearance"
           ],
           "top_entities": [
             {
@@ -514,11 +514,11 @@
               "count": 9
             },
             {
-              "entity": "fujitsu",
+              "entity": "hisense",
               "count": 8
             },
             {
-              "entity": "hisense",
+              "entity": "fujitsu",
               "count": 8
             }
           ],
@@ -536,19 +536,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "soundbar",
-            "vacuum",
-            "laptop",
-            "discount",
-            "tv"
+            "washing machine",
+            "tv",
+            "clearance",
+            "price",
+            "vacuum"
           ],
           "top_entities": [
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
@@ -556,15 +556,7 @@
               "count": 2
             },
             {
-              "entity": "soundbar",
-              "count": 1
-            },
-            {
-              "entity": "vacuum",
-              "count": 1
-            },
-            {
-              "entity": "laptop",
+              "entity": "washing machine",
               "count": 1
             },
             {
@@ -572,7 +564,15 @@
               "count": 1
             },
             {
-              "entity": "fridge",
+              "entity": "clearance",
+              "count": 1
+            },
+            {
+              "entity": "vacuum",
+              "count": 1
+            },
+            {
+              "entity": "coffee machine",
               "count": 1
             }
           ],
@@ -590,19 +590,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "soundbar",
-            "vacuum",
-            "laptop",
-            "discount",
-            "tv"
+            "washing machine",
+            "tv",
+            "clearance",
+            "price",
+            "vacuum"
           ],
           "top_entities": [
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
@@ -610,15 +610,7 @@
               "count": 2
             },
             {
-              "entity": "soundbar",
-              "count": 1
-            },
-            {
-              "entity": "vacuum",
-              "count": 1
-            },
-            {
-              "entity": "laptop",
+              "entity": "washing machine",
               "count": 1
             },
             {
@@ -626,7 +618,15 @@
               "count": 1
             },
             {
-              "entity": "fridge",
+              "entity": "clearance",
+              "count": 1
+            },
+            {
+              "entity": "vacuum",
+              "count": 1
+            },
+            {
+              "entity": "coffee machine",
               "count": 1
             }
           ],
@@ -644,19 +644,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "soundbar",
-            "vacuum",
-            "laptop",
-            "discount",
-            "tv"
+            "washing machine",
+            "tv",
+            "clearance",
+            "price",
+            "vacuum"
           ],
           "top_entities": [
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
@@ -664,15 +664,7 @@
               "count": 2
             },
             {
-              "entity": "soundbar",
-              "count": 1
-            },
-            {
-              "entity": "vacuum",
-              "count": 1
-            },
-            {
-              "entity": "laptop",
+              "entity": "washing machine",
               "count": 1
             },
             {
@@ -680,7 +672,15 @@
               "count": 1
             },
             {
-              "entity": "fridge",
+              "entity": "clearance",
+              "count": 1
+            },
+            {
+              "entity": "vacuum",
+              "count": 1
+            },
+            {
+              "entity": "coffee machine",
               "count": 1
             }
           ],
@@ -697,18 +697,18 @@
           "category_entities": 23,
           "spec_entities": 9,
           "heading_entities": [
-            "kitchenaid",
-            "monitor",
-            "vacuum",
-            "bosch",
-            "mixer"
+            "hisense",
+            "philips",
+            "qled",
+            "mixer",
+            "headphones"
           ],
           "intro_entities": [
-            "soundbar",
-            "vacuum",
-            "bosch",
-            "laptop",
-            "tv"
+            "washing machine",
+            "tv",
+            "clearance",
+            "westinghouse",
+            "samsung"
           ],
           "top_entities": [
             {
@@ -740,7 +740,7 @@
               "count": 6
             },
             {
-              "entity": "4k",
+              "entity": "refrigerator",
               "count": 6
             }
           ],
@@ -758,19 +758,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "soundbar",
-            "vacuum",
-            "laptop",
-            "discount",
-            "tv"
+            "washing machine",
+            "tv",
+            "clearance",
+            "price",
+            "vacuum"
           ],
           "top_entities": [
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
@@ -778,15 +778,7 @@
               "count": 2
             },
             {
-              "entity": "soundbar",
-              "count": 1
-            },
-            {
-              "entity": "vacuum",
-              "count": 1
-            },
-            {
-              "entity": "laptop",
+              "entity": "washing machine",
               "count": 1
             },
             {
@@ -794,7 +786,15 @@
               "count": 1
             },
             {
-              "entity": "fridge",
+              "entity": "clearance",
+              "count": 1
+            },
+            {
+              "entity": "vacuum",
+              "count": 1
+            },
+            {
+              "entity": "coffee machine",
               "count": 1
             }
           ],
@@ -811,18 +811,18 @@
           "category_entities": 25,
           "spec_entities": 12,
           "heading_entities": [
-            "sunbeam",
-            "ninja",
-            "vacuum",
-            "espresso",
-            "dyson"
+            "hisense",
+            "philips",
+            "television",
+            "qled",
+            "tcl"
           ],
           "intro_entities": [
-            "soundbar",
-            "vacuum",
-            "laptop",
-            "microwave",
-            "dyson"
+            "hisense",
+            "philips",
+            "qled",
+            "tcl",
+            "washing machine"
           ],
           "top_entities": [
             {
@@ -834,11 +834,11 @@
               "count": 54
             },
             {
-              "entity": "delivery",
+              "entity": "tv",
               "count": 17
             },
             {
-              "entity": "tv",
+              "entity": "delivery",
               "count": 17
             },
             {
@@ -850,11 +850,11 @@
               "count": 13
             },
             {
-              "entity": "fisher & paykel",
+              "entity": "refrigerator",
               "count": 10
             },
             {
-              "entity": "refrigerator",
+              "entity": "fisher & paykel",
               "count": 10
             }
           ],
@@ -872,19 +872,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "soundbar",
-            "vacuum",
-            "laptop",
-            "discount",
-            "tv"
+            "washing machine",
+            "tv",
+            "clearance",
+            "price",
+            "vacuum"
           ],
           "top_entities": [
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
@@ -892,15 +892,7 @@
               "count": 2
             },
             {
-              "entity": "soundbar",
-              "count": 1
-            },
-            {
-              "entity": "vacuum",
-              "count": 1
-            },
-            {
-              "entity": "laptop",
+              "entity": "washing machine",
               "count": 1
             },
             {
@@ -908,7 +900,15 @@
               "count": 1
             },
             {
-              "entity": "fridge",
+              "entity": "clearance",
+              "count": 1
+            },
+            {
+              "entity": "vacuum",
+              "count": 1
+            },
+            {
+              "entity": "coffee machine",
               "count": 1
             }
           ],
@@ -925,18 +925,18 @@
           "category_entities": 5,
           "spec_entities": 13,
           "heading_entities": [
-            "energy rating",
             "television",
             "tv",
             "price",
-            "hdr"
+            "lg",
+            "energy rating"
           ],
           "intro_entities": [
-            "soundbar",
+            "hisense",
             "television",
+            "deal",
             "qled",
-            "tv",
-            "sony"
+            "tv"
           ],
           "top_entities": [
             {
@@ -960,11 +960,11 @@
               "count": 20
             },
             {
-              "entity": "led",
+              "entity": "samsung",
               "count": 19
             },
             {
-              "entity": "samsung",
+              "entity": "led",
               "count": 19
             },
             {
@@ -985,18 +985,18 @@
           "category_entities": 5,
           "spec_entities": 13,
           "heading_entities": [
-            "energy rating",
             "television",
             "tv",
             "price",
-            "hdr"
+            "lg",
+            "energy rating"
           ],
           "intro_entities": [
-            "soundbar",
+            "hisense",
             "television",
+            "deal",
             "qled",
-            "tv",
-            "sony"
+            "tv"
           ],
           "top_entities": [
             {
@@ -1020,11 +1020,11 @@
               "count": 20
             },
             {
-              "entity": "led",
+              "entity": "samsung",
               "count": 19
             },
             {
-              "entity": "samsung",
+              "entity": "led",
               "count": 19
             },
             {
@@ -1045,18 +1045,18 @@
           "category_entities": 4,
           "spec_entities": 10,
           "heading_entities": [
-            "energy rating",
             "washing machine",
             "price",
+            "washer",
             "capacity",
-            "dryer"
+            "energy rating"
           ],
           "intro_entities": [
-            "bosch",
             "washing machine",
+            "clearance",
             "westinghouse",
-            "fisher & paykel",
-            "sale"
+            "samsung",
+            "top loader"
           ],
           "top_entities": [
             {
@@ -1126,15 +1126,15 @@
               "count": 4
             },
             {
+              "entity": "washing machine",
+              "count": 3
+            },
+            {
               "entity": "discount",
               "count": 3
             },
             {
               "entity": "oven",
-              "count": 3
-            },
-            {
-              "entity": "washing machine",
               "count": 3
             },
             {
@@ -1866,11 +1866,11 @@
         },
         {
           "file": "index.html",
-          "total_internal_links": 194,
+          "total_internal_links": 195,
           "specific_anchors": 149,
           "generic_anchors": 17,
-          "empty_anchors": 28,
-          "specific_ratio_pct": 77,
+          "empty_anchors": 29,
+          "specific_ratio_pct": 76,
           "top_generic": [
             "here",
             "shop now",
