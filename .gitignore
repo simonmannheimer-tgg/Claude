@@ -41,6 +41,9 @@ reports/
 # Large packages
 plp-copywriting-package.zip
 
+# Content engineering pipeline run artefacts — local only, commit via tgg-repo-manager
+runs/
+
 # OS
 .DS_Store
 Thumbs.db

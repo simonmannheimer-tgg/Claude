@@ -205,7 +205,21 @@ Always read `00-tov-language-reference.md` before any content task.
 
 ---
 
-## Content Engineering (Pipeline approach)
+## Content Engineering Pipeline
+
+Long-form content production system (buying guides, how-tos, comparisons, EAV explainers) inspired by Ryan Law's Ahrefs content engineering approach. Full contract at `docs/content-engineering-charter.md`.
+
+- **Single article (Claude Code):** `/run keyword="..." type=... slug=... angle="..." byline=...` — triggers `tgg-content-pipeline` orchestrator
+- **Single article (Claude.ai):** use `tgg-content-engineer` skill
+- **Batch (Claude Code):** `/batch input=batches/....csv` — triggers `tgg-ce-batch`
+- **Resume a stalled run:** `/resume run=<run-id> from=<stage>`
+
+Artefacts write to `runs/<run-id>/` (gitignored by default). Commit via `tgg-repo-manager` after review.
+Sub-skills: `tgg-ce-research`, `tgg-ce-competitor-extract`, `tgg-ce-brief`, `tgg-ce-outline`, `tgg-ce-draft`, `tgg-ce-qa`, `tgg-ce-finalise`, `tgg-ce-batch`.
+
+---
+
+## Content Engineering (Category pipeline — existing)
 
 Adapted from Ahrefs' content engineering system. Core principle: every production step saves its own output file before passing to the next stage, so any step can be reviewed, corrected, or re-run independently.
 
