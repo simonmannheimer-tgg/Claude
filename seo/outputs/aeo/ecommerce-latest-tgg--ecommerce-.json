@@ -1545,7 +1545,7 @@
       "pages": [
         {
           "file": "air-conditioners.html",
-          "total_words": 2931,
+          "total_words": 2932,
           "hidden_words": 159,
           "hidden_pct": 5,
           "details_collapsed_words": 0,
@@ -2185,14 +2185,14 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": true,
           "external_scripts": 25,
-          "dom_elements": 3051,
-          "aria_labels": 229,
+          "dom_elements": 3043,
+          "aria_labels": 228,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
             "clean heading hierarchy",
-            "good ARIA (229 labels)"
+            "good ARIA (228 labels)"
           ],
           "score": 25,
           "maxScore": 25,
@@ -2225,13 +2225,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 5659,
-          "aria_labels": 430,
+          "dom_elements": 5651,
+          "aria_labels": 429,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "good ARIA (430 labels)"
+            "good ARIA (429 labels)"
           ],
           "score": 20,
           "maxScore": 25,
@@ -2263,8 +2263,8 @@
           "has_article": true,
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
-          "external_scripts": 24,
-          "dom_elements": 3084,
+          "external_scripts": 23,
+          "dom_elements": 3083,
           "aria_labels": 150,
           "signals": [
             "<main>",
@@ -2274,7 +2274,7 @@
           ],
           "score": 20,
           "maxScore": 25,
-          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (23 scripts)"
         },
         {
           "file": "televisions.html",
@@ -2422,14 +2422,14 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": true,
           "external_scripts": 25,
-          "dom_elements": 3051,
-          "aria_labels": 229,
+          "dom_elements": 3043,
+          "aria_labels": 228,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
             "clean heading hierarchy",
-            "good ARIA (229 labels)"
+            "good ARIA (228 labels)"
           ],
           "score": 25,
           "maxScore": 25,
@@ -2462,13 +2462,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 5659,
-          "aria_labels": 430,
+          "dom_elements": 5651,
+          "aria_labels": 429,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "good ARIA (430 labels)"
+            "good ARIA (429 labels)"
           ],
           "score": 20,
           "maxScore": 25,
@@ -2500,8 +2500,8 @@
           "has_article": true,
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
-          "external_scripts": 24,
-          "dom_elements": 3084,
+          "external_scripts": 23,
+          "dom_elements": 3083,
           "aria_labels": 150,
           "signals": [
             "<main>",
@@ -2511,7 +2511,7 @@
           ],
           "score": 20,
           "maxScore": 25,
-          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (23 scripts)"
         },
         {
           "file": "televisions.html",
