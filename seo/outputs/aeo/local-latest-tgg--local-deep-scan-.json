@@ -32,7 +32,7 @@
             "findings": [
               {
                 "severity": "error",
-                "message": "11 of 12 sampled pages have broken heading hierarchy.",
+                "message": "9 of 12 sampled pages have broken heading hierarchy.",
                 "fix": "Fix heading levels to be sequential (H1 \u2192 H2 \u2192 H3). This is critical for agent parsing."
               },
               {
@@ -94,7 +94,7 @@
         "findings": [
           {
             "severity": "error",
-            "message": "11 of 12 sampled pages have broken heading hierarchy.",
+            "message": "9 of 12 sampled pages have broken heading hierarchy.",
             "fix": "Fix heading levels to be sequential (H1 \u2192 H2 \u2192 H3). This is critical for agent parsing."
           },
           {
@@ -132,7 +132,7 @@
       "errors": [
         {
           "severity": "error",
-          "message": "11 of 12 sampled pages have broken heading hierarchy.",
+          "message": "9 of 12 sampled pages have broken heading hierarchy.",
           "fix": "Fix heading levels to be sequential (H1 \u2192 H2 \u2192 H3). This is critical for agent parsing.",
           "checker": "content-structure",
           "checkerName": "Content Structure Quality"
