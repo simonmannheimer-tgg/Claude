@@ -14,6 +14,7 @@ Writes:
 
 import json
 import os
+import re
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -120,7 +121,7 @@ def push_to_repo(data: dict, label: str) -> None:
         "Accept": "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28",
     }
-    existing = httpx.get(f"{api}/repos/{repo}/contents/{path}?ref={ref}", headers=hdrs)
+    existing = httpx.get(f"{api}/repos/{repo}/contents/{path}?ref={ref}", headers=hdrs, timeout=30)
     sha = existing.json().get("sha") if existing.status_code == 200 else None
     payload = {
         "message": f"AEO local audit ({label}) run #{run_number}",
@@ -129,7 +130,7 @@ def push_to_repo(data: dict, label: str) -> None:
     }
     if sha:
         payload["sha"] = sha
-    resp = httpx.put(f"{api}/repos/{repo}/contents/{path}", headers=hdrs, json=payload)
+    resp = httpx.put(f"{api}/repos/{repo}/contents/{path}", headers=hdrs, json=payload, timeout=30)
     if resp.status_code in (200, 201):
         print(f"Committed to repo: {path}")
     else:
@@ -137,8 +138,6 @@ def push_to_repo(data: dict, label: str) -> None:
 
 
 def main():
-    import re
-
     dir_path = os.getenv("AEO_DIR", "").strip()
     if not dir_path:
         print("ERROR: AEO_DIR not set. Example: AEO_DIR=site-snapshots/thegoodguys.com.au python run_aeo_local.py", file=sys.stderr)
@@ -156,7 +155,7 @@ def main():
     grade = report.get("grade", "?")
     pct = report.get("percentage", 0)
     s = report.get("summary", {})
-    print(f"✓ Grade {grade} ({pct}%) | {s.get('errors', '?')} errors, {s.get('warnings', '?')} warnings")
+    print(f"✓ Grade {grade} ({pct}%) | {s.get('failed', s.get('errors', '?'))} errors, {s.get('warned', s.get('warnings', '?'))} warnings")
 
     for key, name, _ in CATEGORIES:
         c = report.get("categories", {}).get(key, {})
