@@ -148,7 +148,7 @@
             "findings": [
               {
                 "severity": "info",
-                "message": "Average page size: 2,063 tokens (excellent)."
+                "message": "Average page size: 2,051 tokens (excellent)."
               },
               {
                 "severity": "info",
@@ -160,7 +160,7 @@
               },
               {
                 "severity": "info",
-                "message": "Analyzed 12 pages. Total: 24,751 tokens."
+                "message": "Analyzed 12 pages. Total: 24,606 tokens."
               }
             ]
           },
@@ -389,7 +389,7 @@
         "findings": [
           {
             "severity": "info",
-            "message": "Average page size: 2,063 tokens (excellent)."
+            "message": "Average page size: 2,051 tokens (excellent)."
           },
           {
             "severity": "info",
@@ -401,7 +401,7 @@
           },
           {
             "severity": "info",
-            "message": "Analyzed 12 pages. Total: 24,751 tokens."
+            "message": "Analyzed 12 pages. Total: 24,606 tokens."
           }
         ]
       },
@@ -625,7 +625,7 @@
         },
         {
           "severity": "info",
-          "message": "Average page size: 2,063 tokens (excellent).",
+          "message": "Average page size: 2,051 tokens (excellent).",
           "checker": "token-budget",
           "checkerName": "Token Budget Analysis"
         },
@@ -643,7 +643,7 @@
         },
         {
           "severity": "info",
-          "message": "Analyzed 12 pages. Total: 24,751 tokens.",
+          "message": "Analyzed 12 pages. Total: 24,606 tokens.",
           "checker": "token-budget",
           "checkerName": "Token Budget Analysis"
         },
