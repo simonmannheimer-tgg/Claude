@@ -67,30 +67,11 @@ def search_similar(client, query_vector: list[float], top_k: int = 5) -> list[di
 def get_collection_info(client) -> dict:
     try:
         info = client.get_collection(COLLECTION)
-        return {"vectors_count": info.vectors_count, "exists": True}
-    except Exception:
-        return {"vectors_count": 0, "exists": False}
-
-
-
-def search_similar(client, query_vector: list[float], top_k: int = 5) -> list[dict]:
-    """Returns top-k similar passages with scores and payloads."""
-    hits = client.search(
-        collection_name=COLLECTION,
-        query_vector=query_vector,
-        limit=top_k,
-        with_payload=True,
-    )
-    return [
-        {"score": h.score, "text": h.payload.get("text", ""), "url": h.payload.get("url", ""),
-         "domain": h.payload.get("domain", ""), "page_type": h.payload.get("page_type", "")}
-        for h in hits
-    ]
-
-
-def get_collection_info(client) -> dict:
-    try:
-        info = client.get_collection(COLLECTION)
-        return {"vectors_count": info.vectors_count, "exists": True}
+        # qdrant-client ≥1.7 may return None for vectors_count until indexing completes;
+        # points_count is always available immediately after upsert.
+        count = info.points_count
+        if count is None:
+            count = getattr(info, "vectors_count", None) or 0
+        return {"vectors_count": count, "exists": True}
     except Exception:
         return {"vectors_count": 0, "exists": False}
