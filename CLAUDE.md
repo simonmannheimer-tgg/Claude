@@ -241,7 +241,7 @@ After every pipeline run, note any step that needed manual correction under `## 
 - **SHOPPING AUDIT TOOL (in progress):** `seo/scripts/product-shopping-audit.py` — fetches TGG sitemap, extracts all product titles, runs organic Google Shopping scraper for each. Next steps: (1) validate title-cleaning logic against real sitemap, (2) add TGG price comparison from GMC feed, (3) add category roll-up so results map to deals/ URLs, (4) schedule via shopping-scraper.yml once stable.
 - **PROCESS FILE RECONCILIATION (blocked — waiting on new skill versions):** Content skills are being redone externally. Once new versions land, re-audit 00–09 against them and resolve these known conflicts: (1) PLP char count — Process 01 says 220–250, current skills say 230–260; (2) meta description length — Process 02 says 140–155, skills say 145–160; (3) title tag brand inclusion — Process 02 bans TGG in titles, skills permit `| The Good Guys`; (4) Process 05 Task 5C unit clarity — says 230–260 words (not chars). Do not update process files until new skills are available to compare against.
 - **RULE CONFLICTS (open questions for Simon):**
-  - Execution path: For production copy, do you prefer agents (via seo-team-lead) or skills (e.g. tgg-copywriting, tgg-category-pipeline)?
+  - Execution path: For production copy, do you prefer agents (via seo-team-lead) or skills (e.g. tgg-seo, tgg-category-pipeline)?
 
 ### Writing philosophy
 - Guardrails not templates. Ban harmful patterns; don't prescribe "allowed" ones.
@@ -392,7 +392,7 @@ When a chat session creates or updates a skill, package it as a ZIP and upload t
 skill-name_YYYYMMDD-HHMM.zip
 ```
 
-Example: `tgg-copywriting_20260501-1430.zip`
+Example: `tgg-seo_20260501-1430.zip`
 
 The ZIP must contain a `SKILL.md` at the root and a `metadata.json` with:
 ```json
