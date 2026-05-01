@@ -128,7 +128,7 @@ on:
 jobs:
   aeo-audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 50
+    timeout-minutes: 75
     permissions:
       contents: write
 
@@ -153,7 +153,7 @@ jobs:
           FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
       - name: Install Python deps
-        run: pip install httpx playwright beautifulsoup4
+        run: pip install httpx playwright beautifulsoup4 lxml
 
       - name: Install Playwright browser
         if: inputs.run_phase2 || inputs.run_phase3
@@ -180,13 +180,17 @@ jobs:
         if: inputs.run_phase1
         continue-on-error: true
         env:
-          # Default: TGG home + 3 competitors
+          # Default: TGG + competitors across all page types (home, category, guide, editorial)
           AEO_URLS: >-
             ${{ inputs.urls != '' && inputs.urls ||
-              '[{"url":"https://www.thegoodguys.com.au","label":"TGG"},
-                {"url":"https://www.harveynorman.com.au","label":"Harvey Norman"},
-                {"url":"https://www.jbhifi.com.au","label":"JB Hi-Fi"},
-                {"url":"https://www.appliancesonline.com.au","label":"Appliances Online"}]' }}
+              '[{"url":"https://www.thegoodguys.com.au","label":"TGG · Home"},
+                {"url":"https://www.thegoodguys.com.au/televisions","label":"TGG · Category"},
+                {"url":"https://www.thegoodguys.com.au/buying-guide/best-tvs","label":"TGG · Guide"},
+                {"url":"https://www.harveynorman.com.au","label":"Harvey Norman · Home"},
+                {"url":"https://www.harveynorman.com.au/televisions","label":"Harvey Norman · Category"},
+                {"url":"https://www.jbhifi.com.au","label":"JB Hi-Fi · Home"},
+                {"url":"https://www.jbhifi.com.au/collections/televisions","label":"JB Hi-Fi · Category"},
+                {"url":"https://www.appliancesonline.com.au","label":"Appliances Online · Home"}]' }}
           AEO_CHECKS: ${{ steps.checks.outputs.value }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python run_aeo_audit.py 2>&1
@@ -221,7 +225,8 @@ jobs:
           if [ -n "$CRAWL_URLS" ]; then
             python crawl_site_snapshot.py --urls "$CRAWL_URLS" 2>&1
           else
-            # Default: 10 pages across all content types
+            # Default: 12 pages across all content types (home, category, sub-cat,
+            # product detail, buying guide ×3, editorial, sale)
             python crawl_site_snapshot.py --urls '[
               "https://www.thegoodguys.com.au",
               "https://www.thegoodguys.com.au/televisions",
@@ -229,10 +234,12 @@ jobs:
               "https://www.thegoodguys.com.au/washing-machines",
               "https://www.thegoodguys.com.au/televisions/smart-tvs",
               "https://www.thegoodguys.com.au/laptops-computers",
+              "https://www.thegoodguys.com.au/samsung-65-4k-qled-smart-tv-qa65qn90dauxsa",
               "https://www.thegoodguys.com.au/buying-guide/best-tvs",
               "https://www.thegoodguys.com.au/buying-guide/best-air-conditioners",
               "https://www.thegoodguys.com.au/buying-guide/best-washing-machines",
-              "https://www.thegoodguys.com.au/whats-new"
+              "https://www.thegoodguys.com.au/whats-new",
+              "https://www.thegoodguys.com.au/sale"
             ]' 2>&1
           fi
 
@@ -307,6 +314,44 @@ jobs:
               else:
                   bar = '█' * round(c.get('percentage',0)/5) + '░' * (20-round(c.get('percentage',0)/5))
                   print(f"  {name:<28} {bar} {c.get('score',0)}/{c.get('maxScore',0)} ({c.get('percentage',0)}%)")
+          EOF
+          fi
+
+      # ── Phase 4: Content Intelligence ──────────────────────────────────────────
+      - name: "Phase 4 — Content intelligence (~5 min)"
+        if: inputs.run_phase2
+        continue-on-error: true
+        env:
+          SNAPSHOT_DIR: site-snapshots/thegoodguys.com.au
+          AEO_LABEL: TGG (content intelligence)
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python run_content_aeo.py 2>&1
+
+      - name: "Phase 4 — Results"
+        if: inputs.run_phase2 && always()
+        run: |
+          if ls seo/outputs/aeo/content-aeo-*.json 1>/dev/null 2>&1; then
+            python3 - <<'EOF'
+          import json, glob
+          files = sorted(glob.glob('seo/outputs/aeo/content-aeo-*.json'))
+          data = json.loads(open(files[-1]).read())
+          g = {'A':'🟢','B':'🟢','C':'🟡','D':'🟠','F':'🔴'}
+          grade = data.get('grade','?')
+          print(f"Content AEO: {g.get(grade,'?')} Grade {grade} ({data.get('percentage',0)}%)")
+          for key, name in [
+              ('boilerplate_ratio','Boilerplate Ratio'),
+              ('content_chunking', 'Content Chunking'),
+              ('entity_signals',   'Entity Signals'),
+              ('knowledge_graph',  'Knowledge Graph'),
+              ('semantic_structure','Semantic Structure'),
+              ('anchor_quality',   'Anchor Text Quality'),
+          ]:
+              c = data.get('checks', {}).get(key, {})
+              if 'error' in c:
+                  print(f"  ✗ {name:<25} {c['error'][:50]}")
+              else:
+                  bar = '█' * round(c.get('percentage',0)/5) + '░' * (20-round(c.get('percentage',0)/5))
+                  print(f"  {name:<25} {bar} {c.get('score',0)}/{c.get('maxScore',0)} ({c.get('percentage',0)}%)")
           EOF
           fi
 

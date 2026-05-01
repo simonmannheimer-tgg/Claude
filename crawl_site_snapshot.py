@@ -27,16 +27,23 @@ from urllib.parse import urlparse
 from playwright.async_api import async_playwright
 
 DEFAULT_URLS = [
+    # Home
     "https://www.thegoodguys.com.au",
+    # Category pages
     "https://www.thegoodguys.com.au/televisions",
     "https://www.thegoodguys.com.au/air-conditioners",
     "https://www.thegoodguys.com.au/washing-machines",
     "https://www.thegoodguys.com.au/refrigerators",
-    "https://www.thegoodguys.com.au/laptops-computers",
-    "https://www.thegoodguys.com.au/vacuum-cleaners",
+    # Sub-category
+    "https://www.thegoodguys.com.au/televisions/smart-tvs",
+    # Buying guides (protected paths — crawler uses longer wait)
     "https://www.thegoodguys.com.au/buying-guide/best-tvs",
     "https://www.thegoodguys.com.au/buying-guide/best-air-conditioners",
     "https://www.thegoodguys.com.au/buying-guide/best-washing-machines",
+    # Editorial / blog
+    "https://www.thegoodguys.com.au/whats-new",
+    # Product detail page — tests Product + Offer + AggregateRating schema
+    "https://www.thegoodguys.com.au/samsung-65-4k-qled-smart-tv-qa65qn90dauxsa",
 ]
 
 UA = (
