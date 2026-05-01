@@ -60,17 +60,13 @@ REQUIRED_SCHEMA_TYPES = {
 }
 
 # AI Overview content signals — patterns that increase citation probability
-# Note: faq_block is now detected via BS4 in check_ai_signals to avoid backtracking
+# comparison_table is detected via BS4 in check_ai_signals (avoids re.DOTALL risk on large HTML)
 AI_SIGNAL_PATTERNS = {
     "direct_answer_paragraph": re.compile(
         r"<p[^>]*>[^<]{80,}(?:is|are|means|refers to|defined as)[^<]{20,}</p>",
         re.IGNORECASE,
     ),
     "numbered_list": re.compile(r"<ol[^>]*>.*?</ol>", re.IGNORECASE | re.DOTALL),
-    "comparison_table": re.compile(
-        r"<table[^>]*>(?:(?!<table).){0,2000}?(?:vs\.?|versus|compare|difference)[^<]*?</table>",
-        re.IGNORECASE | re.DOTALL,
-    ),
     "definition_heading": re.compile(
         r"<h[23][^>]*>(?:What is|What are|How to|Why)[^<]{5,50}</h[23]>",
         re.IGNORECASE,
@@ -235,10 +231,13 @@ def check_render_diff(snapshot_dir: Path, urls: list[str]) -> dict:
             continue
 
         ratio = raw_words / rendered_words if rendered_words else 0
-        pct_accessible = round(ratio * 100)
-        diff_words = rendered_words - raw_words
+        # For SSR pages raw > rendered is expected (server sends full DOM before JS runs).
+        # Cap display at 100% — anything >=80% scores full marks.
+        pct_accessible = min(round(ratio * 100), 100)
+        ssr_detected = raw_words > rendered_words
+        diff_words = rendered_words - raw_words  # negative when SSR (no JS-gated content)
 
-        # Score: 20pts if >80% accessible, partial for 50-80%, 0 for <50%
+        # Score: 20pts if >=80% content accessible without JS, partial 50-79%, 0 <50%
         if pct_accessible >= 80:
             page_score = 20
         elif pct_accessible >= 50:
@@ -254,9 +253,11 @@ def check_render_diff(snapshot_dir: Path, urls: list[str]) -> dict:
             "raw_words": raw_words,
             "rendered_words": rendered_words,
             "pct_accessible": pct_accessible,
-            "hidden_words": max(diff_words, 0),
+            "ssr_detected": ssr_detected,
+            "js_only_words": max(diff_words, 0),
             "score": page_score,
             "maxScore": 20,
+            "note": "SSR detected — raw HTML contains full content" if ssr_detected else None,
             "issue": "High JS dependency — bots without JS miss significant content" if pct_accessible < 80 else None,
         })
 
@@ -492,7 +493,7 @@ def check_ai_signals(snapshot_dir: Path) -> dict:
             else:
                 signals_missing.append(signal_name)
 
-        # FAQ block detection via BS4 (replaces catastrophic-backtracking regex)
+        # FAQ block detection via BS4 (avoids catastrophic-backtracking regex)
         faq_keywords = {"faq", "frequently asked", "question", "q&a", "q & a"}
         faq_found = False
         for tag in soup.find_all(["details", "section", "div"], limit=200):
@@ -503,6 +504,14 @@ def check_ai_signals(snapshot_dir: Path) -> dict:
                 break
         if faq_found:
             signals_found.append("faq_block")
+
+        # Comparison table via BS4 (avoids re.DOTALL on large HTML)
+        COMPARE_WORDS = {"vs", "versus", "compare", "comparison", "difference"}
+        for table in soup.find_all("table", limit=20):
+            tbl_text = table.get_text(" ", strip=True).lower()[:500]
+            if any(w in tbl_text for w in COMPARE_WORDS):
+                signals_found.append("comparison_table")
+                break
 
         # Additional structural checks
         h1_tags = soup.find_all("h1")
@@ -681,12 +690,14 @@ def main():
         except json.JSONDecodeError:
             live_urls = [u.strip() for u in live_urls_raw.splitlines() if u.strip()]
     else:
-        # Default: use first 3 snapshots for live checks (keeps runtime short)
+        # Default: diverse page types — home, category, sub-category, buying guide
+        # Buying guides are on a stricter Cloudflare policy; include them to surface blocks.
         domain_hint = snapshot_dir.name  # e.g. "thegoodguys.com.au"
         default_live = [
             f"https://www.{domain_hint}",
             f"https://www.{domain_hint}/televisions",
-            f"https://www.{domain_hint}/air-conditioners",
+            f"https://www.{domain_hint}/televisions/smart-tvs",
+            f"https://www.{domain_hint}/buying-guide/best-tvs",
         ]
         live_urls = default_live
 

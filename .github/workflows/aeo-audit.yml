@@ -270,7 +270,14 @@ jobs:
         env:
           SNAPSHOT_DIR: site-snapshots/thegoodguys.com.au
           AEO_LABEL: TGG (ecommerce)
-          LIVE_URLS: ${{ inputs.live_urls }}
+          # Default covers 4 page types: home, category, sub-category, buying guide.
+          # Buying guide is intentionally included to surface Cloudflare bot rules.
+          LIVE_URLS: >-
+            ${{ inputs.live_urls != '' && inputs.live_urls ||
+              '["https://www.thegoodguys.com.au",
+                "https://www.thegoodguys.com.au/televisions",
+                "https://www.thegoodguys.com.au/televisions/smart-tvs",
+                "https://www.thegoodguys.com.au/buying-guide/best-tvs"]' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python run_ecommerce_aeo.py 2>&1
 
