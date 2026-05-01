@@ -2125,13 +2125,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 765,
+          "dom_elements": 766,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (765 elements)",
+            "lean DOM (766 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -2185,14 +2185,14 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": true,
           "external_scripts": 25,
-          "dom_elements": 3043,
-          "aria_labels": 228,
+          "dom_elements": 3051,
+          "aria_labels": 229,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
             "clean heading hierarchy",
-            "good ARIA (228 labels)"
+            "good ARIA (229 labels)"
           ],
           "score": 25,
           "maxScore": 25,
@@ -2224,18 +2224,18 @@
           "has_article": true,
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
-          "external_scripts": 24,
-          "dom_elements": 5651,
-          "aria_labels": 429,
+          "external_scripts": 23,
+          "dom_elements": 5658,
+          "aria_labels": 430,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "good ARIA (429 labels)"
+            "good ARIA (430 labels)"
           ],
           "score": 20,
           "maxScore": 25,
-          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (23 scripts)"
         },
         {
           "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
@@ -2263,8 +2263,8 @@
           "has_article": true,
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
-          "external_scripts": 23,
-          "dom_elements": 3083,
+          "external_scripts": 24,
+          "dom_elements": 3084,
           "aria_labels": 150,
           "signals": [
             "<main>",
@@ -2274,7 +2274,7 @@
           ],
           "score": 20,
           "maxScore": 25,
-          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (23 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
         },
         {
           "file": "televisions.html",
@@ -2362,13 +2362,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 765,
+          "dom_elements": 766,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (765 elements)",
+            "lean DOM (766 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -2422,14 +2422,14 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": true,
           "external_scripts": 25,
-          "dom_elements": 3043,
-          "aria_labels": 228,
+          "dom_elements": 3051,
+          "aria_labels": 229,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
             "clean heading hierarchy",
-            "good ARIA (228 labels)"
+            "good ARIA (229 labels)"
           ],
           "score": 25,
           "maxScore": 25,
@@ -2461,18 +2461,18 @@
           "has_article": true,
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
-          "external_scripts": 24,
-          "dom_elements": 5651,
-          "aria_labels": 429,
+          "external_scripts": 23,
+          "dom_elements": 5658,
+          "aria_labels": 430,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "good ARIA (429 labels)"
+            "good ARIA (430 labels)"
           ],
           "score": 20,
           "maxScore": 25,
-          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (23 scripts)"
         },
         {
           "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
@@ -2500,8 +2500,8 @@
           "has_article": true,
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
-          "external_scripts": 23,
-          "dom_elements": 3083,
+          "external_scripts": 24,
+          "dom_elements": 3084,
           "aria_labels": 150,
           "signals": [
             "<main>",
@@ -2511,7 +2511,7 @@
           ],
           "score": 20,
           "maxScore": 25,
-          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (23 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
         },
         {
           "file": "televisions.html",
