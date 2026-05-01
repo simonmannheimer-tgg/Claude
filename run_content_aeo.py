@@ -66,6 +66,15 @@ try:
 except ImportError:
     _QDRANT_AVAILABLE = False
 
+# spaCy NER for entity gap analysis (optional — falls back to regex)
+try:
+    import spacy as _spacy
+    _SPACY_AVAILABLE = True
+except ImportError:
+    _SPACY_AVAILABLE = False
+
+_SPACY_NLP = None  # lazy init
+
 _QDRANT_CLIENT = None
 _QDRANT_COLLECTION = "aeo_competitor_corpus"
 
@@ -928,6 +937,242 @@ def check_content_similarity(snapshot_dir: Path) -> dict:
     }
 
 
+# ── Check 8: Entity Gap Analysis ──────────────────────────────────────────────
+
+def _get_spacy_nlp():
+    global _SPACY_NLP
+    if _SPACY_NLP is None and _SPACY_AVAILABLE:
+        try:
+            _SPACY_NLP = _spacy.load("en_core_web_trf")
+        except OSError:
+            try:
+                _SPACY_NLP = _spacy.load("en_core_web_sm")
+            except OSError:
+                pass
+    return _SPACY_NLP
+
+
+def _extract_named_entities(text: str) -> set[str]:
+    """Extract named entities using spaCy NER or regex fallback."""
+    nlp = _get_spacy_nlp()
+    if nlp:
+        doc = nlp(text[:50000])  # cap input to avoid memory issues
+        return {
+            ent.text.strip()
+            for ent in doc.ents
+            if ent.label_ in ("ORG", "PRODUCT", "GPE", "PERSON", "WORK_OF_ART", "FAC")
+            and len(ent.text.strip()) > 2
+        }
+    # Regex fallback: capitalised multi-word phrases (heuristic brand/product detection)
+    return {
+        m.group()
+        for m in re.finditer(r'\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+\b', text)
+        if len(m.group()) > 4
+    }
+
+
+def _fetch_competitor_text(domain: str, path: str = "/televisions") -> str:
+    """Fetch competitor page text via httpx (no JS — raw HTML only)."""
+    import httpx as _httpx
+    try:
+        url = f"https://www.{domain}{path}"
+        resp = _httpx.get(url, timeout=15, follow_redirects=True,
+                          headers={"User-Agent": "Mozilla/5.0 (compatible; AEO-Audit/1.0)"})
+        if resp.status_code == 200:
+            from bs4 import BeautifulSoup as _BS
+            return _BS(resp.text, "html.parser").get_text(separator=" ", strip=True)
+    except Exception:
+        pass
+    return ""
+
+
+def check_entity_gap(snapshot_dir: Path) -> dict:
+    """
+    Compares named entities in TGG pages vs competitor pages for the same category.
+    Uses spaCy NER (en_core_web_trf or en_core_web_sm) with regex fallback.
+    Scores: entity coverage vs competitor set. Higher = more comprehensive content.
+    Max 25 pts.
+    """
+    COMPETITOR_DOMAINS = ["jbhifi.com.au", "harveynorman.com.au"]
+    CATEGORY_PATHS = {
+        "televisions": "/televisions",
+        "air-conditioners": "/air-conditioners",
+        "washing-machines": "/washing-machines",
+        "laptops": "/laptops-computers",
+    }
+
+    html_files = sorted(snapshot_dir.glob("*.html"))
+    if not html_files:
+        return {"error": "No HTML snapshots found", "score": 0, "maxScore": 0}
+
+    method = "spaCy NER" if (_SPACY_AVAILABLE and _get_spacy_nlp()) else "regex (install spaCy for better accuracy)"
+    results = []
+    total_score = 0
+    max_score = 0
+    page_max = 25
+
+    for html_file in html_files[:6]:  # cap at 6 pages
+        page_type = html_file.stem.split("--")[0]
+        soup = BeautifulSoup(html_file.read_text(encoding="utf-8", errors="ignore"), "html.parser")
+        tgg_text = soup.get_text(separator=" ", strip=True)
+        tgg_entities = _extract_named_entities(tgg_text)
+
+        # Find competitor path based on page slug
+        comp_path = next(
+            (path for slug, path in CATEGORY_PATHS.items() if slug in html_file.stem.lower()),
+            "/televisions"
+        )
+
+        # Fetch competitor entities (first competitor that responds)
+        comp_entities: set[str] = set()
+        for domain in COMPETITOR_DOMAINS:
+            comp_text = _fetch_competitor_text(domain, comp_path)
+            if comp_text:
+                comp_entities = _extract_named_entities(comp_text)
+                break
+
+        tgg_only = sorted(tgg_entities - comp_entities)
+        comp_only = sorted(comp_entities - tgg_entities)
+        shared = sorted(tgg_entities & comp_entities)
+        total_comp = len(comp_entities) if comp_entities else 1
+        coverage_pct = round(len(shared) / total_comp * 100) if comp_entities else 50
+
+        page_score = round(coverage_pct / 100 * page_max)
+        # Bonus if TGG has unique entities competitor lacks (content advantage)
+        if len(tgg_only) > len(comp_only):
+            page_score = min(page_score + 3, page_max)
+        total_score += page_score
+        max_score += page_max
+
+        results.append({
+            "file": html_file.name,
+            "tgg_entity_count": len(tgg_entities),
+            "competitor_entity_count": len(comp_entities),
+            "shared_count": len(shared),
+            "tgg_only_count": len(tgg_only),
+            "competitor_only_count": len(comp_only),
+            "coverage_pct": coverage_pct,
+            "tgg_only_sample": tgg_only[:8],
+            "missing_from_tgg": comp_only[:8],
+            "score": page_score,
+            "maxScore": page_max,
+            "issue": (
+                f"TGG missing {len(comp_only)} entities vs competitor — "
+                f"consider adding: {', '.join(comp_only[:3])}"
+                if comp_only and coverage_pct < 70 else None
+            ),
+        })
+
+    pct = round(total_score / max_score * 100) if max_score else 0
+    errors = [r for r in results if r.get("issue")]
+    return {
+        "score": total_score,
+        "maxScore": max_score,
+        "percentage": pct,
+        "grade": grade(pct),
+        "method": method,
+        "pages": results,
+        "errors": errors,
+        "summary": (
+            f"{len(results)} pages analysed | avg coverage {round(sum(r['coverage_pct'] for r in results)/max(len(results),1))}% "
+            f"vs competitor | method: {method}"
+        ),
+    }
+
+
+# ── Check 9: LLM Quality Judge ────────────────────────────────────────────────
+
+def _llm_quality_summary(results: list[dict]) -> str:
+    scored = [r["llm_overall"] for r in results if r.get("llm_overall") is not None]
+    avg = round(sum(scored) / len(scored), 1) if scored else 0
+    return f"{len(results)} pages scored by LLM judge | avg {avg}/10"
+
+
+def check_llm_quality(snapshot_dir: Path) -> dict:
+    """
+    Uses local Ollama LLM (Phi-4 or Qwen2.5) to score content quality per page.
+    Gracefully skips if Ollama not running — no impact on CI if GPU unavailable.
+    Score: average llm_overall × 2.5 → max 25 pts.
+    """
+    try:
+        from llm_judge import judge_content, _is_ollama_available
+    except ImportError:
+        return {"error": "llm_judge.py not found", "score": 0, "maxScore": 0}
+
+    if not _is_ollama_available():
+        return {
+            "score": 0, "maxScore": 0, "percentage": 0, "grade": "F",
+            "pages": [], "errors": [],
+            "summary": "LLM judge skipped — Ollama not running (self-hosted runner only)",
+            "skipped": True,
+        }
+
+    results = []
+    total_score = 0
+    max_score = 0
+    page_max = 25
+
+    html_files = sorted(snapshot_dir.glob("*.html"))
+    if not html_files:
+        return {"error": "No HTML snapshots found", "score": 0, "maxScore": 0}
+
+    from bs4 import BeautifulSoup
+    from run_ecommerce_aeo import infer_page_type
+
+    for html_file in html_files[:5]:  # limit to 5 pages per run to stay within time budget
+        page_type = infer_page_type(html_file.name)
+        html = html_file.read_text(encoding="utf-8", errors="ignore")
+        soup = BeautifulSoup(html, "html.parser")
+        text = soup.get_text(separator=" ", strip=True)
+
+        scores = judge_content(text, page_type)
+        max_score += page_max
+
+        if not scores.get("available"):
+            results.append({
+                "file": html_file.name,
+                "page_type": page_type,
+                "score": 0,
+                "maxScore": page_max,
+                "issue": scores.get("reason", "LLM judge unavailable"),
+            })
+            continue
+
+        overall = scores.get("llm_overall", 0)
+        page_score = round(overall / 10 * page_max)
+        total_score += page_score
+
+        results.append({
+            "file": html_file.name,
+            "page_type": page_type,
+            "model": scores.get("model", "unknown"),
+            "clarity": scores.get("clarity"),
+            "specificity": scores.get("specificity"),
+            "schema_alignment": scores.get("schema_alignment"),
+            "query_answerability": scores.get("query_answerability"),
+            "llm_overall": overall,
+            "score": page_score,
+            "maxScore": page_max,
+            "reasoning": scores.get("reasoning", ""),
+            "issue": (
+                f"Low LLM score ({overall}/10) — content needs clarity or specificity improvements"
+                if overall < 6 else None
+            ),
+        })
+
+    pct = round(total_score / max_score * 100) if max_score else 0
+    errors = [r for r in results if r.get("issue")]
+    return {
+        "score": total_score,
+        "maxScore": max_score,
+        "percentage": pct,
+        "grade": grade(pct),
+        "pages": results,
+        "errors": errors,
+        "summary": _llm_quality_summary(results),
+    }
+
+
 # ── Summary & output ───────────────────────────────────────────────────────────
 
 def build_summary(checks: dict, label: str, snapshot_dir: str) -> str:
@@ -954,6 +1199,8 @@ def build_summary(checks: dict, label: str, snapshot_dir: str) -> str:
         "semantic_structure": "Semantic Structure",
         "anchor_quality":     "Anchor Text Quality",
         "content_similarity": "Content Similarity (TF-IDF)",
+        "entity_gap":         "Entity Gap vs Competitors",
+        "llm_quality":        "LLM Quality Judge",
     }
     for key, name in check_labels.items():
         c = checks.get(key, {})
@@ -1033,6 +1280,8 @@ def main():
         ("semantic_structure", "Semantic structure",          lambda: check_semantic_structure(snapshot_dir)),
         ("anchor_quality",     "Anchor text quality",         lambda: check_anchor_quality(snapshot_dir)),
         ("content_similarity", "Content similarity (TF-IDF)", lambda: check_content_similarity(snapshot_dir)),
+        ("entity_gap",         "Entity gap vs competitors",   lambda: check_entity_gap(snapshot_dir)),
+        ("llm_quality",        "LLM quality judge",           lambda: check_llm_quality(snapshot_dir)),
     ]
     for i, (key, name, fn) in enumerate(all_checks, 1):
         print(f"  [{i}/{len(all_checks)}] {name}...")

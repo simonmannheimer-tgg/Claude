@@ -130,19 +130,43 @@ on:
         default: false
 
       sitemap_domain:
-        description: Domain to crawl in sitemap mode (default: thegoodguys.com.au)
+        description: 'Domain to crawl in sitemap mode (default: thegoodguys.com.au)'
         required: false
         default: 'thegoodguys.com.au'
 
       sitemap_sample:
-        description: URLs to sample per page type in sitemap mode (default: 5)
+        description: 'URLs to sample per page type in sitemap mode (default: 5)'
         required: false
         default: '5'
 
       sitemap_types:
-        description: Page types to crawl in sitemap mode (default: home,category,guide)
+        description: 'Page types to crawl in sitemap mode (default: home,category,guide)'
         required: false
         default: 'home,category,guide'
+
+      gmc_feed_url:
+        description: |
+          GMC feed URL (optional) — enables GMC Feed Completeness check in Phase 3.
+          Example: https://www.thegoodguys.com.au/feed.xml
+          Leave blank to skip (check will appear as ⏭ Skipped in report).
+        required: false
+        default: ''
+
+      run_agent_tests:
+        description: |
+          ☐ Agent commerce tests (~2 min) — probe MCP/ACP/UCP endpoints as an AI agent.
+          Runs test_agent_commerce.py against the target domain.
+          Safe read-only probes only — no purchases made.
+        type: boolean
+        default: false
+
+      cf_logpush_file:
+        description: |
+          Cloudflare Logpush file path (optional) — analyse AI bot traffic from CF logs.
+          Path to an NDJSON file in the repo (e.g. inbox/cf-logs.ndjson).
+          Leave blank to skip.
+        required: false
+        default: ''
 
       rebuild_corpus:
         description: |
@@ -343,6 +367,7 @@ jobs:
                 "https://www.thegoodguys.com.au/televisions",
                 "https://www.thegoodguys.com.au/televisions/smart-tvs",
                 "https://www.thegoodguys.com.au/buying-guide/best-tvs"]' }}
+          GMC_FEED_URL: ${{ inputs.gmc_feed_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python run_ecommerce_aeo.py 2>&1
 
@@ -370,6 +395,9 @@ jobs:
               'sitemap_coverage':  'Sitemap Coverage',
               'competitor_schema': 'Competitor Schema',
               'au_signals':        'AU Content Signals',
+              'agentic_commerce':  'Agentic Commerce Readiness',
+              'gtin_coverage':     'GTIN Coverage',
+              'gmc_feed':          'GMC Feed Completeness',
           }
           for key, name in check_names.items():
               c = data.get('checks', {}).get(key, {})
@@ -390,6 +418,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python generate_recommendations.py 2>&1
+
+      # ── Agent Commerce Test (optional) ─────────────────────────────────────────
+      - name: "Agent commerce smoke test (~2 min)"
+        if: inputs.run_agent_tests
+        continue-on-error: true
+        run: python test_agent_commerce.py --domain thegoodguys.com.au 2>&1
+
+      # ── Cloudflare Logpush analysis (optional) ──────────────────────────────────
+      - name: "CF Logpush bot analysis"
+        if: inputs.cf_logpush_file != ''
+        continue-on-error: true
+        run: python ingest_cf_logpush.py --file "${{ inputs.cf_logpush_file }}" 2>&1
 
       # ── Phase 4: Content Intelligence ──────────────────────────────────────────
       - name: "Phase 4 — Content intelligence (~5 min)"
@@ -420,10 +460,16 @@ jobs:
               ('semantic_structure', 'Semantic Structure'),
               ('anchor_quality',     'Anchor Text Quality'),
               ('content_similarity', 'Content Similarity'),
+              ('entity_gap',         'Entity Gap vs Competitors'),
+              ('llm_quality',        'LLM Quality Judge'),
           ]:
               c = data.get('checks', {}).get(key, {})
+              if not c:
+                  continue
               if 'error' in c:
                   print(f"  ✗ {name:<25} {c['error'][:50]}")
+              elif c.get('skipped'):
+                  print(f"  ⏭ {name:<25} skipped (self-hosted runner required)")
               else:
                   bar = '█' * round(c.get('percentage',0)/5) + '░' * (20-round(c.get('percentage',0)/5))
                   print(f"  {name:<25} {bar} {c.get('score',0)}/{c.get('maxScore',0)} ({c.get('percentage',0)}%)")

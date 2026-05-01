@@ -51,6 +51,9 @@ PHASE3_CATS = [
     ("sitemap_coverage",  "Sitemap Coverage",             40),
     ("competitor_schema", "Competitor Schema Comparison", 45),
     ("au_signals",        "AU Content Signals",           20),
+    ("agentic_commerce",  "Agentic Commerce Readiness",   30),
+    ("gtin_coverage",     "GTIN Coverage",                20),
+    ("gmc_feed",          "GMC Feed Completeness",        30),
 ]
 
 PHASE4_CATS = [
@@ -60,6 +63,9 @@ PHASE4_CATS = [
     ("knowledge_graph",    "Knowledge Graph",                20),
     ("semantic_structure", "Semantic Structure",             30),
     ("anchor_quality",     "Anchor Text Quality",            20),
+    ("content_similarity", "Content Similarity",             20),
+    ("entity_gap",         "Entity Gap vs Competitors",      25),
+    ("llm_quality",        "LLM Quality Judge",              25),
 ]
 
 
@@ -326,6 +332,11 @@ def section_phase3(phase3: dict) -> str:
 
     for key, name, _ in PHASE3_CATS:
         c = checks.get(key, {})
+        if not c:
+            continue
+        if c.get("skipped"):
+            rows += f'<tr><td>{name}</td><td colspan="3" style="color:#94a3b8;font-style:italic">⏭ Skipped — set {key.upper()}_URL env var to enable</td></tr>'
+            continue
         if "error" in c:
             rows += f'<tr><td>{name}</td><td colspan="3" class="error">✗ {c["error"][:80]}</td></tr>'
             continue
@@ -401,6 +412,11 @@ def section_phase4(phase4: dict) -> str:
 
     for key, name, _ in PHASE4_CATS:
         c = checks.get(key, {})
+        if not c:
+            continue
+        if c.get("skipped"):
+            rows += f'<tr><td>{name}</td><td colspan="3" style="color:#94a3b8;font-style:italic">⏭ Skipped — self-hosted runner required</td></tr>'
+            continue
         if "error" in c:
             rows += f'<tr><td>{name}</td><td colspan="3" class="error">✗ {c["error"][:80]}</td></tr>'
             continue
