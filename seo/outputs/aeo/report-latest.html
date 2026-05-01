@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AEO Audit Report — The Good Guys — 2026-05-01 07:30 UTC</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; }
+.container { max-width: 1200px; margin: 0 auto; padding: 24px 16px; }
+.report-header { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; padding: 32px; border-radius: 12px; margin-bottom: 28px; }
+.report-header h1 { font-size: 1.8em; margin-bottom: 4px; }
+.report-header .meta { color: #94a3b8; font-size: 0.9em; }
+.hero-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+.hero-card { padding: 24px; border-radius: 10px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.hero-grade { font-size: 3em; font-weight: 800; line-height: 1; }
+.hero-pct { font-size: 1.6em; font-weight: 700; margin: 4px 0; }
+.hero-title { font-weight: 600; font-size: 1em; margin-top: 8px; color: #374151; }
+.hero-sub { font-size: 0.8em; color: #6b7280; margin-top: 2px; }
+.section { background: white; border-radius: 10px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.07); }
+.section h2 { font-size: 1.3em; color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 18px; }
+.section h3 { font-size: 1.05em; color: #374151; margin: 20px 0 12px; }
+.charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
+.chart-box { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.07); }
+.chart-box-wide { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.07); margin-bottom: 24px; }
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.88em; }
+.data-table th { background: #f1f5f9; padding: 8px 12px; text-align: left; font-size: 0.82em; color: #475569; text-transform: uppercase; letter-spacing: 0.04em; }
+.data-table td { padding: 9px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+.data-table tr:hover td { background: #f8fafc; }
+.issues-table { width: 100%; border-collapse: collapse; font-size: 0.85em; }
+.issues-table th { background: #fff7ed; padding: 8px 12px; text-align: left; font-size: 0.8em; color: #9a3412; text-transform: uppercase; letter-spacing: 0.04em; }
+.issues-table td { padding: 8px 12px; border-bottom: 1px solid #fef3c7; vertical-align: top; }
+.issues-table tr:hover td { background: #fffbeb; }
+.pct-bar { display: inline-block; width: 80px; height: 8px; background: #e2e8f0; border-radius: 4px; vertical-align: middle; margin-right: 6px; overflow: hidden; }
+.pct-bar div { height: 100%; border-radius: 4px; }
+.sev-error { color: #dc2626; font-weight: 600; white-space: nowrap; }
+.sev-warn { color: #d97706; font-weight: 600; white-space: nowrap; }
+.fail { color: #dc2626; font-weight: 600; }
+.warn { color: #d97706; font-weight: 600; }
+.error { color: #dc2626; font-style: italic; }
+.empty { color: #94a3b8; font-style: italic; padding: 20px 0; }
+.score-summary { margin-bottom: 16px; }
+.score-label { color: #64748b; font-size: 1em; }
+code { font-family: 'SF Mono', 'Fira Code', monospace; background: #f1f5f9; padding: 1px 5px; border-radius: 3px; font-size: 0.85em; }
+.phase2-summary {}
+.footer { text-align: center; color: #94a3b8; font-size: 0.82em; margin-top: 32px; padding: 16px; }
+@media (max-width: 768px) {
+    .hero-cards { grid-template-columns: 1fr; }
+    .charts-grid { grid-template-columns: 1fr; }
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="container">
+
+  <div class="report-header">
+    <h1>AEO Audit Report — The Good Guys</h1>
+    <div class="meta">Run #2 &nbsp;·&nbsp; Branch: main &nbsp;·&nbsp; Generated: 2026-05-01 07:30 UTC</div>
+  </div>
+
+  <div class="hero-cards">
+        <div class="hero-card" style="border-top:4px solid #ef4444;background:#fee2e2">
+            <div class="hero-grade" style="color:#ef4444">F</div>
+            <div class="hero-pct" style="color:#ef4444">9%</div>
+            <div class="hero-title">Phase 1 · Discovery</div>
+            <div class="hero-sub">Robots, llms.txt, meta signals</div>
+        </div>
+        <div class="hero-card" style="border-top:4px solid #ef4444;background:#fee2e2">
+            <div class="hero-grade" style="color:#ef4444">F</div>
+            <div class="hero-pct" style="color:#ef4444">37%</div>
+            <div class="hero-title">Phase 2 · Deep Scan</div>
+            <div class="hero-sub">Content, tokens, structure</div>
+        </div>
+        <div class="hero-card" style="border-top:4px solid #f97316;background:#fff7ed">
+            <div class="hero-grade" style="color:#f97316">D</div>
+            <div class="hero-pct" style="color:#f97316">54%</div>
+            <div class="hero-title">Phase 3 · Ecommerce</div>
+            <div class="hero-sub">Schema, UA, hidden content</div>
+        </div></div>
+
+  <div class="charts-grid">
+    <div class="chart-box"><canvas id="chartP1Overall" height="220"></canvas></div>
+    <div class="chart-box"><canvas id="chartP3" height="220"></canvas></div>
+  </div>
+  <div class="chart-box-wide"><canvas id="chartP1Cats" height="120"></canvas></div>
+  <div class="chart-box-wide"><canvas id="chartP2" height="100"></canvas></div>
+
+  <div class="section">
+    <h2>Phase 1 — Competitor Comparison (Discovery &amp; Signals)</h2>
+    
+    <table class="data-table">
+        <thead><tr>
+            <th>Site</th><th>Grade</th><th>Score %</th>
+            <th>Discovery<br><small>/25</small></th><th>Content Structure<br><small>/25</small></th><th>Token Economics<br><small>/25</small></th><th>Capability Signaling<br><small>/15</small></th><th>UX Bridge<br><small>/10</small></th>
+            <th>Errors</th><th>Warns</th>
+        </tr></thead>
+        <tbody><tr>
+            <td><strong>TGG</strong></td>
+            <td><span style="color:#ef4444;font-weight:700">F</span></td>
+            <td><div class="pct-bar"><div style="width:9%;background:#ef4444"></div></div><span>9%</span></td>
+            <td><span style="color:#f97316;font-weight:600">8/25</span></td><td><span style="color:#ef4444;font-weight:600">0/25</span></td><td><span style="color:#ef4444;font-weight:600">0/25</span></td><td><span style="color:#ef4444;font-weight:600">1/15</span></td><td><span style="color:#ef4444;font-weight:600">0/10</span></td>
+            <td class="fail">3</td>
+            <td class="warn">6</td>
+        </tr><tr>
+            <td><strong>Harvey Norman</strong></td>
+            <td><span style="color:#ef4444;font-weight:700">F</span></td>
+            <td><div class="pct-bar"><div style="width:9%;background:#ef4444"></div></div><span>9%</span></td>
+            <td><span style="color:#f97316;font-weight:600">8/25</span></td><td><span style="color:#ef4444;font-weight:600">0/25</span></td><td><span style="color:#ef4444;font-weight:600">0/25</span></td><td><span style="color:#ef4444;font-weight:600">1/15</span></td><td><span style="color:#ef4444;font-weight:600">0/10</span></td>
+            <td class="fail">3</td>
+            <td class="warn">6</td>
+        </tr><tr>
+            <td><strong>JB Hi-Fi</strong></td>
+            <td><span style="color:#ef4444;font-weight:700">F</span></td>
+            <td><div class="pct-bar"><div style="width:18%;background:#ef4444"></div></div><span>18%</span></td>
+            <td><span style="color:#eab308;font-weight:600">17/25</span></td><td><span style="color:#ef4444;font-weight:600">0/25</span></td><td><span style="color:#ef4444;font-weight:600">0/25</span></td><td><span style="color:#ef4444;font-weight:600">1/15</span></td><td><span style="color:#ef4444;font-weight:600">0/10</span></td>
+            <td class="fail">2</td>
+            <td class="warn">6</td>
+        </tr><tr>
+            <td><strong>Appliances Online</strong></td>
+            <td><span style="color:#ef4444;font-weight:700">F</span></td>
+            <td><div class="pct-bar"><div style="width:18%;background:#ef4444"></div></div><span>18%</span></td>
+            <td><span style="color:#eab308;font-weight:600">17/25</span></td><td><span style="color:#ef4444;font-weight:600">0/25</span></td><td><span style="color:#ef4444;font-weight:600">0/25</span></td><td><span style="color:#ef4444;font-weight:600">1/15</span></td><td><span style="color:#ef4444;font-weight:600">0/10</span></td>
+            <td class="fail">2</td>
+            <td class="warn">6</td>
+        </tr></tbody>
+    </table><h3>TGG Issues &amp; Fixes</h3><table class="issues-table"><thead><tr><th>Severity</th><th>Check</th><th>Issue</th><th>Fix</th></tr></thead><tbody><tr><td class="sev-error">Error</td><td>llms.txt Discovery Index</td><td>No llms.txt found at site root.</td><td><code>Create a llms.txt file at your site root. This acts as a sitemap for AI agents.</code></td></tr><tr><td class="sev-error">Error</td><td>AGENTS.md / CLAUDE.md</td><td>Cannot scan for AGENTS.md in URL-only mode.</td><td><code>Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.</code></td></tr><tr><td class="sev-error">Error</td><td>Capability Signaling (skill.md)</td><td>Cannot scan for skill.md files in URL-only mode.</td><td><code>Create skill.md files for your APIs and services. These tell agents what your product can DO, not ju</code></td></tr><tr><td class="sev-warn">Warning</td><td>Robots.txt AI Access</td><td>No AI crawlers are explicitly allowed in robots.txt.</td><td>Add explicit Allow rules for AI crawlers like ClaudeBot, GPTBot, PerplexityBot.</td></tr><tr><td class="sev-warn">Warning</td><td>Content Structure Quality</td><td>No local directory available to analyze content structure.</td><td></td></tr><tr><td class="sev-warn">Warning</td><td>Markdown Content Availability</td><td>No local directory available to analyze Markdown availability.</td><td></td></tr><tr><td class="sev-warn">Warning</td><td>Token Budget Analysis</td><td>No local directory available to analyze token counts.</td><td></td></tr><tr><td class="sev-warn">Warning</td><td>AI-Friendly Meta Tags</td><td>No local directory available to analyze meta tags.</td><td></td></tr><tr><td class="sev-warn">Warning</td><td>Copy for AI UX</td><td>No local directory available to analyze copy-for-AI affordances.</td><td></td></tr></tbody></table>
+  </div>
+
+  <div class="section">
+    <h2>Phase 2 — Deep Local Scan (TGG)</h2>
+    
+    <div class="phase2-summary">
+        <div class="score-summary">
+            <span style="color:#ef4444;font-size:3em;font-weight:800">F</span>
+            <span style="color:#ef4444;font-size:1.5em;margin-left:8px">37%</span>
+            <span class="score-label">&nbsp;overall (TGG deep scan)</span>
+        </div>
+        <table class="data-table">
+            <thead><tr><th>Category</th><th>Progress</th><th>Score</th><th>%</th></tr></thead>
+            <tbody><tr>
+            <td>Discovery</td>
+            <td><div class="pct-bar"><div style="width:20%;background:#ef4444"></div></div></td>
+            <td style="color:#ef4444;font-weight:600">5/25</td>
+            <td>20%</td>
+        </tr><tr>
+            <td>Content Structure</td>
+            <td><div class="pct-bar"><div style="width:40%;background:#f97316"></div></div></td>
+            <td style="color:#f97316;font-weight:600">10/25</td>
+            <td>40%</td>
+        </tr><tr>
+            <td>Token Economics</td>
+            <td><div class="pct-bar"><div style="width:84%;background:#22c55e"></div></div></td>
+            <td style="color:#22c55e;font-weight:600">21/25</td>
+            <td>84%</td>
+        </tr><tr>
+            <td>Capability Signaling</td>
+            <td><div class="pct-bar"><div style="width:7%;background:#ef4444"></div></div></td>
+            <td style="color:#ef4444;font-weight:600">1/15</td>
+            <td>7%</td>
+        </tr><tr>
+            <td>UX Bridge</td>
+            <td><div class="pct-bar"><div style="width:0%;background:#ef4444"></div></div></td>
+            <td style="color:#ef4444;font-weight:600">0/10</td>
+            <td>0%</td>
+        </tr></tbody>
+        </table>
+    </div>
+        <h3>Issues &amp; Fixes</h3>
+        <table class="issues-table">
+            <thead><tr><th>Severity</th><th>Check</th><th>Issue</th><th>Fix</th></tr></thead>
+            <tbody><tr><td class="sev-error">Error</td><td>llms.txt Discovery Index</td><td>No llms.txt found at site root.</td><td><code>Create a llms.txt file at your site root. This acts as a sitemap for AI agents.</code></td></tr><tr><td class="sev-error">Error</td><td>AGENTS.md / CLAUDE.md</td><td>No AGENTS.md, CLAUDE.md, or similar agent instruction file found.</td><td><code>Create an AGENTS.md in your repo root. This is the entry point for AI coding agents.</code></td></tr><tr><td class="sev-error">Error</td><td>Content Structure Quality</td><td>9 of 10 sampled pages have broken heading hierarchy.</td><td><code>Fix heading levels to be sequential (H1 → H2 → H3). This is critical for agent parsing.</code></td></tr><tr><td class="sev-error">Error</td><td>Capability Signaling (skill.md)</td><td>No skill.md files found.</td><td><code>Create skill.md files for your APIs and services. These tell agents what your product can DO, not just how to call it.</code></td></tr><tr><td class="sev-warn">Warning</td><td>Robots.txt AI Access</td><td>Consider adding a robots.txt that explicitly permits AI agent crawlers.</td><td>Create a robots.txt with:</td></tr><tr><td class="sev-warn">Warning</td><td>Content Structure Quality</td><td>Few pages (0/10) contain code examples.</td><td>Code examples are critical for agents. Add runnable examples for key operations.</td></tr><tr><td class="sev-warn">Warning</td><td>Content Structure Quality</td><td>Many pages lack a strong opening paragraph.</td><td>Start each page with a clear statement of what the page covers and what the reader/agent will learn.</td></tr><tr><td class="sev-warn">Warning</td><td>Markdown Content Availability</td><td>No Markdown files found. Only HTML is available.</td><td>Serve Markdown versions of documentation pages. Many static site generators can output .md files alongside .html.</td></tr><tr><td class="sev-warn">Warning</td><td>AI-Friendly Meta Tags</td><td>No pages include token count meta tags.</td><td>Add <meta name="ai:token-count" content="12500"> to help agents estimate context cost.</td></tr><tr><td class="sev-warn">Warning</td><td>Copy for AI UX</td><td>No "Copy for AI" buttons found.</td><td>Add a "Copy for AI" button that copies clean Markdown or plain text to clipboard.</td></tr><tr><td class="sev-warn">Warning</td><td>Copy for AI UX</td><td>No copy-to-clipboard buttons found for code blocks.</td><td>Add copy buttons to code blocks. This is standard in modern documentation and helps both human and agent workflows.</td></tr><tr><td class="sev-warn">Warning</td><td>Copy for AI UX</td><td>No links to raw or Markdown views found.</td><td>Add links to Markdown source or "Edit on GitHub" links. These help agents and developers access clean, parseable content</td></tr></tbody>
+        </table>
+  </div>
+
+  <div class="section">
+    <h2>Phase 3 — Ecommerce AEO <span style="display:inline-block;padding:4px 14px;border-radius:20px;background:#fff7ed;color:#f97316;font-weight:700;font-size:1.1em;border:2px solid #f97316">D · 54%</span></h2>
+    
+    <table class="data-table">
+        <thead><tr><th>Check</th><th>Progress</th><th>Score</th><th>%</th></tr></thead>
+        <tbody><tr>
+            <td>Schema / Structured Data</td>
+            <td><div class="pct-bar"><div style="width:32%;background:#f97316"></div></div></td>
+            <td style="color:#f97316;font-weight:600">110/340</td>
+            <td>32%</td>
+        </tr><tr>
+            <td>Render Diff</td>
+            <td><div class="pct-bar"><div style="width:100%;background:#22c55e"></div></div></td>
+            <td style="color:#22c55e;font-weight:600">60/60</td>
+            <td>100%</td>
+        </tr><tr>
+            <td>User Agent Behaviour</td>
+            <td><div class="pct-bar"><div style="width:100%;background:#22c55e"></div></div></td>
+            <td style="color:#22c55e;font-weight:600">60/60</td>
+            <td>100%</td>
+        </tr><tr>
+            <td>Hidden Content</td>
+            <td><div class="pct-bar"><div style="width:50%;background:#eab308"></div></div></td>
+            <td style="color:#eab308;font-weight:600">100/200</td>
+            <td>50%</td>
+        </tr><tr>
+            <td>AI Content Signals</td>
+            <td><div class="pct-bar"><div style="width:65%;background:#eab308"></div></div></td>
+            <td style="color:#eab308;font-weight:600">162/250</td>
+            <td>65%</td>
+        </tr></tbody>
+    </table>
+        <h3>Ecommerce Issues</h3>
+        <table class="issues-table">
+            <thead><tr><th>Check</th><th>Page / URL</th><th>Issue</th></tr></thead>
+            <tbody><tr><td class="sev-error">Hidden Content</td><td><code>air-conditioners.html</code></td><td>11% of content hidden from AI crawlers</td></tr><tr><td class="sev-error">Hidden Content</td><td><code>buying-guide--best-air-conditioners.html</code></td><td>27% of content hidden from AI crawlers</td></tr><tr><td class="sev-error">Hidden Content</td><td><code>buying-guide--best-tvs.html</code></td><td>27% of content hidden from AI crawlers</td></tr><tr><td class="sev-error">Hidden Content</td><td><code>buying-guide--best-washing-machines.html</code></td><td>27% of content hidden from AI crawlers</td></tr><tr><td class="sev-error">Hidden Content</td><td><code>index.html</code></td><td>87% of content hidden from AI crawlers</td></tr><tr><td class="sev-error">Hidden Content</td><td><code>laptops-computers.html</code></td><td>27% of content hidden from AI crawlers</td></tr><tr><td class="sev-error">Hidden Content</td><td><code>televisions--smart-tvs.html</code></td><td>13% of content hidden from AI crawlers</td></tr><tr><td class="sev-error">Hidden Content</td><td><code>televisions.html</code></td><td>13% of content hidden from AI crawlers</td></tr><tr><td class="sev-error">Hidden Content</td><td><code>washing-machines.html</code></td><td>13% of content hidden from AI crawlers</td></tr><tr><td class="sev-error">AI Content Signals</td><td><code>index.html</code></td><td>Low AI content signals — few patterns AI models cite</td></tr></tbody>
+        </table>
+        <h3>Schema Detail by Page</h3>
+        <table class="data-table">
+            <thead><tr><th>Page</th><th>Type</th><th>Score</th><th>Schema Found</th><th>Missing</th><th>Bonus</th></tr></thead>
+            <tbody><tr>
+                <td><code>air-conditioners.html</code></td>
+                <td>category</td>
+                <td style="color:#22c55e;font-weight:600">25/30</td>
+                <td style="color:#64748b;font-size:0.85em">BreadcrumbList, CollectionPage, FAQPage</td>
+                <td style="color:#ef4444;font-size:0.85em">ItemList</td>
+                <td style="color:#22c55e;font-size:0.85em">FAQPage</td>
+            </tr><tr>
+                <td><code>buying-guide--best-air-conditioners.html</code></td>
+                <td>guide</td>
+                <td style="color:#ef4444;font-weight:600">0/40</td>
+                <td style="color:#64748b;font-size:0.85em">None</td>
+                <td style="color:#ef4444;font-size:0.85em">Article, FAQPage, BreadcrumbList, VideoObject</td>
+                <td style="color:#22c55e;font-size:0.85em">—</td>
+            </tr><tr>
+                <td><code>buying-guide--best-tvs.html</code></td>
+                <td>guide</td>
+                <td style="color:#ef4444;font-weight:600">0/40</td>
+                <td style="color:#64748b;font-size:0.85em">None</td>
+                <td style="color:#ef4444;font-size:0.85em">Article, FAQPage, BreadcrumbList, VideoObject</td>
+                <td style="color:#22c55e;font-size:0.85em">—</td>
+            </tr><tr>
+                <td><code>buying-guide--best-washing-machines.html</code></td>
+                <td>guide</td>
+                <td style="color:#ef4444;font-weight:600">0/40</td>
+                <td style="color:#64748b;font-size:0.85em">None</td>
+                <td style="color:#ef4444;font-size:0.85em">Article, FAQPage, BreadcrumbList, VideoObject</td>
+                <td style="color:#22c55e;font-size:0.85em">—</td>
+            </tr><tr>
+                <td><code>index.html</code></td>
+                <td>home</td>
+                <td style="color:#f97316;font-weight:600">10/30</td>
+                <td style="color:#64748b;font-size:0.85em">Organization</td>
+                <td style="color:#ef4444;font-size:0.85em">WebSite, SiteLinksSearchBox</td>
+                <td style="color:#22c55e;font-size:0.85em">—</td>
+            </tr><tr>
+                <td><code>laptops-computers.html</code></td>
+                <td>category</td>
+                <td style="color:#ef4444;font-weight:600">0/30</td>
+                <td style="color:#64748b;font-size:0.85em">None</td>
+                <td style="color:#ef4444;font-size:0.85em">ItemList, BreadcrumbList, CollectionPage</td>
+                <td style="color:#22c55e;font-size:0.85em">—</td>
+            </tr><tr>
+                <td><code>televisions--smart-tvs.html</code></td>
+                <td>product</td>
+                <td style="color:#f97316;font-weight:600">15/40</td>
+                <td style="color:#64748b;font-size:0.85em">BreadcrumbList, CollectionPage, FAQPage</td>
+                <td style="color:#ef4444;font-size:0.85em">Product, Offer, AggregateRating</td>
+                <td style="color:#22c55e;font-size:0.85em">FAQPage</td>
+            </tr><tr>
+                <td><code>televisions.html</code></td>
+                <td>category</td>
+                <td style="color:#22c55e;font-weight:600">25/30</td>
+                <td style="color:#64748b;font-size:0.85em">BreadcrumbList, CollectionPage, FAQPage</td>
+                <td style="color:#ef4444;font-size:0.85em">ItemList</td>
+                <td style="color:#22c55e;font-size:0.85em">FAQPage</td>
+            </tr><tr>
+                <td><code>washing-machines.html</code></td>
+                <td>category</td>
+                <td style="color:#22c55e;font-weight:600">25/30</td>
+                <td style="color:#64748b;font-size:0.85em">BreadcrumbList, CollectionPage, FAQPage</td>
+                <td style="color:#ef4444;font-size:0.85em">ItemList</td>
+                <td style="color:#22c55e;font-size:0.85em">FAQPage</td>
+            </tr><tr>
+                <td><code>whats-new.html</code></td>
+                <td>category</td>
+                <td style="color:#f97316;font-weight:600">10/30</td>
+                <td style="color:#64748b;font-size:0.85em">BreadcrumbList</td>
+                <td style="color:#ef4444;font-size:0.85em">ItemList, CollectionPage</td>
+                <td style="color:#22c55e;font-size:0.85em">—</td>
+            </tr></tbody>
+        </table>
+  </div>
+
+  <div class="footer">
+    AEO Audit · The Good Guys · thegoodguys.com.au · 2026-05-01 07:30 UTC
+  </div>
+
+</div>
+
+<script>
+// ── Phase 1 Overall ──────────────────────────────────────────────
+new Chart(document.getElementById('chartP1Overall'), {
+    type: 'bar',
+    data: {
+        labels: ["TGG", "Harvey Norman", "JB Hi-Fi", "Appliances Online"],
+        datasets: [{
+            label: 'Overall Score %',
+            data: [9, 9, 18, 18],
+            backgroundColor: [9, 9, 18, 18].map(v => v >= 75 ? '#22c55e' : v >= 50 ? '#eab308' : v >= 25 ? '#f97316' : '#ef4444'),
+            borderRadius: 6,
+        }]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        scales: {
+            x: { min: 0, max: 100, ticks: { callback: v => v + '%' } },
+            y: { ticks: { font: { size: 13 } } }
+        },
+        plugins: { legend: { display: false }, title: { display: true, text: 'AEO Score by Site — Phase 1', font: { size: 15 } } }
+    }
+});
+
+// ── Phase 1 Category Breakdown ──────────────────────────────────
+new Chart(document.getElementById('chartP1Cats'), {
+    type: 'bar',
+    data: { labels: ["TGG", "Harvey Norman", "JB Hi-Fi", "Appliances Online"], datasets: [{"label":"Discovery","data":[32, 32, 68, 68],"backgroundColor":'#6366f1'},{"label":"Content Structure","data":[0, 0, 0, 0],"backgroundColor":'#22c55e'},{"label":"Token Economics","data":[0, 0, 0, 0],"backgroundColor":'#eab308'},{"label":"Capability Signaling","data":[7, 7, 7, 7],"backgroundColor":'#f97316'},{"label":"UX Bridge","data":[0, 0, 0, 0],"backgroundColor":'#ec4899'}] },
+    options: {
+        responsive: true,
+        scales: {
+            x: { stacked: false },
+            y: { min: 0, max: 100, ticks: { callback: v => v + '%' } }
+        },
+        plugins: {
+            title: { display: true, text: 'Category Scores by Site — Phase 1', font: { size: 15 } }
+        }
+    }
+});
+
+// ── Phase 2 Category Bars ─────────────────────────────────────────
+new Chart(document.getElementById('chartP2'), {
+    type: 'bar',
+    data: {
+        labels: ["Discovery", "Content Structure", "Token Economics", "Capability Signaling", "UX Bridge"],
+        datasets: [{
+            label: 'Score %',
+            data: [20, 40, 84, 7, 0],
+            backgroundColor: [20, 40, 84, 7, 0].map(v => v >= 75 ? '#22c55e' : v >= 50 ? '#eab308' : v >= 25 ? '#f97316' : '#ef4444'),
+            borderRadius: 6,
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: { y: { min: 0, max: 100, ticks: { callback: v => v + '%' } } },
+        plugins: { legend: { display: false }, title: { display: true, text: 'Deep Scan Categories — Phase 2 (TGG)', font: { size: 15 } } }
+    }
+});
+
+// ── Phase 3 Radar ─────────────────────────────────────────────────
+new Chart(document.getElementById('chartP3'), {
+    type: 'radar',
+    data: {
+        labels: ["Schema / Structured Data", "Render Diff", "User Agent Behaviour", "Hidden Content", "AI Content Signals"],
+        datasets: [{
+            label: 'TGG Ecommerce AEO',
+            data: [32, 100, 100, 50, 65],
+            backgroundColor: 'rgba(99,102,241,0.2)',
+            borderColor: '#6366f1',
+            pointBackgroundColor: '#6366f1',
+            pointRadius: 5,
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: { r: { min: 0, max: 100, ticks: { stepSize: 25 } } },
+        plugins: { title: { display: true, text: 'Ecommerce AEO Checks — Phase 3 (TGG)', font: { size: 15 } } }
+    }
+});
+</script>
+</body>
+</html>
