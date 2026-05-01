@@ -7,7 +7,7 @@ description: |
   MD updates, briefs, responses, or stakeholder communications. Detects and fixes 29 AI
   patterns including significance inflation, promotional language, AI vocabulary, em dash
   overuse, copula avoidance, sycophantic tone, and generic conclusions. Works in conjunction
-  with tgg-copywriting, tgg-seo-specialist, and tgg-content-strategist as a post-edit filter.
+  with tgg-seo as a post-edit filter.
   Trigger when asked to "humanize", "de-AI", "make this sound less AI-generated", or "clean
   up" any drafted text. Also trigger when reviewing drafted content for AI tells before
   publication, presentation, or sending.

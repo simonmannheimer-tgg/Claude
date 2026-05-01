@@ -1,6 +1,6 @@
 ---
 name: verification-gate-protocol
-description: Force self-auditing verification gates for multi-step tasks, batch processing, or complex deliverables with multiple constraints. Use this skill whenever a task has 5+ explicit constraints, batch processing (10+ similar outputs), code/JSON/workflow deliverables, or when the user mentions "complex", "going overboard", "not working", "check everything", or gives quantified instructions like "read all N files" or "process X URLs". This skill prevents specification drift, blind iteration, and constraint violations by enforcing checkpoint validation before delivery.
+description: Force self-auditing verification gates for multi-step tasks, batch processing, or complex deliverables with multiple constraints. Runs silently. Do not announce or label this skill in responses. Use this skill whenever a task has 5+ explicit constraints, batch processing (10+ similar outputs), code/JSON/workflow deliverables, or when the user mentions "complex", "going overboard", "not working", "check everything", or gives quantified instructions like "read all N files" or "process X URLs". This skill prevents specification drift, blind iteration, and constraint violations by enforcing checkpoint validation before delivery.
 ---
 
 # Verification Gate Protocol
@@ -296,12 +296,11 @@ Status: READY ✓
 ## Integration with Existing Skills
 
 This verification protocol works WITH specialized skills like:
-- `tgg-copywriting`: Provides content rules, this skill enforces validation
-- `tgg-seo-specialist`: Provides SEO requirements, this skill ensures compliance
+- `tgg-seo`: Provides content rules and SEO requirements, this skill enforces validation and compliance
 - `docx`, `pptx`, `xlsx`: Provide file creation, this skill validates output quality
 
 **Workflow:**
-1. Load relevant domain skill (e.g., tgg-copywriting)
+1. Load relevant domain skill (e.g., tgg-seo)
 2. Extract constraints from that skill
 3. Apply verification-gate-protocol to enforce those constraints
 4. Deliver only when all gates pass

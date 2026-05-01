@@ -1,6 +1,6 @@
 ---
 name: tgg-prompt-architect
-description: ALWAYS USE THIS SKILL FIRST on every user message before responding or invoking any other skill. This is a mandatory pre-processor that triages every incoming prompt and silently restructures work requests into a Claude contract format for higher-quality output. Use on greetings, work requests, follow-ups, code, files, and conversational messages alike. The skill itself decides whether to hard-skip, soft-skip, bypass, fully restructure, or ask a clarifying question. Specifically use when the user asks for SEO copywriting, metadata, FAQ copy, PLP intros, category copy, schema, internal linking, audits, data analysis, Python or JavaScript scripting, strategy, monthly SEO reporting, deck building, slides, project management, batch processing, file work, document creation, or any prompt asking Claude to produce a deliverable. Use even for simple-looking prompts. The skill self-skips on greetings and continuations, so over-triggering is safe. Under-triggering breaks the workflow.
+description: MANDATORY pre-processor for every user message. Fires automatically and silently before any response or other skill, with NO exceptions for "scoped work requests". Concrete fire conditions: any message longer than 5 words OR any message containing a deliverable verb (write, build, draft, audit, analyse, generate, create, fix, run, produce, deliver, review, audit). Triages every prompt: hard-skip (greetings only), soft-skip, bypass, fully restructure, or ask one clarifying question. Use for SEO copywriting, metadata, FAQ copy, PLP intros, schema, internal linking, audits, data analysis, scripting, strategy, monthly SEO reporting, deck building, project management, batch processing, file work, document creation, or any prompt asking Claude to produce a deliverable. Use even for simple-looking prompts. Over-triggering is safe (self-skips on true greetings); under-triggering breaks the workflow. Do NOT skip just because a request "sounds clear and scoped".
 ---
 
 # tgg-prompt-architect
@@ -63,8 +63,7 @@ These must appear in the rewritten prompt unchanged. Never paraphrase a number o
 
 Match the task to one of Simon's existing TGG skills. Name the skill explicitly inside the rewritten task statement so it triggers downstream:
 
-- SEO copywriting (PLP intros, metadata, FAQ, category copy, EAV) → `tgg-copywriting` and `tgg-seo-specialist`.
-- Content strategy, briefs, content calendars → `tgg-content-strategist`.
+- SEO copywriting (PLP intros, metadata, FAQ, category copy, EAV), SEO strategy (briefs, calendars, AEO frameworks), and technical SEO (audits, schema, internal linking, keyword research) → `tgg-seo`.
 - Marketing analytics, GSC/GA4, Semrush data, performance reports → `tgg-marketing-analyst`.
 - Templates, scaffolds, briefs → `tgg-template-generator`.
 - Repo, commit messages, CLAUDE.md, process files → `tgg-repo-manager`.
@@ -143,7 +142,7 @@ Before delivering the rewritten prompt to downstream execution, run this check i
 |---|---|
 | Lifted verbatim from user prompt | YES |
 | User's standing rules (AU English, no padding, no restating brief, 120-word cap, em dash rule, full URLs, hard numeric limits) | YES |
-| TGG skill rule referenced by name (e.g. tgg-copywriting char limits, tgg-pptx-style colour tokens) | YES, but only as a reference to the downstream skill, not by re-stating its rules |
+| TGG skill rule referenced by name (e.g. tgg-seo char limits, tgg-pptx-style colour tokens) | YES, but only as a reference to the downstream skill, not by re-stating its rules |
 | Inferred from context Claude knows about (model, brand, season) | NO. Delete the constraint. |
 | Reasonable best practice for the task type | NO. Delete the constraint. |
 | Anything else | NO. Delete the constraint. |
@@ -198,7 +197,7 @@ Use XML tags in the rewritten prompt only when the contract has three or more di
 
 ## What this skill must NOT do
 
-- Embed brand voice rules. Lives in `tgg-copywriting` and `tgg-humanizer`.
+- Embed brand voice rules. Lives in `tgg-seo` and `tgg-humanizer`.
 - Embed report templates. Lives in `tgg-monthly-seo-report`.
 - Embed deck styles. Lives in `tgg-pptx-style`.
 - Embed verification rules beyond constraint-lift. Lives in `verification-gate-protocol`.

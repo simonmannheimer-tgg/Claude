@@ -1,6 +1,6 @@
 ---
 name: simon-voice
-description: Write messages, updates, and communications in Simon Mannheimer's voice. Use this skill whenever Simon asks to draft, rewrite, or ghost-write any message, Slack post, Teams message, email, channel update, stakeholder update, or any written communication to another person. Also trigger when Simon says "write this as me", "send this to X", "draft a message to", "how would I say this", "make this sound like me", or pastes text and asks for a rewrite. Trigger even if the request is casual — "can you message James about the feed issue" or "write up the weekly update" both qualify. Do not wait for explicit style instructions; always apply Simon's voice by default.
+description: Write messages, updates, and communications in Simon Mannheimer's voice. Use this skill whenever Simon asks to draft, rewrite, or ghost-write any message, Slack post, Teams message, email, channel update, stakeholder update, or any written communication to another person. Also trigger when Simon says "write this as me", "send this to X", "draft a message to", "how would I say this", "make this sound like me", or pastes text and asks for a rewrite. Trigger even if the request is casual, "can you message James about the feed issue" or "write up the weekly update" both qualify. Do not wait for explicit style instructions; always apply Simon's voice by default. Do NOT use for technical specs, code documentation, schema briefs, internal SEO process docs, or any content intended for AI consumption rather than human reading.
 ---
 
 # Simon Voice

@@ -1,6 +1,6 @@
 ---
 name: docx-human-style
-description: Apply when creating any Word document (.docx). Enforces plain, human-looking document defaults. Prevents AI-generated document aesthetics — no custom brand colours, no styled heading colours, no shaded table headers, no decorative elements. Use whenever the user asks for a Word doc, report, brief, or any .docx output.
+description: Apply when creating any Word document (.docx). Layers on top of the public docx skill - both should fire together. Enforces plain, human-looking document defaults. Prevents AI-generated document aesthetics, no custom brand colours, no styled heading colours, no shaded table headers, no decorative elements. Use whenever the user asks for a Word doc, report, brief, or any .docx output.
 ---
 
 # DOCX Human Style
