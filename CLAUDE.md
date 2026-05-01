@@ -110,6 +110,35 @@ Retry with exponential backoff (2s, 4s, 8s, 16s) on network errors. HTTP 403 = w
 
 ---
 
+## Shell Tool Rules — MANDATORY (VSCode on Windows)
+
+`bash.exe` (Git Bash) is **blocked by corporate endpoint security** on this machine. Every Bash tool call triggers a security alert and fails silently. **Do not use the Bash tool.**
+
+### Priority order for shell operations
+
+1. **Native tools first** — `Read`, `Glob`, `Grep`, `Write`, `Edit` invoke no shell process at all. Use these for any file read, search, or edit.
+2. **PowerShell for everything else** — pre-approved via `PowerShell(*)`. Use for running Python scripts, git commands, file extraction, pip installs, directory listing.
+3. **Bash: never, unless no other option** — if a task genuinely cannot be done with native tools or PowerShell, stop and ask Simon for permission before using `Bash`. State exactly what you need to do and why PowerShell cannot handle it.
+
+### Quick reference
+
+| Need | Use |
+|------|-----|
+| Read a file | `Read` tool |
+| Search for text | `Grep` tool |
+| Find files by pattern | `Glob` tool |
+| Run a Python script | `PowerShell(python ...)` |
+| List directory | `PowerShell(Get-ChildItem ...)` |
+| Extract a ZIP | `PowerShell(Expand-Archive ...)` |
+| Git operations | `PowerShell(git ...)` |
+| Anything requiring bash | Ask permission first |
+
+### Escalation path for bash-only tasks
+
+If a task genuinely requires bash (e.g., a shell script that cannot be rewritten for PowerShell), prefer delegating it to **GitHub Actions** where bash is available, or ask Simon to run it manually.
+
+---
+
 ## MCP Servers (Active)
 
 | Server | Entry point | Purpose |
@@ -273,7 +302,8 @@ Run from repo root: `python tools/tgg_plp_auditor.py`
 3. No over-engineering — no feature flags, backwards-compat shims, speculative abstractions
 4. Prefer editing over creating
 5. Confirm before: deleting files, force-pushing, destructive resets, modifying CI/CD
-6. **Vault hygiene** — after a substantive Claude Code session lands on a `claude/*` branch (i.e. before you create a PR or merge), re-run `python3 scripts/build_logseq_chat_index.py` so the new commits become a `Chat/Code/<slug>` page and the branch shows up in `Projects/Claude-Code`. Skip for trivial single-line fixes; required for any work that adds files or new functionality.
+6. **No Bash tool** — `bash.exe` is blocked by corporate security. Use native tools or PowerShell. If Bash is genuinely the only option, ask permission before proceeding. See "Shell Tool Rules" section above.
+7. **Vault hygiene** — after a substantive Claude Code session lands on a `claude/*` branch (i.e. before you create a PR or merge), re-run `python3 scripts/build_logseq_chat_index.py` so the new commits become a `Chat/Code/<slug>` page and the branch shows up in `Projects/Claude-Code`. Skip for trivial single-line fixes; required for any work that adds files or new functionality.
 
 ---
 
