@@ -370,6 +370,8 @@ jobs:
               'sitemap_coverage':  'Sitemap Coverage',
               'competitor_schema': 'Competitor Schema',
               'au_signals':        'AU Content Signals',
+              'agentic_commerce':  'Agentic Commerce Readiness',
+              'gtin_coverage':     'GTIN Coverage',
           }
           for key, name in check_names.items():
               c = data.get('checks', {}).get(key, {})
@@ -420,10 +422,15 @@ jobs:
               ('semantic_structure', 'Semantic Structure'),
               ('anchor_quality',     'Anchor Text Quality'),
               ('content_similarity', 'Content Similarity'),
+              ('llm_quality',        'LLM Quality Judge'),
           ]:
               c = data.get('checks', {}).get(key, {})
+              if not c:
+                  continue
               if 'error' in c:
                   print(f"  ✗ {name:<25} {c['error'][:50]}")
+              elif c.get('skipped'):
+                  print(f"  ⏭ {name:<25} skipped (self-hosted runner required)")
               else:
                   bar = '█' * round(c.get('percentage',0)/5) + '░' * (20-round(c.get('percentage',0)/5))
                   print(f"  {name:<25} {bar} {c.get('score',0)}/{c.get('maxScore',0)} ({c.get('percentage',0)}%)")

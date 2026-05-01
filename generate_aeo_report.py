@@ -51,6 +51,8 @@ PHASE3_CATS = [
     ("sitemap_coverage",  "Sitemap Coverage",             40),
     ("competitor_schema", "Competitor Schema Comparison", 45),
     ("au_signals",        "AU Content Signals",           20),
+    ("agentic_commerce",  "Agentic Commerce Readiness",   30),
+    ("gtin_coverage",     "GTIN Coverage",                20),
 ]
 
 PHASE4_CATS = [
@@ -60,6 +62,8 @@ PHASE4_CATS = [
     ("knowledge_graph",    "Knowledge Graph",                20),
     ("semantic_structure", "Semantic Structure",             30),
     ("anchor_quality",     "Anchor Text Quality",            20),
+    ("content_similarity", "Content Similarity",             20),
+    ("llm_quality",        "LLM Quality Judge",              25),
 ]
 
 

@@ -928,6 +928,93 @@ def check_content_similarity(snapshot_dir: Path) -> dict:
     }
 
 
+# ── Check 8: LLM Quality Judge ────────────────────────────────────────────────
+
+def check_llm_quality(snapshot_dir: Path) -> dict:
+    """
+    Uses local Ollama LLM (Phi-4 or Qwen2.5) to score content quality per page.
+    Gracefully skips if Ollama not running — no impact on CI if GPU unavailable.
+    Score: average llm_overall × 2.5 → max 25 pts.
+    """
+    try:
+        from llm_judge import judge_content, _is_ollama_available
+    except ImportError:
+        return {"error": "llm_judge.py not found", "score": 0, "maxScore": 25}
+
+    if not _is_ollama_available():
+        return {
+            "score": 0, "maxScore": 25, "percentage": 0, "grade": "F",
+            "pages": [], "errors": [],
+            "summary": "LLM judge skipped — Ollama not running (self-hosted runner only)",
+            "skipped": True,
+        }
+
+    results = []
+    total_score = 0
+    max_score = 0
+    page_max = 25
+
+    html_files = sorted(snapshot_dir.glob("*.html"))
+    if not html_files:
+        return {"error": "No HTML snapshots found", "score": 0, "maxScore": 0}
+
+    from bs4 import BeautifulSoup
+    from run_ecommerce_aeo import infer_page_type
+
+    for html_file in html_files[:5]:  # limit to 5 pages per run to stay within time budget
+        page_type = infer_page_type(html_file.name)
+        html = html_file.read_text(encoding="utf-8", errors="ignore")
+        soup = BeautifulSoup(html, "html.parser")
+        text = soup.get_text(separator=" ", strip=True)
+
+        scores = judge_content(text, page_type)
+        max_score += page_max
+
+        if not scores.get("available"):
+            results.append({
+                "file": html_file.name,
+                "page_type": page_type,
+                "score": 0,
+                "maxScore": page_max,
+                "issue": scores.get("reason", "LLM judge unavailable"),
+            })
+            continue
+
+        overall = scores.get("llm_overall", 0)
+        page_score = round(overall / 10 * page_max)
+        total_score += page_score
+
+        results.append({
+            "file": html_file.name,
+            "page_type": page_type,
+            "model": scores.get("model", "unknown"),
+            "clarity": scores.get("clarity"),
+            "specificity": scores.get("specificity"),
+            "schema_alignment": scores.get("schema_alignment"),
+            "query_answerability": scores.get("query_answerability"),
+            "llm_overall": overall,
+            "score": page_score,
+            "maxScore": page_max,
+            "reasoning": scores.get("reasoning", ""),
+            "issue": (
+                f"Low LLM score ({overall}/10) — content needs clarity or specificity improvements"
+                if overall < 6 else None
+            ),
+        })
+
+    pct = round(total_score / max_score * 100) if max_score else 0
+    errors = [r for r in results if r.get("issue")]
+    return {
+        "score": total_score,
+        "maxScore": max_score,
+        "percentage": pct,
+        "grade": grade(pct),
+        "pages": results,
+        "errors": errors,
+        "summary": f"{len(results)} pages scored by LLM judge | avg {round(sum(r.get('llm_overall',0) for r in results if r.get('llm_overall')) / max(sum(1 for r in results if r.get('llm_overall')),1), 1)}/10",
+    }
+
+
 # ── Summary & output ───────────────────────────────────────────────────────────
 
 def build_summary(checks: dict, label: str, snapshot_dir: str) -> str:
@@ -954,6 +1041,7 @@ def build_summary(checks: dict, label: str, snapshot_dir: str) -> str:
         "semantic_structure": "Semantic Structure",
         "anchor_quality":     "Anchor Text Quality",
         "content_similarity": "Content Similarity (TF-IDF)",
+        "llm_quality":        "LLM Quality Judge",
     }
     for key, name in check_labels.items():
         c = checks.get(key, {})
@@ -1033,6 +1121,7 @@ def main():
         ("semantic_structure", "Semantic structure",          lambda: check_semantic_structure(snapshot_dir)),
         ("anchor_quality",     "Anchor text quality",         lambda: check_anchor_quality(snapshot_dir)),
         ("content_similarity", "Content similarity (TF-IDF)", lambda: check_content_similarity(snapshot_dir)),
+        ("llm_quality",        "LLM quality judge",           lambda: check_llm_quality(snapshot_dir)),
     ]
     for i, (key, name, fn) in enumerate(all_checks, 1):
         print(f"  [{i}/{len(all_checks)}] {name}...")
