@@ -77,24 +77,6 @@ on:
         type: boolean
         default: true
 
-      check_capability:
-        description: |
-          ☑ Capability Signalling — 15 pts  (<1 min)
-          skill.md capability description files (relevant for API/service pages)
-          agent-permissions.json / .well-known/ai-plugin.json
-          Note: skill.md is designed for SaaS/API docs — low-impact for retail.
-        type: boolean
-        default: true
-
-      check_ux:
-        description: |
-          ☑ UX Bridge — 10 pts  (~1 min, Phase 2 only)
-          "Copy for AI" / "Copy as Markdown" buttons
-          Copy-to-clipboard on code/content blocks
-          Raw view / "View source" / "Edit on GitHub" links
-        type: boolean
-        default: true
-
       # ── Custom URL overrides ─────────────────────────────────────────────────
       urls:
         description: |
@@ -242,8 +224,6 @@ jobs:
           [ "${{ inputs.check_discovery }}" = "true" ] && add "robots-txt,llms-txt,agents-md"
           [ "${{ inputs.check_content }}"   = "true" ] && add "content-structure,markdown-availability"
           [ "${{ inputs.check_tokens }}"    = "true" ] && add "token-budget,meta-tags"
-          [ "${{ inputs.check_capability }}" = "true" ] && add "skill-md,agent-permissions"
-          [ "${{ inputs.check_ux }}"        = "true" ] && add "copy-for-ai"
 
           echo "value=$CHECKS" >> "$GITHUB_OUTPUT"
           echo "Active checks: ${CHECKS:-all}"
@@ -259,11 +239,16 @@ jobs:
               '[{"url":"https://www.thegoodguys.com.au","label":"TGG · Home"},
                 {"url":"https://www.thegoodguys.com.au/televisions","label":"TGG · Category"},
                 {"url":"https://www.thegoodguys.com.au/buying-guide/best-tvs","label":"TGG · Guide"},
-                {"url":"https://www.harveynorman.com.au","label":"Harvey Norman · Home"},
-                {"url":"https://www.harveynorman.com.au/televisions","label":"Harvey Norman · Category"},
+                {"url":"https://www.thegoodguys.com.au/whats-new","label":"TGG · Editorial"},
                 {"url":"https://www.jbhifi.com.au","label":"JB Hi-Fi · Home"},
-                {"url":"https://www.jbhifi.com.au/collections/televisions","label":"JB Hi-Fi · Category"},
-                {"url":"https://www.appliancesonline.com.au","label":"Appliances Online · Home"}]' }}
+                {"url":"https://www.jbhifi.com.au/collections/tvs","label":"JB Hi-Fi · Category"},
+                {"url":"https://www.jbhifi.com.au/blogs/news","label":"JB Hi-Fi · Blog"},
+                {"url":"https://www.harveynorman.com.au","label":"Harvey Norman · Home"},
+                {"url":"https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-screen-size/all-tvs","label":"Harvey Norman · Category"},
+                {"url":"https://www.harveynorman.com.au/buying-guides/security-camera-buying-guide","label":"Harvey Norman · Guide"},
+                {"url":"https://www.appliancesonline.com.au","label":"Appliances Online · Home"},
+                {"url":"https://www.appliancesonline.com.au/category/refrigeration/fridges/","label":"Appliances Online · Category"},
+                {"url":"https://www.appliancesonline.com.au/article/refrigerator-size-guide/","label":"Appliances Online · Guide"}]' }}
           AEO_CHECKS: ${{ steps.checks.outputs.value }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python run_aeo_audit.py 2>&1
