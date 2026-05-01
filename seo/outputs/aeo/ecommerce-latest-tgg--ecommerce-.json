@@ -2,9 +2,9 @@
   "label": "TGG (ecommerce)",
   "dir": "site-snapshots/thegoodguys.com.au",
   "grade": "C",
-  "score": 1161,
-  "maxScore": 1705,
-  "percentage": 68,
+  "score": 1291,
+  "maxScore": 1995,
+  "percentage": 65,
   "checks": {
     "schema": {
       "score": 135,
@@ -579,6 +579,7 @@
           "score": 15,
           "maxScore": 15,
           "issues": [],
+          "warnings": [],
           "issue": null
         },
         {
@@ -589,6 +590,7 @@
           "score": 0,
           "maxScore": 15,
           "issues": [],
+          "warnings": [],
           "issue": "No JSON-LD found"
         },
         {
@@ -599,6 +601,7 @@
           "score": 0,
           "maxScore": 15,
           "issues": [],
+          "warnings": [],
           "issue": "No JSON-LD found"
         },
         {
@@ -609,6 +612,7 @@
           "score": 0,
           "maxScore": 15,
           "issues": [],
+          "warnings": [],
           "issue": "No JSON-LD found"
         },
         {
@@ -619,6 +623,7 @@
           "score": 15,
           "maxScore": 15,
           "issues": [],
+          "warnings": [],
           "issue": null
         },
         {
@@ -629,6 +634,7 @@
           "score": 0,
           "maxScore": 15,
           "issues": [],
+          "warnings": [],
           "issue": "No JSON-LD found"
         },
         {
@@ -639,6 +645,7 @@
           "score": 15,
           "maxScore": 15,
           "issues": [],
+          "warnings": [],
           "issue": null
         },
         {
@@ -649,6 +656,7 @@
           "score": 0,
           "maxScore": 15,
           "issues": [],
+          "warnings": [],
           "issue": "No JSON-LD found"
         },
         {
@@ -659,6 +667,7 @@
           "score": 15,
           "maxScore": 15,
           "issues": [],
+          "warnings": [],
           "issue": null
         },
         {
@@ -669,6 +678,7 @@
           "score": 15,
           "maxScore": 15,
           "issues": [],
+          "warnings": [],
           "issue": null
         },
         {
@@ -679,6 +689,7 @@
           "score": 15,
           "maxScore": 15,
           "issues": [],
+          "warnings": [],
           "issue": null
         },
         {
@@ -689,6 +700,7 @@
           "score": 15,
           "maxScore": 15,
           "issues": [],
+          "warnings": [],
           "issue": null
         }
       ],
@@ -701,6 +713,7 @@
           "score": 0,
           "maxScore": 15,
           "issues": [],
+          "warnings": [],
           "issue": "No JSON-LD found"
         },
         {
@@ -711,6 +724,7 @@
           "score": 0,
           "maxScore": 15,
           "issues": [],
+          "warnings": [],
           "issue": "No JSON-LD found"
         },
         {
@@ -721,6 +735,7 @@
           "score": 0,
           "maxScore": 15,
           "issues": [],
+          "warnings": [],
           "issue": "No JSON-LD found"
         },
         {
@@ -731,6 +746,7 @@
           "score": 0,
           "maxScore": 15,
           "issues": [],
+          "warnings": [],
           "issue": "No JSON-LD found"
         },
         {
@@ -741,6 +757,7 @@
           "score": 0,
           "maxScore": 15,
           "issues": [],
+          "warnings": [],
           "issue": "No JSON-LD found"
         }
       ],
@@ -760,6 +777,11 @@
           "pct_accessible": 100,
           "ssr_detected": true,
           "js_only_words": 0,
+          "ssr_schema_count": 1,
+          "csr_schema_count": 1,
+          "schema_injected_csr": false,
+          "price_elements_ssr": 48,
+          "price_elements_rendered": 24,
           "score": 20,
           "maxScore": 20,
           "note": "SSR detected \u2014 raw HTML contains full content",
@@ -773,6 +795,11 @@
           "pct_accessible": 100,
           "ssr_detected": true,
           "js_only_words": 0,
+          "ssr_schema_count": 3,
+          "csr_schema_count": 3,
+          "schema_injected_csr": false,
+          "price_elements_ssr": 29,
+          "price_elements_rendered": 29,
           "score": 20,
           "maxScore": 20,
           "note": "SSR detected \u2014 raw HTML contains full content",
@@ -786,6 +813,11 @@
           "pct_accessible": 100,
           "ssr_detected": true,
           "js_only_words": 0,
+          "ssr_schema_count": 3,
+          "csr_schema_count": 3,
+          "schema_injected_csr": false,
+          "price_elements_ssr": 29,
+          "price_elements_rendered": 29,
           "score": 20,
           "maxScore": 20,
           "note": "SSR detected \u2014 raw HTML contains full content",
@@ -799,6 +831,11 @@
           "pct_accessible": 100,
           "ssr_detected": true,
           "js_only_words": 0,
+          "ssr_schema_count": 0,
+          "csr_schema_count": 0,
+          "schema_injected_csr": false,
+          "price_elements_ssr": 0,
+          "price_elements_rendered": 0,
           "score": 20,
           "maxScore": 20,
           "note": "SSR detected \u2014 raw HTML contains full content",
@@ -817,182 +854,688 @@
         {
           "url": "https://www.thegoodguys.com.au",
           "bots": {
-            "ClaudeBot": {
-              "status": 200,
-              "allowed": true,
-              "score": 5
-            },
             "GPTBot": {
               "status": 200,
               "allowed": true,
-              "score": 5
+              "tier": 1,
+              "score": null
+            },
+            "OAI-SearchBot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 1,
+              "score": null
+            },
+            "ChatGPT-User": {
+              "status": 200,
+              "allowed": true,
+              "tier": 1,
+              "score": null
+            },
+            "ClaudeBot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 1,
+              "score": null
+            },
+            "Claude-User": {
+              "status": 200,
+              "allowed": true,
+              "tier": 1,
+              "score": null
+            },
+            "Claude-SearchBot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 1,
+              "score": null
             },
             "PerplexityBot": {
               "status": 200,
               "allowed": true,
-              "score": 5
+              "tier": 1,
+              "score": null
+            },
+            "Perplexity-User": {
+              "status": 200,
+              "allowed": true,
+              "tier": 2,
+              "score": null
             },
             "Google-Extended": {
               "status": 200,
               "allowed": true,
-              "score": 5
+              "tier": 1,
+              "score": null
+            },
+            "Bingbot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 2,
+              "score": null
+            },
+            "Applebot-Extended": {
+              "status": 200,
+              "allowed": true,
+              "tier": 2,
+              "score": null
+            },
+            "Meta-ExternalAgent": {
+              "status": 200,
+              "allowed": true,
+              "tier": 2,
+              "score": null
+            },
+            "Amazonbot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 2,
+              "score": null
+            },
+            "Bytespider": {
+              "status": 200,
+              "allowed": true,
+              "tier": 3,
+              "score": null
+            },
+            "DuckDuckBot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 3,
+              "score": null
+            },
+            "YouBot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 3,
+              "score": null
+            },
+            "CCBot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 3,
+              "score": null
+            },
+            "Diffbot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 3,
+              "score": null
             },
             "Googlebot (info)": {
               "status": 200,
               "allowed": true,
-              "score": null,
+              "tier": 0,
               "note": "informational \u2014 not scored"
             }
           },
-          "blocked": [],
+          "blocked_tier1": [],
+          "blocked_all": [],
+          "tier1_accessible": "8/8",
+          "score": 20,
+          "maxScore": 20,
           "issue": null
         },
         {
           "url": "https://www.thegoodguys.com.au/televisions",
           "bots": {
-            "ClaudeBot": {
-              "status": 200,
-              "allowed": true,
-              "score": 5
-            },
             "GPTBot": {
               "status": 200,
               "allowed": true,
-              "score": 5
+              "tier": 1,
+              "score": null
+            },
+            "OAI-SearchBot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 1,
+              "score": null
+            },
+            "ChatGPT-User": {
+              "status": 200,
+              "allowed": true,
+              "tier": 1,
+              "score": null
+            },
+            "ClaudeBot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 1,
+              "score": null
+            },
+            "Claude-User": {
+              "status": 200,
+              "allowed": true,
+              "tier": 1,
+              "score": null
+            },
+            "Claude-SearchBot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 1,
+              "score": null
             },
             "PerplexityBot": {
               "status": 200,
               "allowed": true,
-              "score": 5
+              "tier": 1,
+              "score": null
+            },
+            "Perplexity-User": {
+              "status": 200,
+              "allowed": true,
+              "tier": 2,
+              "score": null
             },
             "Google-Extended": {
               "status": 200,
               "allowed": true,
-              "score": 5
+              "tier": 1,
+              "score": null
+            },
+            "Bingbot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 2,
+              "score": null
+            },
+            "Applebot-Extended": {
+              "status": 200,
+              "allowed": true,
+              "tier": 2,
+              "score": null
+            },
+            "Meta-ExternalAgent": {
+              "status": 200,
+              "allowed": true,
+              "tier": 2,
+              "score": null
+            },
+            "Amazonbot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 2,
+              "score": null
+            },
+            "Bytespider": {
+              "status": 200,
+              "allowed": true,
+              "tier": 3,
+              "score": null
+            },
+            "DuckDuckBot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 3,
+              "score": null
+            },
+            "YouBot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 3,
+              "score": null
+            },
+            "CCBot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 3,
+              "score": null
+            },
+            "Diffbot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 3,
+              "score": null
             },
             "Googlebot (info)": {
               "status": 200,
               "allowed": true,
-              "score": null,
+              "tier": 0,
               "note": "informational \u2014 not scored"
             }
           },
-          "blocked": [],
+          "blocked_tier1": [],
+          "blocked_all": [],
+          "tier1_accessible": "8/8",
+          "score": 20,
+          "maxScore": 20,
           "issue": null
         },
         {
           "url": "https://www.thegoodguys.com.au/televisions/smart-tvs",
           "bots": {
-            "ClaudeBot": {
-              "status": 200,
-              "allowed": true,
-              "score": 5
-            },
             "GPTBot": {
               "status": 200,
               "allowed": true,
-              "score": 5
+              "tier": 1,
+              "score": null
+            },
+            "OAI-SearchBot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 1,
+              "score": null
+            },
+            "ChatGPT-User": {
+              "status": 200,
+              "allowed": true,
+              "tier": 1,
+              "score": null
+            },
+            "ClaudeBot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 1,
+              "score": null
+            },
+            "Claude-User": {
+              "status": 200,
+              "allowed": true,
+              "tier": 1,
+              "score": null
+            },
+            "Claude-SearchBot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 1,
+              "score": null
             },
             "PerplexityBot": {
               "status": 200,
               "allowed": true,
-              "score": 5
+              "tier": 1,
+              "score": null
+            },
+            "Perplexity-User": {
+              "status": 200,
+              "allowed": true,
+              "tier": 2,
+              "score": null
             },
             "Google-Extended": {
               "status": 200,
               "allowed": true,
-              "score": 5
+              "tier": 1,
+              "score": null
+            },
+            "Bingbot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 2,
+              "score": null
+            },
+            "Applebot-Extended": {
+              "status": 200,
+              "allowed": true,
+              "tier": 2,
+              "score": null
+            },
+            "Meta-ExternalAgent": {
+              "status": 200,
+              "allowed": true,
+              "tier": 2,
+              "score": null
+            },
+            "Amazonbot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 2,
+              "score": null
+            },
+            "Bytespider": {
+              "status": 200,
+              "allowed": true,
+              "tier": 3,
+              "score": null
+            },
+            "DuckDuckBot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 3,
+              "score": null
+            },
+            "YouBot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 3,
+              "score": null
+            },
+            "CCBot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 3,
+              "score": null
+            },
+            "Diffbot": {
+              "status": 200,
+              "allowed": true,
+              "tier": 3,
+              "score": null
             },
             "Googlebot (info)": {
               "status": 200,
               "allowed": true,
-              "score": null,
+              "tier": 0,
               "note": "informational \u2014 not scored"
             }
           },
-          "blocked": [],
+          "blocked_tier1": [],
+          "blocked_all": [],
+          "tier1_accessible": "8/8",
+          "score": 20,
+          "maxScore": 20,
           "issue": null
         },
         {
           "url": "https://www.thegoodguys.com.au/buying-guide/best-tvs",
           "bots": {
-            "ClaudeBot": {
-              "status": 404,
-              "allowed": false,
-              "score": 0
-            },
             "GPTBot": {
               "status": 404,
               "allowed": false,
-              "score": 0
+              "tier": 1,
+              "score": null
+            },
+            "OAI-SearchBot": {
+              "status": 404,
+              "allowed": false,
+              "tier": 1,
+              "score": null
+            },
+            "ChatGPT-User": {
+              "status": 404,
+              "allowed": false,
+              "tier": 1,
+              "score": null
+            },
+            "ClaudeBot": {
+              "status": 404,
+              "allowed": false,
+              "tier": 1,
+              "score": null
+            },
+            "Claude-User": {
+              "status": 404,
+              "allowed": false,
+              "tier": 1,
+              "score": null
+            },
+            "Claude-SearchBot": {
+              "status": 404,
+              "allowed": false,
+              "tier": 1,
+              "score": null
             },
             "PerplexityBot": {
               "status": 404,
               "allowed": false,
-              "score": 0
+              "tier": 1,
+              "score": null
+            },
+            "Perplexity-User": {
+              "status": 404,
+              "allowed": false,
+              "tier": 2,
+              "score": null
             },
             "Google-Extended": {
               "status": 404,
               "allowed": false,
-              "score": 0
+              "tier": 1,
+              "score": null
+            },
+            "Bingbot": {
+              "status": 404,
+              "allowed": false,
+              "tier": 2,
+              "score": null
+            },
+            "Applebot-Extended": {
+              "status": 404,
+              "allowed": false,
+              "tier": 2,
+              "score": null
+            },
+            "Meta-ExternalAgent": {
+              "status": 404,
+              "allowed": false,
+              "tier": 2,
+              "score": null
+            },
+            "Amazonbot": {
+              "status": 404,
+              "allowed": false,
+              "tier": 2,
+              "score": null
+            },
+            "Bytespider": {
+              "status": 404,
+              "allowed": false,
+              "tier": 3,
+              "score": null
+            },
+            "DuckDuckBot": {
+              "status": 404,
+              "allowed": false,
+              "tier": 3,
+              "score": null
+            },
+            "YouBot": {
+              "status": 404,
+              "allowed": false,
+              "tier": 3,
+              "score": null
+            },
+            "CCBot": {
+              "status": 404,
+              "allowed": false,
+              "tier": 3,
+              "score": null
+            },
+            "Diffbot": {
+              "status": 404,
+              "allowed": false,
+              "tier": 3,
+              "score": null
             },
             "Googlebot (info)": {
               "status": 404,
               "allowed": false,
-              "score": null,
+              "tier": 0,
               "note": "informational \u2014 not scored"
             }
           },
-          "blocked": [
-            "ClaudeBot",
+          "blocked_tier1": [
             "GPTBot",
+            "OAI-SearchBot",
+            "ChatGPT-User",
+            "ClaudeBot",
+            "Claude-User",
+            "Claude-SearchBot",
             "PerplexityBot",
             "Google-Extended"
           ],
-          "issue": "Blocked for: ClaudeBot, GPTBot, PerplexityBot, Google-Extended"
+          "blocked_all": [
+            "GPTBot",
+            "OAI-SearchBot",
+            "ChatGPT-User",
+            "ClaudeBot",
+            "Claude-User",
+            "Claude-SearchBot",
+            "PerplexityBot",
+            "Perplexity-User",
+            "Google-Extended",
+            "Bingbot",
+            "Applebot-Extended",
+            "Meta-ExternalAgent",
+            "Amazonbot",
+            "Bytespider",
+            "DuckDuckBot",
+            "YouBot",
+            "CCBot",
+            "Diffbot"
+          ],
+          "tier1_accessible": "0/8",
+          "score": 0,
+          "maxScore": 20,
+          "issue": "Tier-1 bots blocked: GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-User, Claude-SearchBot, PerplexityBot, Google-Extended"
         }
       ],
       "errors": [
         {
           "url": "https://www.thegoodguys.com.au/buying-guide/best-tvs",
           "bots": {
-            "ClaudeBot": {
-              "status": 404,
-              "allowed": false,
-              "score": 0
-            },
             "GPTBot": {
               "status": 404,
               "allowed": false,
-              "score": 0
+              "tier": 1,
+              "score": null
+            },
+            "OAI-SearchBot": {
+              "status": 404,
+              "allowed": false,
+              "tier": 1,
+              "score": null
+            },
+            "ChatGPT-User": {
+              "status": 404,
+              "allowed": false,
+              "tier": 1,
+              "score": null
+            },
+            "ClaudeBot": {
+              "status": 404,
+              "allowed": false,
+              "tier": 1,
+              "score": null
+            },
+            "Claude-User": {
+              "status": 404,
+              "allowed": false,
+              "tier": 1,
+              "score": null
+            },
+            "Claude-SearchBot": {
+              "status": 404,
+              "allowed": false,
+              "tier": 1,
+              "score": null
             },
             "PerplexityBot": {
               "status": 404,
               "allowed": false,
-              "score": 0
+              "tier": 1,
+              "score": null
+            },
+            "Perplexity-User": {
+              "status": 404,
+              "allowed": false,
+              "tier": 2,
+              "score": null
             },
             "Google-Extended": {
               "status": 404,
               "allowed": false,
-              "score": 0
+              "tier": 1,
+              "score": null
+            },
+            "Bingbot": {
+              "status": 404,
+              "allowed": false,
+              "tier": 2,
+              "score": null
+            },
+            "Applebot-Extended": {
+              "status": 404,
+              "allowed": false,
+              "tier": 2,
+              "score": null
+            },
+            "Meta-ExternalAgent": {
+              "status": 404,
+              "allowed": false,
+              "tier": 2,
+              "score": null
+            },
+            "Amazonbot": {
+              "status": 404,
+              "allowed": false,
+              "tier": 2,
+              "score": null
+            },
+            "Bytespider": {
+              "status": 404,
+              "allowed": false,
+              "tier": 3,
+              "score": null
+            },
+            "DuckDuckBot": {
+              "status": 404,
+              "allowed": false,
+              "tier": 3,
+              "score": null
+            },
+            "YouBot": {
+              "status": 404,
+              "allowed": false,
+              "tier": 3,
+              "score": null
+            },
+            "CCBot": {
+              "status": 404,
+              "allowed": false,
+              "tier": 3,
+              "score": null
+            },
+            "Diffbot": {
+              "status": 404,
+              "allowed": false,
+              "tier": 3,
+              "score": null
             },
             "Googlebot (info)": {
               "status": 404,
               "allowed": false,
-              "score": null,
+              "tier": 0,
               "note": "informational \u2014 not scored"
             }
           },
-          "blocked": [
-            "ClaudeBot",
+          "blocked_tier1": [
             "GPTBot",
+            "OAI-SearchBot",
+            "ChatGPT-User",
+            "ClaudeBot",
+            "Claude-User",
+            "Claude-SearchBot",
             "PerplexityBot",
             "Google-Extended"
           ],
-          "issue": "Blocked for: ClaudeBot, GPTBot, PerplexityBot, Google-Extended"
+          "blocked_all": [
+            "GPTBot",
+            "OAI-SearchBot",
+            "ChatGPT-User",
+            "ClaudeBot",
+            "Claude-User",
+            "Claude-SearchBot",
+            "PerplexityBot",
+            "Perplexity-User",
+            "Google-Extended",
+            "Bingbot",
+            "Applebot-Extended",
+            "Meta-ExternalAgent",
+            "Amazonbot",
+            "Bytespider",
+            "DuckDuckBot",
+            "YouBot",
+            "CCBot",
+            "Diffbot"
+          ],
+          "tier1_accessible": "0/8",
+          "score": 0,
+          "maxScore": 20,
+          "issue": "Tier-1 bots blocked: GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-User, Claude-SearchBot, PerplexityBot, Google-Extended"
         }
       ],
-      "summary": "3/4 pages accessible to all AI bots"
+      "summary": "3/4 pages accessible to all tier-1 AI bots"
     },
     "hidden_content": {
       "score": 240,
@@ -1004,7 +1547,7 @@
           "file": "air-conditioners.html",
           "total_words": 2931,
           "hidden_words": 159,
-          "hidden_ratio_pct": 5,
+          "hidden_pct": 5,
           "details_collapsed_words": 0,
           "hidden_elements_count": 6,
           "top_hidden": [
@@ -1047,7 +1590,7 @@
           "file": "buying-guide--best-air-conditioners.html",
           "total_words": 426,
           "hidden_words": 0,
-          "hidden_ratio_pct": 0,
+          "hidden_pct": 0,
           "details_collapsed_words": 0,
           "hidden_elements_count": 0,
           "top_hidden": [],
@@ -1059,7 +1602,7 @@
           "file": "buying-guide--best-tvs.html",
           "total_words": 426,
           "hidden_words": 0,
-          "hidden_ratio_pct": 0,
+          "hidden_pct": 0,
           "details_collapsed_words": 0,
           "hidden_elements_count": 0,
           "top_hidden": [],
@@ -1071,7 +1614,7 @@
           "file": "buying-guide--best-washing-machines.html",
           "total_words": 426,
           "hidden_words": 0,
-          "hidden_ratio_pct": 0,
+          "hidden_pct": 0,
           "details_collapsed_words": 0,
           "hidden_elements_count": 0,
           "top_hidden": [],
@@ -1083,7 +1626,7 @@
           "file": "index.html",
           "total_words": 2225,
           "hidden_words": 0,
-          "hidden_ratio_pct": 0,
+          "hidden_pct": 0,
           "details_collapsed_words": 0,
           "hidden_elements_count": 0,
           "top_hidden": [],
@@ -1095,7 +1638,7 @@
           "file": "laptops-computers.html",
           "total_words": 426,
           "hidden_words": 0,
-          "hidden_ratio_pct": 0,
+          "hidden_pct": 0,
           "details_collapsed_words": 0,
           "hidden_elements_count": 0,
           "top_hidden": [],
@@ -1107,7 +1650,7 @@
           "file": "sale.html",
           "total_words": 4071,
           "hidden_words": 0,
-          "hidden_ratio_pct": 0,
+          "hidden_pct": 0,
           "details_collapsed_words": 0,
           "hidden_elements_count": 0,
           "top_hidden": [],
@@ -1119,7 +1662,7 @@
           "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
           "total_words": 426,
           "hidden_words": 0,
-          "hidden_ratio_pct": 0,
+          "hidden_pct": 0,
           "details_collapsed_words": 0,
           "hidden_elements_count": 0,
           "top_hidden": [],
@@ -1131,7 +1674,7 @@
           "file": "televisions--smart-tvs.html",
           "total_words": 3292,
           "hidden_words": 247,
-          "hidden_ratio_pct": 8,
+          "hidden_pct": 8,
           "details_collapsed_words": 0,
           "hidden_elements_count": 8,
           "top_hidden": [
@@ -1174,7 +1717,7 @@
           "file": "televisions.html",
           "total_words": 3292,
           "hidden_words": 247,
-          "hidden_ratio_pct": 8,
+          "hidden_pct": 8,
           "details_collapsed_words": 0,
           "hidden_elements_count": 8,
           "top_hidden": [
@@ -1217,7 +1760,7 @@
           "file": "washing-machines.html",
           "total_words": 2882,
           "hidden_words": 158,
-          "hidden_ratio_pct": 5,
+          "hidden_pct": 5,
           "details_collapsed_words": 0,
           "hidden_elements_count": 6,
           "top_hidden": [
@@ -1260,7 +1803,7 @@
           "file": "whats-new.html",
           "total_words": 2419,
           "hidden_words": 0,
-          "hidden_ratio_pct": 0,
+          "hidden_pct": 0,
           "details_collapsed_words": 0,
           "hidden_elements_count": 0,
           "top_hidden": [],
@@ -1281,7 +1824,7 @@
         {
           "file": "air-conditioners.html",
           "page_type": "category",
-          "signals_found": [
+          "found": [
             "direct_answer_paragraph",
             "numbered_list",
             "definition_heading",
@@ -1291,7 +1834,7 @@
             "structured_lists",
             "intro_answer_present"
           ],
-          "signals_missing": [],
+          "missing": [],
           "h1_count": 1,
           "h2_count": 6,
           "table_count": 0,
@@ -1302,13 +1845,13 @@
         {
           "file": "buying-guide--best-air-conditioners.html",
           "page_type": "guide",
-          "signals_found": [
+          "found": [
             "direct_answer_paragraph",
             "h1_present",
             "structured_lists",
             "intro_answer_present"
           ],
-          "signals_missing": [
+          "missing": [
             "numbered_list",
             "definition_heading"
           ],
@@ -1322,13 +1865,13 @@
         {
           "file": "buying-guide--best-tvs.html",
           "page_type": "guide",
-          "signals_found": [
+          "found": [
             "direct_answer_paragraph",
             "h1_present",
             "structured_lists",
             "intro_answer_present"
           ],
-          "signals_missing": [
+          "missing": [
             "numbered_list",
             "definition_heading"
           ],
@@ -1342,13 +1885,13 @@
         {
           "file": "buying-guide--best-washing-machines.html",
           "page_type": "guide",
-          "signals_found": [
+          "found": [
             "direct_answer_paragraph",
             "h1_present",
             "structured_lists",
             "intro_answer_present"
           ],
-          "signals_missing": [
+          "missing": [
             "numbered_list",
             "definition_heading"
           ],
@@ -1362,12 +1905,12 @@
         {
           "file": "index.html",
           "page_type": "home",
-          "signals_found": [
+          "found": [
             "direct_answer_paragraph",
             "structured_lists",
             "intro_answer_present"
           ],
-          "signals_missing": [
+          "missing": [
             "numbered_list",
             "definition_heading"
           ],
@@ -1381,13 +1924,13 @@
         {
           "file": "laptops-computers.html",
           "page_type": "category",
-          "signals_found": [
+          "found": [
             "direct_answer_paragraph",
             "h1_present",
             "structured_lists",
             "intro_answer_present"
           ],
-          "signals_missing": [
+          "missing": [
             "numbered_list",
             "definition_heading"
           ],
@@ -1401,7 +1944,7 @@
         {
           "file": "sale.html",
           "page_type": "category",
-          "signals_found": [
+          "found": [
             "direct_answer_paragraph",
             "numbered_list",
             "h1_present",
@@ -1409,7 +1952,7 @@
             "structured_lists",
             "intro_answer_present"
           ],
-          "signals_missing": [
+          "missing": [
             "definition_heading"
           ],
           "h1_count": 1,
@@ -1422,13 +1965,13 @@
         {
           "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
           "page_type": "category",
-          "signals_found": [
+          "found": [
             "direct_answer_paragraph",
             "h1_present",
             "structured_lists",
             "intro_answer_present"
           ],
-          "signals_missing": [
+          "missing": [
             "numbered_list",
             "definition_heading"
           ],
@@ -1442,7 +1985,7 @@
         {
           "file": "televisions--smart-tvs.html",
           "page_type": "category",
-          "signals_found": [
+          "found": [
             "direct_answer_paragraph",
             "numbered_list",
             "h1_present",
@@ -1451,7 +1994,7 @@
             "structured_lists",
             "intro_answer_present"
           ],
-          "signals_missing": [
+          "missing": [
             "definition_heading"
           ],
           "h1_count": 1,
@@ -1464,7 +2007,7 @@
         {
           "file": "televisions.html",
           "page_type": "category",
-          "signals_found": [
+          "found": [
             "direct_answer_paragraph",
             "numbered_list",
             "h1_present",
@@ -1473,7 +2016,7 @@
             "structured_lists",
             "intro_answer_present"
           ],
-          "signals_missing": [
+          "missing": [
             "definition_heading"
           ],
           "h1_count": 1,
@@ -1486,7 +2029,7 @@
         {
           "file": "washing-machines.html",
           "page_type": "category",
-          "signals_found": [
+          "found": [
             "direct_answer_paragraph",
             "numbered_list",
             "h1_present",
@@ -1495,7 +2038,7 @@
             "structured_lists",
             "intro_answer_present"
           ],
-          "signals_missing": [
+          "missing": [
             "definition_heading"
           ],
           "h1_count": 1,
@@ -1508,7 +2051,7 @@
         {
           "file": "whats-new.html",
           "page_type": "category",
-          "signals_found": [
+          "found": [
             "direct_answer_paragraph",
             "numbered_list",
             "h1_present",
@@ -1516,7 +2059,7 @@
             "structured_lists",
             "intro_answer_present"
           ],
-          "signals_missing": [
+          "missing": [
             "definition_heading"
           ],
           "h1_count": 1,
@@ -1531,12 +2074,12 @@
         {
           "file": "index.html",
           "page_type": "home",
-          "signals_found": [
+          "found": [
             "direct_answer_paragraph",
             "structured_lists",
             "intro_answer_present"
           ],
-          "signals_missing": [
+          "missing": [
             "numbered_list",
             "definition_heading"
           ],
@@ -1582,13 +2125,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 766,
+          "dom_elements": 765,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (766 elements)",
+            "lean DOM (765 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -1662,13 +2205,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 764,
+          "dom_elements": 765,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (764 elements)",
+            "lean DOM (765 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -1682,13 +2225,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 5804,
-          "aria_labels": 445,
+          "dom_elements": 5796,
+          "aria_labels": 444,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "good ARIA (445 labels)"
+            "good ARIA (444 labels)"
           ],
           "score": 20,
           "maxScore": 25,
@@ -1701,13 +2244,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 764,
+          "dom_elements": 765,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (764 elements)",
+            "lean DOM (765 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -1720,8 +2263,8 @@
           "has_article": true,
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
-          "external_scripts": 24,
-          "dom_elements": 3084,
+          "external_scripts": 25,
+          "dom_elements": 3085,
           "aria_labels": 150,
           "signals": [
             "<main>",
@@ -1731,7 +2274,7 @@
           ],
           "score": 20,
           "maxScore": 25,
-          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (25 scripts)"
         },
         {
           "file": "televisions.html",
@@ -1778,13 +2321,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 1125,
+          "dom_elements": 1123,
           "aria_labels": 51,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (1125 elements)",
+            "lean DOM (1123 elements)",
             "good ARIA (51 labels)"
           ],
           "score": 25,
@@ -1819,13 +2362,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 766,
+          "dom_elements": 765,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (766 elements)",
+            "lean DOM (765 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -1899,13 +2442,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 764,
+          "dom_elements": 765,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (764 elements)",
+            "lean DOM (765 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -1919,13 +2462,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 5804,
-          "aria_labels": 445,
+          "dom_elements": 5796,
+          "aria_labels": 444,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "good ARIA (445 labels)"
+            "good ARIA (444 labels)"
           ],
           "score": 20,
           "maxScore": 25,
@@ -1938,13 +2481,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 764,
+          "dom_elements": 765,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (764 elements)",
+            "lean DOM (765 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -1957,8 +2500,8 @@
           "has_article": true,
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
-          "external_scripts": 24,
-          "dom_elements": 3084,
+          "external_scripts": 25,
+          "dom_elements": 3085,
           "aria_labels": 150,
           "signals": [
             "<main>",
@@ -1968,7 +2511,7 @@
           ],
           "score": 20,
           "maxScore": 25,
-          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (25 scripts)"
         },
         {
           "file": "televisions.html",
@@ -2015,13 +2558,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 1125,
+          "dom_elements": 1123,
           "aria_labels": 51,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (1125 elements)",
+            "lean DOM (1123 elements)",
             "good ARIA (51 labels)"
           ],
           "score": 25,
@@ -2033,12 +2576,32 @@
     },
     "robots_content": {
       "robots": {
+        "GPTBot": {
+          "allow": [],
+          "disallow": [],
+          "blocked": false
+        },
+        "OAI-SearchBot": {
+          "allow": [],
+          "disallow": [],
+          "blocked": false
+        },
+        "ChatGPT-User": {
+          "allow": [],
+          "disallow": [],
+          "blocked": false
+        },
         "ClaudeBot": {
           "allow": [],
           "disallow": [],
           "blocked": false
         },
-        "GPTBot": {
+        "Claude-User": {
+          "allow": [],
+          "disallow": [],
+          "blocked": false
+        },
+        "Claude-SearchBot": {
           "allow": [],
           "disallow": [],
           "blocked": false
@@ -2048,7 +2611,57 @@
           "disallow": [],
           "blocked": false
         },
+        "Perplexity-User": {
+          "allow": [],
+          "disallow": [],
+          "blocked": false
+        },
         "Google-Extended": {
+          "allow": [],
+          "disallow": [],
+          "blocked": false
+        },
+        "Bingbot": {
+          "allow": [],
+          "disallow": [],
+          "blocked": false
+        },
+        "Applebot-Extended": {
+          "allow": [],
+          "disallow": [],
+          "blocked": false
+        },
+        "Meta-ExternalAgent": {
+          "allow": [],
+          "disallow": [],
+          "blocked": false
+        },
+        "Amazonbot": {
+          "allow": [],
+          "disallow": [],
+          "blocked": false
+        },
+        "Bytespider": {
+          "allow": [],
+          "disallow": [],
+          "blocked": false
+        },
+        "DuckDuckBot": {
+          "allow": [],
+          "disallow": [],
+          "blocked": false
+        },
+        "YouBot": {
+          "allow": [],
+          "disallow": [],
+          "blocked": false
+        },
+        "CCBot": {
+          "allow": [],
+          "disallow": [],
+          "blocked": false
+        },
+        "Diffbot": {
           "allow": [],
           "disallow": [],
           "blocked": false
@@ -2068,10 +2681,24 @@
         "No llms.txt \u2014 AI agents cannot get a structured site overview"
       ],
       "signals": [
-        "ClaudeBot accessible via robots.txt",
         "GPTBot accessible via robots.txt",
+        "OAI-SearchBot accessible via robots.txt",
+        "ChatGPT-User accessible via robots.txt",
+        "ClaudeBot accessible via robots.txt",
+        "Claude-User accessible via robots.txt",
+        "Claude-SearchBot accessible via robots.txt",
         "PerplexityBot accessible via robots.txt",
-        "Google-Extended accessible via robots.txt"
+        "Perplexity-User accessible via robots.txt",
+        "Google-Extended accessible via robots.txt",
+        "Bingbot accessible via robots.txt",
+        "Applebot-Extended accessible via robots.txt",
+        "Meta-ExternalAgent accessible via robots.txt",
+        "Amazonbot accessible via robots.txt",
+        "Bytespider accessible via robots.txt",
+        "DuckDuckBot accessible via robots.txt",
+        "YouBot accessible via robots.txt",
+        "CCBot accessible via robots.txt",
+        "Diffbot accessible via robots.txt"
       ],
       "percentage": 48,
       "grade": "D",
@@ -2080,7 +2707,7 @@
           "issue": "No llms.txt \u2014 AI agents cannot get a structured site overview"
         }
       ],
-      "summary": "4/4 AI bots accessible | llms.txt: no"
+      "summary": "18/18 AI bots accessible | llms.txt: no"
     },
     "sitemap_coverage": {
       "score": 10,
@@ -2169,6 +2796,423 @@
         }
       ],
       "summary": "TGG: 4 schema types | 1 gaps vs competitors"
+    },
+    "au_signals": {
+      "score": 130,
+      "maxScore": 240,
+      "percentage": 54,
+      "grade": "D",
+      "pages": [
+        {
+          "file": "air-conditioners.html",
+          "lang": "en",
+          "signals": [
+            "AUD currency present",
+            "AU spelling preferred (3 AU / 0 US)",
+            "ACCC comparative pricing present"
+          ],
+          "au_spelling_count": 3,
+          "us_spelling_count": 0,
+          "score": 15,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets"
+        },
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "lang": "en",
+          "signals": [
+            "AU spelling preferred (2 AU / 0 US)"
+          ],
+          "au_spelling_count": 2,
+          "us_spelling_count": 0,
+          "score": 5,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets; No AUD currency markers found"
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "lang": "en",
+          "signals": [
+            "AU spelling preferred (2 AU / 0 US)"
+          ],
+          "au_spelling_count": 2,
+          "us_spelling_count": 0,
+          "score": 5,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets; No AUD currency markers found"
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "lang": "en",
+          "signals": [
+            "AU spelling preferred (2 AU / 0 US)"
+          ],
+          "au_spelling_count": 2,
+          "us_spelling_count": 0,
+          "score": 5,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets; No AUD currency markers found"
+        },
+        {
+          "file": "index.html",
+          "lang": "en",
+          "signals": [
+            "AUD currency present",
+            "AU spelling preferred (5 AU / 0 US)"
+          ],
+          "au_spelling_count": 5,
+          "us_spelling_count": 0,
+          "score": 10,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets"
+        },
+        {
+          "file": "laptops-computers.html",
+          "lang": "en",
+          "signals": [
+            "AU spelling preferred (2 AU / 0 US)",
+            "ACCC comparative pricing present"
+          ],
+          "au_spelling_count": 2,
+          "us_spelling_count": 0,
+          "score": 10,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets; No AUD currency markers found"
+        },
+        {
+          "file": "sale.html",
+          "lang": "en",
+          "signals": [
+            "AUD currency present",
+            "AU spelling preferred (5 AU / 1 US)",
+            "ACCC comparative pricing present"
+          ],
+          "au_spelling_count": 5,
+          "us_spelling_count": 1,
+          "score": 15,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets"
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "lang": "en",
+          "signals": [
+            "AU spelling preferred (2 AU / 0 US)",
+            "ACCC comparative pricing present"
+          ],
+          "au_spelling_count": 2,
+          "us_spelling_count": 0,
+          "score": 10,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets; No AUD currency markers found"
+        },
+        {
+          "file": "televisions--smart-tvs.html",
+          "lang": "en",
+          "signals": [
+            "AUD currency present",
+            "AU spelling preferred (8 AU / 0 US)",
+            "ACCC comparative pricing present"
+          ],
+          "au_spelling_count": 8,
+          "us_spelling_count": 0,
+          "score": 15,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets"
+        },
+        {
+          "file": "televisions.html",
+          "lang": "en",
+          "signals": [
+            "AUD currency present",
+            "AU spelling preferred (8 AU / 0 US)",
+            "ACCC comparative pricing present"
+          ],
+          "au_spelling_count": 8,
+          "us_spelling_count": 0,
+          "score": 15,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets"
+        },
+        {
+          "file": "washing-machines.html",
+          "lang": "en",
+          "signals": [
+            "AUD currency present",
+            "AU spelling preferred (4 AU / 0 US)",
+            "ACCC comparative pricing present"
+          ],
+          "au_spelling_count": 4,
+          "us_spelling_count": 0,
+          "score": 15,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets"
+        },
+        {
+          "file": "whats-new.html",
+          "lang": "en",
+          "signals": [
+            "AU spelling preferred (3 AU / 0 US)",
+            "ACCC comparative pricing present"
+          ],
+          "au_spelling_count": 3,
+          "us_spelling_count": 0,
+          "score": 10,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets; No AUD currency markers found"
+        }
+      ],
+      "errors": [
+        {
+          "file": "air-conditioners.html",
+          "lang": "en",
+          "signals": [
+            "AUD currency present",
+            "AU spelling preferred (3 AU / 0 US)",
+            "ACCC comparative pricing present"
+          ],
+          "au_spelling_count": 3,
+          "us_spelling_count": 0,
+          "score": 15,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets"
+        },
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "lang": "en",
+          "signals": [
+            "AU spelling preferred (2 AU / 0 US)"
+          ],
+          "au_spelling_count": 2,
+          "us_spelling_count": 0,
+          "score": 5,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets; No AUD currency markers found"
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "lang": "en",
+          "signals": [
+            "AU spelling preferred (2 AU / 0 US)"
+          ],
+          "au_spelling_count": 2,
+          "us_spelling_count": 0,
+          "score": 5,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets; No AUD currency markers found"
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "lang": "en",
+          "signals": [
+            "AU spelling preferred (2 AU / 0 US)"
+          ],
+          "au_spelling_count": 2,
+          "us_spelling_count": 0,
+          "score": 5,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets; No AUD currency markers found"
+        },
+        {
+          "file": "index.html",
+          "lang": "en",
+          "signals": [
+            "AUD currency present",
+            "AU spelling preferred (5 AU / 0 US)"
+          ],
+          "au_spelling_count": 5,
+          "us_spelling_count": 0,
+          "score": 10,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets"
+        },
+        {
+          "file": "laptops-computers.html",
+          "lang": "en",
+          "signals": [
+            "AU spelling preferred (2 AU / 0 US)",
+            "ACCC comparative pricing present"
+          ],
+          "au_spelling_count": 2,
+          "us_spelling_count": 0,
+          "score": 10,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets; No AUD currency markers found"
+        },
+        {
+          "file": "sale.html",
+          "lang": "en",
+          "signals": [
+            "AUD currency present",
+            "AU spelling preferred (5 AU / 1 US)",
+            "ACCC comparative pricing present"
+          ],
+          "au_spelling_count": 5,
+          "us_spelling_count": 1,
+          "score": 15,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets"
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "lang": "en",
+          "signals": [
+            "AU spelling preferred (2 AU / 0 US)",
+            "ACCC comparative pricing present"
+          ],
+          "au_spelling_count": 2,
+          "us_spelling_count": 0,
+          "score": 10,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets; No AUD currency markers found"
+        },
+        {
+          "file": "televisions--smart-tvs.html",
+          "lang": "en",
+          "signals": [
+            "AUD currency present",
+            "AU spelling preferred (8 AU / 0 US)",
+            "ACCC comparative pricing present"
+          ],
+          "au_spelling_count": 8,
+          "us_spelling_count": 0,
+          "score": 15,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets"
+        },
+        {
+          "file": "televisions.html",
+          "lang": "en",
+          "signals": [
+            "AUD currency present",
+            "AU spelling preferred (8 AU / 0 US)",
+            "ACCC comparative pricing present"
+          ],
+          "au_spelling_count": 8,
+          "us_spelling_count": 0,
+          "score": 15,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets"
+        },
+        {
+          "file": "washing-machines.html",
+          "lang": "en",
+          "signals": [
+            "AUD currency present",
+            "AU spelling preferred (4 AU / 0 US)",
+            "ACCC comparative pricing present"
+          ],
+          "au_spelling_count": 4,
+          "us_spelling_count": 0,
+          "score": 15,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets"
+        },
+        {
+          "file": "whats-new.html",
+          "lang": "en",
+          "signals": [
+            "AU spelling preferred (3 AU / 0 US)",
+            "ACCC comparative pricing present"
+          ],
+          "au_spelling_count": 3,
+          "us_spelling_count": 0,
+          "score": 10,
+          "maxScore": 20,
+          "issue": "lang attr is \"en\" \u2014 should be en-AU for AU markets; No AUD currency markers found"
+        }
+      ],
+      "summary": "0/12 pages pass AU content signals"
+    },
+    "agentic_commerce": {
+      "score": 0,
+      "maxScore": 30,
+      "percentage": 0,
+      "grade": "F",
+      "checks": {
+        "storefront_mcp": {
+          "url": "https://www.thegoodguys.com.au/.well-known/mcp.json",
+          "status": 404,
+          "reachable": false
+        },
+        "agentic_capabilities": {
+          "url": "https://www.thegoodguys.com.au/.well-known/agent-commerce-capabilities.json",
+          "status": 404,
+          "reachable": false
+        },
+        "ucp_endpoint": {
+          "url": "https://www.thegoodguys.com.au/api/ucp",
+          "status": 404,
+          "reachable": false
+        },
+        "mcp_api": {
+          "url": "https://www.thegoodguys.com.au/api/mcp",
+          "status": 404,
+          "reachable": false
+        },
+        "acp_feed": {
+          "reachable": false
+        },
+        "agent_link_tag": {
+          "found": false
+        }
+      },
+      "signals": [],
+      "issues": [
+        "storefront_mcp not found (/.well-known/mcp.json)",
+        "agentic_capabilities not found (/.well-known/agent-commerce-capabilities.json)",
+        "ucp_endpoint not found (/api/ucp)",
+        "mcp_api not found (/api/mcp)",
+        "No ACP feed found at /acp-feed.json, /api/acp, /.well-known/acp.json",
+        "No <link rel='agent-endpoint'> in page <head>"
+      ],
+      "errors": [
+        {
+          "issue": "storefront_mcp not found (/.well-known/mcp.json)"
+        },
+        {
+          "issue": "agentic_capabilities not found (/.well-known/agent-commerce-capabilities.json)"
+        },
+        {
+          "issue": "ucp_endpoint not found (/api/ucp)"
+        },
+        {
+          "issue": "mcp_api not found (/api/mcp)"
+        },
+        {
+          "issue": "No ACP feed found at /acp-feed.json, /api/acp, /.well-known/acp.json"
+        },
+        {
+          "issue": "No <link rel='agent-endpoint'> in page <head>"
+        }
+      ],
+      "summary": "No agentic commerce endpoints detected \u2014 expected for most retailers"
+    },
+    "gtin_coverage": {
+      "score": 0,
+      "maxScore": 20,
+      "percentage": 0,
+      "grade": "F",
+      "total_product_pages": 0,
+      "with_gtin": 0,
+      "valid_gtin_checksum": 0,
+      "coverage_pct": 0,
+      "by_category": {},
+      "errors": [
+        {
+          "issue": "Only 0% of product pages have GTIN \u2014 GMC and AI matching requires GTIN"
+        }
+      ],
+      "summary": "No product pages found in snapshot"
+    },
+    "gmc_feed": {
+      "score": 0,
+      "maxScore": 0,
+      "percentage": 0,
+      "grade": "F",
+      "errors": [],
+      "summary": "GMC feed check skipped \u2014 set GMC_FEED_URL env var",
+      "skipped": true
     }
   }
 }
