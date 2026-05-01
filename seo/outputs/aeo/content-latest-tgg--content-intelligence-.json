@@ -1,0 +1,2207 @@
+{
+  "label": "TGG (content intelligence)",
+  "dir": "site-snapshots/thegoodguys.com.au",
+  "grade": "D",
+  "score": 944,
+  "maxScore": 1980,
+  "percentage": 48,
+  "checks": {
+    "boilerplate_ratio": {
+      "score": 132,
+      "maxScore": 240,
+      "percentage": 55,
+      "grade": "D",
+      "pages": [
+        {
+          "file": "air-conditioners.html",
+          "total_words": 2931,
+          "main_words": 2616,
+          "main_ratio_pct": 89,
+          "boilerplate_ratio_pct": 9,
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "total_words": 426,
+          "main_words": 58,
+          "main_ratio_pct": 14,
+          "boilerplate_ratio_pct": 68,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "High boilerplate (68%) \u2014 AI reads mostly nav/footer"
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "total_words": 426,
+          "main_words": 58,
+          "main_ratio_pct": 14,
+          "boilerplate_ratio_pct": 68,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "High boilerplate (68%) \u2014 AI reads mostly nav/footer"
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "total_words": 426,
+          "main_words": 58,
+          "main_ratio_pct": 14,
+          "boilerplate_ratio_pct": 68,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "High boilerplate (68%) \u2014 AI reads mostly nav/footer"
+        },
+        {
+          "file": "index.html",
+          "total_words": 4753,
+          "main_words": 1911,
+          "main_ratio_pct": 40,
+          "boilerplate_ratio_pct": 134,
+          "score": 12,
+          "maxScore": 20,
+          "issue": "High boilerplate (134%) \u2014 AI reads mostly nav/footer"
+        },
+        {
+          "file": "laptops-computers.html",
+          "total_words": 426,
+          "main_words": 58,
+          "main_ratio_pct": 14,
+          "boilerplate_ratio_pct": 68,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "High boilerplate (68%) \u2014 AI reads mostly nav/footer"
+        },
+        {
+          "file": "sale.html",
+          "total_words": 4071,
+          "main_words": 3758,
+          "main_ratio_pct": 92,
+          "boilerplate_ratio_pct": 69,
+          "score": 20,
+          "maxScore": 20,
+          "issue": "High boilerplate (69%) \u2014 AI reads mostly nav/footer"
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "total_words": 426,
+          "main_words": 58,
+          "main_ratio_pct": 14,
+          "boilerplate_ratio_pct": 68,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "High boilerplate (68%) \u2014 AI reads mostly nav/footer"
+        },
+        {
+          "file": "televisions--smart-tvs.html",
+          "total_words": 3292,
+          "main_words": 2981,
+          "main_ratio_pct": 91,
+          "boilerplate_ratio_pct": 9,
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "televisions.html",
+          "total_words": 3292,
+          "main_words": 2981,
+          "main_ratio_pct": 91,
+          "boilerplate_ratio_pct": 9,
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "washing-machines.html",
+          "total_words": 2995,
+          "main_words": 2681,
+          "main_ratio_pct": 90,
+          "boilerplate_ratio_pct": 9,
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "whats-new.html",
+          "total_words": 2419,
+          "main_words": 2102,
+          "main_ratio_pct": 87,
+          "boilerplate_ratio_pct": 10,
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        }
+      ],
+      "errors": [
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "total_words": 426,
+          "main_words": 58,
+          "main_ratio_pct": 14,
+          "boilerplate_ratio_pct": 68,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "High boilerplate (68%) \u2014 AI reads mostly nav/footer"
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "total_words": 426,
+          "main_words": 58,
+          "main_ratio_pct": 14,
+          "boilerplate_ratio_pct": 68,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "High boilerplate (68%) \u2014 AI reads mostly nav/footer"
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "total_words": 426,
+          "main_words": 58,
+          "main_ratio_pct": 14,
+          "boilerplate_ratio_pct": 68,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "High boilerplate (68%) \u2014 AI reads mostly nav/footer"
+        },
+        {
+          "file": "index.html",
+          "total_words": 4753,
+          "main_words": 1911,
+          "main_ratio_pct": 40,
+          "boilerplate_ratio_pct": 134,
+          "score": 12,
+          "maxScore": 20,
+          "issue": "High boilerplate (134%) \u2014 AI reads mostly nav/footer"
+        },
+        {
+          "file": "laptops-computers.html",
+          "total_words": 426,
+          "main_words": 58,
+          "main_ratio_pct": 14,
+          "boilerplate_ratio_pct": 68,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "High boilerplate (68%) \u2014 AI reads mostly nav/footer"
+        },
+        {
+          "file": "sale.html",
+          "total_words": 4071,
+          "main_words": 3758,
+          "main_ratio_pct": 92,
+          "boilerplate_ratio_pct": 69,
+          "score": 20,
+          "maxScore": 20,
+          "issue": "High boilerplate (69%) \u2014 AI reads mostly nav/footer"
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "total_words": 426,
+          "main_words": 58,
+          "main_ratio_pct": 14,
+          "boilerplate_ratio_pct": 68,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "High boilerplate (68%) \u2014 AI reads mostly nav/footer"
+        }
+      ],
+      "summary": "5/12 pages have <40% boilerplate"
+    },
+    "content_chunking": {
+      "score": 46,
+      "maxScore": 300,
+      "percentage": 15,
+      "grade": "F",
+      "pages": [
+        {
+          "file": "air-conditioners.html",
+          "paragraph_count": 33,
+          "avg_paragraph_words": 52,
+          "good_chunk_pct": 48,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 3810,
+          "score": 8,
+          "maxScore": 25,
+          "issue": "Only 48% of paragraphs in the ideal 50-400 word range"
+        },
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "paragraph_count": 4,
+          "avg_paragraph_words": 42,
+          "good_chunk_pct": 25,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 554,
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Only 25% of paragraphs in the ideal 50-400 word range"
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "paragraph_count": 4,
+          "avg_paragraph_words": 42,
+          "good_chunk_pct": 25,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 554,
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Only 25% of paragraphs in the ideal 50-400 word range"
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "paragraph_count": 4,
+          "avg_paragraph_words": 42,
+          "good_chunk_pct": 25,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 554,
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Only 25% of paragraphs in the ideal 50-400 word range"
+        },
+        {
+          "file": "index.html",
+          "paragraph_count": 13,
+          "avg_paragraph_words": 71,
+          "good_chunk_pct": 54,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 6179,
+          "score": 15,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "laptops-computers.html",
+          "paragraph_count": 4,
+          "avg_paragraph_words": 42,
+          "good_chunk_pct": 25,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 554,
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Only 25% of paragraphs in the ideal 50-400 word range"
+        },
+        {
+          "file": "sale.html",
+          "paragraph_count": 29,
+          "avg_paragraph_words": 53,
+          "good_chunk_pct": 41,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 5292,
+          "score": 8,
+          "maxScore": 25,
+          "issue": "Only 41% of paragraphs in the ideal 50-400 word range"
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "paragraph_count": 4,
+          "avg_paragraph_words": 42,
+          "good_chunk_pct": 25,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 554,
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Only 25% of paragraphs in the ideal 50-400 word range"
+        },
+        {
+          "file": "televisions--smart-tvs.html",
+          "paragraph_count": 32,
+          "avg_paragraph_words": 47,
+          "good_chunk_pct": 22,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 4280,
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Only 22% of paragraphs in the ideal 50-400 word range"
+        },
+        {
+          "file": "televisions.html",
+          "paragraph_count": 32,
+          "avg_paragraph_words": 47,
+          "good_chunk_pct": 22,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 4280,
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Only 22% of paragraphs in the ideal 50-400 word range"
+        },
+        {
+          "file": "washing-machines.html",
+          "paragraph_count": 48,
+          "avg_paragraph_words": 33,
+          "good_chunk_pct": 12,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 3894,
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Only 12% of paragraphs in the ideal 50-400 word range"
+        },
+        {
+          "file": "whats-new.html",
+          "paragraph_count": 31,
+          "avg_paragraph_words": 58,
+          "good_chunk_pct": 58,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 3145,
+          "score": 15,
+          "maxScore": 25,
+          "issue": null
+        }
+      ],
+      "errors": [
+        {
+          "file": "air-conditioners.html",
+          "paragraph_count": 33,
+          "avg_paragraph_words": 52,
+          "good_chunk_pct": 48,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 3810,
+          "score": 8,
+          "maxScore": 25,
+          "issue": "Only 48% of paragraphs in the ideal 50-400 word range"
+        },
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "paragraph_count": 4,
+          "avg_paragraph_words": 42,
+          "good_chunk_pct": 25,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 554,
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Only 25% of paragraphs in the ideal 50-400 word range"
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "paragraph_count": 4,
+          "avg_paragraph_words": 42,
+          "good_chunk_pct": 25,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 554,
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Only 25% of paragraphs in the ideal 50-400 word range"
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "paragraph_count": 4,
+          "avg_paragraph_words": 42,
+          "good_chunk_pct": 25,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 554,
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Only 25% of paragraphs in the ideal 50-400 word range"
+        },
+        {
+          "file": "laptops-computers.html",
+          "paragraph_count": 4,
+          "avg_paragraph_words": 42,
+          "good_chunk_pct": 25,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 554,
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Only 25% of paragraphs in the ideal 50-400 word range"
+        },
+        {
+          "file": "sale.html",
+          "paragraph_count": 29,
+          "avg_paragraph_words": 53,
+          "good_chunk_pct": 41,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 5292,
+          "score": 8,
+          "maxScore": 25,
+          "issue": "Only 41% of paragraphs in the ideal 50-400 word range"
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "paragraph_count": 4,
+          "avg_paragraph_words": 42,
+          "good_chunk_pct": 25,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 554,
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Only 25% of paragraphs in the ideal 50-400 word range"
+        },
+        {
+          "file": "televisions--smart-tvs.html",
+          "paragraph_count": 32,
+          "avg_paragraph_words": 47,
+          "good_chunk_pct": 22,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 4280,
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Only 22% of paragraphs in the ideal 50-400 word range"
+        },
+        {
+          "file": "televisions.html",
+          "paragraph_count": 32,
+          "avg_paragraph_words": 47,
+          "good_chunk_pct": 22,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 4280,
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Only 22% of paragraphs in the ideal 50-400 word range"
+        },
+        {
+          "file": "washing-machines.html",
+          "paragraph_count": 48,
+          "avg_paragraph_words": 33,
+          "good_chunk_pct": 12,
+          "long_paragraphs": 0,
+          "approx_total_tokens": 3894,
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Only 12% of paragraphs in the ideal 50-400 word range"
+        }
+      ],
+      "summary": "2/12 pages have well-chunked content"
+    },
+    "entity_signals": {
+      "score": 231,
+      "maxScore": 300,
+      "percentage": 77,
+      "grade": "B",
+      "pages": [
+        {
+          "file": "air-conditioners.html",
+          "entity_count": 26,
+          "total_mentions": 222,
+          "entity_density_pct": 7.6,
+          "brand_entities": 5,
+          "category_entities": 8,
+          "spec_entities": 4,
+          "heading_entities": [
+            "price",
+            "capacity",
+            "installation",
+            "energy rating",
+            "reverse cycle"
+          ],
+          "intro_entities": [
+            "split system",
+            "panasonic",
+            "westinghouse",
+            "hisense",
+            "fujitsu"
+          ],
+          "top_entities": [
+            {
+              "entity": "reverse cycle",
+              "count": 36
+            },
+            {
+              "entity": "air conditioner",
+              "count": 34
+            },
+            {
+              "entity": "split system",
+              "count": 33
+            },
+            {
+              "entity": "compare",
+              "count": 31
+            },
+            {
+              "entity": "deal",
+              "count": 11
+            },
+            {
+              "entity": "westinghouse",
+              "count": 9
+            },
+            {
+              "entity": "fujitsu",
+              "count": 9
+            },
+            {
+              "entity": "panasonic",
+              "count": 7
+            }
+          ],
+          "score": 25,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "entity_count": 16,
+          "total_mentions": 21,
+          "entity_density_pct": 4.9,
+          "brand_entities": 0,
+          "category_entities": 9,
+          "spec_entities": 1,
+          "heading_entities": [],
+          "intro_entities": [
+            "soundbar",
+            "price",
+            "washing machine",
+            "laptop",
+            "coffee machine"
+          ],
+          "top_entities": [
+            {
+              "entity": "price",
+              "count": 3
+            },
+            {
+              "entity": "discount",
+              "count": 3
+            },
+            {
+              "entity": "delivery",
+              "count": 2
+            },
+            {
+              "entity": "soundbar",
+              "count": 1
+            },
+            {
+              "entity": "washing machine",
+              "count": 1
+            },
+            {
+              "entity": "sale",
+              "count": 1
+            },
+            {
+              "entity": "laptop",
+              "count": 1
+            },
+            {
+              "entity": "coffee machine",
+              "count": 1
+            }
+          ],
+          "score": 13,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "entity_count": 16,
+          "total_mentions": 21,
+          "entity_density_pct": 4.9,
+          "brand_entities": 0,
+          "category_entities": 9,
+          "spec_entities": 1,
+          "heading_entities": [],
+          "intro_entities": [
+            "soundbar",
+            "price",
+            "washing machine",
+            "laptop",
+            "coffee machine"
+          ],
+          "top_entities": [
+            {
+              "entity": "price",
+              "count": 3
+            },
+            {
+              "entity": "discount",
+              "count": 3
+            },
+            {
+              "entity": "delivery",
+              "count": 2
+            },
+            {
+              "entity": "soundbar",
+              "count": 1
+            },
+            {
+              "entity": "washing machine",
+              "count": 1
+            },
+            {
+              "entity": "sale",
+              "count": 1
+            },
+            {
+              "entity": "laptop",
+              "count": 1
+            },
+            {
+              "entity": "coffee machine",
+              "count": 1
+            }
+          ],
+          "score": 13,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "entity_count": 16,
+          "total_mentions": 21,
+          "entity_density_pct": 4.9,
+          "brand_entities": 0,
+          "category_entities": 9,
+          "spec_entities": 1,
+          "heading_entities": [],
+          "intro_entities": [
+            "soundbar",
+            "price",
+            "washing machine",
+            "laptop",
+            "coffee machine"
+          ],
+          "top_entities": [
+            {
+              "entity": "price",
+              "count": 3
+            },
+            {
+              "entity": "discount",
+              "count": 3
+            },
+            {
+              "entity": "delivery",
+              "count": 2
+            },
+            {
+              "entity": "soundbar",
+              "count": 1
+            },
+            {
+              "entity": "washing machine",
+              "count": 1
+            },
+            {
+              "entity": "sale",
+              "count": 1
+            },
+            {
+              "entity": "laptop",
+              "count": 1
+            },
+            {
+              "entity": "coffee machine",
+              "count": 1
+            }
+          ],
+          "score": 13,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "index.html",
+          "entity_count": 91,
+          "total_mentions": 441,
+          "entity_density_pct": 9.3,
+          "brand_entities": 36,
+          "category_entities": 32,
+          "spec_entities": 14,
+          "heading_entities": [
+            "wi-fi",
+            "bosch",
+            "cooktop",
+            "split system",
+            "lg"
+          ],
+          "intro_entities": [
+            "lg",
+            "projector",
+            "apple",
+            "4k",
+            "led"
+          ],
+          "top_entities": [
+            {
+              "entity": "tv",
+              "count": 29
+            },
+            {
+              "entity": "samsung",
+              "count": 26
+            },
+            {
+              "entity": "compare",
+              "count": 24
+            },
+            {
+              "entity": "deal",
+              "count": 18
+            },
+            {
+              "entity": "vacuum",
+              "count": 16
+            },
+            {
+              "entity": "apple",
+              "count": 15
+            },
+            {
+              "entity": "lg",
+              "count": 14
+            },
+            {
+              "entity": "headphones",
+              "count": 11
+            }
+          ],
+          "score": 25,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "laptops-computers.html",
+          "entity_count": 16,
+          "total_mentions": 21,
+          "entity_density_pct": 4.9,
+          "brand_entities": 0,
+          "category_entities": 9,
+          "spec_entities": 1,
+          "heading_entities": [],
+          "intro_entities": [
+            "soundbar",
+            "price",
+            "washing machine",
+            "laptop",
+            "coffee machine"
+          ],
+          "top_entities": [
+            {
+              "entity": "price",
+              "count": 3
+            },
+            {
+              "entity": "discount",
+              "count": 3
+            },
+            {
+              "entity": "delivery",
+              "count": 2
+            },
+            {
+              "entity": "soundbar",
+              "count": 1
+            },
+            {
+              "entity": "washing machine",
+              "count": 1
+            },
+            {
+              "entity": "sale",
+              "count": 1
+            },
+            {
+              "entity": "laptop",
+              "count": 1
+            },
+            {
+              "entity": "coffee machine",
+              "count": 1
+            }
+          ],
+          "score": 13,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "sale.html",
+          "entity_count": 70,
+          "total_mentions": 400,
+          "entity_density_pct": 9.8,
+          "brand_entities": 21,
+          "category_entities": 26,
+          "spec_entities": 12,
+          "heading_entities": [
+            "wi-fi",
+            "fisher & paykel",
+            "lg",
+            "shark",
+            "washer"
+          ],
+          "intro_entities": [
+            "soundbar",
+            "microwave",
+            "washing machine",
+            "laptop",
+            "4k"
+          ],
+          "top_entities": [
+            {
+              "entity": "compare",
+              "count": 73
+            },
+            {
+              "entity": "deal",
+              "count": 57
+            },
+            {
+              "entity": "delivery",
+              "count": 18
+            },
+            {
+              "entity": "tv",
+              "count": 17
+            },
+            {
+              "entity": "hisense",
+              "count": 14
+            },
+            {
+              "entity": "4k",
+              "count": 13
+            },
+            {
+              "entity": "fisher & paykel",
+              "count": 10
+            },
+            {
+              "entity": "refrigerator",
+              "count": 10
+            }
+          ],
+          "score": 25,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "entity_count": 16,
+          "total_mentions": 21,
+          "entity_density_pct": 4.9,
+          "brand_entities": 0,
+          "category_entities": 9,
+          "spec_entities": 1,
+          "heading_entities": [],
+          "intro_entities": [
+            "soundbar",
+            "price",
+            "washing machine",
+            "laptop",
+            "coffee machine"
+          ],
+          "top_entities": [
+            {
+              "entity": "price",
+              "count": 3
+            },
+            {
+              "entity": "discount",
+              "count": 3
+            },
+            {
+              "entity": "delivery",
+              "count": 2
+            },
+            {
+              "entity": "soundbar",
+              "count": 1
+            },
+            {
+              "entity": "washing machine",
+              "count": 1
+            },
+            {
+              "entity": "sale",
+              "count": 1
+            },
+            {
+              "entity": "laptop",
+              "count": 1
+            },
+            {
+              "entity": "coffee machine",
+              "count": 1
+            }
+          ],
+          "score": 13,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "televisions--smart-tvs.html",
+          "entity_count": 32,
+          "total_mentions": 349,
+          "entity_density_pct": 10.6,
+          "brand_entities": 6,
+          "category_entities": 5,
+          "spec_entities": 13,
+          "heading_entities": [
+            "lg",
+            "price",
+            "television",
+            "tv",
+            "energy rating"
+          ],
+          "intro_entities": [
+            "soundbar",
+            "lg",
+            "deal",
+            "4k",
+            "led"
+          ],
+          "top_entities": [
+            {
+              "entity": "tv",
+              "count": 66
+            },
+            {
+              "entity": "4k",
+              "count": 36
+            },
+            {
+              "entity": "compare",
+              "count": 29
+            },
+            {
+              "entity": "hisense",
+              "count": 21
+            },
+            {
+              "entity": "oled",
+              "count": 20
+            },
+            {
+              "entity": "led",
+              "count": 19
+            },
+            {
+              "entity": "samsung",
+              "count": 19
+            },
+            {
+              "entity": "qled",
+              "count": 18
+            }
+          ],
+          "score": 25,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "televisions.html",
+          "entity_count": 32,
+          "total_mentions": 349,
+          "entity_density_pct": 10.6,
+          "brand_entities": 6,
+          "category_entities": 5,
+          "spec_entities": 13,
+          "heading_entities": [
+            "lg",
+            "price",
+            "television",
+            "tv",
+            "energy rating"
+          ],
+          "intro_entities": [
+            "soundbar",
+            "lg",
+            "deal",
+            "4k",
+            "led"
+          ],
+          "top_entities": [
+            {
+              "entity": "tv",
+              "count": 66
+            },
+            {
+              "entity": "4k",
+              "count": 36
+            },
+            {
+              "entity": "compare",
+              "count": 29
+            },
+            {
+              "entity": "hisense",
+              "count": 21
+            },
+            {
+              "entity": "oled",
+              "count": 20
+            },
+            {
+              "entity": "led",
+              "count": 19
+            },
+            {
+              "entity": "samsung",
+              "count": 19
+            },
+            {
+              "entity": "qled",
+              "count": 18
+            }
+          ],
+          "score": 25,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "washing-machines.html",
+          "entity_count": 33,
+          "total_mentions": 252,
+          "entity_density_pct": 8.4,
+          "brand_entities": 10,
+          "category_entities": 4,
+          "spec_entities": 10,
+          "heading_entities": [
+            "price",
+            "washing machine",
+            "washer",
+            "dryer",
+            "capacity"
+          ],
+          "intro_entities": [
+            "bosch",
+            "fisher & paykel",
+            "lg",
+            "washing machine",
+            "washer"
+          ],
+          "top_entities": [
+            {
+              "entity": "washer",
+              "count": 43
+            },
+            {
+              "entity": "compare",
+              "count": 30
+            },
+            {
+              "entity": "washing machine",
+              "count": 24
+            },
+            {
+              "entity": "lg",
+              "count": 19
+            },
+            {
+              "entity": "deal",
+              "count": 17
+            },
+            {
+              "entity": "dryer",
+              "count": 12
+            },
+            {
+              "entity": "capacity",
+              "count": 11
+            },
+            {
+              "entity": "bosch",
+              "count": 9
+            }
+          ],
+          "score": 25,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "whats-new.html",
+          "entity_count": 20,
+          "total_mentions": 49,
+          "entity_density_pct": 2.0,
+          "brand_entities": 1,
+          "category_entities": 12,
+          "spec_entities": 1,
+          "heading_entities": [],
+          "intro_entities": [
+            "clearance"
+          ],
+          "top_entities": [
+            {
+              "entity": "vacuum",
+              "count": 6
+            },
+            {
+              "entity": "price",
+              "count": 5
+            },
+            {
+              "entity": "tv",
+              "count": 5
+            },
+            {
+              "entity": "heat pump",
+              "count": 4
+            },
+            {
+              "entity": "washing machine",
+              "count": 3
+            },
+            {
+              "entity": "oven",
+              "count": 3
+            },
+            {
+              "entity": "dishwasher",
+              "count": 3
+            },
+            {
+              "entity": "discount",
+              "count": 3
+            }
+          ],
+          "score": 16,
+          "maxScore": 25,
+          "issue": null
+        }
+      ],
+      "errors": [],
+      "summary": "12/12 pages have strong entity signals"
+    },
+    "knowledge_graph": {
+      "score": 25,
+      "maxScore": 240,
+      "percentage": 10,
+      "grade": "F",
+      "pages": [
+        {
+          "file": "air-conditioners.html",
+          "signals_found": [
+            "authority links (1)"
+          ],
+          "signals_missing": [
+            "sameAs links in JSON-LD (connect brand to Wikipedia/Wikidata)",
+            "Organization schema with address/phone"
+          ],
+          "same_as_count": 0,
+          "authority_link_count": 1,
+          "score": 5,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "signals_found": [],
+          "signals_missing": [
+            "sameAs links in JSON-LD (connect brand to Wikipedia/Wikidata)",
+            "external authority links (energy ratings, Choice, Wikipedia)",
+            "Organization schema with address/phone"
+          ],
+          "same_as_count": 0,
+          "authority_link_count": 0,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "No knowledge graph signals \u2014 AI cannot confirm entity identity"
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "signals_found": [],
+          "signals_missing": [
+            "sameAs links in JSON-LD (connect brand to Wikipedia/Wikidata)",
+            "external authority links (energy ratings, Choice, Wikipedia)",
+            "Organization schema with address/phone"
+          ],
+          "same_as_count": 0,
+          "authority_link_count": 0,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "No knowledge graph signals \u2014 AI cannot confirm entity identity"
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "signals_found": [],
+          "signals_missing": [
+            "sameAs links in JSON-LD (connect brand to Wikipedia/Wikidata)",
+            "external authority links (energy ratings, Choice, Wikipedia)",
+            "Organization schema with address/phone"
+          ],
+          "same_as_count": 0,
+          "authority_link_count": 0,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "No knowledge graph signals \u2014 AI cannot confirm entity identity"
+        },
+        {
+          "file": "index.html",
+          "signals_found": [
+            "sameAs (5 links)",
+            "Organization schema",
+            "contact details in schema"
+          ],
+          "signals_missing": [
+            "external authority links (energy ratings, Choice, Wikipedia)"
+          ],
+          "same_as_count": 5,
+          "authority_link_count": 0,
+          "score": 15,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "laptops-computers.html",
+          "signals_found": [],
+          "signals_missing": [
+            "sameAs links in JSON-LD (connect brand to Wikipedia/Wikidata)",
+            "external authority links (energy ratings, Choice, Wikipedia)",
+            "Organization schema with address/phone"
+          ],
+          "same_as_count": 0,
+          "authority_link_count": 0,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "No knowledge graph signals \u2014 AI cannot confirm entity identity"
+        },
+        {
+          "file": "sale.html",
+          "signals_found": [],
+          "signals_missing": [
+            "sameAs links in JSON-LD (connect brand to Wikipedia/Wikidata)",
+            "external authority links (energy ratings, Choice, Wikipedia)",
+            "Organization schema with address/phone"
+          ],
+          "same_as_count": 0,
+          "authority_link_count": 0,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "No knowledge graph signals \u2014 AI cannot confirm entity identity"
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "signals_found": [],
+          "signals_missing": [
+            "sameAs links in JSON-LD (connect brand to Wikipedia/Wikidata)",
+            "external authority links (energy ratings, Choice, Wikipedia)",
+            "Organization schema with address/phone"
+          ],
+          "same_as_count": 0,
+          "authority_link_count": 0,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "No knowledge graph signals \u2014 AI cannot confirm entity identity"
+        },
+        {
+          "file": "televisions--smart-tvs.html",
+          "signals_found": [],
+          "signals_missing": [
+            "sameAs links in JSON-LD (connect brand to Wikipedia/Wikidata)",
+            "external authority links (energy ratings, Choice, Wikipedia)",
+            "Organization schema with address/phone"
+          ],
+          "same_as_count": 0,
+          "authority_link_count": 0,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "No knowledge graph signals \u2014 AI cannot confirm entity identity"
+        },
+        {
+          "file": "televisions.html",
+          "signals_found": [],
+          "signals_missing": [
+            "sameAs links in JSON-LD (connect brand to Wikipedia/Wikidata)",
+            "external authority links (energy ratings, Choice, Wikipedia)",
+            "Organization schema with address/phone"
+          ],
+          "same_as_count": 0,
+          "authority_link_count": 0,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "No knowledge graph signals \u2014 AI cannot confirm entity identity"
+        },
+        {
+          "file": "washing-machines.html",
+          "signals_found": [
+            "authority links (1)"
+          ],
+          "signals_missing": [
+            "sameAs links in JSON-LD (connect brand to Wikipedia/Wikidata)",
+            "Organization schema with address/phone"
+          ],
+          "same_as_count": 0,
+          "authority_link_count": 1,
+          "score": 5,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "whats-new.html",
+          "signals_found": [],
+          "signals_missing": [
+            "sameAs links in JSON-LD (connect brand to Wikipedia/Wikidata)",
+            "external authority links (energy ratings, Choice, Wikipedia)",
+            "Organization schema with address/phone"
+          ],
+          "same_as_count": 0,
+          "authority_link_count": 0,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "No knowledge graph signals \u2014 AI cannot confirm entity identity"
+        }
+      ],
+      "errors": [
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "signals_found": [],
+          "signals_missing": [
+            "sameAs links in JSON-LD (connect brand to Wikipedia/Wikidata)",
+            "external authority links (energy ratings, Choice, Wikipedia)",
+            "Organization schema with address/phone"
+          ],
+          "same_as_count": 0,
+          "authority_link_count": 0,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "No knowledge graph signals \u2014 AI cannot confirm entity identity"
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "signals_found": [],
+          "signals_missing": [
+            "sameAs links in JSON-LD (connect brand to Wikipedia/Wikidata)",
+            "external authority links (energy ratings, Choice, Wikipedia)",
+            "Organization schema with address/phone"
+          ],
+          "same_as_count": 0,
+          "authority_link_count": 0,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "No knowledge graph signals \u2014 AI cannot confirm entity identity"
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "signals_found": [],
+          "signals_missing": [
+            "sameAs links in JSON-LD (connect brand to Wikipedia/Wikidata)",
+            "external authority links (energy ratings, Choice, Wikipedia)",
+            "Organization schema with address/phone"
+          ],
+          "same_as_count": 0,
+          "authority_link_count": 0,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "No knowledge graph signals \u2014 AI cannot confirm entity identity"
+        },
+        {
+          "file": "laptops-computers.html",
+          "signals_found": [],
+          "signals_missing": [
+            "sameAs links in JSON-LD (connect brand to Wikipedia/Wikidata)",
+            "external authority links (energy ratings, Choice, Wikipedia)",
+            "Organization schema with address/phone"
+          ],
+          "same_as_count": 0,
+          "authority_link_count": 0,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "No knowledge graph signals \u2014 AI cannot confirm entity identity"
+        },
+        {
+          "file": "sale.html",
+          "signals_found": [],
+          "signals_missing": [
+            "sameAs links in JSON-LD (connect brand to Wikipedia/Wikidata)",
+            "external authority links (energy ratings, Choice, Wikipedia)",
+            "Organization schema with address/phone"
+          ],
+          "same_as_count": 0,
+          "authority_link_count": 0,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "No knowledge graph signals \u2014 AI cannot confirm entity identity"
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "signals_found": [],
+          "signals_missing": [
+            "sameAs links in JSON-LD (connect brand to Wikipedia/Wikidata)",
+            "external authority links (energy ratings, Choice, Wikipedia)",
+            "Organization schema with address/phone"
+          ],
+          "same_as_count": 0,
+          "authority_link_count": 0,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "No knowledge graph signals \u2014 AI cannot confirm entity identity"
+        },
+        {
+          "file": "televisions--smart-tvs.html",
+          "signals_found": [],
+          "signals_missing": [
+            "sameAs links in JSON-LD (connect brand to Wikipedia/Wikidata)",
+            "external authority links (energy ratings, Choice, Wikipedia)",
+            "Organization schema with address/phone"
+          ],
+          "same_as_count": 0,
+          "authority_link_count": 0,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "No knowledge graph signals \u2014 AI cannot confirm entity identity"
+        },
+        {
+          "file": "televisions.html",
+          "signals_found": [],
+          "signals_missing": [
+            "sameAs links in JSON-LD (connect brand to Wikipedia/Wikidata)",
+            "external authority links (energy ratings, Choice, Wikipedia)",
+            "Organization schema with address/phone"
+          ],
+          "same_as_count": 0,
+          "authority_link_count": 0,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "No knowledge graph signals \u2014 AI cannot confirm entity identity"
+        },
+        {
+          "file": "whats-new.html",
+          "signals_found": [],
+          "signals_missing": [
+            "sameAs links in JSON-LD (connect brand to Wikipedia/Wikidata)",
+            "external authority links (energy ratings, Choice, Wikipedia)",
+            "Organization schema with address/phone"
+          ],
+          "same_as_count": 0,
+          "authority_link_count": 0,
+          "score": 0,
+          "maxScore": 20,
+          "issue": "No knowledge graph signals \u2014 AI cannot confirm entity identity"
+        }
+      ],
+      "summary": "3/12 pages have knowledge graph signals"
+    },
+    "semantic_structure": {
+      "score": 170,
+      "maxScore": 360,
+      "percentage": 47,
+      "grade": "D",
+      "pages": [
+        {
+          "file": "air-conditioners.html",
+          "patterns_found": [
+            "definitions (20)",
+            "question headings (4)",
+            "how-to headings (2)",
+            "ordered lists (1)"
+          ],
+          "patterns_missing": [
+            "comparison language (vs, compared to, unlike)"
+          ],
+          "definition_count": 20,
+          "comparison_count": 1,
+          "question_headings": 4,
+          "ordered_lists": 1,
+          "type_token_ratio": 0.38,
+          "score": 20,
+          "maxScore": 30,
+          "issue": null
+        },
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "patterns_found": [
+            "high lexical diversity (TTR 0.63)"
+          ],
+          "patterns_missing": [
+            "definition sentences ('X is a...', 'X means...')",
+            "comparison language (vs, compared to, unlike)",
+            "question-format headings (What is...?, How to...?)"
+          ],
+          "definition_count": 0,
+          "comparison_count": 0,
+          "question_headings": 0,
+          "ordered_lists": 0,
+          "type_token_ratio": 0.628,
+          "score": 5,
+          "maxScore": 30,
+          "issue": "Few semantic patterns \u2014 low AI citation probability"
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "patterns_found": [
+            "high lexical diversity (TTR 0.63)"
+          ],
+          "patterns_missing": [
+            "definition sentences ('X is a...', 'X means...')",
+            "comparison language (vs, compared to, unlike)",
+            "question-format headings (What is...?, How to...?)"
+          ],
+          "definition_count": 0,
+          "comparison_count": 0,
+          "question_headings": 0,
+          "ordered_lists": 0,
+          "type_token_ratio": 0.628,
+          "score": 5,
+          "maxScore": 30,
+          "issue": "Few semantic patterns \u2014 low AI citation probability"
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "patterns_found": [
+            "high lexical diversity (TTR 0.63)"
+          ],
+          "patterns_missing": [
+            "definition sentences ('X is a...', 'X means...')",
+            "comparison language (vs, compared to, unlike)",
+            "question-format headings (What is...?, How to...?)"
+          ],
+          "definition_count": 0,
+          "comparison_count": 0,
+          "question_headings": 0,
+          "ordered_lists": 0,
+          "type_token_ratio": 0.628,
+          "score": 5,
+          "maxScore": 30,
+          "issue": "Few semantic patterns \u2014 low AI citation probability"
+        },
+        {
+          "file": "index.html",
+          "patterns_found": [
+            "definitions (5)",
+            "question headings (2)",
+            "how-to headings (2)"
+          ],
+          "patterns_missing": [
+            "comparison language (vs, compared to, unlike)",
+            "ordered lists (step-by-step instructions)"
+          ],
+          "definition_count": 5,
+          "comparison_count": 1,
+          "question_headings": 2,
+          "ordered_lists": 0,
+          "type_token_ratio": 0.38,
+          "score": 15,
+          "maxScore": 30,
+          "issue": null
+        },
+        {
+          "file": "laptops-computers.html",
+          "patterns_found": [
+            "high lexical diversity (TTR 0.63)"
+          ],
+          "patterns_missing": [
+            "definition sentences ('X is a...', 'X means...')",
+            "comparison language (vs, compared to, unlike)",
+            "question-format headings (What is...?, How to...?)"
+          ],
+          "definition_count": 0,
+          "comparison_count": 0,
+          "question_headings": 0,
+          "ordered_lists": 0,
+          "type_token_ratio": 0.628,
+          "score": 5,
+          "maxScore": 30,
+          "issue": "Few semantic patterns \u2014 low AI citation probability"
+        },
+        {
+          "file": "sale.html",
+          "patterns_found": [
+            "definitions (7)",
+            "ordered lists (1)"
+          ],
+          "patterns_missing": [
+            "comparison language (vs, compared to, unlike)",
+            "question-format headings (What is...?, How to...?)"
+          ],
+          "definition_count": 7,
+          "comparison_count": 0,
+          "question_headings": 0,
+          "ordered_lists": 1,
+          "type_token_ratio": 0.327,
+          "score": 10,
+          "maxScore": 30,
+          "issue": null
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "patterns_found": [
+            "high lexical diversity (TTR 0.63)"
+          ],
+          "patterns_missing": [
+            "definition sentences ('X is a...', 'X means...')",
+            "comparison language (vs, compared to, unlike)",
+            "question-format headings (What is...?, How to...?)"
+          ],
+          "definition_count": 0,
+          "comparison_count": 0,
+          "question_headings": 0,
+          "ordered_lists": 0,
+          "type_token_ratio": 0.628,
+          "score": 5,
+          "maxScore": 30,
+          "issue": "Few semantic patterns \u2014 low AI citation probability"
+        },
+        {
+          "file": "televisions--smart-tvs.html",
+          "patterns_found": [
+            "definitions (11)",
+            "comparisons (2)",
+            "question headings (2)",
+            "how-to headings (2)",
+            "ordered lists (1)"
+          ],
+          "patterns_missing": [],
+          "definition_count": 11,
+          "comparison_count": 2,
+          "question_headings": 2,
+          "ordered_lists": 1,
+          "type_token_ratio": 0.398,
+          "score": 25,
+          "maxScore": 30,
+          "issue": null
+        },
+        {
+          "file": "televisions.html",
+          "patterns_found": [
+            "definitions (11)",
+            "comparisons (2)",
+            "question headings (2)",
+            "how-to headings (2)",
+            "ordered lists (1)"
+          ],
+          "patterns_missing": [],
+          "definition_count": 11,
+          "comparison_count": 2,
+          "question_headings": 2,
+          "ordered_lists": 1,
+          "type_token_ratio": 0.398,
+          "score": 25,
+          "maxScore": 30,
+          "issue": null
+        },
+        {
+          "file": "washing-machines.html",
+          "patterns_found": [
+            "definitions (6)",
+            "comparisons (2)",
+            "how-to headings (1)",
+            "ordered lists (1)"
+          ],
+          "patterns_missing": [
+            "question-format headings (What is...?, How to...?)"
+          ],
+          "definition_count": 6,
+          "comparison_count": 2,
+          "question_headings": 1,
+          "ordered_lists": 1,
+          "type_token_ratio": 0.388,
+          "score": 20,
+          "maxScore": 30,
+          "issue": null
+        },
+        {
+          "file": "whats-new.html",
+          "patterns_found": [
+            "definitions (19)",
+            "comparisons (2)",
+            "question headings (7)",
+            "how-to headings (3)",
+            "ordered lists (1)",
+            "high lexical diversity (TTR 0.45)"
+          ],
+          "patterns_missing": [],
+          "definition_count": 19,
+          "comparison_count": 2,
+          "question_headings": 7,
+          "ordered_lists": 1,
+          "type_token_ratio": 0.449,
+          "score": 30,
+          "maxScore": 30,
+          "issue": null
+        }
+      ],
+      "errors": [
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "patterns_found": [
+            "high lexical diversity (TTR 0.63)"
+          ],
+          "patterns_missing": [
+            "definition sentences ('X is a...', 'X means...')",
+            "comparison language (vs, compared to, unlike)",
+            "question-format headings (What is...?, How to...?)"
+          ],
+          "definition_count": 0,
+          "comparison_count": 0,
+          "question_headings": 0,
+          "ordered_lists": 0,
+          "type_token_ratio": 0.628,
+          "score": 5,
+          "maxScore": 30,
+          "issue": "Few semantic patterns \u2014 low AI citation probability"
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "patterns_found": [
+            "high lexical diversity (TTR 0.63)"
+          ],
+          "patterns_missing": [
+            "definition sentences ('X is a...', 'X means...')",
+            "comparison language (vs, compared to, unlike)",
+            "question-format headings (What is...?, How to...?)"
+          ],
+          "definition_count": 0,
+          "comparison_count": 0,
+          "question_headings": 0,
+          "ordered_lists": 0,
+          "type_token_ratio": 0.628,
+          "score": 5,
+          "maxScore": 30,
+          "issue": "Few semantic patterns \u2014 low AI citation probability"
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "patterns_found": [
+            "high lexical diversity (TTR 0.63)"
+          ],
+          "patterns_missing": [
+            "definition sentences ('X is a...', 'X means...')",
+            "comparison language (vs, compared to, unlike)",
+            "question-format headings (What is...?, How to...?)"
+          ],
+          "definition_count": 0,
+          "comparison_count": 0,
+          "question_headings": 0,
+          "ordered_lists": 0,
+          "type_token_ratio": 0.628,
+          "score": 5,
+          "maxScore": 30,
+          "issue": "Few semantic patterns \u2014 low AI citation probability"
+        },
+        {
+          "file": "laptops-computers.html",
+          "patterns_found": [
+            "high lexical diversity (TTR 0.63)"
+          ],
+          "patterns_missing": [
+            "definition sentences ('X is a...', 'X means...')",
+            "comparison language (vs, compared to, unlike)",
+            "question-format headings (What is...?, How to...?)"
+          ],
+          "definition_count": 0,
+          "comparison_count": 0,
+          "question_headings": 0,
+          "ordered_lists": 0,
+          "type_token_ratio": 0.628,
+          "score": 5,
+          "maxScore": 30,
+          "issue": "Few semantic patterns \u2014 low AI citation probability"
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "patterns_found": [
+            "high lexical diversity (TTR 0.63)"
+          ],
+          "patterns_missing": [
+            "definition sentences ('X is a...', 'X means...')",
+            "comparison language (vs, compared to, unlike)",
+            "question-format headings (What is...?, How to...?)"
+          ],
+          "definition_count": 0,
+          "comparison_count": 0,
+          "question_headings": 0,
+          "ordered_lists": 0,
+          "type_token_ratio": 0.628,
+          "score": 5,
+          "maxScore": 30,
+          "issue": "Few semantic patterns \u2014 low AI citation probability"
+        }
+      ],
+      "summary": "7/12 pages have strong semantic structure"
+    },
+    "anchor_quality": {
+      "score": 210,
+      "maxScore": 240,
+      "percentage": 88,
+      "grade": "B",
+      "pages": [
+        {
+          "file": "air-conditioners.html",
+          "total_internal_links": 180,
+          "specific_anchors": 163,
+          "generic_anchors": 5,
+          "empty_anchors": 12,
+          "specific_ratio_pct": 91,
+          "top_generic": [
+            "here",
+            "learn more",
+            "learn more",
+            "learn more",
+            "learn more"
+          ],
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "total_internal_links": 59,
+          "specific_anchors": 52,
+          "generic_anchors": 1,
+          "empty_anchors": 6,
+          "specific_ratio_pct": 88,
+          "top_generic": [
+            "here"
+          ],
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "total_internal_links": 59,
+          "specific_anchors": 52,
+          "generic_anchors": 1,
+          "empty_anchors": 6,
+          "specific_ratio_pct": 88,
+          "top_generic": [
+            "here"
+          ],
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "total_internal_links": 59,
+          "specific_anchors": 52,
+          "generic_anchors": 1,
+          "empty_anchors": 6,
+          "specific_ratio_pct": 88,
+          "top_generic": [
+            "here"
+          ],
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "index.html",
+          "total_internal_links": 1193,
+          "specific_anchors": 1148,
+          "generic_anchors": 17,
+          "empty_anchors": 28,
+          "specific_ratio_pct": 96,
+          "top_generic": [
+            "here",
+            "shop now",
+            "shop now",
+            "here",
+            "here"
+          ],
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "laptops-computers.html",
+          "total_internal_links": 59,
+          "specific_anchors": 52,
+          "generic_anchors": 1,
+          "empty_anchors": 6,
+          "specific_ratio_pct": 88,
+          "top_generic": [
+            "here"
+          ],
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "sale.html",
+          "total_internal_links": 343,
+          "specific_anchors": 289,
+          "generic_anchors": 14,
+          "empty_anchors": 40,
+          "specific_ratio_pct": 84,
+          "top_generic": [
+            "here",
+            "here",
+            "here",
+            "here",
+            "here"
+          ],
+          "score": 14,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "total_internal_links": 59,
+          "specific_anchors": 52,
+          "generic_anchors": 1,
+          "empty_anchors": 6,
+          "specific_ratio_pct": 88,
+          "top_generic": [
+            "here"
+          ],
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "televisions--smart-tvs.html",
+          "total_internal_links": 174,
+          "specific_anchors": 140,
+          "generic_anchors": 10,
+          "empty_anchors": 24,
+          "specific_ratio_pct": 80,
+          "top_generic": [
+            "here",
+            "learn more",
+            "learn more",
+            "here",
+            "here"
+          ],
+          "score": 14,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "televisions.html",
+          "total_internal_links": 174,
+          "specific_anchors": 140,
+          "generic_anchors": 10,
+          "empty_anchors": 24,
+          "specific_ratio_pct": 80,
+          "top_generic": [
+            "here",
+            "learn more",
+            "learn more",
+            "here",
+            "here"
+          ],
+          "score": 14,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "washing-machines.html",
+          "total_internal_links": 184,
+          "specific_anchors": 151,
+          "generic_anchors": 7,
+          "empty_anchors": 26,
+          "specific_ratio_pct": 82,
+          "top_generic": [
+            "here",
+            "learn more",
+            "learn more",
+            "learn more",
+            "learn more"
+          ],
+          "score": 14,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "file": "whats-new.html",
+          "total_internal_links": 94,
+          "specific_anchors": 71,
+          "generic_anchors": 17,
+          "empty_anchors": 6,
+          "specific_ratio_pct": 76,
+          "top_generic": [
+            "here",
+            "learn more",
+            "learn more",
+            "learn more",
+            "learn more"
+          ],
+          "score": 14,
+          "maxScore": 20,
+          "issue": null
+        }
+      ],
+      "errors": [],
+      "summary": "12/12 pages have >85% specific anchor text"
+    },
+    "content_similarity": {
+      "score": 130,
+      "maxScore": 300,
+      "percentage": 43,
+      "grade": "D",
+      "pages": [
+        {
+          "file": "air-conditioners.html",
+          "full_page_similarity": 0.547,
+          "avg_top3_similarity": 0.495,
+          "best_passage_similarity": 0.779,
+          "best_passage_preview": "the warm air of the room, refrigerating it then pushing the cooled air back into the room whilst expelling excess heat outside. Split System ACs consi",
+          "best_reference_match": "To choose the right air conditioner, measure the room size in cubic metres and match it to the unit'",
+          "score": 25,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "full_page_similarity": 0.461,
+          "avg_top3_similarity": 0.307,
+          "best_passage_similarity": 0.173,
+          "best_passage_preview": "404 page Oops... Sorry, we can't find that page. Go back to Homepage Search Store Locator View Catalogues Looking for these products? TV Deals Washing",
+          "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Very low similarity (0.17) \u2014 content reads as promotional, not citable"
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "full_page_similarity": 0.461,
+          "avg_top3_similarity": 0.307,
+          "best_passage_similarity": 0.173,
+          "best_passage_preview": "404 page Oops... Sorry, we can't find that page. Go back to Homepage Search Store Locator View Catalogues Looking for these products? TV Deals Washing",
+          "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Very low similarity (0.17) \u2014 content reads as promotional, not citable"
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "full_page_similarity": 0.461,
+          "avg_top3_similarity": 0.307,
+          "best_passage_similarity": 0.173,
+          "best_passage_preview": "404 page Oops... Sorry, we can't find that page. Go back to Homepage Search Store Locator View Catalogues Looking for these products? TV Deals Washing",
+          "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Very low similarity (0.17) \u2014 content reads as promotional, not citable"
+        },
+        {
+          "file": "index.html",
+          "full_page_similarity": 0.431,
+          "avg_top3_similarity": 0.382,
+          "best_passage_similarity": 0.544,
+          "best_passage_preview": "special order, sold out, unavailable, coming soon and shipped by \u201csupplier\u201d, all Pre-orders, digital vouchers, gaming credits and streaming services, ",
+          "best_reference_match": "The Samsung QN90D features a 65-inch Neo QLED panel with a 144Hz refresh rate and AMD FreeSync Premi",
+          "score": 10,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "laptops-computers.html",
+          "full_page_similarity": 0.461,
+          "avg_top3_similarity": 0.307,
+          "best_passage_similarity": 0.173,
+          "best_passage_preview": "404 page Oops... Sorry, we can't find that page. Go back to Homepage Search Store Locator View Catalogues Looking for these products? TV Deals Washing",
+          "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Very low similarity (0.17) \u2014 content reads as promotional, not citable"
+        },
+        {
+          "file": "sale.html",
+          "full_page_similarity": 0.331,
+          "avg_top3_similarity": 0.307,
+          "best_passage_similarity": 0.518,
+          "best_passage_preview": "address provided at the time of entry on 28/05/2026. Winners\u2019 details will be published on The Good Guys\u2019 website from 14/05/2026 for 30 days. Entrant",
+          "best_reference_match": "The Samsung QN90D features a 65-inch Neo QLED panel with a 144Hz refresh rate and AMD FreeSync Premi",
+          "score": 10,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "full_page_similarity": 0.461,
+          "avg_top3_similarity": 0.307,
+          "best_passage_similarity": 0.173,
+          "best_passage_preview": "404 page Oops... Sorry, we can't find that page. Go back to Homepage Search Store Locator View Catalogues Looking for these products? TV Deals Washing",
+          "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Very low similarity (0.17) \u2014 content reads as promotional, not citable"
+        },
+        {
+          "file": "televisions--smart-tvs.html",
+          "full_page_similarity": 0.498,
+          "avg_top3_similarity": 0.468,
+          "best_passage_similarity": 0.694,
+          "best_passage_preview": "Hisense 50\" Q6SAU 4K Hi-QLED Smart TV 2026 No reviews yet 50Q6SAU $ 695 TICKET \u00a4 $ 795 Top Deal Compare Showing 29 of 504 Load more Load Page 2 Televi",
+          "best_reference_match": "The Samsung QN90D features a 65-inch Neo QLED panel with a 144Hz refresh rate and AMD FreeSync Premi",
+          "score": 25,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "televisions.html",
+          "full_page_similarity": 0.498,
+          "avg_top3_similarity": 0.468,
+          "best_passage_similarity": 0.694,
+          "best_passage_preview": "Hisense 50\" Q6SAU 4K Hi-QLED Smart TV 2026 No reviews yet 50Q6SAU $ 695 TICKET \u00a4 $ 795 Top Deal Compare Showing 29 of 504 Load more Load Page 2 Televi",
+          "best_reference_match": "The Samsung QN90D features a 65-inch Neo QLED panel with a 144Hz refresh rate and AMD FreeSync Premi",
+          "score": 25,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "washing-machines.html",
+          "full_page_similarity": 0.68,
+          "avg_top3_similarity": 0.578,
+          "best_passage_similarity": 0.738,
+          "best_passage_preview": "machine upgrade will ensure you don\u2019t miss out on essential tech to save you time and effort, and save your clothes from wear and tear. Read on to dis",
+          "best_reference_match": "Front-load washing machines are more energy and water efficient than top-loaders and typically achie",
+          "score": 25,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "whats-new.html",
+          "full_page_similarity": 0.305,
+          "avg_top3_similarity": 0.22,
+          "best_passage_similarity": 0.507,
+          "best_passage_preview": "bringing you joy and you\u2019ve decided it\u2019s time for an upgrade, we\u2019ve got all the info you\u2019ll need to find the best washing machine. From knowing what t",
+          "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
+          "score": 10,
+          "maxScore": 25,
+          "issue": null
+        }
+      ],
+      "errors": [
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "full_page_similarity": 0.461,
+          "avg_top3_similarity": 0.307,
+          "best_passage_similarity": 0.173,
+          "best_passage_preview": "404 page Oops... Sorry, we can't find that page. Go back to Homepage Search Store Locator View Catalogues Looking for these products? TV Deals Washing",
+          "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Very low similarity (0.17) \u2014 content reads as promotional, not citable"
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "full_page_similarity": 0.461,
+          "avg_top3_similarity": 0.307,
+          "best_passage_similarity": 0.173,
+          "best_passage_preview": "404 page Oops... Sorry, we can't find that page. Go back to Homepage Search Store Locator View Catalogues Looking for these products? TV Deals Washing",
+          "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Very low similarity (0.17) \u2014 content reads as promotional, not citable"
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "full_page_similarity": 0.461,
+          "avg_top3_similarity": 0.307,
+          "best_passage_similarity": 0.173,
+          "best_passage_preview": "404 page Oops... Sorry, we can't find that page. Go back to Homepage Search Store Locator View Catalogues Looking for these products? TV Deals Washing",
+          "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Very low similarity (0.17) \u2014 content reads as promotional, not citable"
+        },
+        {
+          "file": "laptops-computers.html",
+          "full_page_similarity": 0.461,
+          "avg_top3_similarity": 0.307,
+          "best_passage_similarity": 0.173,
+          "best_passage_preview": "404 page Oops... Sorry, we can't find that page. Go back to Homepage Search Store Locator View Catalogues Looking for these products? TV Deals Washing",
+          "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Very low similarity (0.17) \u2014 content reads as promotional, not citable"
+        },
+        {
+          "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
+          "full_page_similarity": 0.461,
+          "avg_top3_similarity": 0.307,
+          "best_passage_similarity": 0.173,
+          "best_passage_preview": "404 page Oops... Sorry, we can't find that page. Go back to Homepage Search Store Locator View Catalogues Looking for these products? TV Deals Washing",
+          "best_reference_match": "The Good Guys price match guarantee covers identical products sold by Australian retailers including",
+          "score": 0,
+          "maxScore": 25,
+          "issue": "Very low similarity (0.17) \u2014 content reads as promotional, not citable"
+        }
+      ],
+      "avg_similarity": 0.445,
+      "similarity_method": "sentence-transformers all-MiniLM-L6-v2",
+      "summary": "7/12 pages have strong AI-citable content (avg: 0.445, method: ST)"
+    }
+  }
+}
