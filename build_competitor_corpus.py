@@ -66,7 +66,9 @@ def _get_encoder():
     try:
         from FlagEmbedding import BGEM3FlagModel
         import numpy as np
-        model = BGEM3FlagModel("BAAI/bge-m3", use_fp16=True)
+        import os
+        use_fp16 = os.getenv("BGE_USE_FP16", "false").lower() == "true"
+        model = BGEM3FlagModel("BAAI/bge-m3", use_fp16=use_fp16)
         def encode(texts):
             out = model.encode(texts, return_dense=True, return_sparse=False, return_colbert_vecs=False)
             vecs = out["dense_vecs"]

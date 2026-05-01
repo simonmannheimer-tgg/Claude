@@ -38,6 +38,9 @@ dist/
 # Reports
 reports/
 
+# Qdrant local vector store — built via build_competitor_corpus.py, cached in CI
+qdrant_data/
+
 # Large packages
 plp-copywriting-package.zip
 

@@ -251,7 +251,10 @@ _BGE_MODEL = None
 def _get_bge_model():
     global _BGE_MODEL
     if _BGE_MODEL is None:
-        _BGE_MODEL = _BGEM3FlagModel("BAAI/bge-m3", use_fp16=True)
+        # use_fp16 only helps on GPU. github-hosted runners are CPU-only.
+        import os
+        use_fp16 = os.getenv("BGE_USE_FP16", "false").lower() == "true"
+        _BGE_MODEL = _BGEM3FlagModel("BAAI/bge-m3", use_fp16=use_fp16)
     return _BGE_MODEL
 
 
@@ -1085,27 +1088,18 @@ def check_entity_gap(snapshot_dir: Path) -> dict:
 def _llm_quality_summary(results: list[dict]) -> str:
     scored = [r["llm_overall"] for r in results if r.get("llm_overall") is not None]
     avg = round(sum(scored) / len(scored), 1) if scored else 0
-    return f"{len(results)} pages scored by LLM judge | avg {avg}/10"
+    return f"{len(results)} pages scored (heuristic judge) | avg {avg}/10"
 
 
 def check_llm_quality(snapshot_dir: Path) -> dict:
     """
-    Uses local Ollama LLM (Phi-4 or Qwen2.5) to score content quality per page.
-    Gracefully skips if Ollama not running — no impact on CI if GPU unavailable.
-    Score: average llm_overall × 2.5 → max 25 pts.
+    Heuristic content quality judge — clarity, specificity, schema alignment,
+    query answerability. No model needed. Score: average × 2.5 → max 25 pts.
     """
     try:
-        from llm_judge import judge_content, _is_ollama_available
+        from llm_judge import judge_content
     except ImportError:
         return {"error": "llm_judge.py not found", "score": 0, "maxScore": 0}
-
-    if not _is_ollama_available():
-        return {
-            "score": 0, "maxScore": 0, "percentage": 0, "grade": "F",
-            "pages": [], "errors": [],
-            "summary": "LLM judge skipped — Ollama not running (self-hosted runner only)",
-            "skipped": True,
-        }
 
     results = []
     total_score = 0
@@ -1119,24 +1113,17 @@ def check_llm_quality(snapshot_dir: Path) -> dict:
     from bs4 import BeautifulSoup
     from run_ecommerce_aeo import infer_page_type
 
-    for html_file in html_files[:5]:  # limit to 5 pages per run to stay within time budget
+    for html_file in html_files[:10]:  # heuristic is fast — score more pages
         page_type = infer_page_type(html_file.name)
         html = html_file.read_text(encoding="utf-8", errors="ignore")
         soup = BeautifulSoup(html, "html.parser")
-        text = soup.get_text(separator=" ", strip=True)
+        for tag in soup.find_all(["nav", "header", "footer", "script", "style", "noscript"]):
+            tag.decompose()
+        main = soup.find("main") or soup.find("article") or soup.body
+        text = (main or soup).get_text(separator=" ", strip=True)
 
-        scores = judge_content(text, page_type)
+        scores = judge_content(text, page_type, html=html)
         max_score += page_max
-
-        if not scores.get("available"):
-            results.append({
-                "file": html_file.name,
-                "page_type": page_type,
-                "score": 0,
-                "maxScore": page_max,
-                "issue": scores.get("reason", "LLM judge unavailable"),
-            })
-            continue
 
         overall = scores.get("llm_overall", 0)
         page_score = round(overall / 10 * page_max)
@@ -1145,7 +1132,7 @@ def check_llm_quality(snapshot_dir: Path) -> dict:
         results.append({
             "file": html_file.name,
             "page_type": page_type,
-            "model": scores.get("model", "unknown"),
+            "method": scores.get("method", "heuristic"),
             "clarity": scores.get("clarity"),
             "specificity": scores.get("specificity"),
             "schema_alignment": scores.get("schema_alignment"),
@@ -1155,7 +1142,7 @@ def check_llm_quality(snapshot_dir: Path) -> dict:
             "maxScore": page_max,
             "reasoning": scores.get("reasoning", ""),
             "issue": (
-                f"Low LLM score ({overall}/10) — content needs clarity or specificity improvements"
+                f"Low quality score ({overall}/10) — improve clarity, specificity, or schema alignment"
                 if overall < 6 else None
             ),
         })

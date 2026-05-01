@@ -153,9 +153,9 @@ on:
 
       rebuild_corpus:
         description: |
-          ☐ Rebuild competitor corpus (~20-30 min, self-hosted runner recommended)
-          Crawls competitor pages, encodes with BGE-M3/MiniLM, upserts to Qdrant.
-          Run monthly to keep competitor similarity scores current.
+          ☐ Force rebuild competitor corpus
+          Normally the corpus is auto-built on first Phase 4 run and cached.
+          Tick to wipe the cache and rebuild from scratch (~5 min extra).
         type: boolean
         default: false
 
@@ -164,25 +164,9 @@ on:
   #   - cron: '0 22 * * 0'
 
 jobs:
-  rebuild-corpus:
-    if: github.event.inputs.rebuild_corpus == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 40
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Install deps for corpus build
-        run: pip install httpx beautifulsoup4 sentence-transformers qdrant-client
-      - name: Rebuild competitor corpus
-        run: python build_competitor_corpus.py 2>&1
-
   aeo-audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 75
+    timeout-minutes: 90
     permissions:
       contents: write
 
@@ -206,14 +190,50 @@ jobs:
         env:
           FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
+      # ── Cache HuggingFace + Qdrant so heavy deps don't re-run every workflow ─
+      - name: Cache HuggingFace + torch models
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/huggingface
+            ~/.cache/torch
+          key: hf-models-bge-m3-spacy-v3
+          restore-keys: hf-models-
+
+      - name: Cache Qdrant competitor corpus
+        if: inputs.run_phase4
+        uses: actions/cache@v4
+        with:
+          path: qdrant_data
+          key: qdrant-corpus-${{ github.run_number }}
+          restore-keys: qdrant-corpus-
+
       - name: Install Python deps
-        run: pip install httpx playwright beautifulsoup4 lxml sentence-transformers pyyaml qdrant-client || true
-        # FlagEmbedding (BGE-M3) requires ~2GB download and GPU for best speed — only on self-hosted
-        # run: pip install FlagEmbedding qdrant-client  # uncomment for self-hosted runner
+        run: |
+          pip install httpx playwright beautifulsoup4 lxml pyyaml \
+            sentence-transformers FlagEmbedding qdrant-client \
+            spacy textstat
+          python -m spacy download en_core_web_sm
 
       - name: Install Playwright browser
-        if: inputs.run_phase2 || inputs.run_phase3
+        if: inputs.run_phase2 || inputs.run_phase3 || inputs.run_phase4
         run: playwright install chromium --with-deps
+
+      # ── Auto-build competitor corpus if Qdrant is empty ──────────────────────
+      - name: "Phase 4 prep — Build competitor corpus if missing or forced"
+        if: inputs.run_phase4
+        continue-on-error: true
+        run: |
+          if [ "${{ inputs.rebuild_corpus }}" = "true" ]; then
+            echo "Force rebuild requested — wiping qdrant_data and rebuilding"
+            rm -rf qdrant_data
+          fi
+          if [ -d "qdrant_data" ] && [ "$(ls -A qdrant_data 2>/dev/null)" ]; then
+            echo "Qdrant corpus exists (cache hit) — skipping rebuild"
+          else
+            echo "Qdrant corpus missing — building from competitor pages..."
+            python build_competitor_corpus.py 2>&1 || echo "Corpus build failed — Phase 4 will use empty corpus"
+          fi
 
       # ── Build AEO_CHECKS string from checkbox inputs ────────────────────────
       - name: Build checks filter
