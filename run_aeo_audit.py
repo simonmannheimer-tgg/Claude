@@ -27,11 +27,22 @@ from pathlib import Path
 import httpx
 
 DEFAULT_URLS = [
-    {"url": "https://www.thegoodguys.com.au", "label": "TGG Home"},
-    {"url": "https://www.thegoodguys.com.au/televisions", "label": "TGG TVs"},
-    {"url": "https://www.thegoodguys.com.au/air-conditioners", "label": "TGG Air Con"},
-    {"url": "https://www.jbhifi.com.au", "label": "JB Hi-Fi"},
-    {"url": "https://www.harveynorman.com.au", "label": "Harvey Norman"},
+    # TGG — all page types
+    {"url": "https://www.thegoodguys.com.au",                              "label": "TGG · Home"},
+    {"url": "https://www.thegoodguys.com.au/televisions",                  "label": "TGG · Category"},
+    {"url": "https://www.thegoodguys.com.au/buying-guide/best-tvs",        "label": "TGG · Buying Guide"},
+    {"url": "https://www.thegoodguys.com.au/whats-new",                    "label": "TGG · Editorial"},
+    # JB Hi-Fi — equivalent page types
+    {"url": "https://www.jbhifi.com.au",                                   "label": "JB Hi-Fi · Home"},
+    {"url": "https://www.jbhifi.com.au/collections/televisions",           "label": "JB Hi-Fi · Category"},
+    {"url": "https://www.jbhifi.com.au/blogs/news",                        "label": "JB Hi-Fi · Blog"},
+    # Harvey Norman — equivalent page types
+    {"url": "https://www.harveynorman.com.au",                             "label": "Harvey Norman · Home"},
+    {"url": "https://www.harveynorman.com.au/televisions",                 "label": "Harvey Norman · Category"},
+    {"url": "https://www.harveynorman.com.au/buying-guide",                "label": "Harvey Norman · Guide"},
+    # Appliances Online
+    {"url": "https://www.appliancesonline.com.au",                         "label": "Appliances Online · Home"},
+    {"url": "https://www.appliancesonline.com.au/televisions",             "label": "Appliances Online · Category"},
 ]
 
 # Category keys from agentic-seo runner.js — kebab-case

@@ -27,16 +27,23 @@ from urllib.parse import urlparse
 from playwright.async_api import async_playwright
 
 DEFAULT_URLS = [
+    # Home
     "https://www.thegoodguys.com.au",
+    # Category pages
     "https://www.thegoodguys.com.au/televisions",
     "https://www.thegoodguys.com.au/air-conditioners",
     "https://www.thegoodguys.com.au/washing-machines",
     "https://www.thegoodguys.com.au/refrigerators",
-    "https://www.thegoodguys.com.au/laptops-computers",
-    "https://www.thegoodguys.com.au/vacuum-cleaners",
+    # Sub-category
+    "https://www.thegoodguys.com.au/televisions/smart-tvs",
+    # Buying guides (protected paths — crawler uses longer wait)
     "https://www.thegoodguys.com.au/buying-guide/best-tvs",
     "https://www.thegoodguys.com.au/buying-guide/best-air-conditioners",
     "https://www.thegoodguys.com.au/buying-guide/best-washing-machines",
+    # Editorial / blog
+    "https://www.thegoodguys.com.au/whats-new",
+    # Product detail page — tests Product + Offer + AggregateRating schema
+    "https://www.thegoodguys.com.au/samsung-65-4k-qled-smart-tv-qa65qn90dauxsa",
 ]
 
 UA = (
@@ -64,25 +71,37 @@ CF_CHALLENGE_MARKERS = (
 )
 
 
-async def fetch_page(page, url: str, retries: int = 2) -> tuple[str | None, str | None]:
+def _is_protected_path(url: str) -> bool:
+    """Buying guides and editorial pages sit behind stricter Cloudflare rules."""
+    path = urlparse(url).path.lower()
+    return any(seg in path for seg in ("/buying-guide/", "/whats-new", "/blog/", "/news/"))
+
+
+async def fetch_page(page, url: str, retries: int = 3) -> tuple[str | None, str | None]:
+    protected = _is_protected_path(url)
     for attempt in range(retries + 1):
         try:
-            await page.goto(url, wait_until="domcontentloaded", timeout=30_000)
-            # Let JS settle (CF challenge needs up to 5s to resolve)
-            await page.wait_for_timeout(3_000 if attempt == 0 else 5_000)
+            await page.goto(url, wait_until="domcontentloaded", timeout=40_000)
+            # Protected paths (buying guides) need longer to clear the CF interstitial.
+            if protected:
+                initial_wait = 8_000 if attempt == 0 else 12_000
+            else:
+                initial_wait = 3_000 if attempt == 0 else 5_000
+            await page.wait_for_timeout(initial_wait)
             await page.evaluate("window.scrollTo(0, Math.floor(document.body.scrollHeight * 0.4))")
-            await page.wait_for_timeout(800)
+            await page.wait_for_timeout(1_000)
             html = await page.content()
             # Detect Cloudflare challenge page — retry with longer wait
             if any(marker in html for marker in CF_CHALLENGE_MARKERS):
                 if attempt < retries:
-                    await page.wait_for_timeout(4_000)
+                    extra = 8_000 if protected else 4_000
+                    await page.wait_for_timeout(extra)
                     continue
                 return None, "Cloudflare challenge not resolved after retries"
             return html, None
         except Exception as e:
             if attempt < retries:
-                await page.wait_for_timeout(2_000)
+                await page.wait_for_timeout(3_000)
                 continue
             return None, str(e)
     return None, "Max retries exceeded"
@@ -109,8 +128,14 @@ async def crawl(urls: list[str], out_dir: Path, delay: float = 1.5) -> list[dict
                 filepath = out_dir / filename
                 filepath.write_text(html, encoding="utf-8")
                 size_kb = len(html) / 1024
-                print(f"  ✓ {filename} ({size_kb:.0f} KB)")
-                results.append({"url": url, "file": str(filepath), "size_bytes": len(html)})
+                # Sanity check: suspiciously small pages are likely CF block pages
+                # that slipped through the marker check (e.g. custom CF templates).
+                word_count = len(html.split())
+                if word_count < 600:
+                    print(f"  ⚠ {filename} ({size_kb:.0f} KB, {word_count} words — may be blocked)", file=sys.stderr)
+                else:
+                    print(f"  ✓ {filename} ({size_kb:.0f} KB, {word_count} words)")
+                results.append({"url": url, "file": str(filepath), "size_bytes": len(html), "word_count": word_count, "suspected_block": word_count < 600})
 
             if i < len(urls) - 1:
                 await asyncio.sleep(delay)

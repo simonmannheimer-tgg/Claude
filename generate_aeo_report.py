@@ -40,11 +40,25 @@ PHASE1_CATS = [
 ]
 
 PHASE3_CATS = [
-    ("schema",         "Schema / Structured Data", 30),
-    ("render_diff",    "Render Diff",              20),
-    ("user_agents",    "User Agent Behaviour",     20),
-    ("hidden_content", "Hidden Content",           20),
-    ("ai_signals",     "AI Content Signals",       10),
+    ("schema",            "Schema / Structured Data",     30),
+    ("schema_validity",   "Schema Validity",              15),
+    ("render_diff",       "Render Diff",                  20),
+    ("user_agents",       "User Agent Behaviour",         20),
+    ("hidden_content",    "Hidden Content",               20),
+    ("ai_signals",        "AI Content Signals",           10),
+    ("dom_structure",     "DOM Structure",                25),
+    ("robots_content",    "Robots.txt & llms.txt",        50),
+    ("sitemap_coverage",  "Sitemap Coverage",             40),
+    ("competitor_schema", "Competitor Schema Comparison", 45),
+]
+
+PHASE4_CATS = [
+    ("boilerplate_ratio",  "Boilerplate Ratio",              20),
+    ("content_chunking",   "Content Chunking",               25),
+    ("entity_signals",     "Entity Signals",                 25),
+    ("knowledge_graph",    "Knowledge Graph",                20),
+    ("semantic_structure", "Semantic Structure",             30),
+    ("anchor_quality",     "Anchor Text Quality",            20),
 ]
 
 
@@ -80,13 +94,14 @@ def grade_badge(grade: str, pct: int) -> str:
 def load_all_data(out_dir: str) -> dict:
     d = out_dir.rstrip("/")
     return {
-        "phase1":    load_latest(f"{d}/aeo-results-*.json"),
-        "phase2":    load_latest(f"{d}/aeo-local-*.json"),
-        "phase3":    load_latest(f"{d}/ecommerce-aeo-*.json"),
-        "run_id":    os.getenv("GITHUB_RUN_ID", "local"),
+        "phase1":     load_latest(f"{d}/aeo-results-*.json"),
+        "phase2":     load_latest(f"{d}/aeo-local-*.json"),
+        "phase3":     load_latest(f"{d}/ecommerce-aeo-*.json"),
+        "phase4":     load_latest(f"{d}/content-aeo-*.json"),
+        "run_id":     os.getenv("GITHUB_RUN_ID", "local"),
         "run_number": os.getenv("GITHUB_RUN_NUMBER", "?"),
-        "ref":       os.getenv("GITHUB_REF_NAME", "main"),
-        "ts":        datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
+        "ref":        os.getenv("GITHUB_REF_NAME", "main"),
+        "ts":         datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
     }
 
 
@@ -140,20 +155,7 @@ def section_hero(data: dict) -> str:
     p2 = data["phase2"]
     p3 = data["phase3"]
 
-    tgg_p1 = next((e for e in p1 if "tgg" in e.get("label", "").lower()), p1[0] if p1 else None)
-    p1_grade = tgg_p1["result"].get("grade", "?") if tgg_p1 and "error" not in tgg_p1.get("result", {}) else "?"
-    p1_pct   = tgg_p1["result"].get("percentage", 0) if tgg_p1 and "error" not in tgg_p1.get("result", {}) else 0
-
-    p2_grade = p2["report"].get("grade", "?") if p2 else "?"
-    p2_pct   = p2["report"].get("percentage", 0) if p2 else 0
-
-    p3_grade = p3.get("grade", "?") if p3 else "?"
-    p3_pct   = p3.get("percentage", 0) if p3 else 0
-
-    cards = [
-        ("Phase 1 · Discovery", p1_grade, p1_pct, "Robots, llms.txt, meta signals"),
-        ("Phase 2 · Deep Scan",  p2_grade, p2_pct, "Content, tokens, structure"),
-        ("Phase 3 · Ecommerce", p3_grade, p3_pct, "Schema, UA, hidden content"),
+    p4 = data.get("phase4")
     ]
 
     html = '<div class="hero-cards">'
@@ -370,35 +372,77 @@ def section_phase3(phase3: dict) -> str:
     return html
 
 
-# ── Chart.js Snippets ──────────────────────────────────────────────────────────
+def section_phase4(phase4: dict) -> str:
+    if not phase4:
+        return "<p class='empty'>No Phase 4 data found.</p>"
 
-def charts_js(data: dict) -> str:
-    phase1 = data["phase1"] or []
-    phase3 = data["phase3"]
+    checks = phase4.get("checks", {})
+    rows = ""
+    all_issues = []
 
-    valid_p1 = [e for e in phase1 if "error" not in e.get("result", {})]
-    p1_labels = json.dumps([e.get("label", e.get("url","?")) for e in valid_p1])
-    p1_pcts   = json.dumps([e["result"].get("percentage", 0) for e in valid_p1])
+    for key, name, _ in PHASE4_CATS:
+        c = checks.get(key, {})
+        if "error" in c:
+            rows += f'<tr><td>{name}</td><td colspan="3" class="error">✗ {c["error"][:80]}</td></tr>'
+            continue
+        pct = c.get("percentage", 0)
+        score = c.get("score", 0)
+        max_s = c.get("maxScore", 0)
+        bar_c = pct_bar_color(pct)
+        rows += f"""<tr>
+            <td>{name}</td>
+            <td><div class="pct-bar"><div style="width:{pct}%;background:{bar_c}"></div></div></td>
+            <td style="color:{bar_c};font-weight:600">{score}/{max_s}</td>
+            <td>{pct}%</td>
+        </tr>"""
+        for e in c.get("errors", []):
+            issue = e.get("issue") or e.get("error") or ""
+            ident = e.get("file") or e.get("url") or ""
+            if issue:
+                all_issues.append((name, ident, issue))
 
-    # Phase 1 category breakdown per site
-    colors = ["'#6366f1'", "'#22c55e'", "'#eab308'", "'#f97316'", "'#ec4899'"]
-    p1_datasets = []
-    for i, (key, name, max_pts) in enumerate(PHASE1_CATS):
-        vals = []
-        for e in valid_p1:
-            c = e["result"].get("categories", {}).get(key, {})
-            vals.append(round(c.get("score", 0) / max_pts * 100))
-        p1_datasets.append(f'{{"label":"{name}","data":{json.dumps(vals)},"backgroundColor":{colors[i]}}}')
-    p1_datasets_js = "[" + ",".join(p1_datasets) + "]"
+    issue_rows = "".join(
+        f'<tr><td class="sev-error">{n}</td><td><code>{i}</code></td><td>{issue}</td></tr>'
+        for n, i, issue in all_issues[:20]
+    )
 
-    # Phase 3 radar
-    if phase3:
-        p3_checks = phase3.get("checks", {})
-        p3_labels = json.dumps([c[1] for c in PHASE3_CATS])
-        p3_data   = json.dumps([p3_checks.get(c[0], {}).get("percentage", 0) for c in PHASE3_CATS])
-    else:
-        p3_labels = "[]"
-        p3_data   = "[]"
+    html = f"""
+    <table class="data-table">
+        <thead><tr><th>Check</th><th>Progress</th><th>Score</th><th>%</th></tr></thead>
+        <tbody>{rows}</tbody>
+    </table>"""
+
+    if issue_rows:
+        html += f"""
+        <h3>Content Intelligence Issues</h3>
+        <table class="issues-table">
+            <thead><tr><th>Check</th><th>Page</th><th>Issue</th></tr></thead>
+            <tbody>{issue_rows}</tbody>
+        </table>"""
+
+    # Entity detail — show top entities per page
+    entity_data = checks.get("entity_signals", {})
+    if entity_data and "pages" in entity_data:
+        ent_rows = ""
+        for p in entity_data["pages"][:8]:
+            top = ", ".join(e["entity"] for e in p.get("top_entities", [])[:5]) or "—"
+            hi  = ", ".join(p.get("heading_entities", [])[:3]) or "—"
+            bar_c = pct_bar_color(round(p.get("score", 0) / max(p.get("maxScore", 1), 1) * 100))
+            ent_rows += f"""<tr>
+                <td><code>{p.get("file","")}</code></td>
+                <td style="color:{bar_c};font-weight:600">{p.get("entity_count",0)} entities</td>
+                <td style="font-size:0.82em;color:#475569">{top}</td>
+                <td style="font-size:0.82em;color:#6366f1">{hi}</td>
+            </tr>"""
+        html += f"""
+        <h3>Entity Signal Detail</h3>
+        <table class="data-table">
+            <thead><tr><th>Page</th><th>Entities</th><th>Top Entities</th><th>In Headings</th></tr></thead>
+            <tbody>{ent_rows}</tbody>
+        </table>"""
+
+    return html
+
 
     # Phase 2 category bars
     phase2 = data["phase2"]
@@ -470,8 +514,29 @@ new Chart(document.getElementById('chartP2'), {{
     }}
 }});
 
+// ── Phase 4 Radar — Content Intelligence ─────────────────────────
+new Chart(document.getElementById('chartP4'), {{
+    type: 'radar',
+    data: {{
+        labels: {p4_labels},
+        datasets: [{{
+            label: 'TGG Content Intelligence',
+            data: {p4_data},
+            backgroundColor: 'rgba(34,197,94,0.2)',
+            borderColor: '#22c55e',
+            pointBackgroundColor: '#22c55e',
+            pointRadius: 5,
+        }}]
+    }},
+    options: {{
+        responsive: true,
+        scales: {{ r: {{ min: 0, max: 100, ticks: {{ stepSize: 25 }} }} }},
+        plugins: {{ title: {{ display: true, text: 'Content Intelligence — Phase 4 (TGG)', font: {{ size: 15 }} }} }}
+    }}
+}});
+
 // ── Phase 3 Radar ─────────────────────────────────────────────────
-new Chart(document.getElementById('chartP3'), {{
+new Chart(document.getElementById('chartP3'), {{{
     type: 'radar',
     data: {{
         labels: {p3_labels},
@@ -502,7 +567,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .report-header { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; padding: 32px; border-radius: 12px; margin-bottom: 28px; }
 .report-header h1 { font-size: 1.8em; margin-bottom: 4px; }
 .report-header .meta { color: #94a3b8; font-size: 0.9em; }
-.hero-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+.hero-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
 .hero-card { padding: 24px; border-radius: 10px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
 .hero-grade { font-size: 3em; font-weight: 800; line-height: 1; }
 .hero-pct { font-size: 1.6em; font-weight: 700; margin: 4px 0; }
@@ -552,32 +617,9 @@ def build_html(data: dict) -> str:
 
     p3_grade = p3.get("grade", "?") if p3 else "?"
     p3_pct   = p3.get("percentage", 0) if p3 else 0
-
-    html = f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AEO Audit Report — The Good Guys — {ts}</title>
-<style>{CSS}</style>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-</head>
-<body>
-<div class="container">
-
-  <div class="report-header">
-    <h1>AEO Audit Report — The Good Guys</h1>
-    <div class="meta">Run #{run_num} &nbsp;·&nbsp; Branch: {ref} &nbsp;·&nbsp; Generated: {ts}</div>
-  </div>
-
-  {section_hero(data)}
-
-  <div class="charts-grid">
-    <div class="chart-box"><canvas id="chartP1Overall" height="220"></canvas></div>
-    <div class="chart-box"><canvas id="chartP3" height="220"></canvas></div>
-  </div>
-  <div class="chart-box-wide"><canvas id="chartP1Cats" height="120"></canvas></div>
-  <div class="chart-box-wide"><canvas id="chartP2" height="100"></canvas></div>
+    p4       = data.get("phase4")
+    p4_grade = p4.get("grade", "?") if p4 else "?"
+    p4_pct   = p4.get("percentage", 0) if p4 else 0
 
   <div class="section">
     <h2>Phase 1 — Competitor Comparison (Discovery &amp; Signals)</h2>
@@ -592,6 +634,11 @@ def build_html(data: dict) -> str:
   <div class="section">
     <h2>Phase 3 — Ecommerce AEO {grade_badge(p3_grade, p3_pct)}</h2>
     {section_phase3(p3)}
+  </div>
+
+  <div class="section">
+    <h2>Phase 4 — Content Intelligence {grade_badge(p4_grade, p4_pct)}</h2>
+    {section_phase4(p4)}
   </div>
 
   <div class="footer">
