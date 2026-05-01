@@ -28,8 +28,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -51,22 +49,21 @@ jobs:
             --timeout 12 \
             --max-urls "$MAX_URLS"
 
-      - name: Show row count
-        run: |
-          ROWS=$(tail -n +2 data/sitemap_audit_latest.csv | wc -l)
-          echo "Sitemap audit rows: $ROWS"
-          echo "ROWS=$ROWS" >> "$GITHUB_ENV"
-
       - name: Commit sitemap audit to repo
+        id: commit
         run: |
+          ROWS=$(tail -n +2 data/sitemap_audit_latest.csv | wc -l | tr -d ' ')
+          echo "rows=$ROWS" >> "$GITHUB_OUTPUT"
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/sitemap_audit_latest.csv
           if git diff --cached --quiet; then
+            echo "committed=false" >> "$GITHUB_OUTPUT"
             echo "No changes to commit."
           else
-            git commit -m "chore: update sitemap_audit_latest.csv (${{ env.ROWS }} rows)"
+            git commit -m "chore: update sitemap_audit_latest.csv ($ROWS rows)"
             git push
+            echo "committed=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Upload artifact
@@ -76,10 +73,61 @@ jobs:
           path: data/sitemap_audit_latest.csv
           retention-days: 30
 
-      - name: Post summary
+      - name: Dashboard summary
         run: |
-          echo "## Sitemap Audit Complete" >> "$GITHUB_STEP_SUMMARY"
-          echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "- **Rows:** ${{ env.ROWS }}" >> "$GITHUB_STEP_SUMMARY"
-          echo "- **Output committed to:** \`data/sitemap_audit_latest.csv\`" >> "$GITHUB_STEP_SUMMARY"
-          echo "- **Next auto-run:** Sunday 12:00 UTC" >> "$GITHUB_STEP_SUMMARY"
+          ROWS=$(tail -n +2 data/sitemap_audit_latest.csv | wc -l | tr -d ' ')
+          OK=$(awk -F',' 'NR>1 && $5=="200" {c++} END {print c+0}' data/sitemap_audit_latest.csv)
+          REDIR=$(awk -F',' 'NR>1 && ($5=="301" || $5=="302") {c++} END {print c+0}' data/sitemap_audit_latest.csv)
+          NOT_FOUND=$(awk -F',' 'NR>1 && $5=="404" {c++} END {print c+0}' data/sitemap_audit_latest.csv)
+          ERRORS=$(awk -F',' 'NR>1 && $5=="Error" {c++} END {print c+0}' data/sitemap_audit_latest.csv)
+          WITH_BC=$(awk -F',' 'NR>1 && $9!="" {c++} END {print c+0}' data/sitemap_audit_latest.csv)
+          PCT=$(awk "BEGIN {printf \"%.1f\", ($WITH_BC/$ROWS)*100}")
+
+          cat >> "$GITHUB_STEP_SUMMARY" << EOF
+          ## TGG Sitemap Audit — Dashboard
+
+          **Run date:** $(date -u '+%Y-%m-%d %H:%M UTC') | **Trigger:** ${{ github.event_name == 'schedule' && 'Scheduled (weekly)' || 'Manual dispatch' }}
+
+          ---
+
+          ### Health Overview
+
+          | Metric | Count | Notes |
+          |--------|------:|-------|
+          | Total URLs audited | **$ROWS** | Across all 9 sitemaps |
+          | ✅ HTTP 200 OK | $OK | Live pages |
+          | ↪️ Redirects (301/302) | $REDIR | Already redirecting |
+          | ❌ 404 Not Found | $NOT_FOUND | Dead pages — redirect candidates |
+          | ⚠️ Errors / Timeouts | $ERRORS | Connectivity issues |
+          | 📂 Breadcrumb coverage | $WITH_BC / $ROWS ($PCT%) | Category path extracted |
+
+          ---
+
+          ### Sitemaps Crawled
+
+          | Sitemap | Included |
+          |---------|----------|
+          | product_sitemap_1.xml | ✅ |
+          | product_sitemap_2.xml | ✅ |
+          | product_sitemap_3.xml | ✅ |
+          | product_sitemap_4.xml | ✅ |
+          | brand_sitemap_1.xml | ✅ |
+          | category_sitemap_1.xml | ✅ |
+          | content_sitemap_1.xml | ✅ |
+          | article_sitemap_1.xml | ✅ |
+          | storelocation_sitemap_1.xml | ✅ |
+
+          ---
+
+          ### Outputs
+
+          | File | Location |
+          |------|----------|
+          | Sitemap index CSV | \`data/sitemap_audit_latest.csv\` |
+          | Downloadable artifact | \`sitemap-audit-${{ github.run_id }}\` (30-day retention) |
+
+          **Next scheduled run:** Sunday 12:00 UTC
+
+          > This sitemap index is used by the **TGG 301 Redirect Mapper** as its primary breadcrumb source.
+          > For best redirect coverage, trigger the mapper workflow after each sitemap refresh.
+          EOF

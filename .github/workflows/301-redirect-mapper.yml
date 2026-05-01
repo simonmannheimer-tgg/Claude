@@ -36,8 +36,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -64,20 +62,6 @@ jobs:
             echo "Sitemap index: $ROWS URLs"
           fi
 
-      - name: Build mapper args
-        id: args
-        run: |
-          ARGS="--mappings '${{ github.event.inputs.mappings_file }}'"
-          ARGS="$ARGS --sitemap data/sitemap_audit_latest.csv"
-          ARGS="$ARGS --output-dir seo/outputs/redirects"
-          if [ -n "${{ github.event.inputs.existing_ready }}" ]; then
-            ARGS="$ARGS --existing-ready '${{ github.event.inputs.existing_ready }}'"
-          fi
-          if [ -n "${{ github.event.inputs.existing_review }}" ]; then
-            ARGS="$ARGS --existing-review '${{ github.event.inputs.existing_review }}'"
-          fi
-          echo "args=$ARGS" >> "$GITHUB_OUTPUT"
-
       - name: Run 301 mapper
         run: |
           mkdir -p seo/outputs/redirects
@@ -88,24 +72,18 @@ jobs:
             ${{ github.event.inputs.existing_ready != '' && format('--existing-ready "{0}"', github.event.inputs.existing_ready) || '' }} \
             ${{ github.event.inputs.existing_review != '' && format('--existing-review "{0}"', github.event.inputs.existing_review) || '' }}
 
-      - name: Show output counts
-        run: |
-          READY=$(tail -n +2 seo/outputs/redirects/final_shopify_import_ready.csv | wc -l)
-          REVIEW=$(tail -n +2 seo/outputs/redirects/final_shopify_import_review.csv | wc -l)
-          echo "READY=$READY"  >> "$GITHUB_ENV"
-          echo "REVIEW=$REVIEW" >> "$GITHUB_ENV"
-          echo "Ready: $READY | Review: $REVIEW | Total: $((READY + REVIEW))"
-
       - name: Commit outputs (optional)
         if: github.event.inputs.commit_outputs == 'yes'
         run: |
+          READY=$(tail -n +2 seo/outputs/redirects/final_shopify_import_ready.csv 2>/dev/null | wc -l | tr -d ' ')
+          REVIEW=$(tail -n +2 seo/outputs/redirects/final_shopify_import_review.csv 2>/dev/null | wc -l | tr -d ' ')
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add seo/outputs/redirects/
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "feat: 301 mapper output — ${{ env.READY }} ready, ${{ env.REVIEW }} review (run ${{ github.run_id }})"
+            git commit -m "feat: 301 mapper output — $READY ready, $REVIEW review (run ${{ github.run_id }})"
             git push
           fi
 
@@ -116,15 +94,65 @@ jobs:
           path: seo/outputs/redirects/
           retention-days: 30
 
-      - name: Post summary
+      - name: Dashboard summary
         run: |
-          echo "## 301 Redirect Mapper Results" >> "$GITHUB_STEP_SUMMARY"
-          echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "| File | Rows |" >> "$GITHUB_STEP_SUMMARY"
-          echo "|------|------|" >> "$GITHUB_STEP_SUMMARY"
-          echo "| \`final_shopify_import_ready.csv\` | ${{ env.READY }} |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| \`final_shopify_import_review.csv\` | ${{ env.REVIEW }} |" >> "$GITHUB_STEP_SUMMARY"
-          echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "**Mappings input:** \`${{ github.event.inputs.mappings_file }}\`" >> "$GITHUB_STEP_SUMMARY"
-          echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "Download the artifact \`301-redirect-output-${{ github.run_id }}\` for all output files." >> "$GITHUB_STEP_SUMMARY"
+          READY=$(tail -n +2 seo/outputs/redirects/final_shopify_import_ready.csv 2>/dev/null | wc -l | tr -d ' ')
+          REVIEW=$(tail -n +2 seo/outputs/redirects/final_shopify_import_review.csv 2>/dev/null | wc -l | tr -d ' ')
+          TOTAL=$((READY + REVIEW))
+
+          # Classification breakdown from review file
+          PROD_NO_BC=$(awk -F',' 'NR>1 && $4~/product.*no-breadcrumb/ {c++} END {print c+0}' seo/outputs/redirects/final_shopify_import_review.csv 2>/dev/null)
+          MALFORMED=$(awk -F',' 'NR>1 && $4~/malformed/ {c++} END {print c+0}' seo/outputs/redirects/final_shopify_import_review.csv 2>/dev/null)
+          LOW_CONF=$(awk -F',' 'NR>1 && $4~/low-conf/ {c++} END {print c+0}' seo/outputs/redirects/final_shopify_import_review.csv 2>/dev/null)
+          EXTERNAL=$(awk -F',' 'NR>1 && $4~/external/ {c++} END {print c+0}' seo/outputs/redirects/final_shopify_import_review.csv 2>/dev/null)
+
+          # Sitemap index stats
+          SITEMAP_ROWS=""
+          if [ -f "data/sitemap_audit_latest.csv" ]; then
+            SITEMAP_ROWS=$(tail -n +2 data/sitemap_audit_latest.csv | wc -l | tr -d ' ')
+          fi
+
+          cat >> "$GITHUB_STEP_SUMMARY" << EOF
+          ## TGG 301 Redirect Mapper — Dashboard
+
+          **Run date:** $(date -u '+%Y-%m-%d %H:%M UTC') | **Mappings input:** \`${{ github.event.inputs.mappings_file }}\`
+
+          ---
+
+          ### Redirect Output
+
+          | File | Rows | Action |
+          |------|-----:|--------|
+          | ✅ \`final_shopify_import_ready.csv\` | **$READY** | Import directly to Shopify |
+          | 🔍 \`final_shopify_import_review.csv\` | **$REVIEW** | Manual review required |
+          | **Total processed** | **$TOTAL** | |
+
+          ---
+
+          ### Review Queue Breakdown
+
+          | Classification | Count | Meaning |
+          |---------------|------:|---------|
+          | product → no breadcrumb | $PROD_NO_BC | Destination is product, no category found — assign manually |
+          | malformed source | $MALFORMED | Garbled/broken source URL — resolve or delete |
+          | low confidence | $LOW_CONF | confidence < 0.92 — verify destination |
+          | external source | $EXTERNAL | URL not in mappings input — verify inclusion |
+
+          ---
+
+          ### Data Sources
+
+          | Source | Status |
+          |--------|--------|
+          | Sitemap index (\`data/sitemap_audit_latest.csv\`) | ${SITEMAP_ROWS:-⚠️ Not found} URLs |
+          | Mappings file | \`${{ github.event.inputs.mappings_file }}\` |
+          | Outputs committed to repo | ${{ github.event.inputs.commit_outputs == 'yes' && '✅ Yes' || '❌ No (artifact only)' }} |
+
+          ---
+
+          ### Download
+
+          **Artifact:** \`301-redirect-output-${{ github.run_id }}\` (30-day retention)
+
+          Contains: \`final_shopify_import_ready.csv\`, \`final_shopify_import_review.csv\`, \`my_shopify_import_ready.csv\`, \`my_shopify_import_review.csv\`, \`my_comparison_report.csv\`
+          EOF
