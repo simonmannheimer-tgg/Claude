@@ -1,0 +1,115 @@
+name: AEO Audit
+
+# Audits TGG + competitors for Agentic Engine Optimisation (AEO) readiness.
+# Checks: robots.txt AI rules, llms.txt, AGENTS.md, content structure,
+# token budgets, meta tags, skill.md, agent-permissions.json, copy-for-AI UX.
+#
+# Scores each URL 0–100 (grade A–F). Results posted to step summary,
+# saved as artifact, and committed to seo/outputs/aeo/latest.json.
+#
+# No API keys required — uses the open-source agentic-seo npm package.
+
+on:
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: >
+          JSON array of URLs to audit. Each item can be a plain string
+          or {"url": "...", "label": "..."}. Leave blank to run the default
+          set: TGG Home, TGG TVs, TGG Air Con, JB Hi-Fi, Harvey Norman.
+        required: false
+        default: ''
+      checks:
+        description: >
+          Comma-separated checker IDs to run (blank = all 10).
+          Options: robots-txt, llms-txt, agents-md, content-structure,
+          markdown-availability, token-budget, meta-tags, skill-md,
+          agent-permissions, copy-for-ai
+        required: false
+        default: ''
+      threshold:
+        description: >
+          Minimum score % — logs a warning for any URL below this value.
+          Blank = no threshold. Does not fail the job.
+        required: false
+        default: ''
+
+  # Uncomment to run weekly (Sunday 22:00 UTC = Monday 08:00 AEST):
+  # schedule:
+  #   - cron: '0 22 * * 0'
+
+jobs:
+  aeo-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+      - name: Install agentic-seo
+        run: npm install -g agentic-seo
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+      - name: Install Python deps
+        run: pip install httpx
+
+      - name: Run AEO audit
+        continue-on-error: true
+        env:
+          AEO_URLS: ${{ inputs.urls }}
+          AEO_CHECKS: ${{ inputs.checks }}
+          AEO_THRESHOLD: ${{ inputs.threshold }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python run_aeo_audit.py 2>&1
+
+      - name: Show results
+        if: always()
+        run: |
+          if ls seo/outputs/aeo/aeo-results-*.json 1>/dev/null 2>&1; then
+            python3 - <<'EOF'
+          import json, glob, sys
+          files = sorted(glob.glob('seo/outputs/aeo/aeo-results-*.json'))
+          if not files:
+              print('No results found')
+              sys.exit(0)
+          entries = json.loads(open(files[-1]).read())
+          grade_map = {'A': '🟢', 'B': '🟢', 'C': '🟡', 'D': '🟠', 'F': '🔴'}
+          for e in entries:
+              r = e.get('result', {})
+              label = e.get('label', e.get('url', '?'))
+              if 'error' in r:
+                  print(f'  ✗ {label}: {r["error"][:100]}')
+              else:
+                  g = r.get('grade', '?')
+                  pct = r.get('percentage', 0)
+                  s = r.get('summary', {})
+                  print(f'  {grade_map.get(g,"?")} {g} ({pct}%) | {label} | {s.get("errors","?")} errors, {s.get("warnings","?")} warnings')
+          EOF
+          else
+            echo "No result files found — check the audit step above for errors."
+          fi
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aeo-results-${{ github.run_id }}
+          path: seo/outputs/aeo/
+          retention-days: 90
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
