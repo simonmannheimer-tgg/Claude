@@ -2,8 +2,8 @@
   "label": "TGG (ecommerce)",
   "dir": "site-snapshots/thegoodguys.com.au",
   "grade": "D",
-  "score": 497,
-  "maxScore": 925,
+  "score": 492,
+  "maxScore": 910,
   "percentage": 54,
   "checks": {
     "schema": {
@@ -491,7 +491,7 @@
           "url": "https://www.thegoodguys.com.au",
           "status_code": 200,
           "raw_words": 6646,
-          "rendered_words": 2224,
+          "rendered_words": 2225,
           "pct_accessible": 299,
           "hidden_words": 0,
           "score": 20,
@@ -501,8 +501,8 @@
         {
           "url": "https://www.thegoodguys.com.au/televisions",
           "status_code": 200,
-          "raw_words": 5873,
-          "rendered_words": 3287,
+          "raw_words": 5878,
+          "rendered_words": 3291,
           "pct_accessible": 179,
           "hidden_words": 0,
           "score": 20,
@@ -513,8 +513,8 @@
           "url": "https://www.thegoodguys.com.au/air-conditioners",
           "status_code": 200,
           "raw_words": 5509,
-          "rendered_words": 5459,
-          "pct_accessible": 101,
+          "rendered_words": 2931,
+          "pct_accessible": 188,
           "hidden_words": 0,
           "score": 20,
           "maxScore": 20,
@@ -525,8 +525,8 @@
       "summary": "3/3 pages \u226580% content accessible without JS"
     },
     "user_agents": {
-      "score": 75,
-      "maxScore": 75,
+      "score": 60,
+      "maxScore": 60,
       "percentage": 100,
       "grade": "A",
       "pages": [
@@ -552,11 +552,6 @@
               "status": 200,
               "allowed": true,
               "score": 5
-            },
-            "Googlebot": {
-              "status": 200,
-              "allowed": true,
-              "score": 5
             }
           },
           "blocked": [],
@@ -581,11 +576,6 @@
               "score": 5
             },
             "Google-Extended": {
-              "status": 200,
-              "allowed": true,
-              "score": 5
-            },
-            "Googlebot": {
               "status": 200,
               "allowed": true,
               "score": 5
@@ -616,11 +606,6 @@
               "status": 200,
               "allowed": true,
               "score": 5
-            },
-            "Googlebot": {
-              "status": 200,
-              "allowed": true,
-              "score": 5
             }
           },
           "blocked": [],
@@ -631,53 +616,47 @@
       "summary": "3/3 pages accessible to all AI bots"
     },
     "hidden_content": {
-      "score": 90,
+      "score": 100,
       "maxScore": 200,
-      "percentage": 45,
+      "percentage": 50,
       "grade": "D",
       "pages": [
         {
           "file": "air-conditioners.html",
-          "total_words": 5459,
-          "hidden_words": 7888,
-          "hidden_ratio_pct": 144,
+          "total_words": 2931,
+          "hidden_words": 323,
+          "hidden_ratio_pct": 11,
           "details_collapsed_words": 0,
-          "hidden_elements_count": 55,
+          "hidden_elements_count": 4,
           "top_hidden": [
             {
               "tag": "div",
               "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 2558,
+              "words": 29,
               "reason": "display:none"
             },
             {
               "tag": "div",
-              "class": "_hideForForceMount_1to88_44 _navDropdown_1to88_156 _topLevel",
-              "words": 2007,
-              "reason": "CSS class"
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 36,
+              "reason": "display:none"
             },
             {
               "tag": "div",
-              "class": "_hideForForceMount_1to88_44 _navDropdown_1to88_156",
-              "words": 174,
-              "reason": "CSS class"
-            },
-            {
-              "tag": "div",
-              "class": "_hideForForceMount_1to88_44 _navDropdown_1to88_156 _leftBord",
-              "words": 32,
-              "reason": "CSS class"
-            },
-            {
-              "tag": "div",
-              "class": "_hideForForceMount_1to88_44 _navDropdown_1to88_156 _leftBord",
+              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
               "words": 22,
               "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 236,
+              "reason": "display:none"
             }
           ],
-          "score": 0,
+          "score": 10,
           "maxScore": 20,
-          "issue": "144% of content hidden from AI crawlers"
+          "issue": "11% of content hidden from AI crawlers"
         },
         {
           "file": "buying-guide--best-air-conditioners.html",
@@ -774,11 +753,11 @@
         },
         {
           "file": "index.html",
-          "total_words": 2224,
-          "hidden_words": 2398,
-          "hidden_ratio_pct": 108,
+          "total_words": 2225,
+          "hidden_words": 1940,
+          "hidden_ratio_pct": 87,
           "details_collapsed_words": 0,
-          "hidden_elements_count": 8,
+          "hidden_elements_count": 4,
           "top_hidden": [
             {
               "tag": "div",
@@ -791,12 +770,6 @@
               "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
               "words": 94,
               "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
-              "words": 43,
-              "reason": "CSS class"
             },
             {
               "tag": "div",
@@ -813,7 +786,7 @@
           ],
           "score": 0,
           "maxScore": 20,
-          "issue": "108% of content hidden from AI crawlers"
+          "issue": "87% of content hidden from AI crawlers"
         },
         {
           "file": "laptops-computers.html",
@@ -848,11 +821,11 @@
         },
         {
           "file": "televisions--smart-tvs.html",
-          "total_words": 3286,
-          "hidden_words": 665,
-          "hidden_ratio_pct": 20,
+          "total_words": 3292,
+          "hidden_words": 412,
+          "hidden_ratio_pct": 13,
           "details_collapsed_words": 0,
-          "hidden_elements_count": 12,
+          "hidden_elements_count": 4,
           "top_hidden": [
             {
               "tag": "div",
@@ -875,27 +848,21 @@
             {
               "tag": "div",
               "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 288,
+              "words": 285,
               "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "refinementListWrapper collapsed",
-              "words": 21,
-              "reason": "CSS class"
             }
           ],
           "score": 10,
           "maxScore": 20,
-          "issue": "20% of content hidden from AI crawlers"
+          "issue": "13% of content hidden from AI crawlers"
         },
         {
           "file": "televisions.html",
-          "total_words": 3287,
-          "hidden_words": 665,
-          "hidden_ratio_pct": 20,
+          "total_words": 3291,
+          "hidden_words": 412,
+          "hidden_ratio_pct": 13,
           "details_collapsed_words": 0,
-          "hidden_elements_count": 12,
+          "hidden_elements_count": 4,
           "top_hidden": [
             {
               "tag": "div",
@@ -918,27 +885,21 @@
             {
               "tag": "div",
               "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 288,
+              "words": 285,
               "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "refinementListWrapper collapsed",
-              "words": 21,
-              "reason": "CSS class"
             }
           ],
           "score": 10,
           "maxScore": 20,
-          "issue": "20% of content hidden from AI crawlers"
+          "issue": "13% of content hidden from AI crawlers"
         },
         {
           "file": "washing-machines.html",
           "total_words": 2995,
-          "hidden_words": 534,
-          "hidden_ratio_pct": 18,
+          "hidden_words": 376,
+          "hidden_ratio_pct": 13,
           "details_collapsed_words": 0,
-          "hidden_elements_count": 10,
+          "hidden_elements_count": 4,
           "top_hidden": [
             {
               "tag": "div",
@@ -963,17 +924,11 @@
               "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
               "words": 273,
               "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "refinementListWrapper collapsed",
-              "words": 37,
-              "reason": "CSS class"
             }
           ],
           "score": 10,
           "maxScore": 20,
-          "issue": "18% of content hidden from AI crawlers"
+          "issue": "13% of content hidden from AI crawlers"
         },
         {
           "file": "whats-new.html",
@@ -998,46 +953,40 @@
       "errors": [
         {
           "file": "air-conditioners.html",
-          "total_words": 5459,
-          "hidden_words": 7888,
-          "hidden_ratio_pct": 144,
+          "total_words": 2931,
+          "hidden_words": 323,
+          "hidden_ratio_pct": 11,
           "details_collapsed_words": 0,
-          "hidden_elements_count": 55,
+          "hidden_elements_count": 4,
           "top_hidden": [
             {
               "tag": "div",
               "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 2558,
+              "words": 29,
               "reason": "display:none"
             },
             {
               "tag": "div",
-              "class": "_hideForForceMount_1to88_44 _navDropdown_1to88_156 _topLevel",
-              "words": 2007,
-              "reason": "CSS class"
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 36,
+              "reason": "display:none"
             },
             {
               "tag": "div",
-              "class": "_hideForForceMount_1to88_44 _navDropdown_1to88_156",
-              "words": 174,
-              "reason": "CSS class"
-            },
-            {
-              "tag": "div",
-              "class": "_hideForForceMount_1to88_44 _navDropdown_1to88_156 _leftBord",
-              "words": 32,
-              "reason": "CSS class"
-            },
-            {
-              "tag": "div",
-              "class": "_hideForForceMount_1to88_44 _navDropdown_1to88_156 _leftBord",
+              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
               "words": 22,
               "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 236,
+              "reason": "display:none"
             }
           ],
-          "score": 0,
+          "score": 10,
           "maxScore": 20,
-          "issue": "144% of content hidden from AI crawlers"
+          "issue": "11% of content hidden from AI crawlers"
         },
         {
           "file": "buying-guide--best-air-conditioners.html",
@@ -1134,11 +1083,11 @@
         },
         {
           "file": "index.html",
-          "total_words": 2224,
-          "hidden_words": 2398,
-          "hidden_ratio_pct": 108,
+          "total_words": 2225,
+          "hidden_words": 1940,
+          "hidden_ratio_pct": 87,
           "details_collapsed_words": 0,
-          "hidden_elements_count": 8,
+          "hidden_elements_count": 4,
           "top_hidden": [
             {
               "tag": "div",
@@ -1151,12 +1100,6 @@
               "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
               "words": 94,
               "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
-              "words": 43,
-              "reason": "CSS class"
             },
             {
               "tag": "div",
@@ -1173,7 +1116,7 @@
           ],
           "score": 0,
           "maxScore": 20,
-          "issue": "108% of content hidden from AI crawlers"
+          "issue": "87% of content hidden from AI crawlers"
         },
         {
           "file": "laptops-computers.html",
@@ -1208,11 +1151,11 @@
         },
         {
           "file": "televisions--smart-tvs.html",
-          "total_words": 3286,
-          "hidden_words": 665,
-          "hidden_ratio_pct": 20,
+          "total_words": 3292,
+          "hidden_words": 412,
+          "hidden_ratio_pct": 13,
           "details_collapsed_words": 0,
-          "hidden_elements_count": 12,
+          "hidden_elements_count": 4,
           "top_hidden": [
             {
               "tag": "div",
@@ -1235,27 +1178,21 @@
             {
               "tag": "div",
               "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 288,
+              "words": 285,
               "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "refinementListWrapper collapsed",
-              "words": 21,
-              "reason": "CSS class"
             }
           ],
           "score": 10,
           "maxScore": 20,
-          "issue": "20% of content hidden from AI crawlers"
+          "issue": "13% of content hidden from AI crawlers"
         },
         {
           "file": "televisions.html",
-          "total_words": 3287,
-          "hidden_words": 665,
-          "hidden_ratio_pct": 20,
+          "total_words": 3291,
+          "hidden_words": 412,
+          "hidden_ratio_pct": 13,
           "details_collapsed_words": 0,
-          "hidden_elements_count": 12,
+          "hidden_elements_count": 4,
           "top_hidden": [
             {
               "tag": "div",
@@ -1278,27 +1215,21 @@
             {
               "tag": "div",
               "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
-              "words": 288,
+              "words": 285,
               "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "refinementListWrapper collapsed",
-              "words": 21,
-              "reason": "CSS class"
             }
           ],
           "score": 10,
           "maxScore": 20,
-          "issue": "20% of content hidden from AI crawlers"
+          "issue": "13% of content hidden from AI crawlers"
         },
         {
           "file": "washing-machines.html",
           "total_words": 2995,
-          "hidden_words": 534,
-          "hidden_ratio_pct": 18,
+          "hidden_words": 376,
+          "hidden_ratio_pct": 13,
           "details_collapsed_words": 0,
-          "hidden_elements_count": 10,
+          "hidden_elements_count": 4,
           "top_hidden": [
             {
               "tag": "div",
@@ -1323,17 +1254,11 @@
               "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
               "words": 273,
               "reason": "display:none"
-            },
-            {
-              "tag": "div",
-              "class": "refinementListWrapper collapsed",
-              "words": 37,
-              "reason": "CSS class"
             }
           ],
           "score": 10,
           "maxScore": 20,
-          "issue": "18% of content hidden from AI crawlers"
+          "issue": "13% of content hidden from AI crawlers"
         }
       ],
       "summary": "1/10 pages have <10% content hidden"
@@ -1358,8 +1283,7 @@
             "intro_answer_present"
           ],
           "signals_missing": [
-            "comparison_table",
-            "faq_block"
+            "comparison_table"
           ],
           "h1_count": 1,
           "h2_count": 6,
@@ -1380,7 +1304,6 @@
           "signals_missing": [
             "numbered_list",
             "comparison_table",
-            "faq_block",
             "definition_heading"
           ],
           "h1_count": 1,
@@ -1402,7 +1325,6 @@
           "signals_missing": [
             "numbered_list",
             "comparison_table",
-            "faq_block",
             "definition_heading"
           ],
           "h1_count": 1,
@@ -1424,7 +1346,6 @@
           "signals_missing": [
             "numbered_list",
             "comparison_table",
-            "faq_block",
             "definition_heading"
           ],
           "h1_count": 1,
@@ -1445,7 +1366,6 @@
           "signals_missing": [
             "numbered_list",
             "comparison_table",
-            "faq_block",
             "definition_heading"
           ],
           "h1_count": 0,
@@ -1467,7 +1387,6 @@
           "signals_missing": [
             "numbered_list",
             "comparison_table",
-            "faq_block",
             "definition_heading"
           ],
           "h1_count": 1,
@@ -1491,7 +1410,6 @@
           ],
           "signals_missing": [
             "comparison_table",
-            "faq_block",
             "definition_heading"
           ],
           "h1_count": 1,
@@ -1515,7 +1433,6 @@
           ],
           "signals_missing": [
             "comparison_table",
-            "faq_block",
             "definition_heading"
           ],
           "h1_count": 1,
@@ -1539,7 +1456,6 @@
           ],
           "signals_missing": [
             "comparison_table",
-            "faq_block",
             "definition_heading"
           ],
           "h1_count": 1,
@@ -1562,7 +1478,6 @@
           ],
           "signals_missing": [
             "comparison_table",
-            "faq_block",
             "definition_heading"
           ],
           "h1_count": 1,
@@ -1585,7 +1500,6 @@
           "signals_missing": [
             "numbered_list",
             "comparison_table",
-            "faq_block",
             "definition_heading"
           ],
           "h1_count": 0,
