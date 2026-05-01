@@ -64,7 +64,7 @@
         },
         {
           "file": "laptops-computers.html",
-          "total_words": 418,
+          "total_words": 426,
           "main_words": 58,
           "main_ratio_pct": 14,
           "boilerplate_ratio_pct": 68,
@@ -84,7 +84,7 @@
         },
         {
           "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
-          "total_words": 418,
+          "total_words": 426,
           "main_words": 58,
           "main_ratio_pct": 14,
           "boilerplate_ratio_pct": 68,
@@ -176,7 +176,7 @@
         },
         {
           "file": "laptops-computers.html",
-          "total_words": 418,
+          "total_words": 426,
           "main_words": 58,
           "main_ratio_pct": 14,
           "boilerplate_ratio_pct": 68,
@@ -196,7 +196,7 @@
         },
         {
           "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
-          "total_words": 418,
+          "total_words": 426,
           "main_words": 58,
           "main_ratio_pct": 14,
           "boilerplate_ratio_pct": 68,
@@ -274,7 +274,7 @@
           "avg_paragraph_words": 42,
           "good_chunk_pct": 25,
           "long_paragraphs": 0,
-          "approx_total_tokens": 543,
+          "approx_total_tokens": 554,
           "score": 0,
           "maxScore": 25,
           "issue": "Only 25% of paragraphs in the ideal 50-400 word range"
@@ -296,7 +296,7 @@
           "avg_paragraph_words": 42,
           "good_chunk_pct": 25,
           "long_paragraphs": 0,
-          "approx_total_tokens": 543,
+          "approx_total_tokens": 554,
           "score": 0,
           "maxScore": 25,
           "issue": "Only 25% of paragraphs in the ideal 50-400 word range"
@@ -397,7 +397,7 @@
           "avg_paragraph_words": 42,
           "good_chunk_pct": 25,
           "long_paragraphs": 0,
-          "approx_total_tokens": 543,
+          "approx_total_tokens": 554,
           "score": 0,
           "maxScore": 25,
           "issue": "Only 25% of paragraphs in the ideal 50-400 word range"
@@ -419,7 +419,7 @@
           "avg_paragraph_words": 42,
           "good_chunk_pct": 25,
           "long_paragraphs": 0,
-          "approx_total_tokens": 543,
+          "approx_total_tokens": 554,
           "score": 0,
           "maxScore": 25,
           "issue": "Only 25% of paragraphs in the ideal 50-400 word range"
@@ -475,17 +475,17 @@
           "category_entities": 8,
           "spec_entities": 4,
           "heading_entities": [
-            "reverse cycle",
-            "price",
-            "air conditioner",
             "energy rating",
-            "capacity"
+            "capacity",
+            "price",
+            "reverse cycle",
+            "installation"
           ],
           "intro_entities": [
-            "split system",
-            "westinghouse",
             "samsung",
-            "reverse cycle",
+            "hisense",
+            "westinghouse",
+            "panasonic",
             "clearance"
           ],
           "top_entities": [
@@ -518,7 +518,7 @@
               "count": 9
             },
             {
-              "entity": "panasonic",
+              "entity": "hisense",
               "count": 7
             }
           ],
@@ -536,19 +536,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "tv",
-            "fridge",
-            "price",
-            "vacuum",
-            "clearance"
+            "washing machine",
+            "coffee machine",
+            "smart home",
+            "dishwasher",
+            "discount"
           ],
           "top_entities": [
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
@@ -556,11 +556,11 @@
               "count": 2
             },
             {
-              "entity": "tv",
+              "entity": "washing machine",
               "count": 1
             },
             {
-              "entity": "fridge",
+              "entity": "coffee machine",
               "count": 1
             },
             {
@@ -568,11 +568,11 @@
               "count": 1
             },
             {
-              "entity": "vacuum",
+              "entity": "smart home",
               "count": 1
             },
             {
-              "entity": "clearance",
+              "entity": "dishwasher",
               "count": 1
             }
           ],
@@ -590,19 +590,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "tv",
-            "fridge",
-            "price",
-            "vacuum",
-            "clearance"
+            "washing machine",
+            "coffee machine",
+            "smart home",
+            "dishwasher",
+            "discount"
           ],
           "top_entities": [
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
@@ -610,11 +610,11 @@
               "count": 2
             },
             {
-              "entity": "tv",
+              "entity": "washing machine",
               "count": 1
             },
             {
-              "entity": "fridge",
+              "entity": "coffee machine",
               "count": 1
             },
             {
@@ -622,11 +622,11 @@
               "count": 1
             },
             {
-              "entity": "vacuum",
+              "entity": "smart home",
               "count": 1
             },
             {
-              "entity": "clearance",
+              "entity": "dishwasher",
               "count": 1
             }
           ],
@@ -644,19 +644,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "tv",
-            "fridge",
-            "price",
-            "vacuum",
-            "clearance"
+            "washing machine",
+            "coffee machine",
+            "smart home",
+            "dishwasher",
+            "discount"
           ],
           "top_entities": [
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
@@ -664,11 +664,11 @@
               "count": 2
             },
             {
-              "entity": "tv",
+              "entity": "washing machine",
               "count": 1
             },
             {
-              "entity": "fridge",
+              "entity": "coffee machine",
               "count": 1
             },
             {
@@ -676,11 +676,11 @@
               "count": 1
             },
             {
-              "entity": "vacuum",
+              "entity": "smart home",
               "count": 1
             },
             {
-              "entity": "clearance",
+              "entity": "dishwasher",
               "count": 1
             }
           ],
@@ -697,18 +697,18 @@
           "category_entities": 23,
           "spec_entities": 9,
           "heading_entities": [
-            "lg",
-            "led",
-            "split system",
-            "westinghouse",
-            "tv"
+            "washer",
+            "monitor",
+            "apple",
+            "sony",
+            "mini led"
           ],
           "intro_entities": [
-            "led",
-            "westinghouse",
-            "tv",
+            "washing machine",
+            "mini led",
+            "coffee machine",
             "samsung",
-            "fridge"
+            "cooktop"
           ],
           "top_entities": [
             {
@@ -736,11 +736,11 @@
               "count": 7
             },
             {
-              "entity": "price",
+              "entity": "4k",
               "count": 6
             },
             {
-              "entity": "4k",
+              "entity": "price",
               "count": 6
             }
           ],
@@ -752,25 +752,25 @@
           "file": "laptops-computers.html",
           "entity_count": 16,
           "total_mentions": 21,
-          "entity_density_pct": 5.0,
+          "entity_density_pct": 4.9,
           "brand_entities": 0,
           "category_entities": 9,
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "tv",
-            "fridge",
-            "price",
-            "vacuum",
-            "clearance"
+            "washing machine",
+            "coffee machine",
+            "smart home",
+            "dishwasher",
+            "discount"
           ],
           "top_entities": [
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
@@ -778,11 +778,11 @@
               "count": 2
             },
             {
-              "entity": "tv",
+              "entity": "washing machine",
               "count": 1
             },
             {
-              "entity": "fridge",
+              "entity": "coffee machine",
               "count": 1
             },
             {
@@ -790,11 +790,11 @@
               "count": 1
             },
             {
-              "entity": "vacuum",
+              "entity": "smart home",
               "count": 1
             },
             {
-              "entity": "clearance",
+              "entity": "dishwasher",
               "count": 1
             }
           ],
@@ -811,18 +811,18 @@
           "category_entities": 26,
           "spec_entities": 12,
           "heading_entities": [
-            "lg",
             "shark",
-            "5g",
-            "westinghouse",
-            "television"
+            "haier",
+            "ninja",
+            "washer",
+            "apple"
           ],
           "intro_entities": [
-            "tv",
-            "fridge",
+            "washing machine",
+            "coffee machine",
             "4k",
-            "vacuum",
-            "clearance"
+            "hisense",
+            "smart home"
           ],
           "top_entities": [
             {
@@ -866,25 +866,25 @@
           "file": "samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html",
           "entity_count": 16,
           "total_mentions": 21,
-          "entity_density_pct": 5.0,
+          "entity_density_pct": 4.9,
           "brand_entities": 0,
           "category_entities": 9,
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "tv",
-            "fridge",
-            "price",
-            "vacuum",
-            "clearance"
+            "washing machine",
+            "coffee machine",
+            "smart home",
+            "dishwasher",
+            "discount"
           ],
           "top_entities": [
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
@@ -892,11 +892,11 @@
               "count": 2
             },
             {
-              "entity": "tv",
+              "entity": "washing machine",
               "count": 1
             },
             {
-              "entity": "fridge",
+              "entity": "coffee machine",
               "count": 1
             },
             {
@@ -904,11 +904,11 @@
               "count": 1
             },
             {
-              "entity": "vacuum",
+              "entity": "smart home",
               "count": 1
             },
             {
-              "entity": "clearance",
+              "entity": "dishwasher",
               "count": 1
             }
           ],
@@ -925,18 +925,18 @@
           "category_entities": 5,
           "spec_entities": 13,
           "heading_entities": [
-            "lg",
-            "television",
-            "tv",
+            "energy rating",
             "price",
-            "hdr"
+            "television",
+            "lg",
+            "tv"
           ],
           "intro_entities": [
-            "lg",
-            "led",
+            "sony",
+            "samsung",
             "deal",
-            "television",
-            "tv"
+            "4k",
+            "hisense"
           ],
           "top_entities": [
             {
@@ -960,11 +960,11 @@
               "count": 20
             },
             {
-              "entity": "led",
+              "entity": "samsung",
               "count": 19
             },
             {
-              "entity": "samsung",
+              "entity": "led",
               "count": 19
             },
             {
@@ -985,18 +985,18 @@
           "category_entities": 5,
           "spec_entities": 13,
           "heading_entities": [
-            "lg",
-            "television",
-            "tv",
+            "energy rating",
             "price",
-            "hdr"
+            "television",
+            "lg",
+            "tv"
           ],
           "intro_entities": [
-            "lg",
-            "led",
+            "sony",
+            "samsung",
             "deal",
-            "television",
-            "tv"
+            "4k",
+            "hisense"
           ],
           "top_entities": [
             {
@@ -1020,11 +1020,11 @@
               "count": 20
             },
             {
-              "entity": "led",
+              "entity": "samsung",
               "count": 19
             },
             {
-              "entity": "samsung",
+              "entity": "led",
               "count": 19
             },
             {
@@ -1045,18 +1045,18 @@
           "category_entities": 4,
           "spec_entities": 10,
           "heading_entities": [
-            "price",
             "washer",
             "washing machine",
             "energy rating",
-            "capacity"
+            "capacity",
+            "price"
           ],
           "intro_entities": [
-            "lg",
-            "westinghouse",
+            "haier",
+            "washer",
+            "washing machine",
             "samsung",
-            "sale",
-            "haier"
+            "sale"
           ],
           "top_entities": [
             {
@@ -1114,11 +1114,11 @@
               "count": 6
             },
             {
-              "entity": "tv",
+              "entity": "price",
               "count": 5
             },
             {
-              "entity": "price",
+              "entity": "tv",
               "count": 5
             },
             {
@@ -1126,19 +1126,19 @@
               "count": 4
             },
             {
-              "entity": "oven",
-              "count": 3
-            },
-            {
               "entity": "washing machine",
               "count": 3
             },
             {
-              "entity": "discount",
+              "entity": "oven",
               "count": 3
             },
             {
               "entity": "dishwasher",
+              "count": 3
+            },
+            {
+              "entity": "discount",
               "count": 3
             }
           ],
@@ -1577,7 +1577,7 @@
           "comparison_count": 0,
           "question_headings": 0,
           "ordered_lists": 0,
-          "type_token_ratio": 0.634,
+          "type_token_ratio": 0.628,
           "score": 5,
           "maxScore": 30,
           "issue": "Few semantic patterns \u2014 low AI citation probability"
@@ -1615,7 +1615,7 @@
           "comparison_count": 0,
           "question_headings": 0,
           "ordered_lists": 0,
-          "type_token_ratio": 0.634,
+          "type_token_ratio": 0.628,
           "score": 5,
           "maxScore": 30,
           "issue": "Few semantic patterns \u2014 low AI citation probability"
@@ -1771,7 +1771,7 @@
           "comparison_count": 0,
           "question_headings": 0,
           "ordered_lists": 0,
-          "type_token_ratio": 0.634,
+          "type_token_ratio": 0.628,
           "score": 5,
           "maxScore": 30,
           "issue": "Few semantic patterns \u2014 low AI citation probability"
@@ -1790,7 +1790,7 @@
           "comparison_count": 0,
           "question_headings": 0,
           "ordered_lists": 0,
-          "type_token_ratio": 0.634,
+          "type_token_ratio": 0.628,
           "score": 5,
           "maxScore": 30,
           "issue": "Few semantic patterns \u2014 low AI citation probability"
@@ -2333,10 +2333,10 @@
         },
         {
           "file": "laptops-computers.html",
-          "tgg_entity_count": 30,
+          "tgg_entity_count": 31,
           "competitor_entity_count": 0,
           "shared_count": 0,
-          "tgg_only_count": 30,
+          "tgg_only_count": 31,
           "competitor_only_count": 0,
           "coverage_pct": 50,
           "tgg_only_sample": [
@@ -2346,8 +2346,8 @@
             "Collect Claim",
             "Deals Washing Machine Deals Vacuum Cleaner Deals Fridge Deals Phone",
             "Digital Wallet",
-            "Homepage Search Store Locator View Catalogues Looking",
-            "Hours Gold Service Extras Hub Gift Cards View Our Latest Catalogue Doing Good Careers"
+            "Email Submit Shop",
+            "Homepage Search Store Locator View Catalogues Looking"
           ],
           "missing_from_tgg": [],
           "score": 15,
