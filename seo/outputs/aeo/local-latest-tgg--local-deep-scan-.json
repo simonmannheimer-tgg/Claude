@@ -82,17 +82,17 @@
             "findings": [
               {
                 "severity": "error",
-                "message": "9 of 10 sampled pages have broken heading hierarchy.",
+                "message": "11 of 12 sampled pages have broken heading hierarchy.",
                 "fix": "Fix heading levels to be sequential (H1 \u2192 H2 \u2192 H3). This is critical for agent parsing."
               },
               {
                 "severity": "warning",
-                "message": "Few pages (0/10) contain code examples.",
+                "message": "Few pages (0/12) contain code examples.",
                 "fix": "Code examples are critical for agents. Add runnable examples for key operations."
               },
               {
                 "severity": "info",
-                "message": "0 of 10 pages use tables.",
+                "message": "0 of 12 pages use tables.",
                 "fix": "Consider using tables for parameter references and comparison data. Tables compress better than prose lists for agents."
               },
               {
@@ -148,7 +148,7 @@
             "findings": [
               {
                 "severity": "info",
-                "message": "Average page size: 2,264 tokens (excellent)."
+                "message": "Average page size: 2,062 tokens (excellent)."
               },
               {
                 "severity": "info",
@@ -160,7 +160,7 @@
               },
               {
                 "severity": "info",
-                "message": "Analyzed 10 pages. Total: 22,644 tokens."
+                "message": "Analyzed 12 pages. Total: 24,747 tokens."
               }
             ]
           },
@@ -179,11 +179,11 @@
               },
               {
                 "severity": "info",
-                "message": "10 of 10 pages have meaningful meta descriptions."
+                "message": "12 of 12 pages have meaningful meta descriptions."
               },
               {
                 "severity": "info",
-                "message": "2 of 10 pages have page type metadata.",
+                "message": "3 of 12 pages have page type metadata.",
                 "fix": "Consider adding <meta name=\"ai:page-type\" content=\"api-reference|guide|tutorial|quickstart\"> to categorize pages for agents."
               },
               {
@@ -192,7 +192,7 @@
               },
               {
                 "severity": "info",
-                "message": "6 of 10 pages have canonical URLs."
+                "message": "7 of 12 pages have canonical URLs."
               }
             ]
           }
@@ -332,17 +332,17 @@
         "findings": [
           {
             "severity": "error",
-            "message": "9 of 10 sampled pages have broken heading hierarchy.",
+            "message": "11 of 12 sampled pages have broken heading hierarchy.",
             "fix": "Fix heading levels to be sequential (H1 \u2192 H2 \u2192 H3). This is critical for agent parsing."
           },
           {
             "severity": "warning",
-            "message": "Few pages (0/10) contain code examples.",
+            "message": "Few pages (0/12) contain code examples.",
             "fix": "Code examples are critical for agents. Add runnable examples for key operations."
           },
           {
             "severity": "info",
-            "message": "0 of 10 pages use tables.",
+            "message": "0 of 12 pages use tables.",
             "fix": "Consider using tables for parameter references and comparison data. Tables compress better than prose lists for agents."
           },
           {
@@ -389,7 +389,7 @@
         "findings": [
           {
             "severity": "info",
-            "message": "Average page size: 2,264 tokens (excellent)."
+            "message": "Average page size: 2,062 tokens (excellent)."
           },
           {
             "severity": "info",
@@ -401,7 +401,7 @@
           },
           {
             "severity": "info",
-            "message": "Analyzed 10 pages. Total: 22,644 tokens."
+            "message": "Analyzed 12 pages. Total: 24,747 tokens."
           }
         ]
       },
@@ -420,11 +420,11 @@
           },
           {
             "severity": "info",
-            "message": "10 of 10 pages have meaningful meta descriptions."
+            "message": "12 of 12 pages have meaningful meta descriptions."
           },
           {
             "severity": "info",
-            "message": "2 of 10 pages have page type metadata.",
+            "message": "3 of 12 pages have page type metadata.",
             "fix": "Consider adding <meta name=\"ai:page-type\" content=\"api-reference|guide|tutorial|quickstart\"> to categorize pages for agents."
           },
           {
@@ -433,7 +433,7 @@
           },
           {
             "severity": "info",
-            "message": "6 of 10 pages have canonical URLs."
+            "message": "7 of 12 pages have canonical URLs."
           }
         ]
       },
@@ -520,7 +520,7 @@
         },
         {
           "severity": "error",
-          "message": "9 of 10 sampled pages have broken heading hierarchy.",
+          "message": "11 of 12 sampled pages have broken heading hierarchy.",
           "fix": "Fix heading levels to be sequential (H1 \u2192 H2 \u2192 H3). This is critical for agent parsing.",
           "checker": "content-structure",
           "checkerName": "Content Structure Quality"
@@ -543,7 +543,7 @@
         },
         {
           "severity": "warning",
-          "message": "Few pages (0/10) contain code examples.",
+          "message": "Few pages (0/12) contain code examples.",
           "fix": "Code examples are critical for agents. Add runnable examples for key operations.",
           "checker": "content-structure",
           "checkerName": "Content Structure Quality"
@@ -600,7 +600,7 @@
         },
         {
           "severity": "info",
-          "message": "0 of 10 pages use tables.",
+          "message": "0 of 12 pages use tables.",
           "fix": "Consider using tables for parameter references and comparison data. Tables compress better than prose lists for agents.",
           "checker": "content-structure",
           "checkerName": "Content Structure Quality"
@@ -625,7 +625,7 @@
         },
         {
           "severity": "info",
-          "message": "Average page size: 2,264 tokens (excellent).",
+          "message": "Average page size: 2,062 tokens (excellent).",
           "checker": "token-budget",
           "checkerName": "Token Budget Analysis"
         },
@@ -643,19 +643,19 @@
         },
         {
           "severity": "info",
-          "message": "Analyzed 10 pages. Total: 22,644 tokens.",
+          "message": "Analyzed 12 pages. Total: 24,747 tokens.",
           "checker": "token-budget",
           "checkerName": "Token Budget Analysis"
         },
         {
           "severity": "info",
-          "message": "10 of 10 pages have meaningful meta descriptions.",
+          "message": "12 of 12 pages have meaningful meta descriptions.",
           "checker": "meta-tags",
           "checkerName": "AI-Friendly Meta Tags"
         },
         {
           "severity": "info",
-          "message": "2 of 10 pages have page type metadata.",
+          "message": "3 of 12 pages have page type metadata.",
           "fix": "Consider adding <meta name=\"ai:page-type\" content=\"api-reference|guide|tutorial|quickstart\"> to categorize pages for agents.",
           "checker": "meta-tags",
           "checkerName": "AI-Friendly Meta Tags"
@@ -668,7 +668,7 @@
         },
         {
           "severity": "info",
-          "message": "6 of 10 pages have canonical URLs.",
+          "message": "7 of 12 pages have canonical URLs.",
           "checker": "meta-tags",
           "checkerName": "AI-Friendly Meta Tags"
         },
