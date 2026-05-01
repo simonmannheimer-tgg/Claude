@@ -1,43 +1,125 @@
 name: AEO Audit
 
-# Two-phase audit for Agentic Engine Optimisation (AEO) readiness.
+# ─────────────────────────────────────────────────────────────────────────────
+# Two-phase AEO (Agentic Engine Optimisation) audit for TGG + competitors.
 #
-# Phase 1 — URL comparison (no crawl needed):
-#   Runs agentic-seo in URL mode against TGG + competitors.
-#   Checks: robots.txt AI rules, llms.txt, agent-permissions.json.
+# PHASE 1 — URL comparison (~5 min, no browser needed)
+#   Fetches robots.txt, llms.txt, agent-permissions.json via HTTP.
+#   Runs against TGG + Harvey Norman, JB Hi-Fi, Appliances Online by default.
 #
-# Phase 2 — Local deep scan (Playwright crawl → full 10-check audit):
-#   Uses Playwright/Chromium to download rendered HTML from TGG pages,
-#   then runs agentic-seo in directory mode for the full score including
-#   content-structure, token-budget, meta-tags, copy-for-ai, markdown-availability.
+# PHASE 2 — Deep local scan (~20-25 min, Playwright required)
+#   Launches headless Chromium, renders 10 TGG pages across all content types,
+#   saves HTML, then runs agentic-seo in directory mode for the full 10-check
+#   score (content structure, token budget, meta tags, copy-for-AI, markdown).
 #
-# No API keys required.
+# No API keys required. All inputs have sensible defaults — leave blank to run
+# a full default audit.
+# ─────────────────────────────────────────────────────────────────────────────
 
 on:
   workflow_dispatch:
     inputs:
+
+      # ── Phases ──────────────────────────────────────────────────────────────
+      run_phase1:
+        description: |
+          ☑ PHASE 1 — URL comparison (~5 min)
+          Checks robots.txt AI rules, llms.txt, agent-permissions.json across
+          TGG + competitors. No Playwright needed. Good for quick competitor diff.
+        type: boolean
+        default: true
+
+      run_phase2:
+        description: |
+          ☑ PHASE 2 — Deep local scan (~20-25 min)
+          Playwright crawls TGG pages, saves rendered HTML, runs full 10-check
+          audit. Unlocks: content structure, token budget, meta tags, copy-for-AI,
+          markdown availability. Results include per-category scores and fixes.
+        type: boolean
+        default: true
+
+      run_phase3:
+        description: |
+          ☑ PHASE 3 — Ecommerce AEO checks (~10 min, requires Phase 2 snapshots)
+          Schema/structured data: Product, FAQ, BreadcrumbList, AggregateRating
+          Render diff: httpx raw vs Playwright snapshot (what bots see vs browsers)
+          User agent behaviour: ClaudeBot, GPTBot, PerplexityBot vs 200/403
+          Hidden content: display:none / aria-hidden / collapsed accordions
+          AI content signals: FAQ blocks, comparison tables, direct answers
+        type: boolean
+        default: true
+
+      # ── Check groups (apply to both phases where relevant) ──────────────────
+      check_discovery:
+        description: |
+          ☑ Discovery — 25 pts  (~1 min)
+          robots.txt AI crawler rules (ClaudeBot, GPTBot, PerplexityBot, Google-Extended)
+          llms.txt presence, structure, token counts, section headings
+          AGENTS.md / CLAUDE.md (repo instruction files for AI coding agents)
+        type: boolean
+        default: true
+
+      check_content:
+        description: |
+          ☑ Content Structure — 25 pts  (~3-5 min, Phase 2 only)
+          Heading hierarchy (H1→H2→H3, no skips), semantic HTML (main/article/section)
+          Markdown availability alongside HTML, HTML-to-text noise ratio
+          JavaScript-required rendering detection (SPA/React indicator)
+        type: boolean
+        default: true
+
+      check_tokens:
+        description: |
+          ☑ Token Economics — 25 pts  (~2-3 min, Phase 2 only)
+          Per-page token counts (target: avg <25K, none >50K)
+          AI-friendly meta tags: description, og:type, title, canonical
+          ai:token-count meta tag presence
+        type: boolean
+        default: true
+
+      check_capability:
+        description: |
+          ☑ Capability Signalling — 15 pts  (<1 min)
+          skill.md capability description files (relevant for API/service pages)
+          agent-permissions.json / .well-known/ai-plugin.json
+          Note: skill.md is designed for SaaS/API docs — low-impact for retail.
+        type: boolean
+        default: true
+
+      check_ux:
+        description: |
+          ☑ UX Bridge — 10 pts  (~1 min, Phase 2 only)
+          "Copy for AI" / "Copy as Markdown" buttons
+          Copy-to-clipboard on code/content blocks
+          Raw view / "View source" / "Edit on GitHub" links
+        type: boolean
+        default: true
+
+      # ── Custom URL overrides ─────────────────────────────────────────────────
       urls:
-        description: >
-          Phase 1: JSON array of URLs for competitor comparison.
-          Each item can be a string or {"url": "...", "label": "..."}.
-          Leave blank for default set: TGG Home, TGG TVs, TGG Air Con,
-          JB Hi-Fi, Harvey Norman.
+        description: |
+          Phase 1 custom URLs (optional — leave blank for defaults).
+          JSON array of strings or {"url":"...","label":"..."} objects.
+          Defaults: TGG Home + Harvey Norman + JB Hi-Fi + Appliances Online
         required: false
         default: ''
+
       crawl_urls:
-        description: >
-          Phase 2: JSON array of TGG URLs to crawl for local deep scan.
-          Leave blank for default 10-page TGG set.
+        description: |
+          Phase 2 custom crawl URLs (optional — leave blank for defaults).
+          JSON array of TGG URLs. Defaults cover: home, 3× category, sub-category,
+          product, 2× buying guide, blog/news, sale page.
+          Tip: use 3-5 URLs for a quick test run (~10-12 min).
         required: false
         default: ''
-      checks:
-        description: 'Phase 1 only: comma-separated checker IDs (blank = all 10)'
+
+      live_urls:
+        description: |
+          Phase 3 live URLs for user-agent and render-diff checks (optional).
+          JSON array of TGG URLs to test live. Defaults: TGG home + 2 categories.
+          Keep to 3-5 URLs — each URL is tested with 5 different bot User-Agents.
         required: false
         default: ''
-      skip_crawl:
-        description: 'Set to "true" to skip Phase 2 (URL comparison only)'
-        required: false
-        default: 'false'
 
   # Uncomment to run weekly (Sunday 22:00 UTC = Monday 08:00 AEST):
   # schedule:
@@ -46,7 +128,7 @@ on:
 jobs:
   aeo-audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 50
     permissions:
       contents: write
 
@@ -71,47 +153,67 @@ jobs:
           FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
       - name: Install Python deps
-        run: pip install httpx playwright
+        run: pip install httpx playwright beautifulsoup4
 
       - name: Install Playwright browser
+        if: inputs.run_phase2 || inputs.run_phase3
         run: playwright install chromium --with-deps
 
-      # ── Phase 1: URL comparison ───────────────────────────────────────────
+      # ── Build AEO_CHECKS string from checkbox inputs ────────────────────────
+      - name: Build checks filter
+        id: checks
+        run: |
+          CHECKS=""
+          add() { CHECKS="${CHECKS:+$CHECKS,}$1"; }
 
-      - name: Phase 1 — URL comparison audit
+          [ "${{ inputs.check_discovery }}" = "true" ] && add "robots-txt,llms-txt,agents-md"
+          [ "${{ inputs.check_content }}"   = "true" ] && add "content-structure,markdown-availability"
+          [ "${{ inputs.check_tokens }}"    = "true" ] && add "token-budget,meta-tags"
+          [ "${{ inputs.check_capability }}" = "true" ] && add "skill-md,agent-permissions"
+          [ "${{ inputs.check_ux }}"        = "true" ] && add "copy-for-ai"
+
+          echo "value=$CHECKS" >> "$GITHUB_OUTPUT"
+          echo "Active checks: ${CHECKS:-all}"
+
+      # ── Phase 1: URL comparison ─────────────────────────────────────────────
+      - name: "Phase 1 — URL comparison (~5 min)"
+        if: inputs.run_phase1
         continue-on-error: true
         env:
-          AEO_URLS: ${{ inputs.urls }}
-          AEO_CHECKS: ${{ inputs.checks }}
+          # Default: TGG home + 3 competitors
+          AEO_URLS: >-
+            ${{ inputs.urls != '' && inputs.urls ||
+              '[{"url":"https://www.thegoodguys.com.au","label":"TGG"},
+                {"url":"https://www.harveynorman.com.au","label":"Harvey Norman"},
+                {"url":"https://www.jbhifi.com.au","label":"JB Hi-Fi"},
+                {"url":"https://www.appliancesonline.com.au","label":"Appliances Online"}]' }}
+          AEO_CHECKS: ${{ steps.checks.outputs.value }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python run_aeo_audit.py 2>&1
 
-      - name: Phase 1 — Show results
-        if: always()
+      - name: "Phase 1 — Results"
+        if: inputs.run_phase1 && always()
         run: |
           if ls seo/outputs/aeo/aeo-results-*.json 1>/dev/null 2>&1; then
             python3 - <<'EOF'
-          import json, glob, sys
+          import json, glob
           files = sorted(glob.glob('seo/outputs/aeo/aeo-results-*.json'))
           entries = json.loads(open(files[-1]).read())
-          grade_map = {'A': '🟢', 'B': '🟢', 'C': '🟡', 'D': '🟠', 'F': '🔴'}
+          g = {'A':'🟢','B':'🟢','C':'🟡','D':'🟠','F':'🔴'}
           for e in entries:
               r = e.get('result', {})
-              label = e.get('label', e.get('url', '?'))
+              lbl = e.get('label', e.get('url', '?'))
               if 'error' in r:
-                  print(f'  ✗ {label}: {r["error"][:100]}')
+                  print(f'  ✗ {lbl}: {r["error"][:100]}')
               else:
-                  g = r.get('grade', '?')
-                  pct = r.get('percentage', 0)
                   s = r.get('summary', {})
-                  print(f'  {grade_map.get(g,"?")} {g} ({pct}%) | {label} | {s.get("errors","?")} errors, {s.get("warnings","?")} warnings')
+                  print(f'  {g.get(r.get("grade","?"),"?")} {r.get("grade","?")} ({r.get("percentage",0)}%) | {lbl} | {s.get("errors","?")} errors, {s.get("warnings","?")} warns')
           EOF
           fi
 
-      # ── Phase 2: Playwright crawl + local deep scan ───────────────────────
-
-      - name: Phase 2 — Crawl TGG pages
-        if: ${{ inputs.skip_crawl != 'true' }}
+      # ── Phase 2: Playwright crawl + local deep scan ─────────────────────────
+      - name: "Phase 2 — Crawl TGG pages (~10-15 min)"
+        if: inputs.run_phase2
         continue-on-error: true
         env:
           CRAWL_URLS: ${{ inputs.crawl_urls }}
@@ -119,11 +221,23 @@ jobs:
           if [ -n "$CRAWL_URLS" ]; then
             python crawl_site_snapshot.py --urls "$CRAWL_URLS" 2>&1
           else
-            python crawl_site_snapshot.py 2>&1
+            # Default: 10 pages across all content types
+            python crawl_site_snapshot.py --urls '[
+              "https://www.thegoodguys.com.au",
+              "https://www.thegoodguys.com.au/televisions",
+              "https://www.thegoodguys.com.au/air-conditioners",
+              "https://www.thegoodguys.com.au/washing-machines",
+              "https://www.thegoodguys.com.au/televisions/smart-tvs",
+              "https://www.thegoodguys.com.au/laptops-computers",
+              "https://www.thegoodguys.com.au/buying-guide/best-tvs",
+              "https://www.thegoodguys.com.au/buying-guide/best-air-conditioners",
+              "https://www.thegoodguys.com.au/buying-guide/best-washing-machines",
+              "https://www.thegoodguys.com.au/whats-new"
+            ]' 2>&1
           fi
 
-      - name: Phase 2 — Local deep scan
-        if: ${{ inputs.skip_crawl != 'true' }}
+      - name: "Phase 2 — Local deep scan (~5 min)"
+        if: inputs.run_phase2
         continue-on-error: true
         env:
           AEO_DIR: site-snapshots/thegoodguys.com.au
@@ -131,8 +245,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python run_aeo_local.py 2>&1
 
-      - name: Phase 2 — Show local results
-        if: ${{ inputs.skip_crawl != 'true' && always() }}
+      - name: "Phase 2 — Results"
+        if: inputs.run_phase2 && always()
         run: |
           if ls seo/outputs/aeo/aeo-local-*.json 1>/dev/null 2>&1; then
             python3 - <<'EOF'
@@ -140,16 +254,56 @@ jobs:
           files = sorted(glob.glob('seo/outputs/aeo/aeo-local-*.json'))
           data = json.loads(open(files[-1]).read())
           r = data.get('report', {})
-          cats = r.get('categories', {})
-          print(f"Local deep scan: Grade {r.get('grade','?')} ({r.get('percentage',0)}%)")
-          for k, c in cats.items():
-              bar = '█' * round(c['percentage']/5) + '░' * (20 - round(c['percentage']/5))
+          g = {'A':'🟢','B':'🟢','C':'🟡','D':'🟠','F':'🔴'}
+          grade = r.get('grade','?')
+          print(f"Local deep scan: {g.get(grade,'?')} Grade {grade} ({r.get('percentage',0)}%)")
+          for k, c in r.get('categories', {}).items():
+              bar = '█' * round(c['percentage']/5) + '░' * (20-round(c['percentage']/5))
               print(f"  {c['name']:<22} {bar} {c['score']}/{c['maxScore']} ({c['percentage']}%)")
           EOF
           fi
 
-      # ── Artifacts ─────────────────────────────────────────────────────────
+      # ── Phase 3: Ecommerce-specific AEO checks ──────────────────────────────
+      - name: "Phase 3 — Ecommerce AEO checks (~10 min)"
+        if: inputs.run_phase3
+        continue-on-error: true
+        env:
+          SNAPSHOT_DIR: site-snapshots/thegoodguys.com.au
+          AEO_LABEL: TGG (ecommerce)
+          LIVE_URLS: ${{ inputs.live_urls }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python run_ecommerce_aeo.py 2>&1
 
+      - name: "Phase 3 — Results"
+        if: inputs.run_phase3 && always()
+        run: |
+          if ls seo/outputs/aeo/ecommerce-aeo-*.json 1>/dev/null 2>&1; then
+            python3 - <<'EOF'
+          import json, glob
+          files = sorted(glob.glob('seo/outputs/aeo/ecommerce-aeo-*.json'))
+          data = json.loads(open(files[-1]).read())
+          g = {'A':'🟢','B':'🟢','C':'🟡','D':'🟠','F':'🔴'}
+          grade = data.get('grade','?')
+          pct = data.get('percentage',0)
+          print(f"Ecommerce AEO: {g.get(grade,'?')} Grade {grade} ({pct}%)")
+          check_names = {
+              'schema':         'Schema / Structured Data',
+              'render_diff':    'Render Diff',
+              'user_agents':    'User Agent Behaviour',
+              'hidden_content': 'Hidden Content',
+              'ai_signals':     'AI Content Signals',
+          }
+          for key, name in check_names.items():
+              c = data.get('checks', {}).get(key, {})
+              if 'error' in c:
+                  print(f"  ✗ {name:<28} {c['error'][:50]}")
+              else:
+                  bar = '█' * round(c.get('percentage',0)/5) + '░' * (20-round(c.get('percentage',0)/5))
+                  print(f"  {name:<28} {bar} {c.get('score',0)}/{c.get('maxScore',0)} ({c.get('percentage',0)}%)")
+          EOF
+          fi
+
+      # ── Artifacts ────────────────────────────────────────────────────────────
       - name: Upload AEO results
         if: always()
         uses: actions/upload-artifact@v4
@@ -161,7 +315,7 @@ jobs:
           FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
       - name: Upload site snapshots
-        if: ${{ inputs.skip_crawl != 'true' && always() }}
+        if: inputs.run_phase2 && always()
         uses: actions/upload-artifact@v4
         with:
           name: site-snapshots-${{ github.run_id }}
