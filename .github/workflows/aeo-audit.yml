@@ -1,46 +1,55 @@
 name: AEO Audit
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Two-phase AEO (Agentic Engine Optimisation) audit for TGG + competitors.
+# AEO (Agentic Engine Optimisation) audit for TGG + competitors.
 #
-# PHASE 1 — URL comparison (~5 min, no browser needed)
-#   Fetches robots.txt, llms.txt, agent-permissions.json via HTTP.
-#   Runs against TGG + Harvey Norman, JB Hi-Fi, Appliances Online by default.
+# AEO CRAWL — Per-URL signal audit (~5-8 min, no browser needed)
+#   Pure Python (httpx + BeautifulSoup). Screaming Frog-style: one row per URL,
+#   one column per check (robots_ai, llms_txt, meta_tags, headings, schema, content, JS).
+#   Covers TGG + 3 competitors across all page types.
 #
-# PHASE 2 — Deep local scan (~20-25 min, Playwright required)
-#   Launches headless Chromium, renders 10 TGG pages across all content types,
-#   saves HTML, then runs agentic-seo in directory mode for the full 10-check
-#   score (content structure, token budget, meta tags, copy-for-AI, markdown).
+# PLAYWRIGHT SNAPSHOTS — Rendered HTML capture (~10-15 min)
+#   Headless Chromium renders TGG pages and saves HTML. Required for:
+#   - JS dependency check (run_aeo_crawl.py js_depend column)
+#   - Phase 3 render diff
+#   - Phase 4 content intelligence
 #
-# No API keys required. All inputs have sensible defaults — leave blank to run
-# a full default audit.
+# PHASE 3 — Ecommerce technical AEO (~10 min, requires snapshots)
+#   Schema/structured data, render diff, user agent behaviour, hidden content,
+#   AI content signals, robots+llms, sitemap, competitor schema.
+#
+# PHASE 4 — Content intelligence (~5 min, requires snapshots)
+#   Entity signals, content chunking, semantic structure, LLM quality.
+#
+# No API keys required. All inputs have sensible defaults.
 # ─────────────────────────────────────────────────────────────────────────────
 
 on:
   workflow_dispatch:
     inputs:
 
-      # ── Phases ──────────────────────────────────────────────────────────────
-      run_phase1:
+      # ── Core phases ──────────────────────────────────────────────────────────
+      run_crawl:
         description: |
-          ☑ PHASE 1 — URL comparison (~5 min)
-          Checks robots.txt AI rules, llms.txt, agent-permissions.json across
-          TGG + competitors. No Playwright needed. Good for quick competitor diff.
+          ☑ AEO Crawl — per-URL signal audit (~5-8 min)
+          Pure Python: robots_ai, llms_txt, meta_tags, headings, schema, content, JS.
+          Covers TGG + JB Hi-Fi + Harvey Norman + Appliances Online.
+          No browser needed — fast competitor diff on any CI runner.
         type: boolean
         default: true
 
-      run_phase2:
+      run_snapshots:
         description: |
-          ☑ PHASE 2 — Deep local scan (~20-25 min)
-          Playwright crawls TGG pages, saves rendered HTML, runs full 10-check
-          audit. Unlocks: content structure, token budget, meta tags, copy-for-AI,
-          markdown availability. Results include per-category scores and fixes.
+          ☑ Playwright snapshots (~10-15 min)
+          Renders TGG pages with headless Chromium and saves HTML.
+          Required for JS dependency scores, Phase 3 render diff, and Phase 4.
+          Skip for a fast crawl-only run.
         type: boolean
         default: true
 
       run_phase3:
         description: |
-          ☑ PHASE 3 — Ecommerce AEO checks (~10 min, requires Phase 2 snapshots)
+          ☑ PHASE 3 — Ecommerce AEO checks (~10 min, requires snapshots)
           Schema/structured data: Product, FAQ, BreadcrumbList, AggregateRating
           Render diff: httpx raw vs Playwright snapshot (what bots see vs browsers)
           User agent behaviour: ClaudeBot, GPTBot, PerplexityBot vs 200/403
@@ -49,49 +58,28 @@ on:
         type: boolean
         default: true
 
-      # ── Check groups (apply to both phases where relevant) ──────────────────
-      check_discovery:
+      run_phase4:
         description: |
-          ☑ Discovery — 25 pts  (~1 min)
-          robots.txt AI crawler rules (ClaudeBot, GPTBot, PerplexityBot, Google-Extended)
-          llms.txt presence, structure, token counts, section headings
-          AGENTS.md / CLAUDE.md (repo instruction files for AI coding agents)
-        type: boolean
-        default: true
-
-      check_content:
-        description: |
-          ☑ Content Structure — 25 pts  (~3-5 min, Phase 2 only)
-          Heading hierarchy (H1→H2→H3, no skips), semantic HTML (main/article/section)
-          Markdown availability alongside HTML, HTML-to-text noise ratio
-          JavaScript-required rendering detection (SPA/React indicator)
-        type: boolean
-        default: true
-
-      check_tokens:
-        description: |
-          ☑ Token Economics — 25 pts  (~2-3 min, Phase 2 only)
-          Per-page token counts (target: avg <25K, none >50K)
-          AI-friendly meta tags: description, og:type, title, canonical
-          ai:token-count meta tag presence
+          ☑ PHASE 4 — Content intelligence (~5 min, requires snapshots)
+          Entity signals, content chunking, semantic structure, anchor quality.
+          Requires Playwright snapshots — run with run_snapshots: true.
         type: boolean
         default: true
 
       # ── Custom URL overrides ─────────────────────────────────────────────────
-      urls:
+      crawl_urls:
         description: |
-          Phase 1 custom URLs (optional — leave blank for defaults).
-          JSON array of strings or {"url":"...","label":"..."} objects.
-          Defaults: TGG Home + Harvey Norman + JB Hi-Fi + Appliances Online
+          Custom crawl URLs for AEO Crawl (optional — leave blank for defaults).
+          JSON array of {"url":"...","label":"...","scope":"page|domain+page"} objects.
+          Defaults cover TGG + 3 competitors across all page types.
         required: false
         default: ''
 
-      crawl_urls:
+      snapshot_urls:
         description: |
-          Phase 2 custom crawl URLs (optional — leave blank for defaults).
-          JSON array of TGG URLs. Defaults cover: home, 3× category, sub-category,
-          product, 2× buying guide, blog/news, sale page.
-          Tip: use 3-5 URLs for a quick test run (~10-12 min).
+          Custom Playwright snapshot URLs (optional — leave blank for defaults).
+          JSON array of TGG URLs. Defaults: home, 3× category, sub-category,
+          product, 3× buying guide, news, sale.
         required: false
         default: ''
 
@@ -99,10 +87,11 @@ on:
         description: |
           Phase 3 live URLs for user-agent and render-diff checks (optional).
           JSON array of TGG URLs to test live. Defaults: TGG home + 2 categories.
-          Keep to 3-5 URLs — each URL is tested with 5 different bot User-Agents.
+          Keep to 3-5 URLs — each URL is tested with multiple bot User-Agents.
         required: false
         default: ''
 
+      # ── Sitemap crawl (optional) ─────────────────────────────────────────────
       run_sitemap_crawl:
         description: |
           ☐ Sitemap crawl mode (optional) — crawl via sitemap instead of fixed URLs.
@@ -126,6 +115,7 @@ on:
         required: false
         default: 'home,category,guide'
 
+      # ── Optional extras ──────────────────────────────────────────────────────
       gmc_feed_url:
         description: |
           GMC feed URL (optional) — enables GMC Feed Completeness check in Phase 3.
@@ -152,9 +142,9 @@ on:
 
       rebuild_corpus:
         description: |
-          ☐ Rebuild competitor corpus (~20-30 min, self-hosted runner recommended)
-          Crawls competitor pages, encodes with BGE-M3/MiniLM, upserts to Qdrant.
-          Run monthly to keep competitor similarity scores current.
+          ☐ Force rebuild competitor corpus
+          Normally the corpus is auto-built on first Phase 4 run and cached.
+          Tick to wipe the cache and rebuild from scratch (~5 min extra).
         type: boolean
         default: false
 
@@ -163,25 +153,9 @@ on:
   #   - cron: '0 22 * * 0'
 
 jobs:
-  rebuild-corpus:
-    if: github.event.inputs.rebuild_corpus == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 40
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Install deps for corpus build
-        run: pip install httpx beautifulsoup4 sentence-transformers qdrant-client
-      - name: Rebuild competitor corpus
-        run: python build_competitor_corpus.py 2>&1
-
   aeo-audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 75
+    timeout-minutes: 90
     permissions:
       contents: write
 
@@ -190,101 +164,93 @@ jobs:
         env:
           FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-        env:
-          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
-      - name: Install agentic-seo
-        run: npm install -g agentic-seo
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
         env:
           FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
+      # ── Cache HuggingFace + Qdrant so heavy deps don't re-run every workflow ─
+      - name: Cache HuggingFace + torch models
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/huggingface
+            ~/.cache/torch
+          key: hf-models-bge-m3-spacy-v3
+          restore-keys: hf-models-
+
+      - name: Cache Qdrant competitor corpus
+        if: inputs.run_phase4
+        uses: actions/cache@v4
+        with:
+          path: qdrant_data
+          key: qdrant-corpus-${{ github.run_number }}
+          restore-keys: qdrant-corpus-
+
       - name: Install Python deps
-        run: pip install httpx playwright beautifulsoup4 lxml sentence-transformers pyyaml qdrant-client || true
-        # FlagEmbedding (BGE-M3) requires ~2GB download and GPU for best speed — only on self-hosted
-        # run: pip install FlagEmbedding qdrant-client  # uncomment for self-hosted runner
+        run: |
+          pip install httpx playwright beautifulsoup4 lxml pyyaml \
+            sentence-transformers FlagEmbedding qdrant-client \
+            spacy textstat
+          python -m spacy download en_core_web_sm
 
       - name: Install Playwright browser
-        if: inputs.run_phase2 || inputs.run_phase3
+        if: inputs.run_snapshots || inputs.run_phase3 || inputs.run_phase4
         run: playwright install chromium --with-deps
 
-      # ── Build AEO_CHECKS string from checkbox inputs ────────────────────────
-      - name: Build checks filter
-        id: checks
-        run: |
-          CHECKS=""
-          add() { CHECKS="${CHECKS:+$CHECKS,}$1"; }
-
-          [ "${{ inputs.check_discovery }}" = "true" ] && add "robots-txt,llms-txt,agents-md"
-          [ "${{ inputs.check_content }}"   = "true" ] && add "content-structure,markdown-availability"
-          [ "${{ inputs.check_tokens }}"    = "true" ] && add "token-budget,meta-tags"
-
-          echo "value=$CHECKS" >> "$GITHUB_OUTPUT"
-          echo "Active checks: ${CHECKS:-all}"
-
-      # ── Phase 1: URL comparison ─────────────────────────────────────────────
-      - name: "Phase 1 — URL comparison (~5 min)"
-        if: inputs.run_phase1
+      # ── AEO Crawl — per-URL signal audit ────────────────────────────────────
+      - name: "AEO Crawl — Per-URL signal audit (~5-8 min)"
+        if: inputs.run_crawl
         continue-on-error: true
         env:
-          # Default: TGG + competitors across all page types (home, category, guide, editorial)
-          AEO_URLS: >-
-            ${{ inputs.urls != '' && inputs.urls ||
-              '[{"url":"https://www.thegoodguys.com.au","label":"TGG · Home"},
-                {"url":"https://www.thegoodguys.com.au/televisions","label":"TGG · Category"},
-                {"url":"https://www.thegoodguys.com.au/buying-guide/best-tvs","label":"TGG · Guide"},
-                {"url":"https://www.thegoodguys.com.au/whats-new","label":"TGG · Editorial"},
-                {"url":"https://www.jbhifi.com.au","label":"JB Hi-Fi · Home"},
-                {"url":"https://www.jbhifi.com.au/collections/tvs","label":"JB Hi-Fi · Category"},
-                {"url":"https://www.jbhifi.com.au/blogs/news","label":"JB Hi-Fi · Blog"},
-                {"url":"https://www.harveynorman.com.au","label":"Harvey Norman · Home"},
-                {"url":"https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-screen-size/all-tvs","label":"Harvey Norman · Category"},
-                {"url":"https://www.harveynorman.com.au/buying-guides/security-camera-buying-guide","label":"Harvey Norman · Guide"},
-                {"url":"https://www.appliancesonline.com.au","label":"Appliances Online · Home"},
-                {"url":"https://www.appliancesonline.com.au/category/refrigeration/fridges/","label":"Appliances Online · Category"},
-                {"url":"https://www.appliancesonline.com.au/article/refrigerator-size-guide/","label":"Appliances Online · Guide"}]' }}
-          AEO_CHECKS: ${{ steps.checks.outputs.value }}
+          AEO_LABEL: tgg
+          # Custom URL list (optional — defaults to DEFAULT_URLS in run_aeo_crawl.py)
+          AEO_URLS: ${{ inputs.crawl_urls }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python run_aeo_audit.py 2>&1
+        run: python run_aeo_crawl.py 2>&1
 
-      - name: "Phase 1 — Results"
-        if: inputs.run_phase1 && always()
+      - name: "AEO Crawl — Results"
+        if: inputs.run_crawl && always()
         run: |
-          if ls seo/outputs/aeo/aeo-results-*.json 1>/dev/null 2>&1; then
+          if ls seo/outputs/aeo/crawl-*.json 1>/dev/null 2>&1; then
             python3 - <<'EOF'
           import json, glob
-          files = sorted(glob.glob('seo/outputs/aeo/aeo-results-*.json'))
-          entries = json.loads(open(files[-1]).read())
+          files = sorted(glob.glob('seo/outputs/aeo/crawl-*.json'))
+          results = json.loads(open(files[-1]).read())
           g = {'A':'🟢','B':'🟢','C':'🟡','D':'🟠','F':'🔴'}
-          for e in entries:
-              r = e.get('result', {})
-              lbl = e.get('label', e.get('url', '?'))
-              if 'error' in r:
-                  print(f'  ✗ {lbl}: {r["error"][:100]}')
-              else:
-                  s = r.get('summary', {})
-                  print(f'  {g.get(r.get("grade","?"),"?")} {r.get("grade","?")} ({r.get("percentage",0)}%) | {lbl} | {s.get("failed",s.get("errors","?"))} errors, {s.get("warned",s.get("warnings","?"))} warns')
+
+          def grade(pct):
+              return 'A' if pct>=80 else 'B' if pct>=65 else 'C' if pct>=50 else 'D' if pct>=35 else 'F'
+
+          by_domain = {}
+          for r in results:
+              by_domain.setdefault(r['domain'], []).append(r)
+
+          for domain, pages in sorted(by_domain.items()):
+              avg = round(sum(p['percentage'] for p in pages) / len(pages))
+              gr = grade(avg)
+              print(f'\n  {g.get(gr,"?")} {domain:<40} avg {avg}% (Grade {gr})  [{len(pages)} pages]')
+              for p in pages:
+                  pg = p.get('grade','?')
+                  issues = len(p.get('issues',[]))
+                  checks = p.get('checks',{})
+                  sb = '✅' if (checks.get('schema_type',{}).get('score',0) or 0) >= 15 else '⚠️' if (checks.get('schema_type',{}).get('score',0) or 0) >= 5 else '❌'
+                  rb = '✅' if (checks.get('robots_ai',{}).get('score',0) or 0) >= 25 else '⚠️' if (checks.get('robots_ai',{}).get('score',0) or 0) >= 15 else '❌'
+                  print(f'    {g.get(pg,"?")} {pg} ({p["percentage"]:>3}%) | robots:{rb} schema:{sb} | {p["label"]} — {issues} issue(s)')
           EOF
           fi
 
-      # ── Phase 2: Playwright crawl + local deep scan ─────────────────────────
-      - name: "Phase 2 — Crawl TGG pages (~10-15 min)"
-        if: inputs.run_phase2
+      # ── Playwright snapshot crawl ────────────────────────────────────────────
+      - name: "Playwright snapshots — Render TGG pages (~10-15 min)"
+        if: inputs.run_snapshots
         continue-on-error: true
         env:
-          CRAWL_URLS: ${{ inputs.crawl_urls }}
+          CRAWL_URLS: ${{ inputs.snapshot_urls }}
         run: |
           if [ -n "$CRAWL_URLS" ]; then
             python crawl_site_snapshot.py --urls "$CRAWL_URLS" 2>&1
           else
-            # Default: 12 pages across all content types (home, category, sub-cat,
-            # product detail, buying guide ×3, editorial, sale)
             python crawl_site_snapshot.py --urls '[
               "https://www.thegoodguys.com.au",
               "https://www.thegoodguys.com.au/televisions",
@@ -301,6 +267,7 @@ jobs:
             ]' 2>&1
           fi
 
+      # ── Sitemap crawl (optional) ─────────────────────────────────────────────
       - name: "Sitemap crawl (optional)"
         if: inputs.run_sitemap_crawl
         continue-on-error: true
@@ -310,31 +277,20 @@ jobs:
             --sample "${{ inputs.sitemap_sample }}" \
             --types "${{ inputs.sitemap_types }}" 2>&1
 
-      - name: "Phase 2 — Local deep scan (~5 min)"
-        if: inputs.run_phase2
+      # ── Auto-build competitor corpus if Qdrant is empty ──────────────────────
+      - name: "Phase 4 prep — Build competitor corpus if missing or forced"
+        if: inputs.run_phase4
         continue-on-error: true
-        env:
-          AEO_DIR: site-snapshots/thegoodguys.com.au
-          AEO_LABEL: TGG (local deep scan)
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python run_aeo_local.py 2>&1
-
-      - name: "Phase 2 — Results"
-        if: inputs.run_phase2 && always()
         run: |
-          if ls seo/outputs/aeo/aeo-local-*.json 1>/dev/null 2>&1; then
-            python3 - <<'EOF'
-          import json, glob
-          files = sorted(glob.glob('seo/outputs/aeo/aeo-local-*.json'))
-          data = json.loads(open(files[-1]).read())
-          r = data.get('report', {})
-          g = {'A':'🟢','B':'🟢','C':'🟡','D':'🟠','F':'🔴'}
-          grade = r.get('grade','?')
-          print(f"Local deep scan: {g.get(grade,'?')} Grade {grade} ({r.get('percentage',0)}%)")
-          for k, c in r.get('categories', {}).items():
-              bar = '█' * round(c['percentage']/5) + '░' * (20-round(c['percentage']/5))
-              print(f"  {c['name']:<22} {bar} {c['score']}/{c['maxScore']} ({c['percentage']}%)")
-          EOF
+          if [ "${{ inputs.rebuild_corpus }}" = "true" ]; then
+            echo "Force rebuild requested — wiping qdrant_data and rebuilding"
+            rm -rf qdrant_data
+          fi
+          if [ -d "qdrant_data" ] && [ "$(ls -A qdrant_data 2>/dev/null)" ]; then
+            echo "Qdrant corpus exists (cache hit) — skipping rebuild"
+          else
+            echo "Qdrant corpus missing — building from competitor pages..."
+            python build_competitor_corpus.py 2>&1 || echo "Corpus build failed — Phase 4 will use empty corpus"
           fi
 
       # ── Phase 3: Ecommerce-specific AEO checks ──────────────────────────────
@@ -344,8 +300,6 @@ jobs:
         env:
           SNAPSHOT_DIR: site-snapshots/thegoodguys.com.au
           AEO_LABEL: TGG (ecommerce)
-          # Default covers 4 page types: home, category, sub-category, buying guide.
-          # Buying guide is intentionally included to surface Cloudflare bot rules.
           LIVE_URLS: >-
             ${{ inputs.live_urls != '' && inputs.live_urls ||
               '["https://www.thegoodguys.com.au",
@@ -396,7 +350,7 @@ jobs:
           EOF
           fi
 
-      # ── Phase 3b: Generate recommendations ─────────────────────────────────────
+      # ── Phase 3b: Generate recommendations ──────────────────────────────────
       - name: "Phase 3b — Generate recommendations"
         if: inputs.run_phase3 && always()
         continue-on-error: true
@@ -404,21 +358,21 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python generate_recommendations.py 2>&1
 
-      # ── Agent Commerce Test (optional) ─────────────────────────────────────────
+      # ── Agent Commerce Test (optional) ───────────────────────────────────────
       - name: "Agent commerce smoke test (~2 min)"
         if: inputs.run_agent_tests
         continue-on-error: true
         run: python test_agent_commerce.py --domain thegoodguys.com.au 2>&1
 
-      # ── Cloudflare Logpush analysis (optional) ──────────────────────────────────
+      # ── Cloudflare Logpush analysis (optional) ───────────────────────────────
       - name: "CF Logpush bot analysis"
         if: inputs.cf_logpush_file != ''
         continue-on-error: true
         run: python ingest_cf_logpush.py --file "${{ inputs.cf_logpush_file }}" 2>&1
 
-      # ── Phase 4: Content Intelligence ──────────────────────────────────────────
+      # ── Phase 4: Content Intelligence ───────────────────────────────────────
       - name: "Phase 4 — Content intelligence (~5 min)"
-        if: inputs.run_phase2
+        if: inputs.run_phase4
         continue-on-error: true
         env:
           SNAPSHOT_DIR: site-snapshots/thegoodguys.com.au
@@ -427,7 +381,7 @@ jobs:
         run: python run_content_aeo.py 2>&1
 
       - name: "Phase 4 — Results"
-        if: inputs.run_phase2 && always()
+        if: inputs.run_phase4 && always()
         run: |
           if ls seo/outputs/aeo/content-aeo-*.json 1>/dev/null 2>&1; then
             python3 - <<'EOF'
@@ -470,7 +424,29 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python generate_aeo_report.py 2>&1
 
-      # ── Artifacts ────────────────────────────────────────────────────────────
+      # ── Deploy to GitHub Pages ────────────────────────────────────────────────
+      - name: "Deploy report to GitHub Pages"
+        if: always()
+        continue-on-error: true
+        run: |
+          if [ ! -f seo/outputs/aeo/report-latest.html ]; then
+            echo "No report-latest.html — skipping Pages deploy"
+            exit 0
+          fi
+          cp seo/outputs/aeo/report-latest.html /tmp/aeo-report.html
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin gh-pages
+          git checkout gh-pages
+          mkdir -p aeo
+          cp /tmp/aeo-report.html aeo/index.html
+          git add aeo/index.html
+          git diff --staged --quiet || git commit -m "Deploy AEO report — run #${{ github.run_number }}"
+          git push origin gh-pages
+          git checkout -
+          echo "Report live at: https://simonmannheimer-tgg.github.io/Claude/aeo/"
+
+      # ── Artifacts ─────────────────────────────────────────────────────────────
       - name: Upload AEO results
         if: always()
         uses: actions/upload-artifact@v4
@@ -482,7 +458,7 @@ jobs:
           FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
       - name: Upload site snapshots
-        if: inputs.run_phase2 && always()
+        if: inputs.run_snapshots && always()
         uses: actions/upload-artifact@v4
         with:
           name: site-snapshots-${{ github.run_id }}

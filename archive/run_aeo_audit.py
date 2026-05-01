@@ -12,9 +12,8 @@ Writes:
   seo/outputs/aeo/aeo-results-YYYYMMDD-HHMM.json — timestamped archive
   seo/outputs/aeo/latest.json                  — committed to repo via GitHub API
 
-Checker IDs (for AEO_CHECKS):
-  robots-txt, llms-txt, agents-md, content-structure, markdown-availability,
-  token-budget, meta-tags, skill-md, agent-permissions, copy-for-ai
+Retail checks used (AEO_CHECKS):
+  discovery, content-structure, token-economics
 """
 
 import json
@@ -26,29 +25,43 @@ from pathlib import Path
 
 import httpx
 
+# Checks that apply to every page type (structure, tokens, meta).
+# robots-txt and llms-txt are site-wide — run once per domain via the Home URL.
+_PAGE_CHECKS = "content-structure,token-budget,meta-tags"
+
 DEFAULT_URLS = [
-    # TGG — all page types
-    {"url": "https://www.thegoodguys.com.au",                              "label": "TGG · Home"},
-    {"url": "https://www.thegoodguys.com.au/televisions",                  "label": "TGG · Category"},
-    {"url": "https://www.thegoodguys.com.au/buying-guide/best-tvs",        "label": "TGG · Buying Guide"},
-    {"url": "https://www.thegoodguys.com.au/whats-new",                    "label": "TGG · Editorial"},
-    # JB Hi-Fi — equivalent page types
-    {"url": "https://www.jbhifi.com.au",                                               "label": "JB Hi-Fi · Home"},
-    {"url": "https://www.jbhifi.com.au/collections/tvs",                               "label": "JB Hi-Fi · Category"},
-    {"url": "https://www.jbhifi.com.au/blogs/news",                                    "label": "JB Hi-Fi · Blog"},
-    # Harvey Norman — equivalent page types
-    {"url": "https://www.harveynorman.com.au",                                                          "label": "Harvey Norman · Home"},
-    {"url": "https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-screen-size/all-tvs",       "label": "Harvey Norman · Category"},
-    {"url": "https://www.harveynorman.com.au/buying-guides/security-camera-buying-guide",               "label": "Harvey Norman · Guide"},
-    # Appliances Online — note: uses /category/[dept]/[sub]/ structure, no flat slugs
-    {"url": "https://www.appliancesonline.com.au",                                         "label": "Appliances Online · Home"},
-    {"url": "https://www.appliancesonline.com.au/category/refrigeration/fridges/",         "label": "Appliances Online · Category"},
-    {"url": "https://www.appliancesonline.com.au/article/refrigerator-size-guide/",        "label": "Appliances Online · Guide"},
+    # ── TGG — Home runs full checks (robots + llms + page-level) ────────────────
+    {"url": "https://www.thegoodguys.com.au",                                               "label": "TGG · Home"},
+    {"url": "https://www.thegoodguys.com.au/televisions",                                   "label": "TGG · Category",     "checks": _PAGE_CHECKS},
+    {"url": "https://www.thegoodguys.com.au/televisions/smart-tvs",                         "label": "TGG · Sub-category", "checks": _PAGE_CHECKS},
+    {"url": "https://www.thegoodguys.com.au/lg-12kg-8kg-combo-washer-dryer-wvc9-1412w",     "label": "TGG · Product",      "checks": _PAGE_CHECKS},
+    {"url": "https://www.thegoodguys.com.au/buying-guide/television-buying-guide",          "label": "TGG · Buying Guide", "checks": _PAGE_CHECKS},
+    {"url": "https://www.thegoodguys.com.au/samsung",                                       "label": "TGG · Brand Hub",    "checks": _PAGE_CHECKS},
+    {"url": "https://www.thegoodguys.com.au/whats-new",                                     "label": "TGG · News Hub",     "checks": _PAGE_CHECKS},
+
+    # ── JB Hi-Fi — Home runs full checks ────────────────────────────────────────
+    {"url": "https://www.jbhifi.com.au",                                                    "label": "JB Hi-Fi · Home"},
+    {"url": "https://www.jbhifi.com.au/collections/tvs",                                    "label": "JB Hi-Fi · Category",     "checks": _PAGE_CHECKS},
+    {"url": "https://www.jbhifi.com.au/pages/samsung",                                      "label": "JB Hi-Fi · Brand Hub",    "checks": _PAGE_CHECKS},
+    {"url": "https://www.jbhifi.com.au/pages/tv-buying-guide",                              "label": "JB Hi-Fi · Buying Guide", "checks": _PAGE_CHECKS},
+    {"url": "https://www.jbhifi.com.au/blogs/guides-tips",                                  "label": "JB Hi-Fi · Editorial Hub","checks": _PAGE_CHECKS},
+
+    # ── Harvey Norman — Home runs full checks ───────────────────────────────────
+    {"url": "https://www.harveynorman.com.au",                                                                "label": "Harvey Norman · Home"},
+    {"url": "https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-screen-size/all-tvs",             "label": "Harvey Norman · Category",     "checks": _PAGE_CHECKS},
+    {"url": "https://www.harveynorman.com.au/hisense-65-inch-q6nau-4k-qled-smart-tv.html",                    "label": "Harvey Norman · Product",      "checks": _PAGE_CHECKS},
+    {"url": "https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-brand/samsung-tvs",               "label": "Harvey Norman · Brand Page",   "checks": _PAGE_CHECKS},
+    {"url": "https://www.harveynorman.com.au/buying-guides/television-buying-guide",                          "label": "Harvey Norman · Buying Guide", "checks": _PAGE_CHECKS},
+
+    # ── Appliances Online — Home runs full checks (/category/[dept]/[sub]/ URLs)
+    {"url": "https://www.appliancesonline.com.au",                                          "label": "Appliances Online · Home"},
+    {"url": "https://www.appliancesonline.com.au/category/refrigeration/fridges/",          "label": "Appliances Online · Category",  "checks": _PAGE_CHECKS},
+    {"url": "https://www.appliancesonline.com.au/brand/samsung/",                           "label": "Appliances Online · Brand Hub", "checks": _PAGE_CHECKS},
+    {"url": "https://www.appliancesonline.com.au/article/refrigerator-size-guide/",         "label": "Appliances Online · Guide",     "checks": _PAGE_CHECKS},
 ]
 
-# Retail-relevant categories only — capability-signaling and ux-bridge are dev/repo checks
-# that reward skill.md, agent-permissions.json, and "Copy as Markdown" buttons, none of
-# which exist or matter on retail ecommerce pages.
+# Ecommerce-relevant categories: discovery, content-structure, token-economics.
+# Scored out of 75 — the agentic-seo tool's other categories target dev tools, not retail.
 CATEGORIES = [
     ("discovery", 25),
     ("content-structure", 25),
@@ -85,9 +98,8 @@ def run_aeo(url: str, checks: str | None = None) -> dict:
 
 def apply_retail_adjustment(result: dict) -> dict:
     """
-    Recalculates score over retail-relevant categories only (discovery, content-structure,
-    token-economics). capability-signaling and ux-bridge are not included in CATEGORIES
-    so they never inflate the score even if agentic-seo CLI scores them internally.
+    Recalculates score over the three ecommerce-relevant categories only:
+    discovery, content-structure, token-economics (75 pts max).
     """
     if "error" in result or "categories" not in result:
         return result
@@ -146,7 +158,13 @@ def build_summary(entries: list[dict]) -> str:
             continue
         findings = r.get("findings", {})
         errors = findings.get("errors", [])
-        warnings = findings.get("warnings", [])
+        # Suppress "No local directory" warnings — these fire in URL mode because
+        # some sub-checks (token budget, meta tags, markdown) need downloaded HTML.
+        # They're not failures; Phase 2 covers them properly.
+        warnings = [
+            f for f in findings.get("warnings", [])
+            if "No local directory" not in f.get("message", "")
+        ]
         if not errors and not warnings:
             continue
         lines.append(f"### {label}\n")
@@ -221,8 +239,11 @@ def main():
     for e in entries:
         url = e["url"]
         label = e.get("label", url)
+        # Global AEO_CHECKS env var overrides; otherwise use per-entry default.
+        # Home URLs have no per-entry checks → run full set (robots+llms+page).
+        entry_checks = checks if checks else e.get("checks")
         print(f"  [{label}] {url}")
-        r = run_aeo(url, checks)
+        r = run_aeo(url, entry_checks)
         r = apply_retail_adjustment(r)
         e["result"] = r
         if "error" in r:
@@ -233,6 +254,7 @@ def main():
             print(
                 f"  ✓ Grade {r.get('grade', '?')} ({r.get('percentage', 0)}% raw"
                 f" / {retail_pct}% retail-adjusted)"
+                f" | {label} — {url}"
                 f" | {s.get('failed', s.get('errors', '?'))} errors, {s.get('warned', s.get('warnings', '?'))} warnings"
             )
 
