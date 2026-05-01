@@ -126,6 +126,23 @@ def _classify_url(url: str) -> str:
 
 # ── Crawler ────────────────────────────────────────────────────────────────────
 
+def _playwright_fetch(url: str) -> str:
+    """Fetch a Cloudflare-protected page via headless Chromium. Returns raw HTML or ''."""
+    try:
+        from playwright.sync_api import sync_playwright
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True)
+            ctx = browser.new_context(user_agent=BROWSER_UA)
+            page = ctx.new_page()
+            page.goto(url, timeout=30000, wait_until="networkidle")
+            html = page.content()
+            browser.close()
+            return html
+    except Exception as e:
+        print(f"    (playwright error: {e})")
+        return ""
+
+
 def crawl_domain(domain: str, paths: list[str]) -> list[dict]:
     """Returns list of {"url", "text", "page_type"} dicts."""
     base = f"https://www.{domain}"
@@ -138,10 +155,16 @@ def crawl_domain(domain: str, paths: list[str]) -> list[dict]:
             if resp.status_code != 200:
                 print(f"  ✗ {url} — HTTP {resp.status_code}")
                 continue
-            text = _extract_text(resp.text)
+            html = resp.text
+            text = _extract_text(html)
             word_count = len(text.split())
             if word_count < 200:
-                print(f"  ⚠ {url} — only {word_count} words (may be blocked)")
+                print(f"  ⚠ {url} — only {word_count} words via httpx, retrying with Playwright...")
+                html = _playwright_fetch(url)
+                text = _extract_text(html)
+                word_count = len(text.split())
+            if word_count < 200:
+                print(f"  ✗ {url} — only {word_count} words after Playwright (blocked)")
                 continue
             page_type = _classify_url(url)
             results.append({"url": url, "text": text, "page_type": page_type, "domain": domain})
