@@ -143,7 +143,13 @@ def build_summary(entries: list[dict]) -> str:
             continue
         findings = r.get("findings", {})
         errors = findings.get("errors", [])
-        warnings = findings.get("warnings", [])
+        # Suppress "No local directory" warnings — these fire in URL mode because
+        # some sub-checks (token budget, meta tags, markdown) need downloaded HTML.
+        # They're not failures; Phase 2 covers them properly.
+        warnings = [
+            f for f in findings.get("warnings", [])
+            if "No local directory" not in f.get("message", "")
+        ]
         if not errors and not warnings:
             continue
         lines.append(f"### {label}\n")
