@@ -62,6 +62,7 @@ jobs:
             echo "No changes to commit."
           else
             git commit -m "chore: update sitemap_audit_latest.csv ($ROWS rows)"
+            git pull --rebase origin main
             git push
             echo "committed=true" >> "$GITHUB_OUTPUT"
           fi
