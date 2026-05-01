@@ -121,10 +121,10 @@ jobs:
 
           ### Outputs
 
-          | File | Location |
-          |------|----------|
-          | Sitemap index CSV | \`data/sitemap_audit_latest.csv\` |
-          | Downloadable artifact | \`sitemap-audit-${{ github.run_id }}\` (30-day retention) |
+          | File | Link |
+          |------|------|
+          | Sitemap index CSV (committed) | [\`data/sitemap_audit_latest.csv\`](${{ github.server_url }}/${{ github.repository }}/blob/main/data/sitemap_audit_latest.csv) |
+          | Artifact ZIP (download) | [sitemap-audit-${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) |
 
           **Next scheduled run:** Sunday 12:00 UTC
 

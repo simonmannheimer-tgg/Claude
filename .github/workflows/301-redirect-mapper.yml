@@ -150,9 +150,15 @@ jobs:
 
           ---
 
-          ### Download
+          ### Output Files
 
-          **Artifact:** \`301-redirect-output-${{ github.run_id }}\` (30-day retention)
+          | File | Description | Link |
+          |------|-------------|------|
+          | \`final_shopify_import_ready.csv\` | Shopify-ready, import directly | [Download artifact](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) |
+          | \`final_shopify_import_review.csv\` | Manual review queue | [Download artifact](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) |
+          | \`my_shopify_import_ready.csv\` | My raw output (pre-merge) | [Download artifact](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) |
+          | \`my_shopify_import_review.csv\` | My raw review (pre-merge) | [Download artifact](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) |
+          | \`my_comparison_report.csv\` | Full diff vs other AI | [Download artifact](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) |
 
-          Contains: \`final_shopify_import_ready.csv\`, \`final_shopify_import_review.csv\`, \`my_shopify_import_ready.csv\`, \`my_shopify_import_review.csv\`, \`my_comparison_report.csv\`
+          All files are bundled in artifact **[301-redirect-output-${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})** (30-day retention).
           EOF
