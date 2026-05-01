@@ -132,14 +132,6 @@ on:
         type: boolean
         default: false
 
-      cf_logpush_file:
-        description: |
-          Cloudflare Logpush file path (optional) — analyse AI bot traffic from CF logs.
-          Path to an NDJSON file in the repo (e.g. inbox/cf-logs.ndjson).
-          Leave blank to skip.
-        required: false
-        default: ''
-
       rebuild_corpus:
         description: |
           ☐ Force rebuild competitor corpus
@@ -363,12 +355,6 @@ jobs:
         if: inputs.run_agent_tests
         continue-on-error: true
         run: python test_agent_commerce.py --domain thegoodguys.com.au 2>&1
-
-      # ── Cloudflare Logpush analysis (optional) ───────────────────────────────
-      - name: "CF Logpush bot analysis"
-        if: inputs.cf_logpush_file != ''
-        continue-on-error: true
-        run: python ingest_cf_logpush.py --file "${{ inputs.cf_logpush_file }}" 2>&1
 
       # ── Phase 4: Content Intelligence ───────────────────────────────────────
       - name: "Phase 4 — Content intelligence (~5 min)"

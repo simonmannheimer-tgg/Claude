@@ -37,7 +37,7 @@ DEFAULT_DOMAIN_PATHS = {
         "/collections/air-conditioners",
         "/collections/washing-machines",
         "/collections/laptops",
-        "/collections/headphones",
+        "/blogs/news",
     ],
     "harveynorman.com.au": [
         "/tv-blu-ray-home-theatre/tvs-by-screen-size/all-tvs",
@@ -66,9 +66,7 @@ def _get_encoder():
     try:
         from FlagEmbedding import BGEM3FlagModel
         import numpy as np
-        import os
-        use_fp16 = os.getenv("BGE_USE_FP16", "false").lower() == "true"
-        model = BGEM3FlagModel("BAAI/bge-m3", use_fp16=use_fp16)
+        model = BGEM3FlagModel("BAAI/bge-m3", use_fp16=True)
         def encode(texts):
             out = model.encode(texts, return_dense=True, return_sparse=False, return_colbert_vecs=False)
             vecs = out["dense_vecs"]
@@ -128,23 +126,6 @@ def _classify_url(url: str) -> str:
 
 # ── Crawler ────────────────────────────────────────────────────────────────────
 
-def _playwright_fetch(url: str) -> str:
-    """Fetch a Cloudflare-protected page via headless Chromium. Returns raw HTML or ''."""
-    try:
-        from playwright.sync_api import sync_playwright
-        with sync_playwright() as p:
-            browser = p.chromium.launch(headless=True)
-            ctx = browser.new_context(user_agent=BROWSER_UA)
-            page = ctx.new_page()
-            page.goto(url, timeout=30000, wait_until="networkidle")
-            html = page.content()
-            browser.close()
-            return html
-    except Exception as e:
-        print(f"    (playwright error: {e})")
-        return ""
-
-
 def crawl_domain(domain: str, paths: list[str]) -> list[dict]:
     """Returns list of {"url", "text", "page_type"} dicts."""
     base = f"https://www.{domain}"
@@ -157,16 +138,10 @@ def crawl_domain(domain: str, paths: list[str]) -> list[dict]:
             if resp.status_code != 200:
                 print(f"  ✗ {url} — HTTP {resp.status_code}")
                 continue
-            html = resp.text
-            text = _extract_text(html)
+            text = _extract_text(resp.text)
             word_count = len(text.split())
             if word_count < 200:
-                print(f"  ⚠ {url} — only {word_count} words via httpx, retrying with Playwright...")
-                html = _playwright_fetch(url)
-                text = _extract_text(html)
-                word_count = len(text.split())
-            if word_count < 200:
-                print(f"  ✗ {url} — only {word_count} words after Playwright (blocked)")
+                print(f"  ⚠ {url} — only {word_count} words (may be blocked)")
                 continue
             page_type = _classify_url(url)
             results.append({"url": url, "text": text, "page_type": page_type, "domain": domain})
@@ -249,9 +224,8 @@ def main():
             {"id": i, "vector": vectors[i], "payload": all_passages[i]}
             for i in range(len(all_passages))
         ]
-        vector_size = len(vectors[0]) if vectors else 384
-        print(f"\nUpserting {len(points)} passages to Qdrant (dim={vector_size})...")
-        upsert_passages(client, points, vector_size)
+        print(f"\nUpserting {len(points)} passages to Qdrant...")
+        upsert_passages(client, points)
         info = get_collection_info(client)
         print(f"  Qdrant collection: {info['vectors_count']} vectors")
         manifest_path.write_text(json.dumps({
