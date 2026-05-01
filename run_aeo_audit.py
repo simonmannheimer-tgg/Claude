@@ -33,25 +33,26 @@ DEFAULT_URLS = [
     {"url": "https://www.thegoodguys.com.au/buying-guide/best-tvs",        "label": "TGG · Buying Guide"},
     {"url": "https://www.thegoodguys.com.au/whats-new",                    "label": "TGG · Editorial"},
     # JB Hi-Fi — equivalent page types
-    {"url": "https://www.jbhifi.com.au",                                   "label": "JB Hi-Fi · Home"},
-    {"url": "https://www.jbhifi.com.au/collections/televisions",           "label": "JB Hi-Fi · Category"},
-    {"url": "https://www.jbhifi.com.au/blogs/news",                        "label": "JB Hi-Fi · Blog"},
+    {"url": "https://www.jbhifi.com.au",                                               "label": "JB Hi-Fi · Home"},
+    {"url": "https://www.jbhifi.com.au/collections/tvs",                               "label": "JB Hi-Fi · Category"},
+    {"url": "https://www.jbhifi.com.au/blogs/news",                                    "label": "JB Hi-Fi · Blog"},
     # Harvey Norman — equivalent page types
-    {"url": "https://www.harveynorman.com.au",                             "label": "Harvey Norman · Home"},
-    {"url": "https://www.harveynorman.com.au/televisions",                 "label": "Harvey Norman · Category"},
-    {"url": "https://www.harveynorman.com.au/buying-guide",                "label": "Harvey Norman · Guide"},
-    # Appliances Online
-    {"url": "https://www.appliancesonline.com.au",                         "label": "Appliances Online · Home"},
-    {"url": "https://www.appliancesonline.com.au/televisions",             "label": "Appliances Online · Category"},
+    {"url": "https://www.harveynorman.com.au",                                                          "label": "Harvey Norman · Home"},
+    {"url": "https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-screen-size/all-tvs",       "label": "Harvey Norman · Category"},
+    {"url": "https://www.harveynorman.com.au/buying-guides/security-camera-buying-guide",               "label": "Harvey Norman · Guide"},
+    # Appliances Online — note: uses /category/[dept]/[sub]/ structure, no flat slugs
+    {"url": "https://www.appliancesonline.com.au",                                         "label": "Appliances Online · Home"},
+    {"url": "https://www.appliancesonline.com.au/category/refrigeration/fridges/",         "label": "Appliances Online · Category"},
+    {"url": "https://www.appliancesonline.com.au/article/refrigerator-size-guide/",        "label": "Appliances Online · Guide"},
 ]
 
-# Category keys from agentic-seo runner.js — kebab-case
+# Retail-relevant categories only — capability-signaling and ux-bridge are dev/repo checks
+# that reward skill.md, agent-permissions.json, and "Copy as Markdown" buttons, none of
+# which exist or matter on retail ecommerce pages.
 CATEGORIES = [
     ("discovery", 25),
     ("content-structure", 25),
     ("token-economics", 25),
-    ("capability-signaling", 15),
-    ("ux-bridge", 10),
 ]
 
 GRADE_EMOJI = {"A": "🟢", "B": "🟢", "C": "🟡", "D": "🟠", "F": "🔴"}
@@ -84,26 +85,19 @@ def run_aeo(url: str, checks: str | None = None) -> dict:
 
 def apply_retail_adjustment(result: dict) -> dict:
     """
-    Remove points for capability-signaling and ux-bridge categories — these reward
-    repo-specific artifacts (skill.md, agent-permissions.json, copy-to-clipboard buttons)
-    that are irrelevant for retail ecommerce pages. Recalculates percentage over
-    the remaining 75-point retail-relevant score.
+    Recalculates score over retail-relevant categories only (discovery, content-structure,
+    token-economics). capability-signaling and ux-bridge are not included in CATEGORIES
+    so they never inflate the score even if agentic-seo CLI scores them internally.
     """
     if "error" in result or "categories" not in result:
         return result
 
-    excluded = {"capability-signaling", "ux-bridge"}
     cats = result.get("categories", {})
-    retail_max = sum(m for k, m in CATEGORIES if k not in excluded)  # 75
-    retail_score = sum(
-        cats.get(k, {}).get("score", 0)
-        for k, _ in CATEGORIES
-        if k not in excluded
-    )
+    retail_max = sum(m for _, m in CATEGORIES)
+    retail_score = sum(cats.get(k, {}).get("score", 0) for k, _ in CATEGORIES)
     adjusted_pct = round(retail_score / retail_max * 100) if retail_max else 0
 
     result["retail_adjusted"] = True
-    result["excluded_categories"] = sorted(excluded)
     result["retail_score"] = retail_score
     result["retail_max"] = retail_max
     result["retail_percentage"] = adjusted_pct

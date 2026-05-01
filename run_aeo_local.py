@@ -25,16 +25,16 @@ import httpx
 GRADE_EMOJI = {"A": "🟢", "B": "🟢", "C": "🟡", "D": "🟠", "F": "🔴"}
 
 CATEGORIES = [
-    ("discovery",            "Discovery",            25),
-    ("content-structure",    "Content Structure",    25),
-    ("token-economics",      "Token Economics",      25),
-    ("capability-signaling", "Capability Signaling", 15),
-    ("ux-bridge",            "UX Bridge",            10),
+    ("discovery",         "Discovery",        25),
+    ("content-structure", "Content Structure", 25),
+    ("token-economics",   "Token Economics",  25),
 ]
+
+_RETAIL_CHECKS = "discovery,content-structure,token-economics"
 
 
 def run_local_aeo(dir_path: str) -> dict:
-    cmd = ["agentic-seo", "--json", dir_path]
+    cmd = ["agentic-seo", "--json", "--checks", _RETAIL_CHECKS, dir_path]
     try:
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
         output = result.stdout.strip()
