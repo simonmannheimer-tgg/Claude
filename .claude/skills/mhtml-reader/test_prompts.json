@@ -1,0 +1,22 @@
+[
+  {
+    "prompt": "I've uploaded Click_Frenzy_FAQ_alignment_-_Claude.mhtml - what's in this file?",
+    "expected": "Should detect it's a Claude conversation, summarize the FAQ work, identify key outputs, and ask what to do next"
+  },
+  {
+    "prompt": "Read Gaming_Headsets_-_Buy_Gaming_Equipment___More_-_JB_Hi-Fi.mhtml",
+    "expected": "Should detect it's a JB Hi-Fi competitor page, extract title/meta/H1, describe the page, and ask what to analyze"
+  },
+  {
+    "prompt": "What's in the Easter Sale 2026 MHTML file?",
+    "expected": "Should detect it's a TGG page (thegoodguys.com.au/easter-sale), extract page metadata, and ask what to analyze"
+  },
+  {
+    "prompt": "I need to analyze the Black Friday report conversation",
+    "expected": "Should detect Black_Friday_report_restructure_and_deals_page_performance_analysis_-_Claude.mhtml, extract conversation summary, and ask next steps"
+  },
+  {
+    "prompt": "Read the Semrush position tracking file",
+    "expected": "Should detect analytics tool, identify it as Semrush report, mention data availability, and ask what to extract"
+  }
+]

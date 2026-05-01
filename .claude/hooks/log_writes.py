@@ -16,7 +16,10 @@ if payload.get("tool_name") not in ("Write", "Edit", "MultiEdit"):
 file_path = payload.get("tool_input", {}).get("file_path", "unknown")
 log = os.path.join(os.path.dirname(__file__), "..", "write_log.txt")
 
-with open(log, "a") as f:
-    f.write(f"{datetime.now().isoformat()} | {payload.get('tool_name')} | {file_path}\n")
+try:
+    with open(log, "a") as f:
+        f.write(f"{datetime.now().isoformat()} | {payload.get('tool_name')} | {file_path}\n")
+except Exception:
+    pass
 
 sys.exit(0)

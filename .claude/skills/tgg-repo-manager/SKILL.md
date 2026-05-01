@@ -1,6 +1,6 @@
 ---
 name: tgg-repo-manager
-description: "Full-context repo and documentation management skill for Simon's Claude Code and SEO workflow files at The Good Guys. Use for writing commit messages, PR descriptions, CLAUDE.md entries, process file updates, repo housekeeping, and structuring any documentation that lives in the .claude/ directory or SEO workflow repo."
+description: Full-context repo and documentation management skill for Simon's Claude Code and SEO workflow files at The Good Guys. Use for writing commit messages, PR descriptions, CLAUDE.md entries, process file updates, repo housekeeping, and structuring any documentation that lives in the .claude/ directory or SEO workflow repo.
 ---
 
 # TGG Repo Manager
@@ -24,38 +24,37 @@ The repo is not a software development project. It is a personal SEO workflow ma
 ## .claude/ directory structure
 
 ```
+~/.claude/
+├── CLAUDE.md                   ← Memory file: process rules, active projects, behavioural instructions
+├── agents/
+│   ├── seo-specialist.md       ← Subagent: SEO audits, PLP copy, schema, AEO
+│   ├── content-strategist.md   ← Subagent: copy production, briefs, AEO copy
+│   ├── base-template-generator.md
+│   ├── pr-manager.md
+│   └── marketing-analyst.md
+├── skills/
+│   ├── seo-specialist/SKILL.md
+│   ├── content-strategist/SKILL.md
+│   ├── base-template-generator/SKILL.md
+│   ├── pr-manager/SKILL.md
+│   └── marketing-analyst/SKILL.md
+└── commands/
+    └── [slash-command-name].md
+```
+
+**Project-scoped** (in repo root):
+```
 [repo-root]/
-├── CLAUDE.md                        → Project-level rules (supplements global)
 ├── .claude/
-│   ├── agents/                      → Project-specific subagents
-│   │   ├── seo-team-lead.md
-│   │   ├── plp-copywriter.md
-│   │   ├── metadata-writer.md
-│   │   ├── faq-writer.md
-│   │   ├── aeo-optimizer.md
-│   │   ├── inlink-migrator.md
-│   │   ├── internal-linking-agent.md
-│   │   ├── content-analyst.md
-│   │   ├── eav-researcher.md
-│   │   ├── seo-keyword-researcher.md
-│   │   ├── seo-competitor-analyst.md
-│   │   ├── seo-content-auditor.md
-│   │   ├── seo-reporter.md
-│   │   └── ai-visibility-analyst.md
-│   ├── skills/                      → Slash skills
-│   │   ├── tgg-repo-manager/SKILL.md
-│   │   ├── check-github/SKILL.md
-│   │   └── start-chat/SKILL.md
-│   ├── settings.json
-│   └── mcp-actions.json
-├── 00-tov-language-reference.md
+│   └── agents/    ← project-specific agents only
+├── CLAUDE.md      ← project-level rules (supplements global)
 ├── 01-plp-intros.md
-├── 02-metadata-generation.md
+├── 02-metadata.md
 ├── 03-inlink-migration.md
 ├── 04-content-analysis.md
 ├── 05-faq-category-copy.md
 ├── 06-internal-linking.md
-├── 07-aeo-optimisation.md
+├── 07-aeo.md
 ├── 08-eav-mapping.md
 └── 09-ai-visibility-polling.md
 ```
@@ -302,20 +301,6 @@ git commit -m "update(process): [description]"
 git add CLAUDE.md CLAUDE.archive.md
 git commit -m "chore(claude.md): prune stale entries — archived to CLAUDE.archive.md"
 ```
-
----
-
-## Periodic repo health checks
-
-Run these checks when invoked as a scheduled or on-demand task:
-
-1. **CLAUDE.md line count** — if over ~200 lines, prune stale/complete entries
-2. **Process file dates** — flag any with "Last updated" > 60 days ago for review
-3. **YAML frontmatter** — validate all agent `.md` files in `.claude/agents/`
-4. **Git remote URL** — verify CLAUDE.md documents the correct proxy port
-5. **Broken references** — check any file paths mentioned in CLAUDE.md actually exist
-6. **Stale branches** — list merged branches that haven't been cleaned up
-7. **Secrets check** — confirm no `.env` file or hardcoded keys are tracked by git
 
 ---
 

@@ -156,23 +156,6 @@ def section_hero(data: dict) -> str:
     p3 = data["phase3"]
 
     p4 = data.get("phase4")
-    tgg_p1 = next((e for e in p1 if "tgg" in e.get("label", "").lower()), p1[0] if p1 else None)
-    p1_grade = tgg_p1["result"].get("grade", "?") if tgg_p1 and "error" not in tgg_p1.get("result", {}) else "?"
-    p1_pct   = tgg_p1["result"].get("percentage", 0) if tgg_p1 and "error" not in tgg_p1.get("result", {}) else 0
-
-    p2_grade = p2["report"].get("grade", "?") if p2 else "?"
-    p2_pct   = p2["report"].get("percentage", 0) if p2 else 0
-
-    p3_grade = p3.get("grade", "?") if p3 else "?"
-    p3_pct   = p3.get("percentage", 0) if p3 else 0
-
-    p4_grade = p4.get("grade", "?") if p4 else "?"
-    p4_pct   = p4.get("percentage", 0) if p4 else 0
-    cards = [
-        ("Phase 1 · Discovery",  p1_grade, p1_pct, "Robots, llms.txt, meta signals"),
-        ("Phase 2 · Deep Scan",  p2_grade, p2_pct, "Content, tokens, structure"),
-        ("Phase 3 · Ecommerce",  p3_grade, p3_pct, "Schema, UA, DOM, sitemap"),
-        ("Phase 4 · Content IQ", p4_grade, p4_pct, "Entities, chunking, semantics"),
     ]
 
     html = '<div class="hero-cards">'
@@ -461,46 +444,6 @@ def section_phase4(phase4: dict) -> str:
     return html
 
 
-# ── Chart.js Snippets ──────────────────────────────────────────────────────────
-
-def charts_js(data: dict) -> str:
-    phase1 = data["phase1"] or []
-    phase3 = data["phase3"]
-
-    valid_p1 = [e for e in phase1 if "error" not in e.get("result", {})]
-    p1_labels = json.dumps([e.get("label", e.get("url","?")) for e in valid_p1])
-    p1_pcts   = json.dumps([e["result"].get("percentage", 0) for e in valid_p1])
-
-    # Phase 1 category breakdown per site
-    colors = ["'#6366f1'", "'#22c55e'", "'#eab308'", "'#f97316'", "'#ec4899'"]
-    p1_datasets = []
-    for i, (key, name, max_pts) in enumerate(PHASE1_CATS):
-        vals = []
-        for e in valid_p1:
-            c = e["result"].get("categories", {}).get(key, {})
-            vals.append(round(c.get("score", 0) / max_pts * 100))
-        p1_datasets.append(f'{{"label":"{name}","data":{json.dumps(vals)},"backgroundColor":{colors[i]}}}')
-    p1_datasets_js = "[" + ",".join(p1_datasets) + "]"
-
-    # Phase 3 radar
-    if phase3:
-        p3_checks = phase3.get("checks", {})
-        p3_labels = json.dumps([c[1] for c in PHASE3_CATS])
-        p3_data   = json.dumps([p3_checks.get(c[0], {}).get("percentage", 0) for c in PHASE3_CATS])
-    else:
-        p3_labels = "[]"
-        p3_data   = "[]"
-
-    # Phase 4 radar
-    phase4 = data.get("phase4")
-    if phase4:
-        p4_checks = phase4.get("checks", {})
-        p4_labels = json.dumps([c[1] for c in PHASE4_CATS])
-        p4_data   = json.dumps([p4_checks.get(c[0], {}).get("percentage", 0) for c in PHASE4_CATS])
-    else:
-        p4_labels = "[]"
-        p4_data   = "[]"
-
     # Phase 2 category bars
     phase2 = data["phase2"]
     if phase2:
@@ -677,33 +620,6 @@ def build_html(data: dict) -> str:
     p4       = data.get("phase4")
     p4_grade = p4.get("grade", "?") if p4 else "?"
     p4_pct   = p4.get("percentage", 0) if p4 else 0
-
-    html = f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AEO Audit Report — The Good Guys — {ts}</title>
-<style>{CSS}</style>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-</head>
-<body>
-<div class="container">
-
-  <div class="report-header">
-    <h1>AEO Audit Report — The Good Guys</h1>
-    <div class="meta">Run #{run_num} &nbsp;·&nbsp; Branch: {ref} &nbsp;·&nbsp; Generated: {ts}</div>
-  </div>
-
-  {section_hero(data)}
-
-  <div class="charts-grid">
-    <div class="chart-box"><canvas id="chartP1Overall" height="220"></canvas></div>
-    <div class="chart-box"><canvas id="chartP3" height="220"></canvas></div>
-    <div class="chart-box"><canvas id="chartP4" height="220"></canvas></div>
-    <div class="chart-box"><canvas id="chartP2" height="220"></canvas></div>
-  </div>
-  <div class="chart-box-wide"><canvas id="chartP1Cats" height="120"></canvas></div>
 
   <div class="section">
     <h2>Phase 1 — Competitor Comparison (Discovery &amp; Signals)</h2>

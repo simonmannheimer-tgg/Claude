@@ -1,11 +1,11 @@
 ---
 name: skill-zip-sync
-description: Syncs skill ZIPs from Google Drive to the GitHub repo. Finds timestamped skill ZIPs (format: skill-name_YYYYMMDD-HHMM.zip), picks the latest per skill, extracts to .claude/skills/, commits with metadata, pushes to GitHub, then logs all processed ZIPs for manual Drive cleanup. Run on a routine schedule or manually.
+description: Syncs skill ZIPs from Google Drive to the GitHub repo. Finds timestamped skill ZIPs (format: skill-name_YYYYMMDD-HHMM.zip), picks the latest per skill, extracts to .claude/skills/, commits with metadata, pushes to GitHub, then deletes all processed ZIPs from Drive. Run on a routine schedule or manually.
 ---
 
 # skill-zip-sync
 
-Pulls the latest skill ZIPs from Google Drive into the repo, commits them, and logs ZIPs for cleanup.
+Pulls the latest skill ZIPs from Google Drive into the repo, commits them, and cleans up Drive.
 
 ---
 
@@ -26,7 +26,7 @@ Return `{name, fileId, modifiedTime}` for each match. Ignore any ZIPs that don't
 2. Group all ZIPs by `skill-name`
 3. Sort each group by `timestamp` descending
 4. Select the newest ZIP per skill to process
-5. All others in the group are stale — collect their `fileId` values for the cleanup log in Step 5
+5. All others in the group are stale — collect their `fileId` values for deletion in Step 5
 
 Check `.claude/skills/[skill-name]/.last_sync` in the repo. If the latest ZIP timestamp is not newer than `.last_sync`, skip that skill entirely (already current).
 
@@ -66,26 +66,20 @@ For each extracted skill:
 
 ---
 
-## Step 5 — Log ZIPs for Drive cleanup
+## Step 5 — Delete all processed ZIPs from Drive
 
-**Note:** Drive delete is not available in the current MCP. Instead of deleting, append all processed ZIP fileIds to `.claude/skill-sync-cleanup.log` in the format:
+For every ZIP found in Step 1 (latest and stale), delete from Drive using the Drive MCP delete tool.
 
-```
-[ISO datetime] CLEANUP_NEEDED fileId=[id] filename=[name]
-```
+This includes the ZIP just processed and any older stale ZIPs for the same skill. Drive should be empty of skill ZIPs after a successful run.
 
-After running, review `.claude/skill-sync-cleanup.log` and delete the listed files from Drive manually, or activate Google Workspace MCP (which supports Drive delete via `update_drive_file`) to automate cleanup.
-
-This includes the ZIP just processed and any older stale ZIPs for the same skill.
-
-If extraction or commit failed for a skill in Step 3-4, do NOT log that skill's ZIPs. Leave them for retry on next run.
+If extraction or commit failed for a skill in Step 3-4, do NOT delete that skill's ZIPs. Leave them for retry on next run.
 
 ---
 
 ## Step 6 — Push to GitHub
 
 ```
-git push -u origin <current-branch>
+git push origin main
 ```
 
 If push fails due to conflict, pull with rebase then push again.
@@ -100,7 +94,7 @@ Skills checked: N
 Skills updated: N
   — [skill-name]: [change description]
 Skills already current: N
-ZIPs logged for cleanup: N (see .claude/skill-sync-cleanup.log)
+ZIPs deleted from Drive: N
 Pushed to GitHub: YES / NO
 ```
 
@@ -109,5 +103,5 @@ Pushed to GitHub: YES / NO
 ## Notes
 
 - Only ZIPs matching `[skill-name]_[YYYYMMDD-HHMM].zip` are processed. All other ZIPs in Drive root are ignored.
-- If two ZIPs have identical timestamps for the same skill, pick either and log both for cleanup.
-- Drive delete unavailable: log instead of delete. Activate Google Workspace MCP to enable automated cleanup.
+- If two ZIPs have identical timestamps for the same skill, pick either and delete both after.
+- If Drive delete is unavailable, log a warning and list fileIds needing manual cleanup.

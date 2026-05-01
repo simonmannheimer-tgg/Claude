@@ -1,0 +1,1516 @@
+{
+  "label": "TGG (ecommerce)",
+  "dir": "site-snapshots/thegoodguys.com.au",
+  "grade": "D",
+  "score": 492,
+  "maxScore": 910,
+  "percentage": 54,
+  "checks": {
+    "schema": {
+      "score": 110,
+      "maxScore": 340,
+      "percentage": 32,
+      "grade": "F",
+      "pages": [
+        {
+          "file": "air-conditioners.html",
+          "page_type": "category",
+          "found_types": [
+            "BreadcrumbList",
+            "CollectionPage",
+            "FAQPage"
+          ],
+          "required": [
+            "ItemList",
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "present": [
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "missing": [
+            "ItemList"
+          ],
+          "bonus": [
+            "FAQPage"
+          ],
+          "score": 25,
+          "maxScore": 30
+        },
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "page_type": "guide",
+          "found_types": [],
+          "required": [
+            "Article",
+            "FAQPage",
+            "BreadcrumbList",
+            "VideoObject"
+          ],
+          "present": [],
+          "missing": [
+            "Article",
+            "FAQPage",
+            "BreadcrumbList",
+            "VideoObject"
+          ],
+          "bonus": [],
+          "score": 0,
+          "maxScore": 40
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "page_type": "guide",
+          "found_types": [],
+          "required": [
+            "Article",
+            "FAQPage",
+            "BreadcrumbList",
+            "VideoObject"
+          ],
+          "present": [],
+          "missing": [
+            "Article",
+            "FAQPage",
+            "BreadcrumbList",
+            "VideoObject"
+          ],
+          "bonus": [],
+          "score": 0,
+          "maxScore": 40
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "page_type": "guide",
+          "found_types": [],
+          "required": [
+            "Article",
+            "FAQPage",
+            "BreadcrumbList",
+            "VideoObject"
+          ],
+          "present": [],
+          "missing": [
+            "Article",
+            "FAQPage",
+            "BreadcrumbList",
+            "VideoObject"
+          ],
+          "bonus": [],
+          "score": 0,
+          "maxScore": 40
+        },
+        {
+          "file": "index.html",
+          "page_type": "home",
+          "found_types": [
+            "Organization"
+          ],
+          "required": [
+            "WebSite",
+            "Organization",
+            "SiteLinksSearchBox"
+          ],
+          "present": [
+            "Organization"
+          ],
+          "missing": [
+            "WebSite",
+            "SiteLinksSearchBox"
+          ],
+          "bonus": [],
+          "score": 10,
+          "maxScore": 30
+        },
+        {
+          "file": "laptops-computers.html",
+          "page_type": "category",
+          "found_types": [],
+          "required": [
+            "ItemList",
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "present": [],
+          "missing": [
+            "ItemList",
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "bonus": [],
+          "score": 0,
+          "maxScore": 30
+        },
+        {
+          "file": "televisions--smart-tvs.html",
+          "page_type": "product",
+          "found_types": [
+            "BreadcrumbList",
+            "CollectionPage",
+            "FAQPage"
+          ],
+          "required": [
+            "Product",
+            "Offer",
+            "AggregateRating",
+            "BreadcrumbList"
+          ],
+          "present": [
+            "BreadcrumbList"
+          ],
+          "missing": [
+            "Product",
+            "Offer",
+            "AggregateRating"
+          ],
+          "bonus": [
+            "FAQPage"
+          ],
+          "score": 15,
+          "maxScore": 40
+        },
+        {
+          "file": "televisions.html",
+          "page_type": "category",
+          "found_types": [
+            "BreadcrumbList",
+            "CollectionPage",
+            "FAQPage"
+          ],
+          "required": [
+            "ItemList",
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "present": [
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "missing": [
+            "ItemList"
+          ],
+          "bonus": [
+            "FAQPage"
+          ],
+          "score": 25,
+          "maxScore": 30
+        },
+        {
+          "file": "washing-machines.html",
+          "page_type": "category",
+          "found_types": [
+            "BreadcrumbList",
+            "CollectionPage",
+            "FAQPage"
+          ],
+          "required": [
+            "ItemList",
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "present": [
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "missing": [
+            "ItemList"
+          ],
+          "bonus": [
+            "FAQPage"
+          ],
+          "score": 25,
+          "maxScore": 30
+        },
+        {
+          "file": "whats-new.html",
+          "page_type": "category",
+          "found_types": [
+            "BreadcrumbList"
+          ],
+          "required": [
+            "ItemList",
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "present": [
+            "BreadcrumbList"
+          ],
+          "missing": [
+            "ItemList",
+            "CollectionPage"
+          ],
+          "bonus": [],
+          "score": 10,
+          "maxScore": 30
+        }
+      ],
+      "errors": [
+        {
+          "file": "air-conditioners.html",
+          "page_type": "category",
+          "found_types": [
+            "BreadcrumbList",
+            "CollectionPage",
+            "FAQPage"
+          ],
+          "required": [
+            "ItemList",
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "present": [
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "missing": [
+            "ItemList"
+          ],
+          "bonus": [
+            "FAQPage"
+          ],
+          "score": 25,
+          "maxScore": 30
+        },
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "page_type": "guide",
+          "found_types": [],
+          "required": [
+            "Article",
+            "FAQPage",
+            "BreadcrumbList",
+            "VideoObject"
+          ],
+          "present": [],
+          "missing": [
+            "Article",
+            "FAQPage",
+            "BreadcrumbList",
+            "VideoObject"
+          ],
+          "bonus": [],
+          "score": 0,
+          "maxScore": 40
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "page_type": "guide",
+          "found_types": [],
+          "required": [
+            "Article",
+            "FAQPage",
+            "BreadcrumbList",
+            "VideoObject"
+          ],
+          "present": [],
+          "missing": [
+            "Article",
+            "FAQPage",
+            "BreadcrumbList",
+            "VideoObject"
+          ],
+          "bonus": [],
+          "score": 0,
+          "maxScore": 40
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "page_type": "guide",
+          "found_types": [],
+          "required": [
+            "Article",
+            "FAQPage",
+            "BreadcrumbList",
+            "VideoObject"
+          ],
+          "present": [],
+          "missing": [
+            "Article",
+            "FAQPage",
+            "BreadcrumbList",
+            "VideoObject"
+          ],
+          "bonus": [],
+          "score": 0,
+          "maxScore": 40
+        },
+        {
+          "file": "index.html",
+          "page_type": "home",
+          "found_types": [
+            "Organization"
+          ],
+          "required": [
+            "WebSite",
+            "Organization",
+            "SiteLinksSearchBox"
+          ],
+          "present": [
+            "Organization"
+          ],
+          "missing": [
+            "WebSite",
+            "SiteLinksSearchBox"
+          ],
+          "bonus": [],
+          "score": 10,
+          "maxScore": 30
+        },
+        {
+          "file": "laptops-computers.html",
+          "page_type": "category",
+          "found_types": [],
+          "required": [
+            "ItemList",
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "present": [],
+          "missing": [
+            "ItemList",
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "bonus": [],
+          "score": 0,
+          "maxScore": 30
+        },
+        {
+          "file": "televisions--smart-tvs.html",
+          "page_type": "product",
+          "found_types": [
+            "BreadcrumbList",
+            "CollectionPage",
+            "FAQPage"
+          ],
+          "required": [
+            "Product",
+            "Offer",
+            "AggregateRating",
+            "BreadcrumbList"
+          ],
+          "present": [
+            "BreadcrumbList"
+          ],
+          "missing": [
+            "Product",
+            "Offer",
+            "AggregateRating"
+          ],
+          "bonus": [
+            "FAQPage"
+          ],
+          "score": 15,
+          "maxScore": 40
+        },
+        {
+          "file": "televisions.html",
+          "page_type": "category",
+          "found_types": [
+            "BreadcrumbList",
+            "CollectionPage",
+            "FAQPage"
+          ],
+          "required": [
+            "ItemList",
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "present": [
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "missing": [
+            "ItemList"
+          ],
+          "bonus": [
+            "FAQPage"
+          ],
+          "score": 25,
+          "maxScore": 30
+        },
+        {
+          "file": "washing-machines.html",
+          "page_type": "category",
+          "found_types": [
+            "BreadcrumbList",
+            "CollectionPage",
+            "FAQPage"
+          ],
+          "required": [
+            "ItemList",
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "present": [
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "missing": [
+            "ItemList"
+          ],
+          "bonus": [
+            "FAQPage"
+          ],
+          "score": 25,
+          "maxScore": 30
+        },
+        {
+          "file": "whats-new.html",
+          "page_type": "category",
+          "found_types": [
+            "BreadcrumbList"
+          ],
+          "required": [
+            "ItemList",
+            "BreadcrumbList",
+            "CollectionPage"
+          ],
+          "present": [
+            "BreadcrumbList"
+          ],
+          "missing": [
+            "ItemList",
+            "CollectionPage"
+          ],
+          "bonus": [],
+          "score": 10,
+          "maxScore": 30
+        }
+      ],
+      "summary": "0/10 pages have all required schema"
+    },
+    "render_diff": {
+      "score": 60,
+      "maxScore": 60,
+      "percentage": 100,
+      "grade": "A",
+      "pages": [
+        {
+          "url": "https://www.thegoodguys.com.au",
+          "status_code": 200,
+          "raw_words": 6646,
+          "rendered_words": 2225,
+          "pct_accessible": 299,
+          "hidden_words": 0,
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "url": "https://www.thegoodguys.com.au/televisions",
+          "status_code": 200,
+          "raw_words": 5878,
+          "rendered_words": 3291,
+          "pct_accessible": 179,
+          "hidden_words": 0,
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        },
+        {
+          "url": "https://www.thegoodguys.com.au/air-conditioners",
+          "status_code": 200,
+          "raw_words": 5509,
+          "rendered_words": 2931,
+          "pct_accessible": 188,
+          "hidden_words": 0,
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        }
+      ],
+      "errors": [],
+      "summary": "3/3 pages \u226580% content accessible without JS"
+    },
+    "user_agents": {
+      "score": 60,
+      "maxScore": 60,
+      "percentage": 100,
+      "grade": "A",
+      "pages": [
+        {
+          "url": "https://www.thegoodguys.com.au",
+          "bots": {
+            "ClaudeBot": {
+              "status": 200,
+              "allowed": true,
+              "score": 5
+            },
+            "GPTBot": {
+              "status": 200,
+              "allowed": true,
+              "score": 5
+            },
+            "PerplexityBot": {
+              "status": 200,
+              "allowed": true,
+              "score": 5
+            },
+            "Google-Extended": {
+              "status": 200,
+              "allowed": true,
+              "score": 5
+            }
+          },
+          "blocked": [],
+          "issue": null
+        },
+        {
+          "url": "https://www.thegoodguys.com.au/televisions",
+          "bots": {
+            "ClaudeBot": {
+              "status": 200,
+              "allowed": true,
+              "score": 5
+            },
+            "GPTBot": {
+              "status": 200,
+              "allowed": true,
+              "score": 5
+            },
+            "PerplexityBot": {
+              "status": 200,
+              "allowed": true,
+              "score": 5
+            },
+            "Google-Extended": {
+              "status": 200,
+              "allowed": true,
+              "score": 5
+            }
+          },
+          "blocked": [],
+          "issue": null
+        },
+        {
+          "url": "https://www.thegoodguys.com.au/air-conditioners",
+          "bots": {
+            "ClaudeBot": {
+              "status": 200,
+              "allowed": true,
+              "score": 5
+            },
+            "GPTBot": {
+              "status": 200,
+              "allowed": true,
+              "score": 5
+            },
+            "PerplexityBot": {
+              "status": 200,
+              "allowed": true,
+              "score": 5
+            },
+            "Google-Extended": {
+              "status": 200,
+              "allowed": true,
+              "score": 5
+            }
+          },
+          "blocked": [],
+          "issue": null
+        }
+      ],
+      "errors": [],
+      "summary": "3/3 pages accessible to all AI bots"
+    },
+    "hidden_content": {
+      "score": 100,
+      "maxScore": 200,
+      "percentage": 50,
+      "grade": "D",
+      "pages": [
+        {
+          "file": "air-conditioners.html",
+          "total_words": 2931,
+          "hidden_words": 323,
+          "hidden_ratio_pct": 11,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 4,
+          "top_hidden": [
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 29,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 36,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
+              "words": 22,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 236,
+              "reason": "display:none"
+            }
+          ],
+          "score": 10,
+          "maxScore": 20,
+          "issue": "11% of content hidden from AI crawlers"
+        },
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "total_words": 426,
+          "hidden_words": 116,
+          "hidden_ratio_pct": 27,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 3,
+          "top_hidden": [
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 29,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
+              "words": 36,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 51,
+              "reason": "display:none"
+            }
+          ],
+          "score": 10,
+          "maxScore": 20,
+          "issue": "27% of content hidden from AI crawlers"
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "total_words": 426,
+          "hidden_words": 116,
+          "hidden_ratio_pct": 27,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 3,
+          "top_hidden": [
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 29,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
+              "words": 36,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 51,
+              "reason": "display:none"
+            }
+          ],
+          "score": 10,
+          "maxScore": 20,
+          "issue": "27% of content hidden from AI crawlers"
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "total_words": 426,
+          "hidden_words": 116,
+          "hidden_ratio_pct": 27,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 3,
+          "top_hidden": [
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 29,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
+              "words": 36,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 51,
+              "reason": "display:none"
+            }
+          ],
+          "score": 10,
+          "maxScore": 20,
+          "issue": "27% of content hidden from AI crawlers"
+        },
+        {
+          "file": "index.html",
+          "total_words": 2225,
+          "hidden_words": 1940,
+          "hidden_ratio_pct": 87,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 4,
+          "top_hidden": [
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 29,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 94,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 390,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 1427,
+              "reason": "display:none"
+            }
+          ],
+          "score": 0,
+          "maxScore": 20,
+          "issue": "87% of content hidden from AI crawlers"
+        },
+        {
+          "file": "laptops-computers.html",
+          "total_words": 426,
+          "hidden_words": 116,
+          "hidden_ratio_pct": 27,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 3,
+          "top_hidden": [
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 29,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
+              "words": 36,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 51,
+              "reason": "display:none"
+            }
+          ],
+          "score": 10,
+          "maxScore": 20,
+          "issue": "27% of content hidden from AI crawlers"
+        },
+        {
+          "file": "televisions--smart-tvs.html",
+          "total_words": 3292,
+          "hidden_words": 412,
+          "hidden_ratio_pct": 13,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 4,
+          "top_hidden": [
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 29,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 44,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
+              "words": 54,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 285,
+              "reason": "display:none"
+            }
+          ],
+          "score": 10,
+          "maxScore": 20,
+          "issue": "13% of content hidden from AI crawlers"
+        },
+        {
+          "file": "televisions.html",
+          "total_words": 3291,
+          "hidden_words": 412,
+          "hidden_ratio_pct": 13,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 4,
+          "top_hidden": [
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 29,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 44,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
+              "words": 54,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 285,
+              "reason": "display:none"
+            }
+          ],
+          "score": 10,
+          "maxScore": 20,
+          "issue": "13% of content hidden from AI crawlers"
+        },
+        {
+          "file": "washing-machines.html",
+          "total_words": 2995,
+          "hidden_words": 376,
+          "hidden_ratio_pct": 13,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 4,
+          "top_hidden": [
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 29,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 43,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
+              "words": 31,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 273,
+              "reason": "display:none"
+            }
+          ],
+          "score": 10,
+          "maxScore": 20,
+          "issue": "13% of content hidden from AI crawlers"
+        },
+        {
+          "file": "whats-new.html",
+          "total_words": 2419,
+          "hidden_words": 29,
+          "hidden_ratio_pct": 1,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 1,
+          "top_hidden": [
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 29,
+              "reason": "display:none"
+            }
+          ],
+          "score": 20,
+          "maxScore": 20,
+          "issue": null
+        }
+      ],
+      "errors": [
+        {
+          "file": "air-conditioners.html",
+          "total_words": 2931,
+          "hidden_words": 323,
+          "hidden_ratio_pct": 11,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 4,
+          "top_hidden": [
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 29,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 36,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
+              "words": 22,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 236,
+              "reason": "display:none"
+            }
+          ],
+          "score": 10,
+          "maxScore": 20,
+          "issue": "11% of content hidden from AI crawlers"
+        },
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "total_words": 426,
+          "hidden_words": 116,
+          "hidden_ratio_pct": 27,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 3,
+          "top_hidden": [
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 29,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
+              "words": 36,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 51,
+              "reason": "display:none"
+            }
+          ],
+          "score": 10,
+          "maxScore": 20,
+          "issue": "27% of content hidden from AI crawlers"
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "total_words": 426,
+          "hidden_words": 116,
+          "hidden_ratio_pct": 27,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 3,
+          "top_hidden": [
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 29,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
+              "words": 36,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 51,
+              "reason": "display:none"
+            }
+          ],
+          "score": 10,
+          "maxScore": 20,
+          "issue": "27% of content hidden from AI crawlers"
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "total_words": 426,
+          "hidden_words": 116,
+          "hidden_ratio_pct": 27,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 3,
+          "top_hidden": [
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 29,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
+              "words": 36,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 51,
+              "reason": "display:none"
+            }
+          ],
+          "score": 10,
+          "maxScore": 20,
+          "issue": "27% of content hidden from AI crawlers"
+        },
+        {
+          "file": "index.html",
+          "total_words": 2225,
+          "hidden_words": 1940,
+          "hidden_ratio_pct": 87,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 4,
+          "top_hidden": [
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 29,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 94,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 390,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 1427,
+              "reason": "display:none"
+            }
+          ],
+          "score": 0,
+          "maxScore": 20,
+          "issue": "87% of content hidden from AI crawlers"
+        },
+        {
+          "file": "laptops-computers.html",
+          "total_words": 426,
+          "hidden_words": 116,
+          "hidden_ratio_pct": 27,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 3,
+          "top_hidden": [
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 29,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
+              "words": 36,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 51,
+              "reason": "display:none"
+            }
+          ],
+          "score": 10,
+          "maxScore": 20,
+          "issue": "27% of content hidden from AI crawlers"
+        },
+        {
+          "file": "televisions--smart-tvs.html",
+          "total_words": 3292,
+          "hidden_words": 412,
+          "hidden_ratio_pct": 13,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 4,
+          "top_hidden": [
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 29,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 44,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
+              "words": 54,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 285,
+              "reason": "display:none"
+            }
+          ],
+          "score": 10,
+          "maxScore": 20,
+          "issue": "13% of content hidden from AI crawlers"
+        },
+        {
+          "file": "televisions.html",
+          "total_words": 3291,
+          "hidden_words": 412,
+          "hidden_ratio_pct": 13,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 4,
+          "top_hidden": [
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 29,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 44,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
+              "words": 54,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 285,
+              "reason": "display:none"
+            }
+          ],
+          "score": 10,
+          "maxScore": 20,
+          "issue": "13% of content hidden from AI crawlers"
+        },
+        {
+          "file": "washing-machines.html",
+          "total_words": 2995,
+          "hidden_words": 376,
+          "hidden_ratio_pct": 13,
+          "details_collapsed_words": 0,
+          "hidden_elements_count": 4,
+          "top_hidden": [
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 29,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 43,
+              "reason": "display:none"
+            },
+            {
+              "tag": "div",
+              "class": "_componentContainer_1frmw_11 _hidePagination_1frmw_150",
+              "words": 31,
+              "reason": "CSS class"
+            },
+            {
+              "tag": "div",
+              "class": "_visible_1q55e_11 _hide-xxs_1q55e_16 _hide-xs_1q55e_22 _hide",
+              "words": 273,
+              "reason": "display:none"
+            }
+          ],
+          "score": 10,
+          "maxScore": 20,
+          "issue": "13% of content hidden from AI crawlers"
+        }
+      ],
+      "summary": "1/10 pages have <10% content hidden"
+    },
+    "ai_signals": {
+      "score": 162,
+      "maxScore": 250,
+      "percentage": 65,
+      "grade": "C",
+      "pages": [
+        {
+          "file": "air-conditioners.html",
+          "page_type": "category",
+          "signals_found": [
+            "direct_answer_paragraph",
+            "numbered_list",
+            "definition_heading",
+            "h1_present",
+            "structured_headings",
+            "ordered_lists",
+            "structured_lists",
+            "intro_answer_present"
+          ],
+          "signals_missing": [
+            "comparison_table"
+          ],
+          "h1_count": 1,
+          "h2_count": 6,
+          "table_count": 0,
+          "score": 24,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "buying-guide--best-air-conditioners.html",
+          "page_type": "guide",
+          "signals_found": [
+            "direct_answer_paragraph",
+            "h1_present",
+            "structured_lists",
+            "intro_answer_present"
+          ],
+          "signals_missing": [
+            "numbered_list",
+            "comparison_table",
+            "definition_heading"
+          ],
+          "h1_count": 1,
+          "h2_count": 1,
+          "table_count": 0,
+          "score": 12,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "buying-guide--best-tvs.html",
+          "page_type": "guide",
+          "signals_found": [
+            "direct_answer_paragraph",
+            "h1_present",
+            "structured_lists",
+            "intro_answer_present"
+          ],
+          "signals_missing": [
+            "numbered_list",
+            "comparison_table",
+            "definition_heading"
+          ],
+          "h1_count": 1,
+          "h2_count": 1,
+          "table_count": 0,
+          "score": 12,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "buying-guide--best-washing-machines.html",
+          "page_type": "guide",
+          "signals_found": [
+            "direct_answer_paragraph",
+            "h1_present",
+            "structured_lists",
+            "intro_answer_present"
+          ],
+          "signals_missing": [
+            "numbered_list",
+            "comparison_table",
+            "definition_heading"
+          ],
+          "h1_count": 1,
+          "h2_count": 1,
+          "table_count": 0,
+          "score": 12,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "index.html",
+          "page_type": "home",
+          "signals_found": [
+            "direct_answer_paragraph",
+            "structured_lists",
+            "intro_answer_present"
+          ],
+          "signals_missing": [
+            "numbered_list",
+            "comparison_table",
+            "definition_heading"
+          ],
+          "h1_count": 0,
+          "h2_count": 0,
+          "table_count": 0,
+          "score": 9,
+          "maxScore": 25,
+          "issue": "Low AI content signals \u2014 few patterns AI models cite"
+        },
+        {
+          "file": "laptops-computers.html",
+          "page_type": "category",
+          "signals_found": [
+            "direct_answer_paragraph",
+            "h1_present",
+            "structured_lists",
+            "intro_answer_present"
+          ],
+          "signals_missing": [
+            "numbered_list",
+            "comparison_table",
+            "definition_heading"
+          ],
+          "h1_count": 1,
+          "h2_count": 1,
+          "table_count": 0,
+          "score": 12,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "televisions--smart-tvs.html",
+          "page_type": "product",
+          "signals_found": [
+            "direct_answer_paragraph",
+            "numbered_list",
+            "h1_present",
+            "structured_headings",
+            "ordered_lists",
+            "structured_lists",
+            "intro_answer_present"
+          ],
+          "signals_missing": [
+            "comparison_table",
+            "definition_heading"
+          ],
+          "h1_count": 1,
+          "h2_count": 7,
+          "table_count": 0,
+          "score": 21,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "televisions.html",
+          "page_type": "category",
+          "signals_found": [
+            "direct_answer_paragraph",
+            "numbered_list",
+            "h1_present",
+            "structured_headings",
+            "ordered_lists",
+            "structured_lists",
+            "intro_answer_present"
+          ],
+          "signals_missing": [
+            "comparison_table",
+            "definition_heading"
+          ],
+          "h1_count": 1,
+          "h2_count": 7,
+          "table_count": 0,
+          "score": 21,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "washing-machines.html",
+          "page_type": "category",
+          "signals_found": [
+            "direct_answer_paragraph",
+            "numbered_list",
+            "h1_present",
+            "structured_headings",
+            "ordered_lists",
+            "structured_lists",
+            "intro_answer_present"
+          ],
+          "signals_missing": [
+            "comparison_table",
+            "definition_heading"
+          ],
+          "h1_count": 1,
+          "h2_count": 6,
+          "table_count": 0,
+          "score": 21,
+          "maxScore": 25,
+          "issue": null
+        },
+        {
+          "file": "whats-new.html",
+          "page_type": "category",
+          "signals_found": [
+            "direct_answer_paragraph",
+            "numbered_list",
+            "h1_present",
+            "ordered_lists",
+            "structured_lists",
+            "intro_answer_present"
+          ],
+          "signals_missing": [
+            "comparison_table",
+            "definition_heading"
+          ],
+          "h1_count": 1,
+          "h2_count": 0,
+          "table_count": 0,
+          "score": 18,
+          "maxScore": 25,
+          "issue": null
+        }
+      ],
+      "errors": [
+        {
+          "file": "index.html",
+          "page_type": "home",
+          "signals_found": [
+            "direct_answer_paragraph",
+            "structured_lists",
+            "intro_answer_present"
+          ],
+          "signals_missing": [
+            "numbered_list",
+            "comparison_table",
+            "definition_heading"
+          ],
+          "h1_count": 0,
+          "h2_count": 0,
+          "table_count": 0,
+          "score": 9,
+          "maxScore": 25,
+          "issue": "Low AI content signals \u2014 few patterns AI models cite"
+        }
+      ],
+      "summary": "9/10 pages have strong AI content signals"
+    }
+  }
+}
