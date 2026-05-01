@@ -2145,13 +2145,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 766,
+          "dom_elements": 765,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (766 elements)",
+            "lean DOM (765 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -2225,7 +2225,7 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 5806,
+          "dom_elements": 5804,
           "aria_labels": 445,
           "signals": [
             "<main>",
@@ -2321,13 +2321,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 1123,
+          "dom_elements": 1125,
           "aria_labels": 51,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (1123 elements)",
+            "lean DOM (1125 elements)",
             "good ARIA (51 labels)"
           ],
           "score": 25,
@@ -2382,13 +2382,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 766,
+          "dom_elements": 765,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (766 elements)",
+            "lean DOM (765 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -2462,7 +2462,7 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 5806,
+          "dom_elements": 5804,
           "aria_labels": 445,
           "signals": [
             "<main>",
@@ -2558,13 +2558,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 1123,
+          "dom_elements": 1125,
           "aria_labels": 51,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (1123 elements)",
+            "lean DOM (1125 elements)",
             "good ARIA (51 labels)"
           ],
           "score": 25,
