@@ -12,9 +12,8 @@ Writes:
   seo/outputs/aeo/aeo-results-YYYYMMDD-HHMM.json — timestamped archive
   seo/outputs/aeo/latest.json                  — committed to repo via GitHub API
 
-Checker IDs (for AEO_CHECKS):
-  robots-txt, llms-txt, agents-md, content-structure, markdown-availability,
-  token-budget, meta-tags, skill-md, agent-permissions, copy-for-ai
+Retail checks used (AEO_CHECKS):
+  discovery, content-structure, token-economics
 """
 
 import json
@@ -46,9 +45,8 @@ DEFAULT_URLS = [
     {"url": "https://www.appliancesonline.com.au/article/refrigerator-size-guide/",        "label": "Appliances Online · Guide"},
 ]
 
-# Retail-relevant categories only — capability-signaling and ux-bridge are dev/repo checks
-# that reward skill.md, agent-permissions.json, and "Copy as Markdown" buttons, none of
-# which exist or matter on retail ecommerce pages.
+# Ecommerce-relevant categories: discovery, content-structure, token-economics.
+# Scored out of 75 — the agentic-seo tool's other categories target dev tools, not retail.
 CATEGORIES = [
     ("discovery", 25),
     ("content-structure", 25),
@@ -85,9 +83,8 @@ def run_aeo(url: str, checks: str | None = None) -> dict:
 
 def apply_retail_adjustment(result: dict) -> dict:
     """
-    Recalculates score over retail-relevant categories only (discovery, content-structure,
-    token-economics). capability-signaling and ux-bridge are not included in CATEGORIES
-    so they never inflate the score even if agentic-seo CLI scores them internally.
+    Recalculates score over the three ecommerce-relevant categories only:
+    discovery, content-structure, token-economics (75 pts max).
     """
     if "error" in result or "categories" not in result:
         return result

@@ -32,11 +32,9 @@ GRADE_BG    = {"A": "#dcfce7", "B": "#dcfce7", "C": "#fef9c3", "D": "#fff7ed", "
 GRADE_EMOJI = {"A": "🟢", "B": "🟢", "C": "🟡", "D": "🟠", "F": "🔴"}
 
 PHASE1_CATS = [
-    ("discovery",            "Discovery",            25),
-    ("content-structure",    "Content Structure",    25),
-    ("token-economics",      "Token Economics",      25),
-    ("capability-signaling", "Capability Signaling", 15),
-    ("ux-bridge",            "UX Bridge",            10),
+    ("discovery",         "Discovery",        25),
+    ("content-structure", "Content Structure", 25),
+    ("token-economics",   "Token Economics",   25),
 ]
 
 PHASE3_CATS = [

@@ -4,13 +4,13 @@ name: AEO Audit
 # Two-phase AEO (Agentic Engine Optimisation) audit for TGG + competitors.
 #
 # PHASE 1 — URL comparison (~5 min, no browser needed)
-#   Fetches robots.txt, llms.txt, agent-permissions.json via HTTP.
-#   Runs against TGG + Harvey Norman, JB Hi-Fi, Appliances Online by default.
+#   Fetches robots.txt, llms.txt via HTTP. Scores discovery, content-structure,
+#   token-economics only (ecommerce-relevant). Runs TGG + competitors by default.
 #
 # PHASE 2 — Deep local scan (~20-25 min, Playwright required)
 #   Launches headless Chromium, renders 10 TGG pages across all content types,
-#   saves HTML, then runs agentic-seo in directory mode for the full 10-check
-#   score (content structure, token budget, meta tags, copy-for-AI, markdown).
+#   saves HTML, then runs agentic-seo in directory mode for the 3 retail checks
+#   (discovery, content-structure, token-economics).
 #
 # No API keys required. All inputs have sensible defaults — leave blank to run
 # a full default audit.
@@ -24,17 +24,18 @@ on:
       run_phase1:
         description: |
           ☑ PHASE 1 — URL comparison (~5 min)
-          Checks robots.txt AI rules, llms.txt, agent-permissions.json across
-          TGG + competitors. No Playwright needed. Good for quick competitor diff.
+          Checks robots.txt, llms.txt across TGG + competitors.
+          Scores discovery, content-structure, token-economics only.
+          No Playwright needed. Good for quick competitor diff.
         type: boolean
         default: true
 
       run_phase2:
         description: |
           ☑ PHASE 2 — Deep local scan (~20-25 min)
-          Playwright crawls TGG pages, saves rendered HTML, runs full 10-check
-          audit. Unlocks: content structure, token budget, meta tags, copy-for-AI,
-          markdown availability. Results include per-category scores and fixes.
+          Playwright crawls TGG pages, saves rendered HTML, runs agentic-seo
+          with retail checks only (discovery, content-structure, token-economics).
+          Results include per-category scores and fixes.
         type: boolean
         default: true
 
