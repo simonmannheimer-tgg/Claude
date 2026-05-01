@@ -56,7 +56,6 @@ on:
           ☑ Discovery — 25 pts  (~1 min)
           robots.txt AI crawler rules (ClaudeBot, GPTBot, PerplexityBot, Google-Extended)
           llms.txt presence, structure, token counts, section headings
-          AGENTS.md / CLAUDE.md (repo instruction files for AI coding agents)
         type: boolean
         default: true
 
@@ -64,7 +63,6 @@ on:
         description: |
           ☑ Content Structure — 25 pts  (~3-5 min, Phase 2 only)
           Heading hierarchy (H1→H2→H3, no skips), semantic HTML (main/article/section)
-          Markdown availability alongside HTML, HTML-to-text noise ratio
           JavaScript-required rendering detection (SPA/React indicator)
         type: boolean
         default: true
@@ -242,8 +240,8 @@ jobs:
           CHECKS=""
           add() { CHECKS="${CHECKS:+$CHECKS,}$1"; }
 
-          [ "${{ inputs.check_discovery }}" = "true" ] && add "robots-txt,llms-txt,agents-md"
-          [ "${{ inputs.check_content }}"   = "true" ] && add "content-structure,markdown-availability"
+          [ "${{ inputs.check_discovery }}" = "true" ] && add "robots-txt,llms-txt"
+          [ "${{ inputs.check_content }}"   = "true" ] && add "content-structure"
           [ "${{ inputs.check_tokens }}"    = "true" ] && add "token-budget,meta-tags"
 
           echo "value=$CHECKS" >> "$GITHUB_OUTPUT"
@@ -352,7 +350,9 @@ jobs:
           g = {'A':'🟢','B':'🟢','C':'🟡','D':'🟠','F':'🔴'}
           grade = r.get('grade','?')
           print(f"Local deep scan: {g.get(grade,'?')} Grade {grade} ({r.get('percentage',0)}%)")
+          retail = ['discovery', 'content-structure', 'token-economics']
           for k, c in r.get('categories', {}).items():
+              if k not in retail: continue
               bar = '█' * round(c['percentage']/5) + '░' * (20-round(c['percentage']/5))
               print(f"  {c['name']:<22} {bar} {c['score']}/{c['maxScore']} ({c['percentage']}%)")
           EOF
