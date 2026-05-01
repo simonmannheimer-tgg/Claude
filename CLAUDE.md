@@ -208,6 +208,8 @@ After every pipeline run, note any step that needed manual correction under `## 
 ### Pending tasks (open)
 - **ONBOARDING:** Walk Simon through the full system (agents, skills, pipeline, outputs, MCPs). Trigger: "run onboarding" or "walk me through the system".
 - **CONNECTIONS REVIEW:** Audit what tools/MCPs should connect to the pipeline to make skills better. Trigger: "what should we connect" or "connections review".
+- **AUTOMATED WEEKLY SEO REPORT:** `seo-weekly-report.yml` was removed (cost/quality not ready). Goal: wire the seo-reporter agent to pull from GSC MCP + Semrush automatically and produce a weekly digest that's genuinely useful without manual prompting. Needs: GSC MCP connected, Semrush report templates defined, output format agreed. Trigger: "build the weekly report workflow".
+- **SHOPPING AUDIT TOOL (in progress):** `seo/scripts/product-shopping-audit.py` — fetches TGG sitemap, extracts all product titles, runs organic Google Shopping scraper for each. Next steps: (1) validate title-cleaning logic against real sitemap, (2) add TGG price comparison from GMC feed, (3) add category roll-up so results map to deals/ URLs, (4) schedule via shopping-scraper.yml once stable.
 - **RULE CONFLICTS (open questions for Simon):**
   - PLP char count: Process 01 says **220–250**; `tgg-seo-specialist` skill says 230–260. Which is correct?
   - Execution path: For production copy, do you prefer agents (via seo-team-lead) or skills (e.g. tgg-copywriting, tgg-category-pipeline)?
