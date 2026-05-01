@@ -40,13 +40,15 @@ BROWSER_UA = (
     "Chrome/122.0.0.0 Safari/537.36"
 )
 
+# Primary AI bots — blocking any of these is scored as a failure
 AI_BOT_UAS = {
-    "ClaudeBot":     "ClaudeBot/1.0 (+https://www.anthropic.com/claude-bot)",
-    "GPTBot":        "GPTBot/1.1 (+https://openai.com/gptbot)",
-    "PerplexityBot": "PerplexityBot/1.0 (+https://docs.perplexity.ai/docs/perplexitybot)",
+    "ClaudeBot":       "ClaudeBot/1.0 (+https://www.anthropic.com/claude-bot)",
+    "GPTBot":          "GPTBot/1.1 (+https://openai.com/gptbot)",
+    "PerplexityBot":   "PerplexityBot/1.0 (+https://docs.perplexity.ai/docs/perplexitybot)",
     "Google-Extended": "Mozilla/5.0 (compatible; Google-Extended)",
-    "Googlebot":     "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
 }
+# Informational only — not scored (blocking Googlebot is a separate SEO issue, not AEO)
+GOOGLEBOT_UA = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
 
 # Schema types that matter for ecommerce AI visibility
 REQUIRED_SCHEMA_TYPES = {
@@ -58,6 +60,7 @@ REQUIRED_SCHEMA_TYPES = {
 }
 
 # AI Overview content signals — patterns that increase citation probability
+# Note: faq_block is now detected via BS4 in check_ai_signals to avoid backtracking
 AI_SIGNAL_PATTERNS = {
     "direct_answer_paragraph": re.compile(
         r"<p[^>]*>[^<]{80,}(?:is|are|means|refers to|defined as)[^<]{20,}</p>",
@@ -65,11 +68,7 @@ AI_SIGNAL_PATTERNS = {
     ),
     "numbered_list": re.compile(r"<ol[^>]*>.*?</ol>", re.IGNORECASE | re.DOTALL),
     "comparison_table": re.compile(
-        r"<table[^>]*>(?:(?!<table).)*?(?:vs\.?|versus|compare|difference)[^<]*?</table>",
-        re.IGNORECASE | re.DOTALL,
-    ),
-    "faq_block": re.compile(
-        r"<(?:details|div|section)[^>]*>(?:(?!<(?:details|div|section)).)*?(?:faq|frequently\s+asked|question)[^<]*?</(?:details|div|section)>",
+        r"<table[^>]*>(?:(?!<table).){0,2000}?(?:vs\.?|versus|compare|difference)[^<]*?</table>",
         re.IGNORECASE | re.DOTALL,
     ),
     "definition_heading": re.compile(
@@ -110,7 +109,7 @@ def extract_jsonld(soup: BeautifulSoup) -> list[dict]:
     schemas = []
     for tag in soup.find_all("script", type="application/ld+json"):
         try:
-            data = json.loads(tag.string or "")
+            data = json.loads(tag.get_text() or "")
             if isinstance(data, list):
                 schemas.extend(data)
             else:
@@ -339,11 +338,17 @@ def check_hidden_content(snapshot_dir: Path) -> dict:
         if all_words == 0:
             continue
 
-        # Find elements that conceal content
+        # Find elements that conceal content — skip descendants of already-counted hidden elements
+        # to avoid double-counting nested structures.
         hidden_words = 0
         hidden_elements = []
+        hidden_el_set: set = set()  # ids of elements already counted as hidden
 
         for el in soup.find_all(True):
+            # Skip if any ancestor is already marked hidden
+            if any(id(a) in hidden_el_set for a in el.parents):
+                continue
+
             style = el.get("style", "")
             aria_hidden = el.get("aria-hidden", "")
             hidden_attr = el.has_attr("hidden")
@@ -359,6 +364,7 @@ def check_hidden_content(snapshot_dir: Path) -> dict:
             )
 
             if is_hidden:
+                hidden_el_set.add(id(el))
                 text = el.get_text(separator=" ", strip=True)
                 words = len(text.split())
                 if words > 20:
@@ -442,12 +448,24 @@ def check_ai_signals(snapshot_dir: Path) -> dict:
         signals_found = []
         signals_missing = []
 
-        # Check each signal pattern
+        # Check regex-based signal patterns (safe patterns only — no backtracking risk)
         for signal_name, pattern in AI_SIGNAL_PATTERNS.items():
             if pattern.search(raw_html):
                 signals_found.append(signal_name)
             else:
                 signals_missing.append(signal_name)
+
+        # FAQ block detection via BS4 (replaces catastrophic-backtracking regex)
+        faq_keywords = {"faq", "frequently asked", "question", "q&a", "q & a"}
+        faq_found = False
+        for tag in soup.find_all(["details", "section", "div"], limit=200):
+            tag_text = tag.get_text(" ", strip=True).lower()[:200]
+            classes = " ".join(tag.get("class", [])).lower()
+            if any(kw in tag_text or kw in classes for kw in faq_keywords):
+                faq_found = True
+                break
+        if faq_found:
+            signals_found.append("faq_block")
 
         # Additional structural checks
         h1_tags = soup.find_all("h1")

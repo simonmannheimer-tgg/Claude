@@ -100,8 +100,8 @@ def build_summary(entries: list[dict]) -> str:
             f"| {GRADE_EMOJI.get(grade, '❓')} **{grade}** "
             f"| {pct}% "
             f"| {cats} "
-            f"| {s.get('errors', '?')} "
-            f"| {s.get('warnings', '?')} |"
+            f"| {s.get('failed', s.get('errors', '?'))} "
+            f"| {s.get('warned', s.get('warnings', '?'))} |"
         )
 
     lines += ["\n## Errors & Fixes\n"]
@@ -148,7 +148,7 @@ def push_to_repo(entries: list[dict]) -> None:
         "X-GitHub-Api-Version": "2022-11-28",
     }
 
-    existing = httpx.get(f"{api}/repos/{repo}/contents/{path}?ref={ref}", headers=hdrs)
+    existing = httpx.get(f"{api}/repos/{repo}/contents/{path}?ref={ref}", headers=hdrs, timeout=30)
     sha = existing.json().get("sha") if existing.status_code == 200 else None
 
     payload = {
@@ -159,7 +159,7 @@ def push_to_repo(entries: list[dict]) -> None:
     if sha:
         payload["sha"] = sha
 
-    resp = httpx.put(f"{api}/repos/{repo}/contents/{path}", headers=hdrs, json=payload)
+    resp = httpx.put(f"{api}/repos/{repo}/contents/{path}", headers=hdrs, json=payload, timeout=30)
     if resp.status_code in (200, 201):
         print(f"Committed to repo: {path} on {ref}")
     else:
@@ -197,7 +197,7 @@ def main():
             s = r.get("summary", {})
             print(
                 f"  ✓ Grade {r.get('grade', '?')} ({r.get('percentage', 0)}%)"
-                f" | {s.get('errors', '?')} errors, {s.get('warnings', '?')} warnings"
+                f" | {s.get('failed', s.get('errors', '?'))} errors, {s.get('warned', s.get('warnings', '?'))} warnings"
             )
 
     out_dir = Path("seo/outputs/aeo")
