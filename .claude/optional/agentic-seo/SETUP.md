@@ -4,9 +4,9 @@
 
 **Best for:** Auditing TGG category pages or buying guides for AEO readiness; scoring a site before publishing an `llms.txt`; CI gating a documentation build; checking competitors' agent-readiness.
 
-**Status:** Not running. Repo cloned. Requires Node.js (`npx` works without global install).
+**Status:** Active. Repo cloned and deps installed. Node 22 confirmed.
 
-**Effort to activate:** 2 min (no API keys, no OAuth — pure Node/npx).
+**Binary:** `node /home/user/Claude/.claude/optional/agentic-seo/repo/bin/aeo.js` (the CLI entry is `aeo.js`, not `agentic-seo.js`).
 
 ---
 
@@ -32,52 +32,30 @@ Language: JavaScript (MIT licence, no API keys needed)
 
 ## Activate
 
-### Step 1 — Confirm Node.js is available
-```bash
-node --version   # 18+ recommended
-npx --version
-```
+### Already done — active as of 2026-05-01
 
-### Step 2 — Install globally (optional — npx works without this)
-```bash
-npm install -g agentic-seo
-```
+Node 22 confirmed, repo cloned to `repo/`, `npm install` complete.
 
-Or run directly without installing:
-```bash
-npx agentic-seo ./path/to/site
-```
+### Run an audit
 
-### Step 3 — Run your first audit
-
-**Audit a local build directory:**
 ```bash
-npx agentic-seo ./my-project
-```
+# alias for convenience (add to shell profile if desired)
+alias aeo="node /home/user/Claude/.claude/optional/agentic-seo/repo/bin/aeo.js"
 
-**Audit a live URL:**
-```bash
-npx agentic-seo --url https://www.thegoodguys.com.au
-```
+# Audit a live URL
+node /home/user/Claude/.claude/optional/agentic-seo/repo/bin/aeo.js --url https://www.thegoodguys.com.au
 
-**Audit with verbose output:**
-```bash
-npx agentic-seo --verbose --url https://www.thegoodguys.com.au
-```
+# Verbose
+node /home/user/Claude/.claude/optional/agentic-seo/repo/bin/aeo.js --verbose --url https://www.thegoodguys.com.au
 
-**JSON output for piping into a report:**
-```bash
-npx agentic-seo --json --url https://www.thegoodguys.com.au > aeo-report.json
-```
+# JSON output
+node /home/user/Claude/.claude/optional/agentic-seo/repo/bin/aeo.js --json --url https://www.thegoodguys.com.au > aeo-report.json
 
-**CI mode with score threshold:**
-```bash
-npx agentic-seo --json --threshold 60 ./build
-```
+# CI mode with score threshold
+node /home/user/Claude/.claude/optional/agentic-seo/repo/bin/aeo.js --json --threshold 60 ./build
 
-**Run only specific checks:**
-```bash
-npx agentic-seo --checks robots-txt,llms-txt,token-budget --url https://www.thegoodguys.com.au
+# Specific checks only
+node /home/user/Claude/.claude/optional/agentic-seo/repo/bin/aeo.js --checks robots-txt,llms-txt,token-budget --url https://www.thegoodguys.com.au
 ```
 
 ---

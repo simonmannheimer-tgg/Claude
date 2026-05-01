@@ -61,17 +61,17 @@
     "PreToolUse": [
       {
         "matcher": "Bash",
-        "hooks": [{ "type": "command", "command": "python3 .claude/hooks/block_dangerous.py" }]
+        "hooks": [{ "type": "command", "command": "python3 /home/user/Claude/.claude/hooks/block_dangerous.py" }]
       }
     ],
     "PostToolUse": [
       {
         "matcher": "Write|Edit|MultiEdit",
-        "hooks": [{ "type": "command", "command": "python3 .claude/hooks/log_writes.py" }]
+        "hooks": [{ "type": "command", "command": "python3 /home/user/Claude/.claude/hooks/log_writes.py" }]
       }
     ],
     "Stop": [
-      { "hooks": [{ "type": "command", "command": "python3 .claude/hooks/session_log.py" }] }
+      { "hooks": [{ "type": "command", "command": "python3 /home/user/Claude/.claude/hooks/session_log.py" }] }
     ]
   }
 }
