@@ -1,0 +1,44 @@
+type: faq-block
+description: Standalone FAQ section for schema markup (HowTo or FAQPage)
+
+hard_limits:
+  question_count:
+    min: 5
+    max: 8
+  answer_word_count:
+    min: 50
+    max: 120
+  question_word_count:
+    min: 6
+    max: 18
+
+required_elements:
+  - natural_language_questions        # questions phrased as a person would type or speak them
+  - schema_safe_answers               # no markdown in answers (no **, no #, no bullet lists)
+  - no_duplicate_intent               # no two questions answer the same underlying query
+
+content_rules:
+  australian_english: true
+  banned_ai_phrases: true
+  no_markdown_in_answers: true        # answers must be plain prose, JSON-LD ready
+  em_dash_as_connector: false
+
+qa_gates:
+  - id: question_count
+    check: "between 5 and 8 questions"
+    fail_action: block_delivery
+  - id: answer_length
+    check: "every answer between 50 and 120 words"
+    fail_action: block_delivery
+  - id: schema_safe
+    check: "no markdown formatting (**, ##, -, etc.) inside answers"
+    fail_action: block_delivery
+  - id: duplicate_intent
+    check: "no two questions share the same search intent"
+    fail_action: flag_and_fix
+  - id: natural_language
+    check: "questions read as natural search queries, not formal headings"
+    fail_action: flag_and_fix
+  - id: australian_english
+    check: "no US English spellings"
+    fail_action: block_delivery

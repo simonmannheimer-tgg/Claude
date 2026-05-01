@@ -1,0 +1,54 @@
+type: buying-guide
+description: Long-form buying guide (e.g. "how to choose a heat pump dryer")
+
+hard_limits:
+  word_count:
+    min: 1800
+    max: 2500
+  h2_count:
+    min: 6
+    max: 9
+  internal_links:
+    min: 8
+    max: 12
+  faq_count:
+    min: 5
+    max: 8
+  faq_answer_words:
+    min: 50
+    max: 120
+
+required_sections:
+  - australian_retail_considerations   # energy ratings, finance options, click-and-collect
+  - eav_attributes                     # at least one block mapping key attributes (capacity, energy rating, etc.)
+  - recommendation_callout             # explicit "what to look for" or "who should buy X" summary
+
+content_rules:
+  australian_english: true
+  banned_ai_phrases: true              # defers to tgg-humanizer 29-pattern list
+  em_dash_as_connector: false
+  claim_evidence_pairing: true
+  tgg_mention_max_per_200_words: 1
+
+qa_gates:
+  - id: word_count
+    check: "word count between 1800 and 2500"
+    fail_action: flag_and_fix
+  - id: h2_count
+    check: "H2 count between 6 and 9"
+    fail_action: flag_and_fix
+  - id: internal_links
+    check: "internal link count between 8 and 12"
+    fail_action: flag_and_fix
+  - id: faq_block
+    check: "FAQ block present with 5–8 Q/A pairs"
+    fail_action: flag_and_fix
+  - id: required_sections
+    check: "all required_sections present"
+    fail_action: block_delivery
+  - id: australian_english
+    check: "no US English spellings (organize, color, optimization, etc.)"
+    fail_action: block_delivery
+  - id: claim_evidence
+    check: "every factual claim has a source link or explicit attribution"
+    fail_action: flag_and_fix

@@ -1,0 +1,42 @@
+type: how-to
+description: Step-by-step instructional article (e.g. "how to clean a dishwasher filter")
+
+hard_limits:
+  word_count:
+    min: 800
+    max: 1400
+  h2_count:
+    min: 4
+    max: 7
+  internal_links:
+    min: 4
+    max: 8
+
+required_sections:
+  - numbered_steps                     # H2 or H3 steps each beginning with an action verb
+  - tools_or_requirements              # list of what the reader needs before starting
+  - time_estimate                      # explicit time to complete
+
+content_rules:
+  australian_english: true
+  banned_ai_phrases: true
+  em_dash_as_connector: false
+  claim_evidence_pairing: true
+  each_step_starts_with_action_verb: true
+
+qa_gates:
+  - id: word_count
+    check: "word count between 800 and 1400"
+    fail_action: flag_and_fix
+  - id: h2_count
+    check: "H2 count between 4 and 7"
+    fail_action: flag_and_fix
+  - id: internal_links
+    check: "internal link count between 4 and 8"
+    fail_action: flag_and_fix
+  - id: numbered_steps
+    check: "steps are numbered and each begins with an action verb"
+    fail_action: block_delivery
+  - id: australian_english
+    check: "no US English spellings"
+    fail_action: block_delivery
