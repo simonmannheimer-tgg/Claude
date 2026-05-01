@@ -56,16 +56,36 @@ def url_to_filename(url: str) -> str:
     return f"{safe}.html"
 
 
-async def fetch_page(page, url: str) -> tuple[str | None, str | None]:
-    try:
-        await page.goto(url, wait_until="domcontentloaded", timeout=30_000)
-        # Let JS settle then scroll mid-page to trigger lazy-loaded content
-        await page.wait_for_timeout(2_000)
-        await page.evaluate("window.scrollTo(0, Math.floor(document.body.scrollHeight * 0.4))")
-        await page.wait_for_timeout(800)
-        return await page.content(), None
-    except Exception as e:
-        return None, str(e)
+CF_CHALLENGE_MARKERS = (
+    "<title>Just a moment...</title>",
+    "cf-browser-verification",
+    "challenge-running",
+    "Checking if the site connection is secure",
+)
+
+
+async def fetch_page(page, url: str, retries: int = 2) -> tuple[str | None, str | None]:
+    for attempt in range(retries + 1):
+        try:
+            await page.goto(url, wait_until="domcontentloaded", timeout=30_000)
+            # Let JS settle (CF challenge needs up to 5s to resolve)
+            await page.wait_for_timeout(3_000 if attempt == 0 else 5_000)
+            await page.evaluate("window.scrollTo(0, Math.floor(document.body.scrollHeight * 0.4))")
+            await page.wait_for_timeout(800)
+            html = await page.content()
+            # Detect Cloudflare challenge page — retry with longer wait
+            if any(marker in html for marker in CF_CHALLENGE_MARKERS):
+                if attempt < retries:
+                    await page.wait_for_timeout(4_000)
+                    continue
+                return None, "Cloudflare challenge not resolved after retries"
+            return html, None
+        except Exception as e:
+            if attempt < retries:
+                await page.wait_for_timeout(2_000)
+                continue
+            return None, str(e)
+    return None, "Max retries exceeded"
 
 
 async def crawl(urls: list[str], out_dir: Path, delay: float = 1.5) -> list[dict]:
