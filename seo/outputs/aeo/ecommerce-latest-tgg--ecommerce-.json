@@ -2125,13 +2125,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 765,
+          "dom_elements": 766,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (765 elements)",
+            "lean DOM (766 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -2205,13 +2205,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 765,
+          "dom_elements": 764,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (765 elements)",
+            "lean DOM (764 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -2225,13 +2225,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 5796,
-          "aria_labels": 444,
+          "dom_elements": 5804,
+          "aria_labels": 445,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "good ARIA (444 labels)"
+            "good ARIA (445 labels)"
           ],
           "score": 20,
           "maxScore": 25,
@@ -2244,13 +2244,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 765,
+          "dom_elements": 764,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (765 elements)",
+            "lean DOM (764 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -2263,8 +2263,8 @@
           "has_article": true,
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
-          "external_scripts": 25,
-          "dom_elements": 3085,
+          "external_scripts": 24,
+          "dom_elements": 3084,
           "aria_labels": 150,
           "signals": [
             "<main>",
@@ -2274,7 +2274,7 @@
           ],
           "score": 20,
           "maxScore": 25,
-          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (25 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
         },
         {
           "file": "televisions.html",
@@ -2302,13 +2302,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 3077,
-          "aria_labels": 161,
+          "dom_elements": 3115,
+          "aria_labels": 163,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "good ARIA (161 labels)"
+            "good ARIA (163 labels)"
           ],
           "score": 20,
           "maxScore": 25,
@@ -2362,13 +2362,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 765,
+          "dom_elements": 766,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (765 elements)",
+            "lean DOM (766 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -2442,13 +2442,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 765,
+          "dom_elements": 764,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (765 elements)",
+            "lean DOM (764 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -2462,13 +2462,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 5796,
-          "aria_labels": 444,
+          "dom_elements": 5804,
+          "aria_labels": 445,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "good ARIA (444 labels)"
+            "good ARIA (445 labels)"
           ],
           "score": 20,
           "maxScore": 25,
@@ -2481,13 +2481,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 765,
+          "dom_elements": 764,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (765 elements)",
+            "lean DOM (764 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -2500,8 +2500,8 @@
           "has_article": true,
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
-          "external_scripts": 25,
-          "dom_elements": 3085,
+          "external_scripts": 24,
+          "dom_elements": 3084,
           "aria_labels": 150,
           "signals": [
             "<main>",
@@ -2511,7 +2511,7 @@
           ],
           "score": 20,
           "maxScore": 25,
-          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (25 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
         },
         {
           "file": "televisions.html",
@@ -2539,13 +2539,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 3077,
-          "aria_labels": 161,
+          "dom_elements": 3115,
+          "aria_labels": 163,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "good ARIA (161 labels)"
+            "good ARIA (163 labels)"
           ],
           "score": 20,
           "maxScore": 25,
