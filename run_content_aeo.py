@@ -41,15 +41,33 @@ from pathlib import Path
 import httpx
 from bs4 import BeautifulSoup
 
-# sentence-transformers for semantic similarity (Check 7).
-# Falls back to TF-IDF cosine if not installed.
+# Embedding models for semantic similarity (Check 7).
+# Priority: BGE-M3 (best) → all-MiniLM-L6-v2 (lighter) → TF-IDF (no GPU/install)
 try:
-    from sentence_transformers import SentenceTransformer
+    from FlagEmbedding import BGEM3FlagModel as _BGEM3FlagModel
     import numpy as np
-    _ST_MODEL: SentenceTransformer | None = None
-    _ST_AVAILABLE = True
-except ImportError:
+    _BGE_MODEL = None  # lazy init
+    _BGE_AVAILABLE = True
     _ST_AVAILABLE = False
+except ImportError:
+    _BGE_AVAILABLE = False
+    try:
+        from sentence_transformers import SentenceTransformer
+        import numpy as np
+        _ST_MODEL = None  # lazy init
+        _ST_AVAILABLE = True
+    except ImportError:
+        _ST_AVAILABLE = False
+
+# Qdrant local vector store for competitor corpus (optional)
+try:
+    from qdrant_client import QdrantClient as _QdrantClient
+    _QDRANT_AVAILABLE = True
+except ImportError:
+    _QDRANT_AVAILABLE = False
+
+_QDRANT_CLIENT = None
+_QDRANT_COLLECTION = "aeo_competitor_corpus"
 
 GRADE_EMOJI = {"A": "🟢", "B": "🟢", "C": "🟡", "D": "🟠", "F": "🔴"}
 
@@ -214,15 +232,45 @@ def _tfidf_similarity(text: str) -> tuple[float, float, str]:
     return scored[0][0], sum(s for s, _ in scored[:3]) / 3, scored[0][1][:100]
 
 
-# ── sentence-transformers implementation ───────────────────────────────────────
+# ── BGE-M3 implementation (primary) ───────────────────────────────────────────
 
 _REF_EMBEDDINGS = None  # lazy-initialised on first call
+_ST_MODEL = None
+_BGE_MODEL = None
 
 
-def _get_st_model() -> "SentenceTransformer":
+def _get_bge_model():
+    global _BGE_MODEL
+    if _BGE_MODEL is None:
+        _BGE_MODEL = _BGEM3FlagModel("BAAI/bge-m3", use_fp16=True)
+    return _BGE_MODEL
+
+
+def _bge_embed(texts: list[str]) -> "np.ndarray":
+    model = _get_bge_model()
+    output = model.encode(texts, return_dense=True, return_sparse=False, return_colbert_vecs=False)
+    vecs = output["dense_vecs"]
+    norms = np.linalg.norm(vecs, axis=1, keepdims=True)
+    return vecs / np.where(norms == 0, 1, norms)
+
+
+def _bge_similarity(text: str) -> tuple[float, float, str]:
+    global _REF_EMBEDDINGS
+    if _REF_EMBEDDINGS is None:
+        _REF_EMBEDDINGS = _bge_embed(REFERENCE_CORPUS)
+    vec = _bge_embed([text])[0]
+    sims = _REF_EMBEDDINGS @ vec
+    top_idx = int(np.argmax(sims))
+    top3_avg = float(np.mean(np.sort(sims)[-3:]))
+    return float(sims[top_idx]), top3_avg, REFERENCE_CORPUS[top_idx][:100]
+
+
+# ── sentence-transformers fallback ────────────────────────────────────────────
+
+def _get_st_model():
     global _ST_MODEL
     if _ST_MODEL is None:
-        # all-MiniLM-L6-v2: 80MB, fast, good semantic quality for English
+        from sentence_transformers import SentenceTransformer
         _ST_MODEL = SentenceTransformer("all-MiniLM-L6-v2")
     return _ST_MODEL
 
@@ -233,7 +281,7 @@ def _st_similarity(text: str) -> tuple[float, float, str]:
     if _REF_EMBEDDINGS is None:
         _REF_EMBEDDINGS = model.encode(REFERENCE_CORPUS, normalize_embeddings=True)
     vec = model.encode([text], normalize_embeddings=True)[0]
-    sims = _REF_EMBEDDINGS @ vec  # cosine similarity (normalized dot product)
+    sims = _REF_EMBEDDINGS @ vec
     top_idx = int(np.argmax(sims))
     top3_avg = float(np.mean(np.sort(sims)[-3:]))
     return float(sims[top_idx]), top3_avg, REFERENCE_CORPUS[top_idx][:100]
@@ -245,10 +293,13 @@ def similarity_to_corpus(text: str) -> tuple[float, float, str]:
     """
     Returns (max_similarity, avg_top3_similarity, best_matching_reference_snippet).
 
-    Uses sentence-transformers (semantic) when available, else TF-IDF (lexical).
-    Sentence-transformers scores: strong ecommerce content ~0.60-0.80, marketing copy ~0.30-0.45.
-    TF-IDF scores: strong content ~0.25-0.45, marketing copy <0.15 (different scale).
+    Priority: BGE-M3 → all-MiniLM-L6-v2 → TF-IDF (no install).
+    BGE-M3 scores: strong ecommerce ~0.70-0.85, marketing copy ~0.40-0.55.
+    MiniLM scores: strong ~0.60-0.80, marketing copy ~0.30-0.45.
+    TF-IDF scores: strong ~0.25-0.45, marketing copy <0.15 (different scale).
     """
+    if _BGE_AVAILABLE:
+        return _bge_similarity(text)
     if _ST_AVAILABLE:
         return _st_similarity(text)
     return _tfidf_similarity(text)
@@ -736,28 +787,42 @@ def check_anchor_quality(snapshot_dir: Path) -> dict:
 
 # ── Check 7: Content Similarity ───────────────────────────────────────────────
 
+def _get_qdrant_client():
+    global _QDRANT_CLIENT
+    if _QDRANT_CLIENT is None and _QDRANT_AVAILABLE:
+        try:
+            from shared.qdrant_client import get_client, get_collection_info
+            client = get_client()
+            info = get_collection_info(client)
+            if info["exists"] and info["vectors_count"] > 0:
+                _QDRANT_CLIENT = client
+        except Exception:
+            pass
+    return _QDRANT_CLIENT
+
+
 def check_content_similarity(snapshot_dir: Path) -> dict:
     """
-    TF-IDF cosine similarity between page content and a reference corpus of ideal
-    AI-citable ecommerce passages. Measures whether page content resembles the kind
-    of direct, factual, entity-rich content AI Answer Engines prefer to cite.
+    Semantic similarity between page content and reference corpus of ideal AI-citable passages.
+    When Qdrant competitor corpus is available, also computes competitor gap score.
 
-    Scoring thresholds (sentence-transformers / TF-IDF fallback):
-      ST  ≥0.65 | TFIDF ≥0.35 — strong: direct, factual, entity-rich content
-      ST  ≥0.55 | TFIDF ≥0.28 — moderate: good passages among marketing copy
-      ST  ≥0.45 | TFIDF ≥0.20 — weak: mostly promotional, few citable facts
-      ST  <0.45 | TFIDF <0.20 — very weak: almost no AI-citable patterns
-
-    TODO: swap similarity_to_corpus() to OpenAI/Cohere embeddings API for higher
-    accuracy — see module docstring for options.
+    Thresholds (BGE-M3 / MiniLM / TF-IDF):
+      BGE  ≥0.72 | ST ≥0.65 | TFIDF ≥0.35 — strong: direct, factual, entity-rich
+      BGE  ≥0.62 | ST ≥0.55 | TFIDF ≥0.28 — moderate: good passages mixed with marketing
+      BGE  ≥0.52 | ST ≥0.45 | TFIDF ≥0.20 — weak: mostly promotional
+      BGE  <0.52 | ST <0.45 | TFIDF <0.20 — very weak: no AI-citable patterns
     """
-    # Thresholds differ between semantic (ST) and lexical (TF-IDF) backends
-    if _ST_AVAILABLE:
+    if _BGE_AVAILABLE:
+        thresholds = (0.72, 0.62, 0.52, 0.45)
+        method = "BGE-M3"
+    elif _ST_AVAILABLE:
         thresholds = (0.65, 0.55, 0.45, 0.38)
-        method = "sentence-transformers all-MiniLM-L6-v2"
+        method = "all-MiniLM-L6-v2"
     else:
         thresholds = (0.35, 0.28, 0.20, 0.12)
-        method = "TF-IDF cosine (bag-of-words) — install sentence-transformers for semantic similarity"
+        method = "TF-IDF (install FlagEmbedding or sentence-transformers for semantic)"
+
+    qdrant = _get_qdrant_client()
 
     t_strong, t_good, t_weak, t_poor = thresholds
 
@@ -775,7 +840,7 @@ def check_content_similarity(snapshot_dir: Path) -> dict:
         main = get_main_content(soup)
         content_text = main.get_text(" ", strip=True) if main else full_text
 
-        # Full-page similarity
+        # Full-page similarity against reference corpus
         best_score, avg_top3, best_ref = similarity_to_corpus(full_text)
 
         # Passage-level: split into ~200-word chunks, find best citable passage
@@ -792,6 +857,24 @@ def check_content_similarity(snapshot_dir: Path) -> dict:
             if s > best_passage_score:
                 best_passage_score = s
                 best_passage_text = chunk[:150]
+
+        # Qdrant competitor lookup (optional — only when corpus exists)
+        competitor_hits = []
+        avg_competitor_sim = None
+        if qdrant and (method in ("BGE-M3", "all-MiniLM-L6-v2")):
+            try:
+                from shared.qdrant_client import search_similar
+                # Embed the page's best passage for competitor comparison
+                if _BGE_AVAILABLE:
+                    vec = _bge_embed([best_passage_text or content_text[:500]])[0]
+                else:
+                    model = _get_st_model()
+                    vec = model.encode([best_passage_text or content_text[:500]], normalize_embeddings=True)[0].tolist()
+                competitor_hits = search_similar(qdrant, vec, top_k=5)
+                if competitor_hits:
+                    avg_competitor_sim = round(sum(h["score"] for h in competitor_hits) / len(competitor_hits), 3)
+            except Exception:
+                pass
 
         page_max = 25
         if best_passage_score >= t_strong:
@@ -814,7 +897,7 @@ def check_content_similarity(snapshot_dir: Path) -> dict:
         elif best_passage_score < t_weak:
             issue = f"Low similarity ({best_passage_score:.2f}) — few factual/educational passages for AI to cite"
 
-        results.append({
+        page_result = {
             "file": html_file.name,
             "full_page_similarity": round(best_score, 3),
             "avg_top3_similarity": round(avg_top3, 3),
@@ -824,7 +907,11 @@ def check_content_similarity(snapshot_dir: Path) -> dict:
             "score": page_score,
             "maxScore": page_max,
             "issue": issue,
-        })
+        }
+        if avg_competitor_sim is not None:
+            page_result["avg_competitor_similarity"] = avg_competitor_sim
+            page_result["top_competitor_domains"] = list({h["domain"] for h in competitor_hits[:3]})
+        results.append(page_result)
 
     pct = round(total_score / max_score * 100) if max_score else 0
     errors = [r for r in results if r.get("issue")]
@@ -836,7 +923,8 @@ def check_content_similarity(snapshot_dir: Path) -> dict:
         "pages": results, "errors": errors,
         "avg_similarity": avg_sim,
         "similarity_method": method,
-        "summary": f"{len(results) - len(errors)}/{len(results)} pages have strong AI-citable content (avg: {avg_sim}, method: {'ST' if _ST_AVAILABLE else 'TF-IDF'})",
+        "qdrant_corpus_used": qdrant is not None,
+        "summary": f"{len(results) - len(errors)}/{len(results)} pages have strong AI-citable content (avg: {avg_sim}, method: {method})",
     }
 
 

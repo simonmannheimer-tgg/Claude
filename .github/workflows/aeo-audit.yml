@@ -121,11 +121,58 @@ on:
         required: false
         default: ''
 
+      run_sitemap_crawl:
+        description: |
+          ☐ Sitemap crawl mode (optional) — crawl via sitemap instead of fixed URLs.
+          Fetches sitemap_index.xml, classifies URLs by type, samples N per type.
+          Set sitemap_domain and sitemap_sample to configure.
+        type: boolean
+        default: false
+
+      sitemap_domain:
+        description: Domain to crawl in sitemap mode (default: thegoodguys.com.au)
+        required: false
+        default: 'thegoodguys.com.au'
+
+      sitemap_sample:
+        description: URLs to sample per page type in sitemap mode (default: 5)
+        required: false
+        default: '5'
+
+      sitemap_types:
+        description: Page types to crawl in sitemap mode (default: home,category,guide)
+        required: false
+        default: 'home,category,guide'
+
+      rebuild_corpus:
+        description: |
+          ☐ Rebuild competitor corpus (~20-30 min, self-hosted runner recommended)
+          Crawls competitor pages, encodes with BGE-M3/MiniLM, upserts to Qdrant.
+          Run monthly to keep competitor similarity scores current.
+        type: boolean
+        default: false
+
   # Uncomment to run weekly (Sunday 22:00 UTC = Monday 08:00 AEST):
   # schedule:
   #   - cron: '0 22 * * 0'
 
 jobs:
+  rebuild-corpus:
+    if: github.event.inputs.rebuild_corpus == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install deps for corpus build
+        run: pip install httpx beautifulsoup4 sentence-transformers qdrant-client
+      - name: Rebuild competitor corpus
+        run: python build_competitor_corpus.py 2>&1
+
   aeo-audit:
     runs-on: ubuntu-latest
     timeout-minutes: 75
@@ -153,7 +200,9 @@ jobs:
           FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
       - name: Install Python deps
-        run: pip install httpx playwright beautifulsoup4 lxml sentence-transformers
+        run: pip install httpx playwright beautifulsoup4 lxml sentence-transformers pyyaml qdrant-client || true
+        # FlagEmbedding (BGE-M3) requires ~2GB download and GPU for best speed — only on self-hosted
+        # run: pip install FlagEmbedding qdrant-client  # uncomment for self-hosted runner
 
       - name: Install Playwright browser
         if: inputs.run_phase2 || inputs.run_phase3
@@ -243,6 +292,15 @@ jobs:
             ]' 2>&1
           fi
 
+      - name: "Sitemap crawl (optional)"
+        if: inputs.run_sitemap_crawl
+        continue-on-error: true
+        run: |
+          python crawl_from_sitemap.py \
+            --domain "${{ inputs.sitemap_domain }}" \
+            --sample "${{ inputs.sitemap_sample }}" \
+            --types "${{ inputs.sitemap_types }}" 2>&1
+
       - name: "Phase 2 — Local deep scan (~5 min)"
         if: inputs.run_phase2
         continue-on-error: true
@@ -301,14 +359,22 @@ jobs:
           pct = data.get('percentage',0)
           print(f"Ecommerce AEO: {g.get(grade,'?')} Grade {grade} ({pct}%)")
           check_names = {
-              'schema':         'Schema / Structured Data',
-              'render_diff':    'Render Diff',
-              'user_agents':    'User Agent Behaviour',
-              'hidden_content': 'Hidden Content',
-              'ai_signals':     'AI Content Signals',
+              'schema':            'Schema / Structured Data',
+              'schema_validity':   'Schema Validity',
+              'render_diff':       'Render Diff',
+              'user_agents':       'User Agent Behaviour',
+              'hidden_content':    'Hidden Content',
+              'ai_signals':        'AI Content Signals',
+              'dom_structure':     'DOM Structure',
+              'robots_content':    'Robots.txt & llms.txt',
+              'sitemap_coverage':  'Sitemap Coverage',
+              'competitor_schema': 'Competitor Schema',
+              'au_signals':        'AU Content Signals',
           }
           for key, name in check_names.items():
               c = data.get('checks', {}).get(key, {})
+              if not c:
+                  continue
               if 'error' in c:
                   print(f"  ✗ {name:<28} {c['error'][:50]}")
               else:
@@ -316,6 +382,14 @@ jobs:
                   print(f"  {name:<28} {bar} {c.get('score',0)}/{c.get('maxScore',0)} ({c.get('percentage',0)}%)")
           EOF
           fi
+
+      # ── Phase 3b: Generate recommendations ─────────────────────────────────────
+      - name: "Phase 3b — Generate recommendations"
+        if: inputs.run_phase3 && always()
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python generate_recommendations.py 2>&1
 
       # ── Phase 4: Content Intelligence ──────────────────────────────────────────
       - name: "Phase 4 — Content intelligence (~5 min)"

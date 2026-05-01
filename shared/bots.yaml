@@ -1,0 +1,95 @@
+# AI bot user-agents for AEO audit tooling.
+# tier 1 = primary AI answer engines (scored in user_agents check)
+# tier 2 = secondary AI/search bots (informational)
+# tier 3 = scraping/training bots (informational)
+
+bots:
+  - name: GPTBot
+    ua: "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; GPTBot/1.2; +https://openai.com/gptbot)"
+    robots_pattern: gptbot
+    tier: 1
+
+  - name: OAI-SearchBot
+    ua: "OAI-SearchBot/1.0 (+https://openai.com/searchbot)"
+    robots_pattern: oai-searchbot
+    tier: 1
+
+  - name: ChatGPT-User
+    ua: "ChatGPT-User/1.0 (+https://openai.com/bot)"
+    robots_pattern: chatgpt-user
+    tier: 1
+
+  - name: ClaudeBot
+    ua: "Mozilla/5.0 (compatible; ClaudeBot/1.0; +https://anthropic.com/en/claude-bot)"
+    robots_pattern: claudebot
+    tier: 1
+
+  - name: Claude-User
+    ua: "Claude-User/1.0"
+    robots_pattern: claude-user
+    tier: 1
+
+  - name: Claude-SearchBot
+    ua: "Claude-SearchBot/1.0"
+    robots_pattern: claude-searchbot
+    tier: 1
+
+  - name: PerplexityBot
+    ua: "Mozilla/5.0 (compatible; PerplexityBot/1.0; +https://docs.perplexity.ai/docs/perplexitybot)"
+    robots_pattern: perplexitybot
+    tier: 1
+
+  - name: Perplexity-User
+    ua: "Perplexity-User/1.0"
+    robots_pattern: perplexity-user
+    tier: 2
+
+  - name: Google-Extended
+    ua: "Mozilla/5.0 (compatible; Google-Extended)"
+    robots_pattern: google-extended
+    tier: 1
+
+  - name: Bingbot
+    ua: "Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)"
+    robots_pattern: bingbot
+    tier: 2
+
+  - name: Applebot-Extended
+    ua: "Applebot-Extended/1.0"
+    robots_pattern: applebot-extended
+    tier: 2
+
+  - name: Meta-ExternalAgent
+    ua: "Meta-ExternalAgent/1.1 (+https://developers.facebook.com/docs/sharing/webmasters/crawler)"
+    robots_pattern: meta-externalagent
+    tier: 2
+
+  - name: Amazonbot
+    ua: "Amazonbot/0.1 (+https://developer.amazon.com/support/amazonbot)"
+    robots_pattern: amazonbot
+    tier: 2
+
+  - name: Bytespider
+    ua: "Bytespider/1.0 (+https://zhanzhang.toutiao.com/)"
+    robots_pattern: bytespider
+    tier: 3
+
+  - name: DuckDuckBot
+    ua: "DuckDuckBot/1.1 (+http://duckduckgo.com/duckduckbot.html)"
+    robots_pattern: duckduckbot
+    tier: 3
+
+  - name: YouBot
+    ua: "YouBot/1.0 (+https://about.you.com/en/)"
+    robots_pattern: youbot
+    tier: 3
+
+  - name: CCBot
+    ua: "CCBot/2.0 (https://commoncrawl.org/faq/)"
+    robots_pattern: ccbot
+    tier: 3
+
+  - name: Diffbot
+    ua: "Diffbot/1.0 (+http://www.diffbot.com)"
+    robots_pattern: diffbot
+    tier: 3

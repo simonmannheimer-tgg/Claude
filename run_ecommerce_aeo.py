@@ -32,6 +32,19 @@ from urllib.parse import urlparse, urljoin
 import httpx
 from bs4 import BeautifulSoup
 
+try:
+    import yaml as _yaml
+    def _load_bots():
+        p = Path(__file__).parent / "shared" / "bots.yaml"
+        if p.exists():
+            return _yaml.safe_load(p.read_text())["bots"]
+        return []
+except ImportError:
+    def _load_bots():
+        return []
+
+_BOTS = _load_bots()
+
 # ── Constants ─────────────────────────────────────────────────────────────────
 
 BROWSER_UA = (
@@ -78,16 +91,25 @@ GRADE_EMOJI = {"A": "🟢", "B": "🟢", "C": "🟡", "D": "🟠", "F": "🔴"}
 # Required fields per schema @type for validity checks
 SCHEMA_REQUIRED_FIELDS: dict[str, set[str]] = {
     "Product":          {"name", "offers"},
-    "Offer":            {"price", "priceCurrency"},
+    "Offer":            {"price", "priceCurrency", "availability"},
     "AggregateRating":  {"ratingValue", "reviewCount"},
     "FAQPage":          {"mainEntity"},
     "Question":         {"name", "acceptedAnswer"},
     "BreadcrumbList":   {"itemListElement"},
-    "Article":          {"headline", "author"},
+    "Article":          {"headline", "author", "datePublished"},
     "WebSite":          {"url"},
     "Organization":     {"name"},
     "ItemList":         {"itemListElement"},
     "LocalBusiness":    {"name", "address"},
+    "MerchantReturnPolicy": {"applicableCountry", "returnPolicyCategory"},
+    "OfferShippingDetails": {"shippingRate"},
+}
+
+# Recommended (not required) fields that earn warning if absent
+SCHEMA_RECOMMENDED_FIELDS: dict[str, set[str]] = {
+    "Product":   {"brand", "gtin", "gtin13", "gtin14", "sameAs", "image"},
+    "Offer":     {"priceValidUntil", "seller"},
+    "Article":   {"dateModified", "image"},
 }
 
 DEFAULT_COMPETITORS = [
@@ -243,6 +265,7 @@ def check_render_diff(snapshot_dir: Path, urls: list[str]) -> dict:
             raw_text = raw_soup.get_text(separator=" ", strip=True)
             raw_words = len(raw_text.split())
             status = resp.status_code
+            raw_html_text = resp.text
         except Exception as e:
             results.append({"url": url, "error": str(e)[:100]})
             continue
@@ -258,13 +281,28 @@ def check_render_diff(snapshot_dir: Path, urls: list[str]) -> dict:
         ssr_detected = raw_words > rendered_words
         diff_words = rendered_words - raw_words  # negative when SSR (no JS-gated content)
 
+        # Element-level SSR diff: count JSON-LD blocks and price elements in raw vs rendered
+        raw_schema_count = len(re.findall(r'<script[^>]+type=["\']application/ld\+json["\']', raw_html_text, re.IGNORECASE))
+        rendered_html_text = rendered_soup.__str__()
+        rendered_schema_count = len(re.findall(r'<script[^>]+type=["\']application/ld\+json["\']', rendered_html_text, re.IGNORECASE))
+        schema_injected_csr = rendered_schema_count > raw_schema_count
+
+        # Price element counts (itemprop=price, data-price, .price class)
+        raw_price_els = len(raw_soup.find_all(attrs={"itemprop": "price"})) + \
+                        len(raw_soup.find_all(attrs={"data-price": True}))
+        rendered_price_els = len(rendered_soup.find_all(attrs={"itemprop": "price"})) + \
+                             len(rendered_soup.find_all(attrs={"data-price": True}))
+
         # Score: 20pts if >=80% content accessible without JS, partial 50-79%, 0 <50%
+        # Deduct 5pts if schema is CSR-only (AI bots won't see it)
         if pct_accessible >= 80:
             page_score = 20
         elif pct_accessible >= 50:
             page_score = 10
         else:
             page_score = 0
+        if schema_injected_csr:
+            page_score = max(0, page_score - 5)
 
         total_score += page_score
 
@@ -276,10 +314,18 @@ def check_render_diff(snapshot_dir: Path, urls: list[str]) -> dict:
             "pct_accessible": pct_accessible,
             "ssr_detected": ssr_detected,
             "js_only_words": max(diff_words, 0),
+            "ssr_schema_count": raw_schema_count,
+            "csr_schema_count": rendered_schema_count,
+            "schema_injected_csr": schema_injected_csr,
+            "price_elements_ssr": raw_price_els,
+            "price_elements_rendered": rendered_price_els,
             "score": page_score,
             "maxScore": 20,
             "note": "SSR detected — raw HTML contains full content" if ssr_detected else None,
-            "issue": "High JS dependency — bots without JS miss significant content" if pct_accessible < 80 else None,
+            "issue": (
+                "Schema injected via JS — AI bots cannot see structured data" if schema_injected_csr else
+                "High JS dependency — bots without JS miss significant content" if pct_accessible < 80 else None
+            ),
         })
 
     client.close()
@@ -299,13 +345,24 @@ def check_render_diff(snapshot_dir: Path, urls: list[str]) -> dict:
 # ── Check 3: User Agent Behaviour ─────────────────────────────────────────────
 
 def check_user_agents(test_urls: list[str]) -> dict:
+    # Use all 18 bots from shared/bots.yaml; fall back to hardcoded tier-1 bots
+    if _BOTS:
+        tier1_bots = {b["name"]: b["ua"] for b in _BOTS if b["tier"] == 1}
+        all_bots   = {b["name"]: b["ua"] for b in _BOTS}
+    else:
+        tier1_bots = AI_BOT_UAS
+        all_bots   = AI_BOT_UAS
+
+    # Score based on tier-1 accessibility (20 pts max per URL)
+    # 20 = all tier-1 allowed, 10 = ≥50%, 0 = <50%
     results = []
     total_score = 0
-    max_score = len(test_urls) * len(AI_BOT_UAS) * 5 if test_urls else 0
+    max_score = len(test_urls) * 20 if test_urls else 0
 
     for url in test_urls:
         ua_results = {}
-        for bot_name, ua_string in AI_BOT_UAS.items():
+        for bot_name, ua_string in all_bots.items():
+            tier = next((b["tier"] for b in _BOTS if b["name"] == bot_name), 1)
             try:
                 resp = httpx.get(
                     url,
@@ -317,40 +374,58 @@ def check_user_agents(test_urls: list[str]) -> dict:
                 ua_results[bot_name] = {
                     "status": resp.status_code,
                     "allowed": allowed,
-                    "score": 5 if allowed else 0,
+                    "tier": tier,
+                    "score": None,  # scored at URL level below
                 }
-                if allowed:
-                    total_score += 5
             except Exception as e:
-                ua_results[bot_name] = {"status": "error", "allowed": False, "error": str(e)[:80], "score": 0}
+                ua_results[bot_name] = {"status": "error", "allowed": False, "tier": tier,
+                                        "error": str(e)[:80], "score": None}
 
-        # Googlebot: informational only, not scored (blocking is an SEO issue not AEO)
+        # Googlebot: informational only
         try:
-            resp_gb = httpx.get(
-                url,
-                headers={"User-Agent": GOOGLEBOT_UA},
-                follow_redirects=True,
-                timeout=10,
-            )
+            resp_gb = httpx.get(url, headers={"User-Agent": GOOGLEBOT_UA},
+                                follow_redirects=True, timeout=10)
             ua_results["Googlebot (info)"] = {
                 "status": resp_gb.status_code,
                 "allowed": resp_gb.status_code == 200,
-                "score": None,
+                "tier": 0,
                 "note": "informational — not scored",
             }
         except Exception as e:
-            ua_results["Googlebot (info)"] = {"status": "error", "note": str(e)[:80], "score": None}
+            ua_results["Googlebot (info)"] = {"status": "error", "tier": 0,
+                                               "note": str(e)[:80]}
 
-        blocked = [k for k, v in ua_results.items() if k != "Googlebot (info)" and not v.get("allowed")]
+        tier1_allowed = sum(
+            1 for n, v in ua_results.items()
+            if n in tier1_bots and v.get("allowed")
+        )
+        tier1_total = len(tier1_bots)
+        tier1_ratio = tier1_allowed / tier1_total if tier1_total else 0
+
+        if tier1_ratio >= 1.0:
+            page_score = 20
+        elif tier1_ratio >= 0.5:
+            page_score = 10
+        else:
+            page_score = 0
+        total_score += page_score
+
+        blocked_tier1 = [n for n in tier1_bots if not ua_results.get(n, {}).get("allowed")]
+        blocked_all   = [n for n, v in ua_results.items()
+                         if n != "Googlebot (info)" and not v.get("allowed")]
         results.append({
             "url": url,
             "bots": ua_results,
-            "blocked": blocked,
-            "issue": f"Blocked for: {', '.join(blocked)}" if blocked else None,
+            "blocked_tier1": blocked_tier1,
+            "blocked_all": blocked_all,
+            "tier1_accessible": f"{tier1_allowed}/{tier1_total}",
+            "score": page_score,
+            "maxScore": 20,
+            "issue": f"Tier-1 bots blocked: {', '.join(blocked_tier1)}" if blocked_tier1 else None,
         })
 
     pct = round(total_score / max_score * 100) if max_score else 0
-    errors = [r for r in results if r.get("blocked")]
+    errors = [r for r in results if r.get("blocked_tier1")]
     return {
         "score": total_score,
         "maxScore": max_score,
@@ -358,7 +433,7 @@ def check_user_agents(test_urls: list[str]) -> dict:
         "grade": grade(pct),
         "pages": results,
         "errors": errors,
-        "summary": f"{len(results) - len(errors)}/{len(results)} pages accessible to all AI bots",
+        "summary": f"{len(results) - len(errors)}/{len(results)} pages accessible to all tier-1 AI bots",
     }
 
 
@@ -466,7 +541,7 @@ def check_hidden_content(snapshot_dir: Path) -> dict:
             "file": html_file.name,
             "total_words": all_words,
             "hidden_words": hidden_words,
-            "hidden_ratio_pct": round(hidden_ratio * 100),
+            "hidden_pct": round(hidden_ratio * 100),
             "details_collapsed_words": details_text_words,
             "hidden_elements_count": len(hidden_elements),
             "top_hidden": hidden_elements[:5],
@@ -574,8 +649,8 @@ def check_ai_signals(snapshot_dir: Path) -> dict:
         results.append({
             "file": html_file.name,
             "page_type": page_type,
-            "signals_found": signals_found,
-            "signals_missing": signals_missing,
+            "found": signals_found,
+            "missing": signals_missing,
             "h1_count": len(h1_tags),
             "h2_count": len(h2_tags),
             "table_count": len(tables),
@@ -597,18 +672,44 @@ def check_ai_signals(snapshot_dir: Path) -> dict:
     }
 
 
+# ── GTIN validation ───────────────────────────────────────────────────────────
+
+def _validate_gtin(gtin: str) -> bool:
+    """Luhn-based check digit validation for GTIN-8/12/13/14."""
+    digits = re.sub(r'\D', '', str(gtin))
+    if len(digits) not in (8, 12, 13, 14):
+        return False
+    total = 0
+    for i, d in enumerate(reversed(digits[:-1])):
+        n = int(d)
+        total += n * 3 if i % 2 == 0 else n
+    check = (10 - total % 10) % 10
+    return check == int(digits[-1])
+
+
 # ── Check 6: Schema Validity ──────────────────────────────────────────────────
 
-def _validate_schema_block(block: dict) -> list[str]:
+def _validate_schema_block(block: dict) -> tuple[list[str], list[str]]:
+    """Returns (errors, warnings) for a single schema block."""
     t = block.get("@type", "")
     if isinstance(t, list):
         t = t[0] if t else ""
     required = SCHEMA_REQUIRED_FIELDS.get(t, set())
-    return [f for f in required if not block.get(f)]
+    recommended = SCHEMA_RECOMMENDED_FIELDS.get(t, set())
+    errors = [f for f in required if not block.get(f)]
+    warnings = [f for f in recommended if not block.get(f)]
+
+    # GTIN validation when present
+    for gtin_field in ("gtin", "gtin13", "gtin14", "gtin8"):
+        val = block.get(gtin_field)
+        if val and not _validate_gtin(str(val)):
+            errors.append(f"{gtin_field} has invalid check digit: {val}")
+
+    return errors, warnings
 
 
 def check_schema_validity(snapshot_dir: Path) -> dict:
-    """Validates required fields in found JSON-LD blocks — presence alone isn't enough."""
+    """Validates required and recommended fields in JSON-LD blocks, including GTIN."""
     results = []
     total_score = 0
     max_score = 0
@@ -622,21 +723,24 @@ def check_schema_validity(snapshot_dir: Path) -> dict:
             max_score += page_max
             results.append({"file": html_file.name, "schema_count": 0, "valid": 0,
                             "invalid": 0, "score": 0, "maxScore": page_max,
-                            "issues": [], "issue": "No JSON-LD found"})
+                            "issues": [], "warnings": [], "issue": "No JSON-LD found"})
             continue
 
         issues = []
+        warn_list = []
         valid_count = 0
 
         def _validate(item: dict) -> None:
             nonlocal valid_count
-            missing = _validate_schema_block(item)
+            errs, warns = _validate_schema_block(item)
             t = item.get("@type", "unknown")
             if isinstance(t, list): t = t[0]
-            if missing:
-                issues.append(f"{t}: missing {', '.join(missing)}")
+            if errs:
+                issues.append(f"{t}: missing {', '.join(errs)}")
             else:
                 valid_count += 1
+            for w in warns:
+                warn_list.append(f"{t}: recommended field absent — {w}")
             for sub in item.get("@graph", []):
                 _validate(sub)
 
@@ -656,6 +760,7 @@ def check_schema_validity(snapshot_dir: Path) -> dict:
             "score": page_score,
             "maxScore": page_max,
             "issues": issues[:5],
+            "warnings": warn_list[:5],
             "issue": "; ".join(issues[:2]) if issues else None,
         })
 
@@ -792,13 +897,18 @@ def check_robots_content(base_url: str) -> dict:
     A site that blocks GPTBot but allows ClaudeBot needs a different fix than
     one that uses a wildcard disallow. llms.txt quality also assessed.
     """
-    bot_map = {
-        "ClaudeBot":       ["claudebot"],
-        "GPTBot":          ["gptbot"],
-        "PerplexityBot":   ["perplexitybot"],
-        "Google-Extended": ["google-extended"],
-        "Googlebot":       ["googlebot"],
-    }
+    # Build bot_map from shared YAML (all 18 bots); fall back to 5-bot hardcoded list
+    if _BOTS:
+        bot_map = {b["name"]: [b["robots_pattern"]] for b in _BOTS}
+        bot_map["Googlebot"] = ["googlebot"]
+    else:
+        bot_map = {
+            "ClaudeBot":       ["claudebot"],
+            "GPTBot":          ["gptbot"],
+            "PerplexityBot":   ["perplexitybot"],
+            "Google-Extended": ["google-extended"],
+            "Googlebot":       ["googlebot"],
+        }
     result: dict = {
         "robots": {}, "llms_txt": {},
         "score": 0, "maxScore": 50,
@@ -851,12 +961,17 @@ def check_robots_content(base_url: str) -> dict:
     except Exception as e:
         result["llms_txt"] = {"exists": False, "error": str(e)[:60]}
 
-    # Scoring
+    # Scoring: tier-1 bots (7) weight 3pts each = 21 pts max; llms.txt = 29 pts max → total 50
+    tier1_names = {b["name"] for b in _BOTS if b["tier"] == 1} if _BOTS else {
+        "ClaudeBot", "GPTBot", "PerplexityBot", "Google-Extended",
+        "OAI-SearchBot", "ChatGPT-User", "Claude-User",
+    }
     ai_bots = [b for b in bot_map if b != "Googlebot"]
     accessible = sum(1 for b in ai_bots if not result["robots"].get(b, {}).get("blocked", False))
-    score = accessible * 6  # max 24 (4 bots × 6pts)
+    tier1_accessible = sum(1 for b in tier1_names if not result["robots"].get(b, {}).get("blocked", False))
+    score = tier1_accessible * 3  # 7 tier-1 bots × 3 pts = 21 max
     if result["llms_txt"].get("exists"):
-        score += 16
+        score += 19
         if result["llms_txt"].get("sections", 0) >= 3:
             score += 10
 
@@ -1013,6 +1128,100 @@ def check_competitor_schema(snapshot_dir: Path, competitors: list[dict] | None =
     }
 
 
+# ── Check 11: Australian Content Signals ─────────────────────────────────────
+
+_AU_SPELLING_US = re.compile(
+    r"\b(color|colorful|colorize|gray|center|fiber|aluminum|organize|recognize|"
+    r"behavior|neighbor|odor|flavor|honor|rumor|labor|tumor|humor|vapor|vigor)\b",
+    re.IGNORECASE,
+)
+_AU_SPELLING_AU = re.compile(
+    r"\b(colour|colourful|grey|centre|fibre|aluminium|organise|recognise|"
+    r"behaviour|neighbour|odour|flavour|honour|rumour|labour|tumour|humour|vapour|vigour)\b",
+    re.IGNORECASE,
+)
+_ACCC_PRICE_PATTERN = re.compile(
+    r"(?:was|save|rrp|aud|a\$|\$[\d,]+\s*was|\bsave\b)",
+    re.IGNORECASE,
+)
+
+
+def check_au_signals(snapshot_dir: Path) -> dict:
+    """Australian-specific content signals: lang attr, AUD currency, spelling, ACCC pricing."""
+    results = []
+    total_score = 0
+    max_score = 0
+    page_max = 20
+
+    html_files = sorted(snapshot_dir.glob("*.html"))
+    if not html_files:
+        return {"error": "No HTML snapshots found", "score": 0, "maxScore": 0}
+
+    for html_file in html_files:
+        raw = html_file.read_text(encoding="utf-8", errors="ignore")
+        soup = BeautifulSoup(raw, "html.parser")
+        signals = []
+        issues = []
+
+        # lang="en-AU" on <html> tag
+        html_tag = soup.find("html")
+        lang = (html_tag.get("lang", "") if html_tag else "").lower()
+        if "en-au" in lang:
+            signals.append("lang=en-AU")
+        else:
+            issues.append(f'lang attr is "{lang or "missing"}" — should be en-AU for AU markets')
+
+        # AUD currency signals in page text
+        text = soup.get_text(separator=" ", strip=True)
+        if re.search(r"\b(?:AUD|A\$)\b", text) or re.search(r"\$\s*[\d,]+", text):
+            signals.append("AUD currency present")
+        else:
+            issues.append("No AUD currency markers found")
+
+        # Australian vs US spelling
+        au_count = len(_AU_SPELLING_AU.findall(text))
+        us_count = len(_AU_SPELLING_US.findall(text))
+        if us_count == 0 or (au_count > 0 and au_count >= us_count):
+            signals.append(f"AU spelling preferred ({au_count} AU / {us_count} US)")
+        elif us_count > au_count:
+            issues.append(f"US spelling drift detected ({us_count} US terms > {au_count} AU terms)")
+
+        # ACCC-style comparative pricing (Was/Save/RRP)
+        page_type = infer_page_type(html_file.name)
+        if page_type in ("product", "category"):
+            if _ACCC_PRICE_PATTERN.search(text):
+                signals.append("ACCC comparative pricing present")
+            else:
+                issues.append("No Was/Save/RRP pricing — ACCC compliance uncertain")
+
+        page_score = min(len(signals) * 5, page_max)
+        total_score += page_score
+        max_score += page_max
+
+        results.append({
+            "file": html_file.name,
+            "lang": lang or "missing",
+            "signals": signals,
+            "au_spelling_count": au_count,
+            "us_spelling_count": us_count,
+            "score": page_score,
+            "maxScore": page_max,
+            "issue": "; ".join(issues[:2]) if issues else None,
+        })
+
+    pct = round(total_score / max_score * 100) if max_score else 0
+    errors = [r for r in results if r.get("issue")]
+    return {
+        "score": total_score,
+        "maxScore": max_score,
+        "percentage": pct,
+        "grade": grade(pct),
+        "pages": results,
+        "errors": errors,
+        "summary": f"{len(results) - len(errors)}/{len(results)} pages pass AU content signals",
+    }
+
+
 # ── Report builder ─────────────────────────────────────────────────────────────
 
 def build_summary(checks: dict, label: str, snapshot_dir: str) -> str:
@@ -1042,6 +1251,7 @@ def build_summary(checks: dict, label: str, snapshot_dir: str) -> str:
         "robots_content":    ("Robots.txt & llms.txt Rules",   50),
         "sitemap_coverage":  ("Sitemap Coverage",              40),
         "competitor_schema": ("Competitor Schema Comparison",  45),
+        "au_signals":        ("Australian Content Signals",    20),
     }
 
     for key, (name, weight) in check_labels.items():
@@ -1148,7 +1358,7 @@ def main():
     competitor_urls_raw = os.getenv("COMPETITOR_URLS", "").strip()
     competitor_urls = json.loads(competitor_urls_raw) if competitor_urls_raw else None
 
-    default_checks = "schema,schema_validity,render_diff,user_agents,hidden_content,ai_signals,dom_structure,robots_content,sitemap_coverage,competitor_schema"
+    default_checks = "schema,schema_validity,render_diff,user_agents,hidden_content,ai_signals,dom_structure,robots_content,sitemap_coverage,competitor_schema,au_signals"
     checks_to_run = set((os.getenv("AEO_CHECKS") or default_checks).split(","))
     checks_to_run = {c.strip() for c in checks_to_run}
 
@@ -1176,6 +1386,7 @@ def main():
     run_check("robots_content",   "Robots.txt & llms.txt rules",        lambda: check_robots_content(base_url))
     run_check("sitemap_coverage", "Sitemap coverage",                   lambda: check_sitemap_coverage(base_url))
     run_check("competitor_schema","Competitor schema comparison",       lambda: check_competitor_schema(snapshot_dir, competitor_urls))
+    run_check("au_signals",       "Australian content signals",         lambda: check_au_signals(snapshot_dir))
 
     # Totals
     total_score = sum(c.get("score", 0) for c in checks.values() if isinstance(c, dict))
