@@ -790,8 +790,8 @@
         {
           "url": "https://www.thegoodguys.com.au/televisions",
           "status_code": 200,
-          "raw_words": 5878,
-          "rendered_words": 3292,
+          "raw_words": 5886,
+          "rendered_words": 3300,
           "pct_accessible": 100,
           "ssr_detected": true,
           "js_only_words": 0,
@@ -808,8 +808,8 @@
         {
           "url": "https://www.thegoodguys.com.au/televisions/smart-tvs",
           "status_code": 200,
-          "raw_words": 5878,
-          "rendered_words": 3292,
+          "raw_words": 5886,
+          "rendered_words": 3300,
           "pct_accessible": 100,
           "ssr_detected": true,
           "js_only_words": 0,
@@ -1672,9 +1672,9 @@
         },
         {
           "file": "televisions--smart-tvs.html",
-          "total_words": 3292,
+          "total_words": 3300,
           "hidden_words": 247,
-          "hidden_pct": 8,
+          "hidden_pct": 7,
           "details_collapsed_words": 0,
           "hidden_elements_count": 8,
           "top_hidden": [
@@ -1715,9 +1715,9 @@
         },
         {
           "file": "televisions.html",
-          "total_words": 3292,
+          "total_words": 3300,
           "hidden_words": 247,
-          "hidden_pct": 8,
+          "hidden_pct": 7,
           "details_collapsed_words": 0,
           "hidden_elements_count": 8,
           "top_hidden": [
@@ -2165,13 +2165,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 765,
+          "dom_elements": 766,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (765 elements)",
+            "lean DOM (766 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -2225,7 +2225,7 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 5661,
+          "dom_elements": 5659,
           "aria_labels": 430,
           "signals": [
             "<main>",
@@ -2264,13 +2264,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 3084,
-          "aria_labels": 150,
+          "dom_elements": 3057,
+          "aria_labels": 149,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "good ARIA (150 labels)"
+            "good ARIA (149 labels)"
           ],
           "score": 20,
           "maxScore": 25,
@@ -2283,13 +2283,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 3084,
-          "aria_labels": 150,
+          "dom_elements": 3057,
+          "aria_labels": 149,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "good ARIA (150 labels)"
+            "good ARIA (149 labels)"
           ],
           "score": 20,
           "maxScore": 25,
@@ -2301,8 +2301,8 @@
           "has_article": true,
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
-          "external_scripts": 23,
-          "dom_elements": 3077,
+          "external_scripts": 24,
+          "dom_elements": 3078,
           "aria_labels": 161,
           "signals": [
             "<main>",
@@ -2312,7 +2312,7 @@
           ],
           "score": 20,
           "maxScore": 25,
-          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (23 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
         },
         {
           "file": "whats-new.html",
@@ -2402,13 +2402,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 25,
-          "dom_elements": 765,
+          "dom_elements": 766,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (765 elements)",
+            "lean DOM (766 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
@@ -2462,7 +2462,7 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 5661,
+          "dom_elements": 5659,
           "aria_labels": 430,
           "signals": [
             "<main>",
@@ -2501,13 +2501,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 3084,
-          "aria_labels": 150,
+          "dom_elements": 3057,
+          "aria_labels": 149,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "good ARIA (150 labels)"
+            "good ARIA (149 labels)"
           ],
           "score": 20,
           "maxScore": 25,
@@ -2520,13 +2520,13 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 3084,
-          "aria_labels": 150,
+          "dom_elements": 3057,
+          "aria_labels": 149,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "good ARIA (150 labels)"
+            "good ARIA (149 labels)"
           ],
           "score": 20,
           "maxScore": 25,
@@ -2538,8 +2538,8 @@
           "has_article": true,
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
-          "external_scripts": 23,
-          "dom_elements": 3077,
+          "external_scripts": 24,
+          "dom_elements": 3078,
           "aria_labels": 161,
           "signals": [
             "<main>",
@@ -2549,7 +2549,7 @@
           ],
           "score": 20,
           "maxScore": 25,
-          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (23 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
         },
         {
           "file": "whats-new.html",
