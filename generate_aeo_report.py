@@ -53,6 +53,8 @@ ISSUE_ADVICE = {
     "competitor_schema":"Competitors use more complete schema. Add missing types to match or exceed their structured data coverage.",
     "au_signals":       "Add <code>lang=\"en-AU\"</code> to &lt;html&gt;, ensure AUD currency is visible, and include Was/Save pricing patterns for ACCC compliance.",
     "agentic_commerce": "No agentic endpoints found. Shopify Agentic Storefronts exposes MCP/ACP endpoints that AI shopping agents use to browse and buy.",
+    "content_freshness": "Update schema dateModified and ensure server sends Last-Modified headers. AI crawlers deprioritise content older than 90 days.",
+    "review_accessibility": "Review text is loaded via JavaScript and invisible to AI crawlers. Move review content to server-rendered HTML or use SSR.",
 }
 
 # Human-readable descriptions for every check — shown as tooltips and in description column
@@ -81,6 +83,8 @@ CHECK_DESCRIPTIONS = {
     "agentic_commerce":  "Shopify Agentic Storefronts readiness — MCP endpoint, ACP feed, UCP endpoint, agent-endpoint link tag in HTML head.",
     "gtin_coverage":     "Percentage of product pages with valid GTIN (barcode) in structured data — required for Google Shopping AI and agentic purchase flows.",
     "gmc_feed":          "Google Merchant Centre feed completeness — required fields (id, title, price, gtin, brand) and optional fields per GMC spec.",
+    "content_freshness": "Schema dateModified/datePublished age + HTTP Last-Modified header age. Pages older than 90 days flagged as stale. 0 stale = 100%, ≤25% = 70%, ≤50% = 40%, >50% = 10%.",
+    "review_accessibility": "Customer review text in raw HTML vs Playwright render. JS-gated reviews score 0 per page; SSR or no reviews = full marks.",
     # Content Intelligence checks
     "boilerplate_ratio":  "Ratio of unique content vs boilerplate (nav, footer, sidebar). Lower boilerplate = more AI-citable unique content per page.",
     "content_chunking":   "Content broken into H2/H3 sections with short paragraphs and numbered lists — structure that lets AI extract and cite specific answers.",
@@ -121,6 +125,8 @@ PHASE3_CATS = [
     ("agentic_commerce",  "Agentic Commerce Readiness",   30),
     ("gtin_coverage",     "GTIN Coverage",                20),
     ("gmc_feed",          "GMC Feed Completeness",        30),
+    ("content_freshness", "Content Freshness",            20),
+    ("review_accessibility", "Review Accessibility",     10),
 ]
 
 PHASE4_CATS = [
@@ -593,6 +599,7 @@ def section_phase3(phase3: dict) -> str:
             </table>"""
 
     # Schema detail
+    # ── Schema presence detail ───────────────────────────────────────────────
     schema_data = checks.get("schema", {})
     if schema_data and "pages" in schema_data:
         schema_rows = ""
@@ -602,19 +609,88 @@ def section_phase3(phase3: dict) -> str:
             bonus = ", ".join(p.get("bonus", [])) or "—"
             page_pct = round(p.get("score", 0) / p.get("maxScore", 1) * 100) if p.get("maxScore") else 0
             bar_c = pct_bar_color(page_pct)
+            pt = p.get("page_type", "")
+            pt_colour = {"product": "#6366f1", "category": "#0ea5e9", "guide": "#f59e0b",
+                         "home": "#22c55e", "editorial": "#ec4899"}.get(pt, "#64748b")
+            pt_badge = f'<span style="background:{pt_colour};color:#fff;font-size:0.72em;padding:1px 6px;border-radius:3px;margin-left:4px">{pt}</span>' if pt else ""
             schema_rows += f"""<tr>
-                <td><code>{p.get("file","")}</code></td>
-                <td>{p.get("page_type","")}</td>
+                <td><code>{p.get("file","")}</code>{pt_badge}</td>
                 <td style="color:{bar_c};font-weight:600">{p.get("score",0)}/{p.get("maxScore",0)}</td>
                 <td style="color:#64748b;font-size:0.85em">{found}</td>
                 <td style="color:#ef4444;font-size:0.85em">{missing}</td>
                 <td style="color:#22c55e;font-size:0.85em">{bonus}</td>
             </tr>"""
         html += f"""
-        <h3>Schema Detail by Page</h3>
+        <h3>Schema Presence by Page</h3>
         <table class="data-table">
-            <thead><tr><th>Page</th><th>Type</th><th>Score</th><th>Schema Found</th><th>Missing</th><th>Bonus</th></tr></thead>
+            <thead><tr><th>Page</th><th>Score</th><th>Schema Found</th><th>Missing</th><th>Bonus</th></tr></thead>
             <tbody>{schema_rows}</tbody>
+        </table>"""
+
+    # ── Schema validity detail (with warnings inline) ────────────────────────
+    sv_data = checks.get("schema_validity", {})
+    if sv_data and "pages" in sv_data:
+        sv_rows = ""
+        for p in sv_data["pages"]:
+            pt = p.get("page_type", "")
+            pt_colour = {"product": "#6366f1", "category": "#0ea5e9", "guide": "#f59e0b",
+                         "home": "#22c55e", "editorial": "#ec4899"}.get(pt, "#64748b")
+            pt_badge = f'<span style="background:{pt_colour};color:#fff;font-size:0.72em;padding:1px 6px;border-radius:3px;margin-left:4px">{pt}</span>' if pt else ""
+            page_pct = round(p.get("score", 0) / p.get("maxScore", 1) * 100) if p.get("maxScore") else 0
+            bar_c = pct_bar_color(page_pct)
+            issues = p.get("issues", [])
+            warnings = p.get("warnings", [])
+            issue_html = ""
+            if issues:
+                issue_items = "".join(f"<li style='color:#ef4444'>{i}</li>" for i in issues[:4])
+                issue_html += f"<ul style='margin:2px 0 0 12px;padding:0;font-size:0.82em'>{issue_items}</ul>"
+            if warnings:
+                warn_items = "".join(f"<li style='color:#f59e0b'>{w}</li>" for w in warnings[:4])
+                issue_html += f"""<details style="margin-top:3px"><summary style="font-size:0.8em;color:#94a3b8;cursor:pointer">{len(warnings)} warning(s)</summary>
+                <ul style='margin:2px 0 0 12px;padding:0;font-size:0.8em'>{warn_items}</ul></details>"""
+            sv_rows += f"""<tr>
+                <td><code>{p.get("file","")}</code>{pt_badge}</td>
+                <td style="color:{bar_c};font-weight:600">{p.get("score",0)}/{p.get("maxScore",0)}</td>
+                <td style="text-align:center">{p.get("valid",0)}/{p.get("schema_count",0)}</td>
+                <td>{issue_html or '<span style="color:#22c55e">All valid</span>'}</td>
+            </tr>"""
+        html += f"""
+        <h3>Schema Validity by Page</h3>
+        <table class="data-table">
+            <thead><tr><th>Page</th><th>Score</th><th>Valid/Total</th><th>Issues &amp; Warnings</th></tr></thead>
+            <tbody>{sv_rows}</tbody>
+        </table>"""
+
+    # ── Content freshness detail ─────────────────────────────────────────────
+    cf_data = checks.get("content_freshness", {})
+    if cf_data and "pages" in cf_data:
+        cf_rows = ""
+        for p in cf_data["pages"]:
+            stale = p.get("stale", False)
+            age = p.get("age_days")
+            age_str = f"{age}d" if age is not None else "Unknown"
+            freshness_badge = (
+                '<span style="background:#ef4444;color:#fff;font-size:0.75em;padding:1px 6px;border-radius:3px">STALE</span>'
+                if stale else
+                '<span style="background:#22c55e;color:#fff;font-size:0.75em;padding:1px 6px;border-radius:3px">FRESH</span>'
+                if age is not None else
+                '<span style="background:#94a3b8;color:#fff;font-size:0.75em;padding:1px 6px;border-radius:3px">UNKNOWN</span>'
+            )
+            schema_date = p.get("schema_date", "")[:10] if p.get("schema_date") else "—"
+            lm = p.get("last_modified", "")[:10] if p.get("last_modified") else "—"
+            pt = p.get("page_type", "")
+            cf_rows += f"""<tr>
+                <td><code>{p.get("file","")}</code></td>
+                <td>{pt}</td>
+                <td>{freshness_badge} {age_str}</td>
+                <td style="font-size:0.82em;color:#64748b">{schema_date}</td>
+                <td style="font-size:0.82em;color:#64748b">{lm}</td>
+            </tr>"""
+        html += f"""
+        <h3>Content Freshness by Page</h3>
+        <table class="data-table">
+            <thead><tr><th>Page</th><th>Type</th><th>Status</th><th>Schema Date</th><th>HTTP Last-Modified</th></tr></thead>
+            <tbody>{cf_rows}</tbody>
         </table>"""
 
     return html

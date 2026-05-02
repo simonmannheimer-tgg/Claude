@@ -342,6 +342,8 @@ jobs:
               'agentic_commerce':  'Agentic Commerce Readiness',
               'gtin_coverage':     'GTIN Coverage',
               'gmc_feed':          'GMC Feed Completeness',
+              'content_freshness': 'Content Freshness',
+              'review_accessibility': 'Review Accessibility',
           }
           for key, name in check_names.items():
               c = data.get('checks', {}).get(key, {})

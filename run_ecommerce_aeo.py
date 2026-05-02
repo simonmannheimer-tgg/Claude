@@ -90,26 +90,52 @@ GRADE_EMOJI = {"A": "🟢", "B": "🟢", "C": "🟡", "D": "🟠", "F": "🔴"}
 
 # Required fields per schema @type for validity checks
 SCHEMA_REQUIRED_FIELDS: dict[str, set[str]] = {
-    "Product":          {"name", "offers"},
-    "Offer":            {"price", "priceCurrency", "availability"},
-    "AggregateRating":  {"ratingValue", "reviewCount"},
-    "FAQPage":          {"mainEntity"},
-    "Question":         {"name", "acceptedAnswer"},
-    "BreadcrumbList":   {"itemListElement"},
-    "Article":          {"headline", "author", "datePublished"},
-    "WebSite":          {"url"},
-    "Organization":     {"name"},
-    "ItemList":         {"itemListElement"},
-    "LocalBusiness":    {"name", "address"},
+    "Product":              {"name", "offers"},
+    "Offer":                {"price", "priceCurrency", "availability"},
+    "AggregateRating":      {"ratingValue", "reviewCount"},
+    "FAQPage":              {"mainEntity"},
+    "Question":             {"name", "acceptedAnswer"},
+    "BreadcrumbList":       {"itemListElement"},
+    "Article":              {"headline", "author", "datePublished"},
+    "WebSite":              {"url"},
+    "Organization":         {"name"},
+    "ItemList":             {"itemListElement"},
+    "LocalBusiness":        {"name", "address"},
     "MerchantReturnPolicy": {"applicableCountry", "returnPolicyCategory"},
     "OfferShippingDetails": {"shippingRate"},
+    # Sprint 6 additions
+    "VideoObject":          {"name", "description", "uploadDate"},
+    "HowTo":                {"name", "step"},
+    "Review":               {"itemReviewed", "reviewRating"},
+    "SearchAction":         {"target"},
+    "PropertyValue":        {"name", "value"},
 }
+
+# schema.org availability enum trailing segments (Offer.availability must end with one of these)
+OFFER_AVAILABILITY_ENUM = frozenset({
+    "InStock", "OutOfStock", "PreOrder", "Discontinued",
+    "InStoreOnly", "OnlineOnly", "SoldOut", "LimitedAvailability",
+})
+
+# schema.org MerchantReturnPolicy category enum trailing segments
+RETURN_POLICY_ENUM = frozenset({
+    "MerchantReturnFiniteReturnWindow",
+    "MerchantReturnNotPermitted",
+    "MerchantReturnUnlimitedWindow",
+    "MerchantReturnUnspecified",
+})
 
 # Recommended (not required) fields that earn warning if absent
 SCHEMA_RECOMMENDED_FIELDS: dict[str, set[str]] = {
-    "Product":   {"brand", "gtin", "gtin13", "gtin14", "sameAs", "image"},
-    "Offer":     {"priceValidUntil", "seller"},
-    "Article":   {"dateModified", "image"},
+    "Product":        {"brand", "gtin", "gtin13", "gtin14", "sameAs", "image"},
+    "Offer":          {"priceValidUntil", "seller", "itemCondition"},
+    "Article":        {"dateModified", "image"},
+    "AggregateRating": {"bestRating", "worstRating"},
+    "Organization":   {"logo", "sameAs", "contactPoint"},
+    # Sprint 6 additions
+    "VideoObject":    {"contentUrl", "embedUrl", "thumbnailUrl", "duration", "transcript"},
+    "HowTo":          {"image", "totalTime"},
+    "Review":         {"author", "datePublished"},
 }
 
 DEFAULT_COMPETITORS = [
@@ -601,13 +627,19 @@ def check_ai_signals(snapshot_dir: Path) -> dict:
         if faq_found:
             signals_found.append("faq_block")
 
-        # Comparison table via BS4 (avoids re.DOTALL on large HTML)
+        # Structured comparison table — must have <thead> with <th> elements
+        # (bare <table> without column headers is presentational, not AI-extractable)
         COMPARE_WORDS = {"vs", "versus", "compare", "comparison", "difference"}
+        structured_tables = []
         for table in soup.find_all("table", limit=20):
-            tbl_text = table.get_text(" ", strip=True).lower()[:500]
-            if any(w in tbl_text for w in COMPARE_WORDS):
-                signals_found.append("comparison_table")
-                break
+            thead = table.find("thead")
+            has_th = bool(table.find("th"))
+            if thead and has_th:
+                structured_tables.append(table)
+                tbl_text = table.get_text(" ", strip=True).lower()[:500]
+                if any(w in tbl_text for w in COMPARE_WORDS):
+                    signals_found.append("comparison_table")
+                    break
 
         # Additional structural checks
         h1_tags = soup.find_all("h1")
@@ -621,7 +653,8 @@ def check_ai_signals(snapshot_dir: Path) -> dict:
             signals_found.append("h1_present")
         if len(h2_tags) >= 3:
             signals_found.append("structured_headings")
-        if tables:
+        if structured_tables:
+            # Only award data_tables for tables with proper header structure
             signals_found.append("data_tables")
         if ols:
             signals_found.append("ordered_lists")
@@ -802,6 +835,115 @@ def _validate_schema_block(block: dict) -> tuple[list[str], list[str]]:
                 f"FAQPage has {len(main_entity)} Q&A pair(s) — min 3 recommended for AI FAQ extraction"
             )
 
+    # ── Offer: availability enum + itemCondition ──────────────────────────────
+    elif t == "Offer":
+        avail = block.get("availability", "")
+        if avail:
+            trailing = str(avail).rstrip("/").rsplit("/", 1)[-1]
+            if trailing not in OFFER_AVAILABILITY_ENUM:
+                errors.append(
+                    f"availability '{avail}' is not a schema.org enum URI "
+                    f"(expected e.g. schema.org/InStock)"
+                )
+
+    # ── MerchantReturnPolicy: enum + returnDays + AU country ─────────────────
+    elif t == "MerchantReturnPolicy":
+        cat = block.get("returnPolicyCategory", "")
+        if cat:
+            trailing = str(cat).rstrip("/").rsplit("/", 1)[-1]
+            if trailing not in RETURN_POLICY_ENUM:
+                warnings.append(
+                    f"returnPolicyCategory '{cat}' not a recognised schema.org enum — "
+                    "use MerchantReturnFiniteReturnWindow, MerchantReturnUnlimitedWindow, etc."
+                )
+        if not block.get("returnDays") and not block.get("merchantReturnDays"):
+            warnings.append("returnDays absent — return window unknown to AI commerce agents")
+        country = block.get("applicableCountry", "")
+        if country and str(country).upper() not in ("AU", "AUS", "AUSTRALIA"):
+            warnings.append(
+                f"applicableCountry '{country}' — AU retailers should set 'AU' for correct AI commerce routing"
+            )
+
+    # ── OfferShippingDetails: nested shippingRate fields + deliveryTime ───────
+    elif t == "OfferShippingDetails":
+        rate = block.get("shippingRate")
+        if rate:
+            if isinstance(rate, list):
+                rate = rate[0]
+            if not rate.get("price") and not rate.get("value"):
+                errors.append("shippingRate.price missing — AI agents cannot determine shipping cost")
+            if not rate.get("priceCurrency") and not rate.get("currency"):
+                errors.append("shippingRate.priceCurrency missing")
+        if not block.get("deliveryTime"):
+            warnings.append("deliveryTime absent — AI agents cannot confirm delivery speed")
+
+    # ── Organization: logo, sameAs, contactPoint ─────────────────────────────
+    elif t == "Organization":
+        if not block.get("logo"):
+            warnings.append("logo absent — brand visual identity missing from AI knowledge context")
+        if not block.get("sameAs"):
+            warnings.append("sameAs absent — no external entity linking reduces knowledge graph authority")
+        if not block.get("contactPoint"):
+            warnings.append("contactPoint absent — AI commerce agents need contact details")
+
+    # ── VideoObject ───────────────────────────────────────────────────────────
+    elif t == "VideoObject":
+        if not block.get("contentUrl") and not block.get("embedUrl"):
+            warnings.append("contentUrl/embedUrl absent — AI cannot link to video content")
+        if not block.get("thumbnailUrl"):
+            warnings.append("thumbnailUrl absent — reduces AI visual citation confidence")
+        if not block.get("duration"):
+            warnings.append("duration absent — AI agents cannot filter by video length")
+        if not block.get("transcript"):
+            warnings.append("transcript absent — AI cannot extract video content as text")
+        upload = block.get("uploadDate")
+        if upload and not re.match(r"\d{4}-\d{2}-\d{2}", str(upload)):
+            warnings.append(f"uploadDate not in ISO 8601 format: {upload}")
+
+    # ── HowTo ─────────────────────────────────────────────────────────────────
+    elif t == "HowTo":
+        steps = block.get("step", [])
+        if isinstance(steps, dict):
+            steps = [steps]
+        bad_steps = []
+        for i, step in enumerate(steps[:3]):
+            if not step.get("name"):
+                bad_steps.append(f"step[{i}] missing name")
+            if not step.get("text") and not step.get("itemListElement"):
+                bad_steps.append(f"step[{i}] missing text")
+        if bad_steps:
+            errors.extend(bad_steps)
+        if not block.get("totalTime"):
+            warnings.append("totalTime absent — AI cannot surface time commitment to users")
+
+    # ── Review ────────────────────────────────────────────────────────────────
+    elif t == "Review":
+        rating = block.get("reviewRating")
+        if rating:
+            if isinstance(rating, list):
+                rating = rating[0]
+            if not rating.get("ratingValue"):
+                errors.append("reviewRating.ratingValue missing")
+        if not block.get("author"):
+            warnings.append("author absent — unsigned reviews carry lower AI trust weight")
+        if not block.get("datePublished"):
+            warnings.append("datePublished absent — AI cannot assess review recency")
+
+    # ── SearchAction / PotentialAction ────────────────────────────────────────
+    elif t in ("SearchAction", "PotentialAction"):
+        target = block.get("target", "")
+        if not target:
+            errors.append("target URL template absent — AI cannot discover site search")
+        elif isinstance(target, str) and "{search_term}" not in target and "query=" not in target:
+            warnings.append("target URL template missing {search_term} variable")
+        if not block.get("query-input"):
+            errors.append("query-input absent — AI cannot discover site search capability")
+
+    # ── PropertyValue (used as Product.additionalProperty) ────────────────────
+    elif t == "PropertyValue":
+        if not block.get("unitCode") and not block.get("unitText"):
+            warnings.append("unitCode/unitText absent — units enable AI spec comparison")
+
     return errors, warnings
 
 
@@ -890,6 +1032,23 @@ def check_schema_validity(snapshot_dir: Path) -> dict:
         page_errs, page_warns = _validate_page_schema_set(schemas, page_type)
         issues.extend(page_errs)
         warn_list.extend(page_warns)
+
+        # Freshness check — flag dateModified/datePublished older than 90 days
+        _STALE_DAYS = 90
+        for s in schemas:
+            for date_field in ("dateModified", "datePublished"):
+                val = s.get(date_field)
+                if val:
+                    try:
+                        from datetime import datetime, timezone
+                        dt = datetime.fromisoformat(str(val).replace("Z", "+00:00"))
+                        age = (datetime.now(timezone.utc) - dt).days
+                        if age > _STALE_DAYS:
+                            warn_list.append(
+                                f"{date_field} is {age} days old — stale content may rank lower with AI crawlers"
+                            )
+                    except (ValueError, TypeError):
+                        pass
 
         total_blocks = len(schemas)
         # Score: proportion of fully-valid blocks, minus 1pt per page-level error
@@ -1241,6 +1400,60 @@ def check_competitor_schema(snapshot_dir: Path, competitors: list[dict] | None =
     gaps = sorted(all_comp_schema - tgg_all)
     avg_comp = sum(r["count"] for r in comp_results) / max(len(comp_results), 1)
 
+    # ── Schema depth scoring ──────────────────────────────────────────────────
+    # Count filled required fields per page (depth = field completeness, not just type presence)
+    def _schema_depth(html_files) -> float:
+        """Average number of filled required fields across all blocks in all pages."""
+        total_filled = 0
+        total_blocks = 0
+        for path in html_files:
+            try:
+                soup = BeautifulSoup(path.read_text(encoding="utf-8", errors="ignore"), "html.parser") if hasattr(path, "read_text") else None
+                if soup is None:
+                    continue
+                schemas = extract_jsonld(soup)
+                for s in schemas:
+                    t = s.get("@type", "")
+                    if isinstance(t, list):
+                        t = t[0]
+                    req = SCHEMA_REQUIRED_FIELDS.get(t, set())
+                    filled = sum(1 for f in req if s.get(f))
+                    total_filled += filled
+                    total_blocks += 1
+            except Exception:
+                pass
+        return total_filled / max(total_blocks, 1)
+
+    tgg_depth = _schema_depth(sorted(snapshot_dir.glob("*.html")))
+
+    # Fetch competitor depth from httpx pages (reuse already-fetched HTML above if possible)
+    comp_depths = []
+    for comp in competitors[:3]:
+        for path in ["", "/televisions", "/tv"]:
+            url = comp["url"].rstrip("/") + path
+            try:
+                resp = httpx.get(url, timeout=12, follow_redirects=True,
+                                 headers={"User-Agent": BROWSER_UA})
+                if resp.status_code == 200:
+                    soup = BeautifulSoup(resp.text, "html.parser")
+                    schemas = extract_jsonld(soup)
+                    depth_total, depth_blocks = 0, 0
+                    for s in schemas:
+                        t = s.get("@type", "")
+                        if isinstance(t, list):
+                            t = t[0]
+                        req = SCHEMA_REQUIRED_FIELDS.get(t, set())
+                        depth_total += sum(1 for f in req if s.get(f))
+                        depth_blocks += 1
+                    if depth_blocks > 0:
+                        comp_depths.append(depth_total / depth_blocks)
+                        break
+            except Exception:
+                pass
+
+    avg_comp_depth = sum(comp_depths) / max(len(comp_depths), 1)
+    depth_ratio = tgg_depth / avg_comp_depth if avg_comp_depth > 0 else 1.0
+
     issues = []
     signals = []
     score = 0
@@ -1261,17 +1474,37 @@ def check_competitor_schema(snapshot_dir: Path, competitors: list[dict] | None =
         score += min(len(advantages) * 2, 10)
         signals.append(f"TGG-unique schema: {', '.join(advantages[:4])}")
 
+    # Depth score adjustment
+    if depth_ratio >= 1.2:
+        score = min(score + 10, 45)
+        signals.append(f"TGG schema depth leads competitors (ratio {depth_ratio:.2f})")
+    elif depth_ratio >= 1.0:
+        score = min(score + 5, 45)
+        signals.append(f"TGG schema depth on par with competitors (ratio {depth_ratio:.2f})")
+    elif depth_ratio < 0.8:
+        score = max(0, score - 5)
+        issues.append(
+            f"TGG schema field completeness below competitors (ratio {depth_ratio:.2f}) — "
+            "required fields missing in existing schema blocks"
+        )
+
     pct = round(min(score, 45) / 45 * 100)
     return {
         "score": min(score, 45), "maxScore": 45, "percentage": pct, "grade": grade(pct),
         "tgg_schema_types": sorted(tgg_all),
         "tgg_schema_count": len(tgg_all),
+        "tgg_schema_depth": round(tgg_depth, 2),
+        "competitor_avg_depth": round(avg_comp_depth, 2),
+        "depth_ratio": round(depth_ratio, 2),
         "competitors": comp_results,
         "tgg_advantages": advantages,
         "tgg_gaps": gaps,
         "signals": signals,
         "errors": [{"issue": i} for i in issues],
-        "summary": f"TGG: {len(tgg_all)} schema types | {len(gaps)} gaps vs competitors",
+        "summary": (
+            f"TGG: {len(tgg_all)} schema types, depth {tgg_depth:.1f} fields/block "
+            f"| {len(gaps)} gap(s) vs competitors"
+        ),
     }
 
 
@@ -1625,6 +1858,253 @@ def check_gmc_feed(feed_url: str | None = None) -> dict:
     return result
 
 
+# ── Check 15: Content Freshness ───────────────────────────────────────────────
+
+def check_content_freshness(snapshot_dir: Path, live_urls: list[str]) -> dict:
+    """
+    Measures content freshness via two signals:
+    1. Schema dateModified/datePublished age extracted from local snapshots
+    2. HTTP Last-Modified response header age from live server
+
+    Pages older than 90 days are flagged as stale — AI crawlers deprioritise
+    stale content in their training and retrieval pipelines.
+    """
+    from datetime import datetime, timezone
+
+    STALE_DAYS = 90
+    results = []
+
+    client = httpx.Client(
+        headers={"User-Agent": BROWSER_UA},
+        follow_redirects=True,
+        timeout=10,
+    )
+
+    for html_file in sorted(snapshot_dir.glob("*.html")):
+        page_type = infer_page_type(html_file.name)
+        soup = parse_html(html_file)
+        schemas = extract_jsonld(soup)
+
+        # Extract best schema date (prefer dateModified over datePublished)
+        schema_date = None
+        schema_age_days = None
+        for s in schemas:
+            for field in ("dateModified", "datePublished"):
+                val = s.get(field)
+                if val:
+                    try:
+                        dt = datetime.fromisoformat(str(val).replace("Z", "+00:00"))
+                        if schema_date is None or dt > schema_date:
+                            schema_date = dt
+                    except (ValueError, TypeError):
+                        pass
+        if schema_date:
+            schema_age_days = (datetime.now(timezone.utc) - schema_date).days
+
+        # Derive URL from filename for Last-Modified check
+        domain = snapshot_dir.name
+        filename = html_file.stem
+        if filename == "index":
+            url = f"https://www.{domain}"
+        else:
+            path = filename.replace("--", "/")
+            url = f"https://www.{domain}/{path}"
+
+        last_modified = None
+        last_modified_age_days = None
+        try:
+            resp = client.head(url, timeout=8)
+            lm_header = resp.headers.get("last-modified") or resp.headers.get("Last-Modified")
+            if lm_header:
+                from email.utils import parsedate_to_datetime
+                lm_dt = parsedate_to_datetime(lm_header)
+                last_modified = lm_dt.isoformat()
+                last_modified_age_days = (datetime.now(timezone.utc) - lm_dt.astimezone(timezone.utc)).days
+        except Exception:
+            pass
+
+        # Determine stale status — use schema date if available, else Last-Modified
+        age_days = schema_age_days if schema_age_days is not None else last_modified_age_days
+        stale = age_days is not None and age_days > STALE_DAYS
+
+        issue = None
+        if stale:
+            issue = (
+                f"Content is {age_days} days old (threshold: {STALE_DAYS} days) — "
+                "stale content may rank lower with AI crawlers"
+            )
+
+        results.append({
+            "file": html_file.name,
+            "page_type": page_type,
+            "url": url,
+            "schema_date": schema_date.isoformat() if schema_date else None,
+            "schema_age_days": schema_age_days,
+            "last_modified": last_modified,
+            "last_modified_age_days": last_modified_age_days,
+            "age_days": age_days,
+            "stale": stale,
+            "issue": issue,
+        })
+
+    client.close()
+
+    total = len(results)
+    stale_count = sum(1 for r in results if r.get("stale"))
+    no_date_count = sum(1 for r in results if r.get("age_days") is None)
+
+    if total == 0:
+        pct = 0
+    elif stale_count == 0:
+        pct = 100
+    elif stale_count / total <= 0.25:
+        pct = 70
+    elif stale_count / total <= 0.50:
+        pct = 40
+    else:
+        pct = 10
+
+    max_score = 20
+    score = round(pct / 100 * max_score)
+
+    return {
+        "score": score,
+        "maxScore": max_score,
+        "percentage": pct,
+        "grade": grade(pct),
+        "pages": results,
+        "errors": [r for r in results if r.get("stale")],
+        "summary": (
+            f"{stale_count}/{total} pages stale (>{STALE_DAYS} days), "
+            f"{no_date_count} with no date signal"
+        ),
+    }
+
+
+# ── Check 16: Review Accessibility ────────────────────────────────────────────
+
+def check_review_accessibility(snapshot_dir: Path, live_urls: list[str]) -> dict:
+    """
+    Checks that customer review text is accessible to non-JS AI crawlers.
+    Reviews are heavily cited by AI agents for product comparisons; JS-gated
+    reviews are invisible to GPTBot, ClaudeBot, PerplexityBot.
+    """
+    results = []
+    total_score = 0
+    max_score = 0
+
+    client = httpx.Client(
+        headers={"User-Agent": BROWSER_UA},
+        follow_redirects=True,
+        timeout=12,
+    )
+
+    _REVIEW_ATTRS = [
+        {"itemprop": "review"}, {"itemprop": "reviewBody"},
+        {"data-review": True}, {"data-reviews": True},
+    ]
+    _REVIEW_CLASSES = re.compile(r"\breview(?:s|[-_]text|[-_]body|[-_]content)?\b", re.IGNORECASE)
+    _RATING_ATTRS = [{"itemprop": "ratingValue"}, {"itemprop": "aggregateRating"}]
+
+    def _count_review_els(soup: BeautifulSoup) -> int:
+        count = 0
+        for attrs in _REVIEW_ATTRS:
+            count += len(soup.find_all(attrs=attrs))
+        count += len([t for t in soup.find_all(class_=True)
+                      if _REVIEW_CLASSES.search(" ".join(t.get("class", [])))])
+        for attrs in _RATING_ATTRS:
+            count += len(soup.find_all(attrs=attrs))
+        return count
+
+    page_max = 10
+
+    for url in live_urls:
+        parsed = urlparse(url)
+        path = parsed.path.strip("/")
+        filename = ("index" if not path else re.sub(r"[^a-zA-Z0-9_-]", "-", path.replace("/", "--"))) + ".html"
+        snapshot_path = snapshot_dir / filename
+        page_type = infer_page_type(filename)
+
+        # Only product and guide pages are expected to have reviews
+        if page_type not in ("product", "guide", "category"):
+            results.append({
+                "url": url, "page_type": page_type,
+                "score": page_max, "maxScore": page_max,
+                "note": "Review check N/A for this page type",
+            })
+            total_score += page_max
+            max_score += page_max
+            continue
+
+        if not snapshot_path.exists():
+            results.append({"url": url, "error": "No snapshot found"})
+            max_score += page_max
+            continue
+
+        rendered_soup = parse_html(snapshot_path)
+        rendered_count = _count_review_els(rendered_soup)
+
+        # Raw HTTP (no JS) comparison
+        raw_count = 0
+        try:
+            resp = client.get(url, timeout=10)
+            raw_soup = BeautifulSoup(resp.text, "html.parser")
+            raw_count = _count_review_els(raw_soup)
+        except Exception:
+            pass
+
+        if rendered_count == 0 and raw_count == 0:
+            # No reviews detected — N/A, award neutral score
+            page_score = page_max
+            note = "No review content detected on this page"
+            issue = None
+        elif raw_count >= rendered_count * 0.5:
+            # Reviews accessible in raw HTML (SSR)
+            page_score = page_max
+            note = f"Reviews accessible in raw HTML ({raw_count} elements)"
+            issue = None
+        else:
+            # JS-gated reviews
+            page_score = 0
+            note = f"Review content JS-gated: {raw_count} raw vs {rendered_count} rendered elements"
+            issue = (
+                f"Review content is JS-gated — AI bots without JS cannot access "
+                f"{rendered_count - raw_count} review elements"
+            )
+
+        results.append({
+            "url": url,
+            "page_type": page_type,
+            "raw_review_elements": raw_count,
+            "rendered_review_elements": rendered_count,
+            "score": page_score,
+            "maxScore": page_max,
+            "note": note,
+            "issue": issue,
+        })
+        total_score += page_score
+        max_score += page_max
+
+    client.close()
+
+    pct = round(total_score / max_score * 100) if max_score else 0
+    errors = [r for r in results if r.get("issue")]
+    gated = sum(1 for r in results if r.get("issue"))
+
+    return {
+        "score": total_score,
+        "maxScore": max_score,
+        "percentage": pct,
+        "grade": grade(pct),
+        "pages": results,
+        "errors": errors,
+        "summary": (
+            f"{gated} page(s) with JS-gated reviews invisible to AI crawlers"
+            if gated else "Review content accessible to AI crawlers on all checked pages"
+        ),
+    }
+
+
 # ── Report builder ─────────────────────────────────────────────────────────────
 
 def build_summary(checks: dict, label: str, snapshot_dir: str) -> str:
@@ -1658,6 +2138,8 @@ def build_summary(checks: dict, label: str, snapshot_dir: str) -> str:
         "agentic_commerce":    ("Agentic Commerce Readiness",      30),
         "gtin_coverage":       ("GTIN Coverage",                   20),
         "gmc_feed":            ("GMC Feed Completeness",           30),
+        "content_freshness":   ("Content Freshness",               20),
+        "review_accessibility":("Review Accessibility",            10),
     }
 
     for key, (name, weight) in check_labels.items():
@@ -1764,7 +2246,7 @@ def main():
     competitor_urls_raw = os.getenv("COMPETITOR_URLS", "").strip()
     competitor_urls = json.loads(competitor_urls_raw) if competitor_urls_raw else None
 
-    default_checks = "schema,schema_validity,render_diff,user_agents,hidden_content,ai_signals,dom_structure,robots_content,sitemap_coverage,competitor_schema,au_signals,agentic_commerce,gtin_coverage,gmc_feed"
+    default_checks = "schema,schema_validity,render_diff,user_agents,hidden_content,ai_signals,dom_structure,robots_content,sitemap_coverage,competitor_schema,au_signals,agentic_commerce,gtin_coverage,gmc_feed,content_freshness,review_accessibility"
     checks_to_run = set((os.getenv("AEO_CHECKS") or default_checks).split(","))
     checks_to_run = {c.strip() for c in checks_to_run}
 
@@ -1796,6 +2278,8 @@ def main():
     run_check("agentic_commerce",   "Agentic commerce readiness",         lambda: check_agentic_commerce(base_url))
     run_check("gtin_coverage",      "GTIN coverage",                      lambda: check_gtin_coverage(snapshot_dir))
     run_check("gmc_feed",           "GMC feed completeness",               lambda: check_gmc_feed())
+    run_check("content_freshness",  "Content freshness",                  lambda: check_content_freshness(snapshot_dir, live_urls))
+    run_check("review_accessibility","Review accessibility (no-JS)",      lambda: check_review_accessibility(snapshot_dir, live_urls))
 
     # Totals
     total_score = sum(c.get("score", 0) for c in checks.values() if isinstance(c, dict))
