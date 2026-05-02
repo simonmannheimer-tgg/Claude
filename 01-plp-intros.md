@@ -45,7 +45,7 @@ The two-sentence format is deliberately tight — 220–250 characters forces ev
 - S1 opens with a specific benefit, outcome, or differentiator tied directly to the brand or category — not a generic claim.
 - S1 names at least one brand-specific technology, product format, or defining characteristic.
 - S2 names 2–3 specific sub-types, series, tech references, or capacity ranges as a tight natural list.
-- "The Good Guys" appears once, anchoring the retailer entity to the brand + category.
+- "The Good Guys" appears in S2 only — never in S1, never more than once per intro.
 - Reads like the first line of a useful buying guide — not an ad, not a product description.
 
 ### What it avoids
@@ -92,7 +92,7 @@ The two-sentence format is deliberately tight — 220–250 characters forces ev
 
 - **Exactly 2 sentences.** No run-ons disguised as commas. No extra clauses for padding.
 - **S2 must be shorter than S1.** Long S2 creates orphaned text blocks on mobile. If S1 runs long, trim S2 first.
-- **S1 openers:** Avoid Discover, Explore, Shop as S1 openers — these suit S2. Vary S1 openers across a batch: outcome-first, feature-first, format-first, spec-first angles all work. No single opener should dominate.
+- **S1 opener — hard rule:** S1 must open with an action verb. Never use Discover, Explore, or Shop to open S1 — these are S2 openers. Vary S1 openers across a batch: outcome-first, feature-first, format-first, spec-first angles all work. No single opener should dominate.
 - **S2 openers:** Find, Shop, Discover, Explore, Choose are all valid. Rotate across a batch. Don't open three consecutive S2s the same way.
 
 ---

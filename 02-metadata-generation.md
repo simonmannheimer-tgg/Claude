@@ -35,7 +35,8 @@ Identify before writing:
 | Structure | `[Primary Keyword] - [Feature/Benefit] [Modifier]` |
 | Separators | Dashes (-) or colons (:) — no pipes for editorial content |
 | Keyword placement | Primary keyword in first half |
-| Do NOT include | "The Good Guys", "best", "top", "cheap", "deals", "sale", "save" |
+| Do NOT include | "best", "top", "cheap", "deals", "sale", "save" |
+| Brand inclusion | Append `\| The Good Guys` as the final element for category and brand pages |
 
 ### Good Examples
 - `Air Fryers - Dual Zone & Compact Models for Every Kitchen`
@@ -48,7 +49,7 @@ Identify before writing:
 
 | Rule | Requirement |
 |------|-------------|
-| Length | 140–155 characters (hard max: 155) |
+| Length | 145–160 characters (hard max: 160) |
 | Structure | `[User Benefit]. [Details]. [The Good Guys]. [CTA].` |
 | CTA | `Shop online or in-store today!` OR `Shop now at The Good Guys.` |
 | TGG mention | Exactly once, mid-description (not at start) |
@@ -102,8 +103,8 @@ Description Length: [character count]
 ## QA Checklist
 
 - [ ] Title ≤60 characters
-- [ ] Description 140–155 characters
-- [ ] No "The Good Guys" in title
+- [ ] Description 145–160 characters
+- [ ] Title ends with `| The Good Guys` for category/brand pages
 - [ ] "The Good Guys" appears once in description (not at start)
 - [ ] No prohibited words
 - [ ] Ends with correct CTA format

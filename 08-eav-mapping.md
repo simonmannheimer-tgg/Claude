@@ -81,8 +81,9 @@ This helps other processes target the right intent (e.g. FAQ copy for budget buy
 
 | Process | What it takes from EAV |
 |---------|----------------------|
-| **01 (PLP Intros)** | Top 3–4 entities to mention in 2 sentences. Brands for category PLPs. Tech/specs for brand PLPs. |
+| **01 (PLP Intros)** | Top 3–4 entities to mention in 2 sentences. Brands for category PLPs. Tech/specs for brand PLPs. Target: 220–250 characters. |
 | **02 (Metadata)** | Key features and brands for description. Primary category keyword for title. |
+| **EAV Descriptions** | When writing standalone EAV descriptions for CMS fields (separate from PLP intros): **250–265 characters, hard rule.** Same entity-density requirement as PLP intros but longer. |
 | **04 (Content Analysis)** | Entity list supplements extracted entities. Search intents feed query fanout. |
 | **05 (FAQ/Category Copy)** | Entity list ensures FAQ coverage is comprehensive. User values become FAQ answers. Search intents become FAQ questions. |
 | **07 (AEO)** | Entity richness improves AI citability. Triplets (entity→attribute→value) make content more extractable. |

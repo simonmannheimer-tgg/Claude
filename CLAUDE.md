@@ -253,9 +253,6 @@ After every pipeline run, note any step that needed manual correction under `## 
 - **CONNECTIONS REVIEW:** Audit what tools/MCPs should connect to the pipeline to make skills better. Trigger: "what should we connect" or "connections review".
 - **AUTOMATED WEEKLY SEO REPORT:** `seo-weekly-report.yml` was removed (cost/quality not ready). Goal: wire the seo-reporter agent to pull from GSC MCP + Semrush automatically and produce a weekly digest that's genuinely useful without manual prompting. Needs: GSC MCP connected, Semrush report templates defined, output format agreed. Trigger: "build the weekly report workflow".
 - **SHOPPING AUDIT TOOL (in progress):** `seo/scripts/product-shopping-audit.py` — fetches TGG sitemap, extracts all product titles, runs organic Google Shopping scraper for each. Next steps: (1) validate title-cleaning logic against real sitemap, (2) add TGG price comparison from GMC feed, (3) add category roll-up so results map to deals/ URLs, (4) schedule via shopping-scraper.yml once stable.
-- **PROCESS FILE RECONCILIATION (blocked — waiting on new skill versions):** Content skills are being redone externally. Once new versions land, re-audit 00–09 against them and resolve these known conflicts: (1) PLP char count — Process 01 says 220–250, current skills say 230–260; (2) meta description length — Process 02 says 140–155, skills say 145–160; (3) title tag brand inclusion — Process 02 bans TGG in titles, skills permit `| The Good Guys`; (4) Process 05 Task 5C unit clarity — says 230–260 words (not chars). Do not update process files until new skills are available to compare against.
-- **RULE CONFLICTS (open questions for Simon):**
-  - Execution path: For production copy, do you prefer agents (via seo-team-lead) or skills (e.g. tgg-seo, tgg-category-pipeline)?
 
 ### Writing philosophy
 - Guardrails not templates. Ban harmful patterns; don't prescribe "allowed" ones.
@@ -322,6 +319,11 @@ The script is idempotent — it deletes all `Chat___*.md` and `Projects___*.md` 
 
 | Skill | What it does |
 |-------|-------------|
+| `tgg-seo` | **Primary production skill.** Copy (PLP, metadata, FAQ, EAV), strategy, and technical SEO. Three modes: Production / Strategy / Technical. Replaces tgg-copywriting + tgg-seo-specialist. |
+| `tgg-category-pipeline` | Full category page build — chains EAV → keywords → PLP → FAQ → metadata → links in sequence |
+| `simon-voice` | Ghost-writes Simon's emails, Slack posts, Teams messages, and comms in his voice |
+| `tgg-301-mapper` | Maps dead TGG URLs to Shopify redirect targets using Simon's three rules; outputs Shopify-ready CSV |
+| `tgg-session-anchor` | Session focus management — surfaces abandoned projects at start, catches scope drift mid-task |
 | `check-github` | Poll GitHub Issues for @claude tasks, route to seo-team-lead, post replies |
 | `start-chat` | Start Chat UI server on port 7860 |
 | `tgg-conversation-indexer` | Weekly indexer — scans conversations, updates Google Drive index, flags abandoned projects |
@@ -343,11 +345,11 @@ For local use on Windows/PowerShell or macOS. Not run in GitHub Actions.
 | `mhtml_transformer.py` | Converts MHTML to self-contained .ai.html |
 | `check_status.py` | Checks URL status codes from a CSV |
 | `merge_and_split.py` | Merges/splits CSVs (Semrush keyword exports) |
-| `split_csv.py` | Splits a large CSV into two halves |
+| `split_csv.py` | Splits a large CSV into chunks (30 MB max per file, dynamic input) |
+| `tgg_sitemap_audit.py` | Crawls all TGG sitemaps, checks HTTP status + canonical + breadcrumb, outputs CSV |
+| `tgg_301_mapper.py` | Core 301 redirect mapping logic — applies Simon's rules, outputs Shopify-ready CSV |
 
 Run from repo root: `python tools/tgg_plp_auditor.py`
-
-**Note on paths:** Some scripts have hardcoded Windows paths. Update the path variables at the top for your machine.
 
 ---
 
@@ -382,13 +384,14 @@ Run from repo root: `python tools/tgg_plp_auditor.py`
 
 | Workflow | Trigger | API key needed |
 |----------|---------|---------------|
-| `seo-weekly-report.yml` | Manual only (cron disabled) | Yes |
-| `seo-on-demand.yml` | @claude in issues/PRs | Yes |
-| `shopping-scraper.yml` | Manual only | Yes |
-| `gtmetrix-audit.yml` | Manual only | Yes |
-| `issue-receiver.yml` | Issue events | No |
-| `plp-merge.yml` | Push to branch | No |
-| `drive-skill-sync.yml` | Manual only — pull skill ZIPs from Drive | Yes |
+| `drive-skill-sync.yml` | Weekly Mon 23:00 UTC + manual — pull skill ZIPs from Drive | Yes |
+| `gsc-weekly-pull.yml` | Weekly Mon 07:00 UTC + manual — pull top GSC queries to CSV | No |
+| `vault-autocommit.yml` | Daily 13:15 UTC + manual — snapshot vault/ changes | No |
+| `sitemap-audit-weekly.yml` | Weekly Sun 12:00 UTC + manual — crawl all TGG sitemaps, write `data/sitemap_audit_latest.csv` | No |
+| `aeo-audit.yml` | Manual only — 3-phase AEO audit (robots/llms.txt, local scan, ecommerce schema) | No |
+| `301-redirect-mapper.yml` | Manual only — map dead URLs to Shopify redirect targets | No |
+| `shopping-scraper.yml` | Manual only — Google Shopping SERP carousel + organic scraper | No |
+| `gtmetrix-audit.yml` | Manual only — GTMetrix performance audit against URL list | Yes |
 
 Required secrets: `ANTHROPIC_API_KEY`, `SEMRUSH_API_KEY`, `FIRECRAWL_API_KEY`.
 
