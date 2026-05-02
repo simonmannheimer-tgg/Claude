@@ -19,6 +19,7 @@ Output: site-snapshots/<domain>/*.html, ready for:
 import argparse
 import asyncio
 import json
+import random
 import re
 import sys
 from pathlib import Path
@@ -46,12 +47,49 @@ DEFAULT_URLS = [
     "https://www.thegoodguys.com.au/samsung-65-4k-qled-smart-tv-qa65qn90dauxsa",
 ]
 
-UA = (
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-    "AppleWebKit/537.36 (KHTML, like Gecko) "
-    "Chrome/122.0.0.0 Safari/537.36"
+# Rotating UA pool — a fresh profile is selected per page so CF sees varied
+# fingerprints rather than the same automated-looking UA on every request.
+# Android Chrome is included because it's historically bypassed TGG's CF rules.
+UA_POOL: list[tuple[str, dict]] = [
+    (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/124.0.0.0 Safari/537.36",
+        {"width": 1920, "height": 1080},
+    ),
+    (
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/124.0.0.0 Safari/537.36",
+        {"width": 1440, "height": 900},
+    ),
+    (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/123.0.0.0 Safari/537.36",
+        {"width": 1366, "height": 768},
+    ),
+    # Android Chrome — known to pass TGG's Cloudflare rules
+    (
+        "Mozilla/5.0 (Linux; Android 14; Pixel 8) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/124.0.0.0 Mobile Safari/537.36",
+        {"width": 412, "height": 915},
+    ),
+    (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0",
+        {"width": 1280, "height": 800},
+    ),
+]
+
+# Suppress navigator.webdriver so CF bot-detection JS sees undefined, not true
+_STEALTH_SCRIPT = (
+    "Object.defineProperty(navigator, 'webdriver', {get: () => undefined});"
+    "Object.defineProperty(navigator, 'plugins', {get: () => [1,2,3]});"
+    "window.chrome = {runtime: {}};"
 )
-VP = {"width": 1280, "height": 900}
 
 
 def url_to_filename(url: str) -> str:
@@ -73,16 +111,16 @@ CF_CHALLENGE_MARKERS = (
 # Domains that serve Cloudflare bot challenges.
 # We pre-warm these by visiting the homepage first so that CF issues a
 # cf_clearance session cookie before we crawl any subpages.
-CF_SESSION_DOMAINS = {"harveynorman.com.au"}
-CF_DOMAIN_DELAY = 3.5  # seconds between requests for CF-protected domains
+CF_SESSION_DOMAINS = {"harveynorman.com.au", "thegoodguys.com.au"}
+CF_DOMAIN_DELAY = 6.0  # seconds between requests for CF-protected domains
 
 
 async def _warmup_cf_domain(page, domain: str) -> None:
     """Visit homepage to establish CF clearance cookie before crawling subpages."""
     print(f"  [CF warmup] https://www.{domain}/ — establishing session cookie")
     try:
-        await page.goto(f"https://www.{domain}/", wait_until="networkidle", timeout=45_000)
-        await page.wait_for_timeout(4_500)
+        await page.goto(f"https://www.{domain}/", wait_until="networkidle", timeout=55_000)
+        await page.wait_for_timeout(random.randint(4_000, 6_500))
         print(f"  [CF warmup] Done")
     except Exception as e:
         print(f"  [CF warmup] Warning: {e}")
@@ -98,27 +136,39 @@ async def fetch_page(page, url: str, retries: int = 3) -> tuple[str | None, str 
     protected = _is_protected_path(url)
     for attempt in range(retries + 1):
         try:
-            await page.goto(url, wait_until="domcontentloaded", timeout=40_000)
-            # Protected paths (buying guides) need longer to clear the CF interstitial.
+            # networkidle waits for all XHR/fetch to settle — more reliable than
+            # domcontentloaded for JS-heavy pages and CF interstitials.
+            await page.goto(url, wait_until="networkidle", timeout=55_000)
+
+            # Randomised initial dwell — human reading pattern
             if protected:
-                initial_wait = 8_000 if attempt == 0 else 12_000
+                await page.wait_for_timeout(random.randint(7_000, 12_000))
             else:
-                initial_wait = 3_000 if attempt == 0 else 5_000
-            await page.wait_for_timeout(initial_wait)
-            await page.evaluate("window.scrollTo(0, Math.floor(document.body.scrollHeight * 0.4))")
-            await page.wait_for_timeout(1_000)
+                await page.wait_for_timeout(random.randint(2_500, 5_000))
+
+            # Multi-step scroll: partial read → deeper read (triggers lazy-load)
+            await page.evaluate(
+                "window.scrollTo(0, Math.floor(document.body.scrollHeight * 0.25))"
+            )
+            await page.wait_for_timeout(random.randint(600, 1_400))
+            await page.evaluate(
+                "window.scrollTo(0, Math.floor(document.body.scrollHeight * 0.65))"
+            )
+            await page.wait_for_timeout(random.randint(400, 900))
+
             html = await page.content()
-            # Detect Cloudflare challenge page — retry with longer wait
+
             if any(marker in html for marker in CF_CHALLENGE_MARKERS):
                 if attempt < retries:
-                    extra = 8_000 if protected else 4_000
+                    extra = random.randint(10_000, 16_000) if protected else random.randint(5_000, 9_000)
+                    print(f"  [CF] Challenge detected, waiting {extra//1000}s before retry {attempt+1}…")
                     await page.wait_for_timeout(extra)
                     continue
                 return None, "Cloudflare challenge not resolved after retries"
             return html, None
         except Exception as e:
             if attempt < retries:
-                await page.wait_for_timeout(3_000)
+                await page.wait_for_timeout(random.randint(3_000, 6_000))
                 continue
             return None, str(e)
     return None, "Max retries exceeded"
@@ -155,21 +205,34 @@ def _detect_cf_uniform_blocks(results: list[dict]) -> None:
                 print(f"    flagged: {r['url']}", file=sys.stderr)
 
 
-async def crawl(urls: list[str], out_dir: Path, delay: float = 1.5) -> list[dict]:
+async def crawl(urls: list[str], out_dir: Path, delay: float = 4.0) -> list[dict]:
     out_dir.mkdir(parents=True, exist_ok=True)
     results = []
     warmed_domains: set[str] = set()
 
     async with async_playwright() as pw:
-        browser = await pw.chromium.launch(headless=True)
-        ctx = await browser.new_context(user_agent=UA, viewport=VP)
-        page = await ctx.new_page()
+        browser = await pw.chromium.launch(
+            headless=True,
+            args=["--disable-blink-features=AutomationControlled"],
+        )
 
         for i, url in enumerate(urls):
             domain = urlparse(url).netloc.replace("www.", "")
 
-            # Pre-warm CF session for blocked domains before their first subpage.
-            # Skip warmup if this URL IS the homepage (avoid double-visiting).
+            # Rotate UA + viewport per page — fresh fingerprint each time
+            ua, vp = UA_POOL[i % len(UA_POOL)]
+
+            # Fresh browser context per URL: new cookie jar, new TLS fingerprint
+            ctx = await browser.new_context(
+                user_agent=ua,
+                viewport=vp,
+                locale="en-AU",
+                timezone_id="Australia/Melbourne",
+            )
+            await ctx.add_init_script(_STEALTH_SCRIPT)
+            page = await ctx.new_page()
+
+            # Pre-warm CF session for known-blocked domains before their first subpage.
             if domain in CF_SESSION_DOMAINS and domain not in warmed_domains:
                 is_homepage = urlparse(url).path.strip("/") == ""
                 if not is_homepage:
@@ -177,8 +240,10 @@ async def crawl(urls: list[str], out_dir: Path, delay: float = 1.5) -> list[dict
                     await asyncio.sleep(CF_DOMAIN_DELAY)
                 warmed_domains.add(domain)
 
-            print(f"[{i+1}/{len(urls)}] {url}")
+            ua_short = ua.split("Chrome/")[1].split(" ")[0] if "Chrome/" in ua else ua[:30]
+            print(f"[{i+1}/{len(urls)}] {url}  [Chrome/{ua_short}]")
             html, error = await fetch_page(page, url)
+            await ctx.close()
 
             if error:
                 print(f"  ✗ {error}", file=sys.stderr)
@@ -188,8 +253,6 @@ async def crawl(urls: list[str], out_dir: Path, delay: float = 1.5) -> list[dict
                 filepath = out_dir / filename
                 filepath.write_text(html, encoding="utf-8")
                 size_kb = len(html) / 1024
-                # Sanity check: suspiciously small pages are likely CF block pages
-                # that slipped through the marker check (e.g. custom CF templates).
                 word_count = len(html.split())
                 if word_count < 600:
                     print(f"  ⚠ {filename} ({size_kb:.0f} KB, {word_count} words — may be blocked)", file=sys.stderr)
@@ -199,10 +262,10 @@ async def crawl(urls: list[str], out_dir: Path, delay: float = 1.5) -> list[dict
                     results.append({"url": url, "file": str(filepath), "size_bytes": len(html), "word_count": word_count, "suspected_block": False})
 
             if i < len(urls) - 1:
-                # Slow down for CF-protected domains (helps avoid re-triggering challenge)
+                jitter = random.uniform(0.5, 2.5)
                 next_domain = urlparse(urls[i + 1]).netloc.replace("www.", "")
-                effective_delay = CF_DOMAIN_DELAY if domain in CF_SESSION_DOMAINS or next_domain in CF_SESSION_DOMAINS else delay
-                await asyncio.sleep(effective_delay)
+                base = CF_DOMAIN_DELAY if (domain in CF_SESSION_DOMAINS or next_domain in CF_SESSION_DOMAINS) else delay
+                await asyncio.sleep(base + jitter)
 
         await browser.close()
 
@@ -216,7 +279,7 @@ def main():
     parser = argparse.ArgumentParser(description="Crawl HTML snapshots for AEO analysis")
     parser.add_argument("--urls", type=str, help="JSON array of URLs")
     parser.add_argument("--out", type=str, help="Output directory")
-    parser.add_argument("--delay", type=float, default=1.5, help="Seconds between requests")
+    parser.add_argument("--delay", type=float, default=4.0, help="Seconds between requests (default: 4.0; jitter added automatically)")
     args = parser.parse_args()
 
     if args.urls:
