@@ -134,6 +134,11 @@ on:
         type: boolean
         default: true
 
+      type_store:
+        description: '☑ Include: Store / store-finder pages'
+        type: boolean
+        default: true
+
       # ── Competitors to include in AEO crawl ─────────────────────────────────
       comp_jbhifi:
         description: '☑ Competitor: JB Hi-Fi (jbhifi.com.au)'
@@ -255,6 +260,7 @@ jobs:
           [[ "${{ inputs.type_product }}"  == "true" ]] && TYPES="${TYPES:+$TYPES,}product"
           [[ "${{ inputs.type_guide }}"    == "true" ]] && TYPES="${TYPES:+$TYPES,}guide"
           [[ "${{ inputs.type_blog }}"     == "true" ]] && TYPES="${TYPES:+$TYPES,}blog"
+          [[ "${{ inputs.type_store }}"    == "true" ]] && TYPES="${TYPES:+$TYPES,}store"
 
           # Build competitor domains string from checkboxes
           COMPS=""
@@ -309,6 +315,7 @@ jobs:
           [[ "${{ inputs.type_product }}"  == "true" ]] && TYPES="${TYPES:+$TYPES,}product"
           [[ "${{ inputs.type_guide }}"    == "true" ]] && TYPES="${TYPES:+$TYPES,}guide"
           [[ "${{ inputs.type_blog }}"     == "true" ]] && TYPES="${TYPES:+$TYPES,}blog"
+          [[ "${{ inputs.type_store }}"    == "true" ]] && TYPES="${TYPES:+$TYPES,}store"
           echo "Page types selected: ${TYPES:-none}"
 
           if [ -n "$CRAWL_URLS" ]; then
@@ -335,6 +342,7 @@ jobs:
           [[ "${{ inputs.type_product }}"  == "true" ]] && TYPES="${TYPES:+$TYPES,}product"
           [[ "${{ inputs.type_guide }}"    == "true" ]] && TYPES="${TYPES:+$TYPES,}guide"
           [[ "${{ inputs.type_blog }}"     == "true" ]] && TYPES="${TYPES:+$TYPES,}blog"
+          [[ "${{ inputs.type_store }}"    == "true" ]] && TYPES="${TYPES:+$TYPES,}store"
           echo "Deep crawl: ${TYPES:-none}, sample=${{ inputs.sitemap_sample }} per type"
           python crawl_from_sitemap.py \
             --domain "${{ inputs.sitemap_domain }}" \
