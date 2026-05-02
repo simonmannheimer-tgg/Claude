@@ -54,20 +54,20 @@ _PAGE = "content"   # shorthand used in run loop
 _PAGE_CHECKS = "content-structure,token-budget,meta-tags"
 
 DEFAULT_URLS = [
-    # ── TGG — one URL per sitemap type ──────────────────────────────────────────
-    {"url": "https://www.thegoodguys.com.au",                                               "label": "TGG · Home",         "scope": "domain+page"},
-    {"url": "https://www.thegoodguys.com.au/televisions",                                   "label": "TGG · Category",     "scope": "page"},
-    {"url": "https://www.thegoodguys.com.au/televisions/smart-tvs",                         "label": "TGG · Sub-category", "scope": "page"},
-    {"url": "https://www.thegoodguys.com.au/lg-12kg-8kg-combo-washer-dryer-wvc9-1412w",     "label": "TGG · Product",      "scope": "page"},
-    {"url": "https://www.thegoodguys.com.au/buying-guide/television-buying-guide",          "label": "TGG · Buying Guide", "scope": "page"},
-    {"url": "https://www.thegoodguys.com.au/samsung",                                       "label": "TGG · Brand Hub",    "scope": "page"},
-    {"url": "https://www.thegoodguys.com.au/whats-new",                                     "label": "TGG · News Hub",     "scope": "page"},
+    # ── TGG — one URL per core page type ────────────────────────────────────────
+    {"url": "https://www.thegoodguys.com.au",                                                                          "label": "TGG · Home",         "scope": "domain+page"},
+    {"url": "https://www.thegoodguys.com.au/televisions",                                                              "label": "TGG · Category",     "scope": "page"},
+    {"url": "https://www.thegoodguys.com.au/televisions/smart-tvs",                                                    "label": "TGG · Sub-category", "scope": "page"},
+    {"url": "https://www.thegoodguys.com.au/samsung-65-inches-qn85f-neo-qled-4k-mini-led-smart-ai-tv-2025-qa65qn85fawxxy", "label": "TGG · Product",      "scope": "page"},
+    {"url": "https://www.thegoodguys.com.au/buying-guide/television-buying-guide",                                     "label": "TGG · Buying Guide", "scope": "page"},
+    {"url": "https://www.thegoodguys.com.au/samsung",                                                                  "label": "TGG · Brand Hub",    "scope": "page"},
+    {"url": "https://www.thegoodguys.com.au/whats-new/unboxing-the-lg-tv-range-2025",                                  "label": "TGG · Blog Article", "scope": "page"},
     # ── JB Hi-Fi ────────────────────────────────────────────────────────────────
     {"url": "https://www.jbhifi.com.au",                                                    "label": "JB Hi-Fi · Home",          "scope": "domain+page"},
     {"url": "https://www.jbhifi.com.au/collections/tvs",                                    "label": "JB Hi-Fi · Category",      "scope": "page"},
+    {"url": "https://www.jbhifi.com.au/products/samsung-65-qn90d-neo-qled-4k-smart-tv-2024", "label": "JB Hi-Fi · Product",      "scope": "page"},
     {"url": "https://www.jbhifi.com.au/pages/samsung",                                      "label": "JB Hi-Fi · Brand Hub",     "scope": "page"},
     {"url": "https://www.jbhifi.com.au/pages/tv-buying-guide",                              "label": "JB Hi-Fi · Buying Guide",  "scope": "page"},
-    {"url": "https://www.jbhifi.com.au/blogs/guides-tips",                                  "label": "JB Hi-Fi · Editorial Hub", "scope": "page"},
     # ── Harvey Norman ───────────────────────────────────────────────────────────
     {"url": "https://www.harveynorman.com.au",                                                                "label": "Harvey Norman · Home",          "scope": "domain+page"},
     {"url": "https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-screen-size/all-tvs",             "label": "Harvey Norman · Category",      "scope": "page"},
@@ -75,10 +75,11 @@ DEFAULT_URLS = [
     {"url": "https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-brand/samsung-tvs",               "label": "Harvey Norman · Brand Page",    "scope": "page"},
     {"url": "https://www.harveynorman.com.au/buying-guides/television-buying-guide",                          "label": "Harvey Norman · Buying Guide",  "scope": "page"},
     # ── Appliances Online ───────────────────────────────────────────────────────
-    {"url": "https://www.appliancesonline.com.au",                                          "label": "Appliances Online · Home",      "scope": "domain+page"},
-    {"url": "https://www.appliancesonline.com.au/category/refrigeration/fridges/",          "label": "Appliances Online · Category",  "scope": "page"},
-    {"url": "https://www.appliancesonline.com.au/brand/samsung/",                           "label": "Appliances Online · Brand Hub", "scope": "page"},
-    {"url": "https://www.appliancesonline.com.au/article/refrigerator-size-guide/",         "label": "Appliances Online · Guide",     "scope": "page"},
+    {"url": "https://www.appliancesonline.com.au",                                                                               "label": "Appliances Online · Home",      "scope": "domain+page"},
+    {"url": "https://www.appliancesonline.com.au/category/refrigeration/fridges/",                                                "label": "Appliances Online · Category",  "scope": "page"},
+    {"url": "https://www.appliancesonline.com.au/product/westinghouse-easycare-9kg-front-load-washing-machine-wwf9024m5sa/",     "label": "Appliances Online · Product",   "scope": "page"},
+    {"url": "https://www.appliancesonline.com.au/brand/samsung/",                                                                 "label": "Appliances Online · Brand Hub", "scope": "page"},
+    {"url": "https://www.appliancesonline.com.au/article/refrigerator-size-guide/",                                              "label": "Appliances Online · Guide",     "scope": "page"},
 ]
 
 # ── AI bots to check in robots.txt ────────────────────────────────────────────

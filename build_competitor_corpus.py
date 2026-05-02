@@ -224,8 +224,9 @@ def main():
             {"id": i, "vector": vectors[i], "payload": all_passages[i]}
             for i in range(len(all_passages))
         ]
+        vector_size = len(vectors[0]) if vectors else 1024
         print(f"\nUpserting {len(points)} passages to Qdrant...")
-        upsert_passages(client, points)
+        upsert_passages(client, points, vector_size)
         info = get_collection_info(client)
         print(f"  Qdrant collection: {info['vectors_count']} vectors")
         manifest_path.write_text(json.dumps({

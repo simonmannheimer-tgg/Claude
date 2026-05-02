@@ -423,6 +423,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin gh-pages
+          git checkout -- . 2>/dev/null || true
+          git clean -fd seo/outputs/aeo/ 2>/dev/null || true
           git checkout gh-pages
           mkdir -p aeo
           cp /tmp/aeo-report.html aeo/index.html

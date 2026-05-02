@@ -29,7 +29,45 @@ import httpx
 
 GRADE_COLOR = {"A": "#22c55e", "B": "#4ade80", "C": "#eab308", "D": "#f97316", "F": "#ef4444"}
 GRADE_BG    = {"A": "#dcfce7", "B": "#dcfce7", "C": "#fef9c3", "D": "#fff7ed", "F": "#fee2e2"}
-GRADE_EMOJI = {"A": "🟢", "B": "🟢", "C": "🟡", "D": "🟠", "F": "🔴"}
+GRADE_EMOJI = {"A": "A", "B": "B", "C": "C", "D": "D", "F": "F"}
+
+# Human-readable descriptions for every check — shown as tooltips and in description column
+CHECK_DESCRIPTIONS = {
+    # AEO Crawl checks
+    "robots_ai":    "Which AI bots are explicitly allowed in robots.txt — GPTBot, ClaudeBot, PerplexityBot, Google-Extended, Amazonbot, Bingbot scored 5 pts each.",
+    "llms_txt":     "/llms.txt exists (10 pts) + has structured sections (5 pts) + contains at least 100 words of content (5 pts).",
+    "http_access":  "Page returns HTTP 200 for a standard browser UA (5 pts) and for the GPTBot user-agent string (5 pts). Failures mean AI crawlers are blocked.",
+    "meta_tags":    "Title 30–70 chars (5), meta description 100–160 chars (5), og:type present (5), canonical tag self-referential (5).",
+    "headings":     "H1 present (5), only one H1 on the page (5), at least one H2 (5), no H3 used without a preceding H2 (5).",
+    "schema_type":  "JSON-LD block exists (5), correct schema type for this page type — Product/ItemList/Article/WebSite (10), multiple schema types present (5).",
+    "content":      "Body has at least 300 words (5), FAQ or Q&A patterns present (5), specification or list signals (5), number/spec density in text (5).",
+    "js_depend":    "How much content is accessible without JavaScript — what AI crawlers (httpx) see vs Playwright render. 80%+ = 20 pts, 50–79% = 10 pts, under 50% = 0.",
+    # Ecommerce AEO checks
+    "schema":            "JSON-LD structured data coverage across all pages. Category pages need ItemList, products need Product+Offer+AggregateRating, guides need Article.",
+    "schema_validity":   "Required fields present in each schema type — Offer.price, Offer.availability, AggregateRating.ratingValue, Product.brand, ItemList elements.",
+    "render_diff":       "Server-side rendering completeness — percentage of content available without JavaScript. AI bots use httpx, not a full browser.",
+    "user_agents":       "Whether tier-1 AI bots (GPTBot, ClaudeBot, PerplexityBot) can access pages using their real user-agent strings via robots.txt rules.",
+    "hidden_content":    "Percentage of page content hidden from HTML (display:none, visibility:hidden). High hidden ratios reduce what AI can read.",
+    "ai_signals":        "AI-legible content signals — FAQ schema, structured headings, entity mentions, specification tables, Q&A patterns.",
+    "dom_structure":     "HTML structure quality — semantic elements (nav, main, article, section), correct heading hierarchy, proper list usage.",
+    "robots_content":    "robots.txt rules for all 18 tracked AI bots and presence of /llms.txt with correctly formatted sections and sufficient content.",
+    "sitemap_coverage":  "Whether all key content types (category, product, buying guide, brand) appear in the XML sitemap so AI crawlers can discover them.",
+    "competitor_schema": "Schema types used by TGG vs top competitors — measures the schema completeness gap against JB Hi-Fi and Harvey Norman.",
+    "au_signals":        "Australian-specific signals — lang=en-AU on html tag, AUD currency present, Australian spelling, ACCC pricing compliance (Was/Save patterns).",
+    "agentic_commerce":  "Shopify Agentic Storefronts readiness — MCP endpoint, ACP feed, UCP endpoint, agent-endpoint link tag in HTML head.",
+    "gtin_coverage":     "Percentage of product pages with valid GTIN (barcode) in structured data — required for Google Shopping AI and agentic purchase flows.",
+    "gmc_feed":          "Google Merchant Centre feed completeness — required fields (id, title, price, gtin, brand) and optional fields per GMC spec.",
+    # Content Intelligence checks
+    "boilerplate_ratio":  "Ratio of unique content vs boilerplate (nav, footer, sidebar). Lower boilerplate = more AI-citable unique content per page.",
+    "content_chunking":   "Content broken into H2/H3 sections with short paragraphs and numbered lists — structure that lets AI extract and cite specific answers.",
+    "entity_signals":     "Named entities present — brands, product models, specs, features, locations. AI systems extract and cite entities when answering queries.",
+    "knowledge_graph":    "Signals linking content to the knowledge graph — schema sameAs URLs, Wikidata links, authoritative entity references.",
+    "semantic_structure": "Semantic HTML quality — correct use of article, section, aside, figure elements that help AI parsers identify content boundaries.",
+    "anchor_quality":     "Descriptive vs generic anchor text. Specific anchors (brand names, product types) score higher than 'click here' or 'read more'.",
+    "content_similarity": "Cosine similarity of page content to competitor corpus using BGE-M3 embeddings — how well TGG covers the same topics competitors cover.",
+    "entity_gap":         "Entities found in competitor pages but absent from equivalent TGG pages — brands, features, specs TGG should mention to close the gap.",
+    "llm_quality":        "LLM-judge scoring via Phi-4/Ollama — rates clarity, specificity, structured-data alignment, query answerability. Self-hosted runner only.",
+}
 
 # Checks produced by run_aeo_crawl.py
 CRAWL_CHECKS = [
@@ -185,11 +223,19 @@ def section_hero(data: dict) -> str:
 
 # ── AEO Crawl section ──────────────────────────────────────────────────────────
 
-def _check_icon(c: dict | None) -> str:
+def _check_badge(c: dict | None) -> str:
+    """CSS-styled text badge replacing emoji check icons."""
     if not c or c.get("score") is None:
-        return "–"
+        return "<span style='color:#94a3b8'>—</span>"
     p = c.get("percentage", 0)
-    return "✅" if p >= 80 else "⚠️" if p >= 50 else "❌"
+    if p >= 80:
+        return "<span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span>"
+    if p >= 50:
+        return "<span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span>"
+    return "<span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span>"
+
+def _check_icon(c: dict | None) -> str:
+    return _check_badge(c)
 
 
 def section_crawl(crawl: list) -> str:
@@ -208,7 +254,7 @@ def section_crawl(crawl: list) -> str:
         c   = GRADE_COLOR.get(g, "#94a3b8")
         is_tgg = "thegoodguys" in domain
         domain_rows += f"""<tr style="{'background:#f0fdf4' if is_tgg else ''}">
-            <td><strong>{'⭐ ' if is_tgg else ''}{domain}</strong></td>
+            <td><strong>{'<span style="background:#166534;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.75em;margin-right:4px">TGG</span>' if is_tgg else ''}{domain}</strong></td>
             <td><span style="color:{c};font-weight:700">{g}</span></td>
             <td><div class="pct-bar"><div style="width:{avg}%;background:{pct_bar_color(avg)}"></div></div><span>{avg}%</span></td>
             <td style="color:#64748b">{len(pages)} pages</td>
@@ -223,8 +269,8 @@ def section_crawl(crawl: list) -> str:
 
     # ── Per-URL check table ──────────────────────────────────────────────────
     check_headers = "".join(
-        f'<th title="{name} (max {mx} pts)">{name.split("/")[0].strip()}<br><small>/{mx}</small></th>'
-        for _, name, mx in CRAWL_CHECKS
+        f'<th title="{CHECK_DESCRIPTIONS.get(k, name)} (max {mx} pts)">{name.split("/")[0].strip()}<br><small>/{mx}pts</small></th>'
+        for k, name, mx in CRAWL_CHECKS
     )
 
     url_rows = ""
@@ -234,19 +280,24 @@ def section_crawl(crawl: list) -> str:
         c    = GRADE_COLOR.get(g, "#94a3b8")
         ch   = r.get("checks", {})
         is_tgg = "thegoodguys" in r.get("domain", "")
-        icons = "".join(f"<td style='text-align:center'>{_check_icon(ch.get(k))}</td>" for k, _, _ in CRAWL_CHECKS)
+        badges = "".join(f"<td style='text-align:center'>{_check_badge(ch.get(k))}</td>" for k, _, _ in CRAWL_CHECKS)
         short_label = r["label"].split(" · ", 1)[-1] if " · " in r["label"] else r["label"]
         domain_tag = r["domain"].replace("thegoodguys.com.au", "TGG").replace("jbhifi.com.au", "JB").replace("harveynorman.com.au", "HN").replace("appliancesonline.com.au", "AO")
+        url_path = "/" + "/".join(r["url"].split("/")[3:]) if "/" in r["url"][8:] else "/"
+        url_display = url_path[:55] + "…" if len(url_path) > 55 else url_path
         url_rows += f"""<tr style="{'background:#f0fdf4' if is_tgg else ''}">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">{domain_tag}</small><br><a href="{r['url']}" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">{short_label}</a></td>
+            <td>
+                <small style="color:#94a3b8">{domain_tag}</small> <strong>{short_label}</strong><br>
+                <a href="{r['url']}" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">{url_display}</a>
+            </td>
             <td style="text-align:center"><span style="color:{c};font-weight:700">{g}</span></td>
             <td style="text-align:center">{pct}%</td>
-            {icons}
+            {badges}
         </tr>"""
 
     html += f"""
     <h3>Per-URL Check Results</h3>
-    <p style="font-size:0.82em;color:#64748b;margin-top:-8px">✅ ≥80% &nbsp; ⚠️ 50–79% &nbsp; ❌ &lt;50% &nbsp; – Not scored (no snapshot)</p>
+    <p style="font-size:0.82em;color:#64748b;margin-top:-8px"><strong>PASS</strong> = 80%+ &nbsp; <strong>WARN</strong> = 50–79% &nbsp; <strong>FAIL</strong> = below 50% &nbsp; — = no snapshot data. Hover column headers for check descriptions.</p>
     <div style="overflow-x:auto">
     <table class="data-table">
         <thead><tr>
@@ -309,7 +360,7 @@ def section_crawl(crawl: list) -> str:
         html += f"""
         <h3>JS Dependency — Raw vs Rendered Word Counts</h3>
         <p style="font-size:0.85em;color:#64748b;margin-top:-8px">
-          🟡 No JS = what AI bots see via httpx &nbsp;|&nbsp; 🔵 With JS = Playwright render &nbsp;|&nbsp;
+          <strong>No JS</strong> = what AI bots see via httpx &nbsp;|&nbsp; <strong>With JS</strong> = Playwright render &nbsp;|&nbsp;
           % = share of content accessible without JS
         </p>
         <table class="data-table">
@@ -333,20 +384,18 @@ def section_phase3(phase3: dict) -> str:
         if not c:
             continue
         if c.get("skipped"):
-            rows += f'<tr><td>{name}</td><td colspan="3" style="color:#94a3b8;font-style:italic">⏭ Skipped — set {key.upper()}_URL env var to enable</td></tr>'
+            rows += f'<tr><td>{name}</td><td style="font-size:0.8em;color:#64748b">{CHECK_DESCRIPTIONS.get(key,"")}</td><td colspan="2" style="color:#94a3b8;font-style:italic">Skipped — set {key.upper()}_URL env var to enable</td></tr>'
             continue
         if "error" in c:
-            rows += f'<tr><td>{name}</td><td colspan="3" class="error">✗ {c["error"][:80]}</td></tr>'
+            rows += f'<tr><td>{name}</td><td style="font-size:0.8em;color:#64748b">{CHECK_DESCRIPTIONS.get(key,"")}</td><td colspan="2" class="error">ERROR: {c["error"][:80]}</td></tr>'
             continue
         pct = c.get("percentage", 0)
-        score = c.get("score", 0)
-        max_s = c.get("maxScore", 0)
         bar_c = pct_bar_color(pct)
         rows += f"""<tr>
-            <td>{name}</td>
+            <td><strong>{name}</strong></td>
+            <td style="font-size:0.8em;color:#64748b">{CHECK_DESCRIPTIONS.get(key,"")}</td>
             <td><div class="pct-bar"><div style="width:{pct}%;background:{bar_c}"></div></div></td>
-            <td style="color:{bar_c};font-weight:600">{score}/{max_s}</td>
-            <td>{pct}%</td>
+            <td style="color:{bar_c};font-weight:600;text-align:right">{pct}/100</td>
         </tr>"""
         for e in c.get("errors", []):
             issue = e.get("issue") or e.get("error") or ""
@@ -360,7 +409,7 @@ def section_phase3(phase3: dict) -> str:
 
     html = f"""
     <table class="data-table">
-        <thead><tr><th>Check</th><th>Progress</th><th>Score</th><th>%</th></tr></thead>
+        <thead><tr><th>Check</th><th>Description</th><th>Progress</th><th>Score</th></tr></thead>
         <tbody>{rows}</tbody>
     </table>"""
 
@@ -408,18 +457,18 @@ def section_phase3(phase3: dict) -> str:
                 </td>
                 <td style="text-align:center;color:{bar_c};font-weight:600">{pct_acc}%</td>
                 <td style="text-align:center;font-size:0.85em">
-                  {"🟠 " if csr_flag else "🟢 "}{ssr_sc} raw / {csr_sc} rendered
+                  {('<span style="color:#991b1b;font-weight:700">CSR</span> ' if csr_flag else '<span style="color:#166534;font-weight:700">SSR</span> ')}{ssr_sc} raw / {csr_sc} rendered
                 </td>
                 <td style="text-align:center;font-size:0.85em">
-                  {"🔴 " if raw_pr == 0 and rend_pr > 0 else "🟢 "}{raw_pr} raw / {rend_pr} rendered
+                  {('<span style="color:#991b1b;font-weight:700">MISS</span> ' if raw_pr == 0 and rend_pr > 0 else '<span style="color:#166534;font-weight:700">OK</span> ')}{raw_pr} raw / {rend_pr} rendered
                 </td>
             </tr>"""
         if rd_rows:
             html += f"""
             <h3>Render Diff — Pre JS vs Post JS</h3>
             <p style="font-size:0.85em;color:#64748b;margin-top:-8px">
-              🟡 No JS = what AI bots (httpx) see &nbsp;|&nbsp; 🔵 With JS = Playwright render &nbsp;|&nbsp;
-              % = content accessible without JS &nbsp;|&nbsp; Schema: JSON-LD blocks &nbsp;|&nbsp; Price elements
+              <strong>No JS</strong> = what AI bots (httpx) see &nbsp;|&nbsp; <strong>With JS</strong> = Playwright render &nbsp;|&nbsp;
+              % = content accessible without JS &nbsp;|&nbsp; Schema: <strong>SSR</strong> = server-rendered / <strong>CSR</strong> = injected by JS &nbsp;|&nbsp; Price: <strong>OK</strong> / <strong>MISS</strong>
             </p>
             <table class="data-table">
                 <thead><tr><th>Page</th><th>Word counts</th><th>% accessible</th><th>Schema blocks</th><th>Price els</th></tr></thead>
@@ -467,20 +516,18 @@ def section_phase4(phase4: dict) -> str:
         if not c:
             continue
         if c.get("skipped"):
-            rows += f'<tr><td>{name}</td><td colspan="3" style="color:#94a3b8;font-style:italic">⏭ Skipped — self-hosted runner required</td></tr>'
+            rows += f'<tr><td><strong>{name}</strong></td><td style="font-size:0.8em;color:#64748b">{CHECK_DESCRIPTIONS.get(key,"")}</td><td colspan="2" style="color:#94a3b8;font-style:italic">Skipped — self-hosted runner required</td></tr>'
             continue
         if "error" in c:
-            rows += f'<tr><td>{name}</td><td colspan="3" class="error">✗ {c["error"][:80]}</td></tr>'
+            rows += f'<tr><td><strong>{name}</strong></td><td style="font-size:0.8em;color:#64748b">{CHECK_DESCRIPTIONS.get(key,"")}</td><td colspan="2" class="error">ERROR: {c["error"][:80]}</td></tr>'
             continue
         pct = c.get("percentage", 0)
-        score = c.get("score", 0)
-        max_s = c.get("maxScore", 0)
         bar_c = pct_bar_color(pct)
         rows += f"""<tr>
-            <td>{name}</td>
+            <td><strong>{name}</strong></td>
+            <td style="font-size:0.8em;color:#64748b">{CHECK_DESCRIPTIONS.get(key,"")}</td>
             <td><div class="pct-bar"><div style="width:{pct}%;background:{bar_c}"></div></div></td>
-            <td style="color:{bar_c};font-weight:600">{score}/{max_s}</td>
-            <td>{pct}%</td>
+            <td style="color:{bar_c};font-weight:600;text-align:right">{pct}/100</td>
         </tr>"""
         for e in c.get("errors", []):
             issue = e.get("issue") or e.get("error") or ""
@@ -495,7 +542,7 @@ def section_phase4(phase4: dict) -> str:
 
     html = f"""
     <table class="data-table">
-        <thead><tr><th>Check</th><th>Progress</th><th>Score</th><th>%</th></tr></thead>
+        <thead><tr><th>Check</th><th>Description</th><th>Progress</th><th>Score</th></tr></thead>
         <tbody>{rows}</tbody>
     </table>"""
 
