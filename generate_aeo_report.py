@@ -1051,6 +1051,22 @@ def section_recommendations(recs: dict | None) -> str:
             html += f"<li style='margin-bottom:6px'>{fix}</li>"
         html += "</ul>"
 
+    site_fixes = recs.get("site_wide_fixes", [])
+    if site_fixes:
+        html += "<h3>Site-Wide Fixes</h3>"
+        for fix in site_fixes:
+            impact = fix.get("impact", "medium")
+            ic = priority_color.get("high" if impact == "high" else impact, "#94a3b8")
+            impact_badge = f'<span style="background:#dcfce7;color:#166534;padding:1px 8px;border-radius:10px;font-size:0.75em;font-weight:600">{impact.upper()}</span>'
+            effort_badge = f'<span style="background:#f1f5f9;color:#475569;padding:1px 8px;border-radius:10px;font-size:0.75em">{fix.get("effort","").upper()} effort</span>'
+            check_badge = f'<span style="background:#e0e7ff;color:#3730a3;padding:1px 8px;border-radius:10px;font-size:0.75em;font-weight:600">{fix.get("check","").replace("_"," ")}</span>'
+            html += f"""<div style="margin-bottom:14px;padding:14px;background:#fffbeb;border-left:3px solid {ic};border-radius:4px">
+                <div style="font-weight:600;margin-bottom:6px">{check_badge} {fix.get('issue','')} &nbsp;{impact_badge} {effort_badge}</div>
+                <div style="font-size:0.88em;color:#374151;margin-bottom:8px">{fix.get('fix','')}</div>"""
+            if fix.get("snippet"):
+                html += f'<details style="margin-top:6px"><summary style="cursor:pointer;font-size:0.82em;color:#6366f1">Show code snippet</summary><pre style="background:#1e293b;color:#e2e8f0;padding:12px;border-radius:6px;overflow-x:auto;font-size:0.82em;margin-top:6px">{fix["snippet"]}</pre></details>'
+            html += "</div>"
+
     if pages:
         html += "<h3>Per-Page Fixes</h3>"
         for page in pages[:20]:
