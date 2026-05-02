@@ -288,10 +288,10 @@
         "score": 15,
         "max": 20,
         "percentage": 75,
-        "word_count": 2976,
+        "word_count": 2970,
         "has_faq": false,
         "has_specs": true,
-        "num_density": 88.0,
+        "num_density": 88.2,
         "list_count": 17,
         "issues": [
           "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
@@ -301,166 +301,7 @@
       "js_depend": {
         "score": null,
         "max": 20,
-        "raw_words": 2976,
-        "rendered_words": null,
-        "pct_accessible": null,
-        "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
-      }
-    },
-    "issues": [
-      {
-        "check": "meta_tags",
-        "issue": "Missing og:type"
-      },
-      {
-        "check": "schema_type",
-        "issue": "Missing expected schema: ItemList"
-      },
-      {
-        "check": "content",
-        "issue": "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
-      }
-    ],
-    "cf_blocked": false
-  },
-  {
-    "url": "https://www.thegoodguys.com.au/televisions/smart-tvs",
-    "label": "TGG \u00b7 Sub-category",
-    "domain": "thegoodguys.com.au",
-    "page_type": "subcategory",
-    "scope": "page",
-    "score": 90,
-    "max_score": 140,
-    "percentage": 64,
-    "grade": "C",
-    "checks": {
-      "robots_ai": {
-        "score": 18,
-        "max": 30,
-        "percentage": 60,
-        "bots": {
-          "GPTBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "ClaudeBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "PerplexityBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Google-Extended": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Amazonbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Bingbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          }
-        },
-        "tier1_blocked": [],
-        "http_status": 200,
-        "issue": null
-      },
-      "llms_txt": {
-        "score": 0,
-        "max": 20,
-        "exists": false,
-        "http_status": 404
-      },
-      "http_access": {
-        "score": 10,
-        "max": 10,
-        "percentage": 100,
-        "statuses": {
-          "browser": 200,
-          "GPTBot": 200
-        },
-        "issue": null
-      },
-      "meta_tags": {
-        "score": 12,
-        "max": 20,
-        "percentage": 60,
-        "details": {
-          "title": {
-            "text": "Buy TV's Online | Television Deal",
-            "length": 33
-          },
-          "description": {
-            "length": 138
-          },
-          "og_type": "",
-          "canonical": "https://www.thegoodguys.com.au/televisions"
-        },
-        "issues": [
-          "Missing og:type",
-          "Canonical points to different URL"
-        ],
-        "issue": "Missing og:type"
-      },
-      "headings": {
-        "score": 20,
-        "max": 20,
-        "percentage": 100,
-        "h1_count": 1,
-        "h1_text": "Televisions",
-        "h2_count": 7,
-        "h3_count": 15,
-        "issues": [],
-        "issue": null
-      },
-      "schema_type": {
-        "score": 15,
-        "max": 20,
-        "percentage": 75,
-        "found_types": [
-          "CollectionPage",
-          "FAQPage",
-          "BreadcrumbList"
-        ],
-        "expected_types": [
-          "ItemList",
-          "BreadcrumbList"
-        ],
-        "missing_types": [
-          "ItemList"
-        ],
-        "issues": [
-          "Missing expected schema: ItemList"
-        ],
-        "issue": "Missing expected schema: ItemList"
-      },
-      "content": {
-        "score": 15,
-        "max": 20,
-        "percentage": 75,
-        "word_count": 2976,
-        "has_faq": false,
-        "has_specs": true,
-        "num_density": 88.0,
-        "list_count": 17,
-        "issues": [
-          "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
-        ],
-        "issue": "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
-      },
-      "js_depend": {
-        "score": null,
-        "max": 20,
-        "raw_words": 2976,
+        "raw_words": 2970,
         "rendered_words": null,
         "pct_accessible": null,
         "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
@@ -795,172 +636,14 @@
     "cf_blocked": false
   },
   {
-    "url": "https://www.thegoodguys.com.au/samsung",
-    "label": "TGG \u00b7 Brand Hub",
-    "domain": "thegoodguys.com.au",
-    "page_type": "brand",
-    "scope": "page",
-    "score": 90,
-    "max_score": 140,
-    "percentage": 64,
-    "grade": "C",
-    "checks": {
-      "robots_ai": {
-        "score": 18,
-        "max": 30,
-        "percentage": 60,
-        "bots": {
-          "GPTBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "ClaudeBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "PerplexityBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Google-Extended": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Amazonbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Bingbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          }
-        },
-        "tier1_blocked": [],
-        "http_status": 200,
-        "issue": null
-      },
-      "llms_txt": {
-        "score": 0,
-        "max": 20,
-        "exists": false,
-        "http_status": 404
-      },
-      "http_access": {
-        "score": 10,
-        "max": 10,
-        "percentage": 100,
-        "statuses": {
-          "browser": 200,
-          "GPTBot": 200
-        },
-        "issue": null
-      },
-      "meta_tags": {
-        "score": 12,
-        "max": 20,
-        "percentage": 60,
-        "details": {
-          "title": {
-            "text": "Shop Samsung Appliances & Tech | TVs, Phones, Fridges & More",
-            "length": 60
-          },
-          "description": {
-            "length": 169
-          },
-          "og_type": "",
-          "canonical": "https://www.thegoodguys.com.au/samsung"
-        },
-        "issues": [
-          "Description length 169 \u2014 target 100-160 chars",
-          "Missing og:type"
-        ],
-        "issue": "Description length 169 \u2014 target 100-160 chars"
-      },
-      "headings": {
-        "score": 20,
-        "max": 20,
-        "percentage": 100,
-        "h1_count": 1,
-        "h1_text": "",
-        "h2_count": 13,
-        "h3_count": 18,
-        "issues": [],
-        "issue": null
-      },
-      "schema_type": {
-        "score": 15,
-        "max": 20,
-        "percentage": 75,
-        "found_types": [
-          "CollectionPage",
-          "BreadcrumbList"
-        ],
-        "expected_types": [
-          "ItemList",
-          "BreadcrumbList"
-        ],
-        "missing_types": [
-          "ItemList"
-        ],
-        "issues": [
-          "Missing expected schema: ItemList"
-        ],
-        "issue": "Missing expected schema: ItemList"
-      },
-      "content": {
-        "score": 15,
-        "max": 20,
-        "percentage": 75,
-        "word_count": 4741,
-        "has_faq": false,
-        "has_specs": true,
-        "num_density": 54.2,
-        "list_count": 16,
-        "issues": [
-          "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
-        ],
-        "issue": "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
-      },
-      "js_depend": {
-        "score": null,
-        "max": 20,
-        "raw_words": 4741,
-        "rendered_words": null,
-        "pct_accessible": null,
-        "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
-      }
-    },
-    "issues": [
-      {
-        "check": "meta_tags",
-        "issue": "Description length 169 \u2014 target 100-160 chars"
-      },
-      {
-        "check": "schema_type",
-        "issue": "Missing expected schema: ItemList"
-      },
-      {
-        "check": "content",
-        "issue": "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
-      }
-    ],
-    "cf_blocked": false
-  },
-  {
     "url": "https://www.thegoodguys.com.au/whats-new/unboxing-the-lg-tv-range-2025",
     "label": "TGG \u00b7 Blog Article",
     "domain": "thegoodguys.com.au",
-    "page_type": "category",
+    "page_type": "editorial",
     "scope": "page",
-    "score": 93,
+    "score": 98,
     "max_score": 140,
-    "percentage": 66,
+    "percentage": 70,
     "grade": "B",
     "checks": {
       "robots_ai": {
@@ -1051,24 +734,20 @@
         "issue": null
       },
       "schema_type": {
-        "score": 15,
+        "score": 20,
         "max": 20,
-        "percentage": 75,
+        "percentage": 100,
         "found_types": [
           "Article",
           "BreadcrumbList"
         ],
         "expected_types": [
-          "ItemList",
+          "Article",
           "BreadcrumbList"
         ],
-        "missing_types": [
-          "ItemList"
-        ],
-        "issues": [
-          "Missing expected schema: ItemList"
-        ],
-        "issue": "Missing expected schema: ItemList"
+        "missing_types": [],
+        "issues": [],
+        "issue": null
       },
       "content": {
         "score": 15,
@@ -1097,10 +776,6 @@
       {
         "check": "meta_tags",
         "issue": "Missing og:type"
-      },
-      {
-        "check": "schema_type",
-        "issue": "Missing expected schema: ItemList"
       },
       {
         "check": "content",
@@ -1441,9 +1116,9 @@
     "domain": "jbhifi.com.au",
     "page_type": "product",
     "scope": "page",
-    "score": 60,
+    "score": 57,
     "max_score": 140,
-    "percentage": 43,
+    "percentage": 41,
     "grade": "D",
     "checks": {
       "robots_ai": {
@@ -1507,13 +1182,13 @@
         "issue": "GPTBot receives non-200 response"
       },
       "meta_tags": {
-        "score": 12,
+        "score": 9,
         "max": 20,
-        "percentage": 60,
+        "percentage": 45,
         "details": {
           "title": {
-            "text": "404 Not Found - JB Hi-Fi",
-            "length": 24
+            "text": "404 Not Found",
+            "length": 13
           },
           "description": {
             "length": 0
@@ -1522,10 +1197,11 @@
           "canonical": "https://www.jbhifi.com.au/404"
         },
         "issues": [
+          "Title length 13 \u2014 target 30-70 chars",
           "Missing meta description",
           "Canonical points to different URL"
         ],
-        "issue": "Missing meta description"
+        "issue": "Title length 13 \u2014 target 30-70 chars"
       },
       "headings": {
         "score": 10,
@@ -1583,7 +1259,7 @@
       },
       {
         "check": "meta_tags",
-        "issue": "Missing meta description"
+        "issue": "Title length 13 \u2014 target 30-70 chars"
       },
       {
         "check": "headings",
