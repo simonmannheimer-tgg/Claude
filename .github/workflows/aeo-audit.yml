@@ -160,7 +160,6 @@ on:
 jobs:
   aeo-audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
     permissions:
       contents: write
 
