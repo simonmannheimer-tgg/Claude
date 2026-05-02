@@ -611,7 +611,7 @@ def section_phase3(phase3: dict) -> str:
             bar_c = pct_bar_color(page_pct)
             pt = p.get("page_type", "")
             pt_colour = {"product": "#6366f1", "category": "#0ea5e9", "guide": "#f59e0b",
-                         "home": "#22c55e", "editorial": "#ec4899"}.get(pt, "#64748b")
+                         "home": "#22c55e", "blog": "#ec4899", "editorial": "#ec4899"}.get(pt, "#64748b")
             pt_badge = f'<span style="background:{pt_colour};color:#fff;font-size:0.72em;padding:1px 6px;border-radius:3px;margin-left:4px">{pt}</span>' if pt else ""
             schema_rows += f"""<tr>
                 <td><code>{p.get("file","")}</code>{pt_badge}</td>
@@ -634,7 +634,7 @@ def section_phase3(phase3: dict) -> str:
         for p in sv_data["pages"]:
             pt = p.get("page_type", "")
             pt_colour = {"product": "#6366f1", "category": "#0ea5e9", "guide": "#f59e0b",
-                         "home": "#22c55e", "editorial": "#ec4899"}.get(pt, "#64748b")
+                         "home": "#22c55e", "blog": "#ec4899", "editorial": "#ec4899"}.get(pt, "#64748b")
             pt_badge = f'<span style="background:{pt_colour};color:#fff;font-size:0.72em;padding:1px 6px;border-radius:3px;margin-left:4px">{pt}</span>' if pt else ""
             page_pct = round(p.get("score", 0) / p.get("maxScore", 1) * 100) if p.get("maxScore") else 0
             bar_c = pct_bar_color(page_pct)

@@ -124,7 +124,7 @@ EXPECTED_SCHEMA = {
     "product":     ["Product", "Offer", "BreadcrumbList"],
     "guide":       ["Article", "FAQPage", "BreadcrumbList"],
     "brand":       ["ItemList", "BreadcrumbList"],
-    "editorial":   ["Article", "BreadcrumbList"],
+    "blog":        ["Article", "BreadcrumbList"],
     "hub":         ["CollectionPage", "ItemList"],
 }
 
@@ -133,7 +133,7 @@ def infer_page_type(url: str, label: str = "") -> str:
     lbl = label.lower()
     if "product" in lbl:     return "product"
     if "buying guide" in lbl or "guide" in lbl: return "guide"
-    if "blog" in lbl or "article" in lbl or "editorial" in lbl: return "editorial"
+    if "blog" in lbl or "article" in lbl or "editorial" in lbl: return "blog"
     if "brand" in lbl:       return "brand"
     if "news hub" in lbl:    return "hub"
     if "sub-category" in lbl: return "subcategory"

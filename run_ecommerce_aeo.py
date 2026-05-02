@@ -69,6 +69,7 @@ REQUIRED_SCHEMA_TYPES = {
     "category": ["ItemList", "BreadcrumbList", "CollectionPage"],
     "product":  ["Product", "Offer", "AggregateRating", "BreadcrumbList"],
     "guide":    ["Article", "FAQPage", "BreadcrumbList", "VideoObject"],
+    "blog":     ["Article", "BreadcrumbList", "Person"],
     "default":  ["BreadcrumbList", "WebPage"],
 }
 
@@ -165,6 +166,10 @@ def infer_page_type(filename: str) -> str:
         return "home"
     if any(k in name for k in ("buying-guide", "best-", "guide")):
         return "guide"
+    # Blog / news / editorial pages — match leading slug or hyphen-joined path
+    # segments (e.g. blog--my-post.html, news--whatever.html, whats-new.html).
+    if any(re.search(rf'(^|--){k}(--|\.|$)', name) for k in ("blog", "news", "whats-new", "editorial", "magazine", "stories", "story")):
+        return "blog"
     # Products have SKU numbers, /p/ path segment, or "product" in name.
     # Sub-categories use -- to join path segments (televisions--smart-tvs.html)
     # and should NOT be classified as products.

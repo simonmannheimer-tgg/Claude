@@ -36,7 +36,7 @@ BROWSER_UA = (
     "Chrome/122.0.0.0 Safari/537.36"
 )
 
-ALL_TYPES = ["home", "category", "product", "guide", "editorial", "other"]
+ALL_TYPES = ["home", "category", "product", "guide", "blog", "other"]
 
 
 # ── Sitemap fetching ──────────────────────────────────────────────────────────
@@ -110,11 +110,11 @@ def fetch_all_urls(domain: str, max_sitemaps: int = 10) -> list[str]:
 
 _PRODUCT_RE = re.compile(r'(?:/p/|-\d{6,}|/products?/|/sku/)', re.IGNORECASE)
 _GUIDE_RE   = re.compile(r'/(?:buying-guide|guide|advice|how-to|reviews?)/', re.IGNORECASE)
-_EDITORIAL_RE = re.compile(r'/(?:blog|news|whats-new|editorial|magazine|stories?)(?:/|$)', re.IGNORECASE)
+_BLOG_RE = re.compile(r'/(?:blog|news|whats-new|editorial|magazine|stories?)(?:/|$)', re.IGNORECASE)
 
 
 def classify_url(url: str) -> str:
-    """Returns: home | category | product | guide | editorial | other"""
+    """Returns: home | category | product | guide | blog | other"""
     parsed = urlparse(url)
     path = parsed.path.rstrip("/")
 
@@ -122,8 +122,8 @@ def classify_url(url: str) -> str:
         return "home"
     if _GUIDE_RE.search(path):
         return "guide"
-    if _EDITORIAL_RE.search(path):
-        return "editorial"
+    if _BLOG_RE.search(path):
+        return "blog"
     if _PRODUCT_RE.search(path):
         return "product"
 
@@ -161,8 +161,8 @@ def main():
                         help="Domain to crawl (e.g. thegoodguys.com.au)")
     parser.add_argument("--sample", type=int, default=5,
                         help="URLs to sample per page type (default: 5)")
-    parser.add_argument("--types", type=str, default="home,category,product,guide,editorial",
-                        help="Comma-separated page types to include (default: home,category,product,guide,editorial)")
+    parser.add_argument("--types", type=str, default="home,category,product,guide,blog",
+                        help="Comma-separated page types to include (default: home,category,product,guide,blog)")
     parser.add_argument("--out", type=str, default="",
                         help="Output directory (default: site-snapshots/<domain>/)")
     parser.add_argument("--list-only", action="store_true",
