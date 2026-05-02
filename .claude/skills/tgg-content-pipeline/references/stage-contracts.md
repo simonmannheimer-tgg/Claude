@@ -46,7 +46,7 @@ Defines the input and output shape for each pipeline stage. Both `tgg-content-pi
 - Contentful entry ID (if resolved)
 - Current word count and last published date (if available)
 
-**Produced by:** `tgg-seo-specialist` + `tgg-ce-competitor-extract/scripts/extract_competitors.py` + `tgg-contentful-linker`
+**Produced by:** `tgg-seo (technical mode)` + `tgg-ce-competitor-extract/scripts/extract_competitors.py` + `tgg-contentful-linker`
 
 ---
 
@@ -67,7 +67,7 @@ Defines the input and output shape for each pipeline stage. Both `tgg-content-pi
 
 **Gate:** `verification-gate-protocol --type <content_type>` pre-draft check → must return PASS
 
-**Produced by:** `tgg-content-strategist` using `tgg-template-generator` scaffold
+**Produced by:** `tgg-seo (strategy mode)` using `tgg-template-generator` scaffold
 
 ---
 
@@ -77,7 +77,7 @@ Defines the input and output shape for each pipeline stage. Both `tgg-content-pi
 **Output file:** `runs/<run-id>/outline.md`
 **Required:** H2 list with estimated word budget per section, H2 count within type target, FAQ H2 present
 
-**Produced by:** `tgg-content-strategist`
+**Produced by:** `tgg-seo (strategy mode)`
 
 ---
 
@@ -87,7 +87,7 @@ Defines the input and output shape for each pipeline stage. Both `tgg-content-pi
 **Output file:** `runs/<run-id>/draft.md`
 **Required:** Word count within type range, internal-link placeholders as `[LINK: <slug>]`, FAQ block present
 
-**Produced by:** `tgg-content-strategist` (body) + `tgg-copywriting` (FAQ, PLP intro, metadata blocks)
+**Produced by:** `tgg-seo (strategy mode)` (body) + `tgg-seo (production mode)` (FAQ, PLP intro, metadata blocks)
 
 ---
 
@@ -113,7 +113,7 @@ Block delivery: YES / NO
 
 **Gate:** Any `block_delivery: YES` item → hard stop, present to human, wait
 
-**Produced by:** `verification-gate-protocol` + `tgg-seo-specialist`
+**Produced by:** `verification-gate-protocol` + `tgg-seo (technical mode)`
 
 ---
 
@@ -136,4 +136,4 @@ Block delivery: YES / NO
 - `runs/<run-id>/faq.json` — JSON-LD FAQPage schema
 - `runs/<run-id>/internal-links.md` — resolved Contentful entry IDs
 
-**Produced by:** `tgg-contentful-linker` (links) + `tgg-copywriting` (metadata) + optional `simon-voice`
+**Produced by:** `tgg-contentful-linker` (links) + `tgg-seo (production mode)` (metadata) + optional `simon-voice`

@@ -25,7 +25,7 @@ For all of these, return the user's message unchanged. Do not announce the skip.
 
 Original: `meta description for the lg fridge plp, 155 chars max`
 
-Minimum edit: `Write one meta description for the LG fridge PLP. Hard limit: 155 characters. Lift the LG fridge PLP context from tgg-copywriting.`
+Minimum edit: `Write one meta description for the LG fridge PLP. Hard limit: 155 characters. Lift the LG fridge PLP context from tgg-seo (production mode).`
 
 No full contract template, no invented role, no length inflation.
 
@@ -39,7 +39,7 @@ No full contract template, no invented role, no length inflation.
 > can you do plp intros for the new samsung phone pages we just got, the s26 ones
 
 **After:**
-> Using `tgg-copywriting`, write PLP intros for the new Samsung Galaxy S26 pages.
+> Using `tgg-seo (production mode)`, write PLP intros for the new Samsung Galaxy S26 pages.
 >
 > Constraints (hard limits):
 > - 220-250 characters per intro, 225-235 ideal.
@@ -58,7 +58,7 @@ No full contract template, no invented role, no length inflation.
 > need title tags for the lg 2026 tv launch pages
 
 **After:**
-> Using `tgg-copywriting` and `tgg-seo-specialist`, write title tags for the LG 2026 TV launch pages.
+> Using `tgg-seo (production mode)` and `tgg-seo (technical mode)`, write title tags for the LG 2026 TV launch pages.
 >
 > Constraints (hard limits):
 > - 60 character hard ceiling, including spaces.
@@ -115,7 +115,7 @@ No full contract template, no invented role, no length inflation.
 > ideas for how we should respond to JB Hi-Fi launching their new comparison tool
 
 **After:**
-> Using `tgg-content-strategist`, draft a strategic response brief for JB Hi-Fi's new comparison tool launch.
+> Using `tgg-seo (strategy mode)`, draft a strategic response brief for JB Hi-Fi's new comparison tool launch.
 >
 > Constraints:
 > - Australian English.
@@ -133,7 +133,7 @@ No full contract template, no invented role, no length inflation.
 > rewrite these 47 product titles to add the colour in brackets
 
 **After:**
-> Using `tgg-copywriting` and `verification-gate-protocol`, rewrite the 47 product titles to add the standard colour term in brackets where the supplier colour is non-standard (e.g. "Midnight" → "Midnight (Black)").
+> Using `tgg-seo (production mode)` and `verification-gate-protocol`, rewrite the 47 product titles to add the standard colour term in brackets where the supplier colour is non-standard (e.g. "Midnight" → "Midnight (Black)").
 >
 > Constraints:
 > - Process all 47. Do not stop at a checkpoint without flagging.
@@ -223,7 +223,7 @@ User: `write 3 faqs for the dishwasher deals page`
 
 Bad rewrite: `Write 3 FAQs for the dishwasher deals page. Each must be 50-75 words, include a primary keyword, end with a CTA, and use H3 headings.`
 
-Why bad: 50-75 words, primary keyword, CTA, and H3 are all invented constraints. The user did not ask for any of these. Defer to `tgg-copywriting` for the actual FAQ rules.
+Why bad: 50-75 words, primary keyword, CTA, and H3 are all invented constraints. The user did not ask for any of these. Defer to `tgg-seo (production mode)` for the actual FAQ rules.
 
 **Anti-pattern 3: Restating the brief**
 

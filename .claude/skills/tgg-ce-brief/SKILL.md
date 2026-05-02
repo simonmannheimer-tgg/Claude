@@ -1,11 +1,11 @@
 ---
 name: tgg-ce-brief
-description: Content engineering pipeline stage — brief. Consolidates intake, SEO data, competitor extracts, and existing content into a production brief for tgg-content-strategist. Adds TGG-specific requirements (Australian retail, EAV, schema) on top of the base brief template from tgg-template-generator. Calls verification-gate-protocol as a hard gate before passing the brief to Stage 5. Use only within the content pipeline.
+description: Content engineering pipeline stage — brief. Consolidates intake, SEO data, competitor extracts, and existing content into a production brief for tgg-seo (strategy mode). Adds TGG-specific requirements (Australian retail, EAV, schema) on top of the base brief template from tgg-template-generator. Calls verification-gate-protocol as a hard gate before passing the brief to Stage 5. Use only within the content pipeline.
 ---
 
 # CE Brief — Stage 4
 
-Produces `runs/<run-id>/brief.md`. Owns the TGG-specific brief augmentation layer. Does not own strategy reasoning — that lives in `tgg-content-strategist`.
+Produces `runs/<run-id>/brief.md`. Owns the TGG-specific brief augmentation layer. Does not own strategy reasoning — that lives in `tgg-seo`.
 
 ## Inputs required (all must exist before starting)
 
@@ -22,7 +22,7 @@ Call `tgg-template-generator` with `content_type=<content_type from intake.md>`.
 
 ## Step 2: Add TGG-specific brief requirements
 
-Append or expand the following sections in the template before passing to `tgg-content-strategist`. These are TGG augmentations — do not duplicate what the template already covers:
+Append or expand the following sections in the template before passing to `tgg-seo`. These are TGG augmentations — do not duplicate what the template already covers:
 
 **Australian retail considerations (all types):**
 - Relevant energy star ratings or efficiency labels for this product/topic (if applicable)
@@ -47,7 +47,7 @@ Append or expand the following sections in the template before passing to `tgg-c
 
 ## Step 3: Brief assembly
 
-Pass all inputs plus the augmented template to `tgg-content-strategist` with this request:
+Pass all inputs plus the augmented template to `tgg-seo` with this request:
 
 > Produce a complete production brief using the attached template and inputs. Use the angle verbatim from intake.md — do not reinterpret it. Include every section in the template. For Australian retail considerations, EAV requirements, and schema requirements, use the augmentation notes I have appended.
 >
@@ -70,7 +70,7 @@ If gate returns FAIL: present the gap list to the human. Do not proceed to Stage
 
 ## What this skill does NOT do
 
-- Does not write the brief itself — `tgg-content-strategist` does
+- Does not write the brief itself — `tgg-seo` does
 - Does not generate the base template — `tgg-template-generator` does
 - Does not apply the 29 banned AI phrases — that is `tgg-humanizer` at Stage 8
 - Does not resolve Contentful entry IDs — that is Stage 9

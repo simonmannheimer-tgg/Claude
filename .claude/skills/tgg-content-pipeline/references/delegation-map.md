@@ -33,10 +33,10 @@ When `tgg-content-pipeline` and `tgg-content-engineer` disagree, `docs/content-e
 | Domain | Skill | Do NOT replicate in pipeline |
 |---|---|---|
 | Analytics and keyword data | `tgg-marketing-analyst` | GSC/GA4/Semrush API calls, query fan-out |
-| SEO strategy and on-page | `tgg-seo-specialist` | Technical SEO, keyword placement, backlinks |
+| SEO strategy and on-page | `tgg-seo` (technical mode) | Technical SEO, keyword placement, backlinks |
 | Contentful resolution | `tgg-contentful-linker` | CMS URL → entry ID mapping |
-| Content strategy and drafting | `tgg-content-strategist` | Brief reasoning, outline craft, body drafting |
-| Short-form copy production | `tgg-copywriting` | PLP intro, FAQ copy, metadata copy |
+| Content strategy and drafting | `tgg-seo` (strategy mode) | Brief reasoning, outline craft, body drafting |
+| Short-form copy production | `tgg-seo` (production mode) | PLP intro, FAQ copy, metadata copy |
 | Template scaffolds | `tgg-template-generator` | Brief and outline templates by content type |
 | Multi-constraint validation | `verification-gate-protocol` | Constraint checking, gate logic |
 | AI-pattern removal | `tgg-humanizer` | All 29 banned patterns |

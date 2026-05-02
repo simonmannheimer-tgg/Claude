@@ -1,7 +1,7 @@
 # Content Engineering Charter
 
 **Owner:** Simon Mannheimer, SEO Lead, The Good Guys
-**Last updated:** 2026-05-01
+**Last updated:** 2026-05-02
 **Source of truth:** This file. When `tgg-content-pipeline` and `tgg-content-engineer` disagree, this is canonical.
 
 ---
@@ -22,19 +22,19 @@ For one-off exceptions, note them in the pipeline run's `pipeline-status.md` —
 tgg-content-pipeline (orchestrator)
 ├── Stage 1: Intake          — orchestrator (no delegation)
 ├── Stage 2: Research        — tgg-ce-research → tgg-marketing-analyst + run_research.py
-├── Stage 3: Competitor      — tgg-ce-competitor-extract → tgg-seo-specialist + extract_competitors.py
+├── Stage 3: Competitor      — tgg-ce-competitor-extract → tgg-seo (technical mode) + extract_competitors.py
 │                              tgg-contentful-linker (existing TGG content)
-├── Stage 4: Brief           — tgg-ce-brief → tgg-content-strategist + tgg-template-generator
+├── Stage 4: Brief           — tgg-ce-brief → tgg-seo (strategy mode) + tgg-template-generator
 │                              GATE: verification-gate-protocol --type <type>
-├── Stage 5: Outline         — tgg-ce-outline → tgg-content-strategist
+├── Stage 5: Outline         — tgg-ce-outline → tgg-seo (strategy mode)
 │                              VALIDATES: H2 count vs numeric-constraints.md
-├── Stage 6: Draft           — tgg-ce-draft → tgg-content-strategist (body)
-│                              tgg-copywriting (FAQ block, PLP intro if present)
-├── Stage 7: QA              — tgg-ce-qa → verification-gate-protocol + tgg-seo-specialist
+├── Stage 6: Draft           — tgg-ce-draft → tgg-seo (strategy mode) (body)
+│                              tgg-seo (production mode) (FAQ block, PLP intro if present)
+├── Stage 7: QA              — tgg-ce-qa → verification-gate-protocol + tgg-seo (technical mode)
 │                              GATE: block_delivery items stop pipeline
 ├── Stage 8: Humanise        — tgg-humanizer (always called)
 └── Stage 9: Finalise        — tgg-ce-finalise → tgg-contentful-linker (links)
-                               tgg-copywriting (metadata)
+                               tgg-seo (production mode) (metadata)
                                simon-voice (byline: simon only)
 ```
 
@@ -66,18 +66,18 @@ Source files: `.claude/skills/verification-gate-protocol/constraints/<type>.yaml
 | Analytics and keyword data | `tgg-marketing-analyst` | keyword, date range, market | `seo-data.md` structured markdown |
 | SEO data (deterministic) | `run_research.py` | keyword, market, competitors | JSON merged into `seo-data.md` |
 | Competitor page fetch | `extract_competitors.py` | keyword, competitor domains | JSON merged into `competitive-extract.md` |
-| Competitor SEO analysis | `tgg-seo-specialist` | competitor JSON, keyword | Gap analysis in markdown |
+| Competitor SEO analysis | `tgg-seo (technical mode)` | competitor JSON, keyword | Gap analysis in markdown |
 | Existing TGG content | `tgg-contentful-linker` | keyword, slug pattern | `existing-content.md` with Contentful IDs |
 | Brief template | `tgg-template-generator` | `content_type` slug | Base brief scaffold markdown |
-| Brief + strategy reasoning | `tgg-content-strategist` | all inputs + template | `brief.md` |
-| Outline | `tgg-content-strategist` | `brief.md` | `outline.md` |
-| Body draft | `tgg-content-strategist` | brief + outline + seo-data + competitive | Body copy markdown |
-| Short-form copy | `tgg-copywriting` | content_type, keyword, angle | FAQ block / PLP intro / metadata block |
+| Brief + strategy reasoning | `tgg-seo (strategy mode)` | all inputs + template | `brief.md` |
+| Outline | `tgg-seo (strategy mode)` | `brief.md` | `outline.md` |
+| Body draft | `tgg-seo (strategy mode)` | brief + outline + seo-data + competitive | Body copy markdown |
+| Short-form copy | `tgg-seo (production mode)` | content_type, keyword, angle | FAQ block / PLP intro / metadata block |
 | Multi-constraint validation | `verification-gate-protocol` | draft + constraint YAML path | PASS/FAIL per constraint |
 | AI-pattern removal | `tgg-humanizer` | draft markdown | Humanised draft |
 | Voice pass | `simon-voice` | humanised draft | Voice-passed draft (byline: simon only) |
 | Internal link resolution | `tgg-contentful-linker` | list of `[LINK: /slug]` | Contentful entry IDs + resolved markdown links |
-| Metadata copy | `tgg-copywriting` | first 300 words + keyword + slug | `metadata.md` |
+| Metadata copy | `tgg-seo (production mode)` | first 300 words + keyword + slug | `metadata.md` |
 | Commit messages | `tgg-repo-manager` | stage name + run-id | Structured commit |
 | Prompt pre-processing | `tgg-prompt-architect` | all prompts (upstream, always-on) | Re-routed prompt |
 | Session scope lock | `tgg-session-anchor` | called at `/run` start | Scope confirmation |

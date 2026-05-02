@@ -93,7 +93,7 @@ Merge the script output with `tgg-marketing-analyst`'s markdown into the single 
 
 **Artefacts:** `runs/<run-id>/competitive-extract.md`, `runs/<run-id>/existing-content.md`
 
-**Competitor scan:** Hand off to `tgg-seo-specialist`. Provide competitor list: jbhifi.com.au, harveynorman.com.au, appliancesonline.com.au. Request H1/H2/H3 structure, key claims, and content gaps for each.
+**Competitor scan:** Hand off to `tgg-seo (technical mode)`. Provide competitor list: jbhifi.com.au, harveynorman.com.au, appliancesonline.com.au. Request H1/H2/H3 structure, key claims, and content gaps for each.
 
 Also run `scripts/extract_competitors.py` for the deterministic page fetch:
 ```
@@ -112,7 +112,7 @@ Save to `runs/<run-id>/competitive-extract.md`.
 
 **Artefact:** `runs/<run-id>/brief.md`
 
-Hand off all of the following to `tgg-content-strategist`:
+Hand off all of the following to `tgg-seo (strategy mode)`:
 - `runs/<run-id>/intake.md`
 - `runs/<run-id>/seo-data.md`
 - `runs/<run-id>/competitive-extract.md`
@@ -120,7 +120,7 @@ Hand off all of the following to `tgg-content-strategist`:
 
 Request a full brief with: target audience, primary and secondary keywords, content angle (verbatim from `intake.md`), must-cover topics, differentiation from competitors, EAV attributes to define (for eav-explainer and buying-guide types), schema requirements, internal-link opportunities.
 
-Call `tgg-template-generator` with `content_type=<content_type>` to get the base brief scaffold, then have `tgg-content-strategist` populate it.
+Call `tgg-template-generator` with `content_type=<content_type>` to get the base brief scaffold, then have `tgg-seo (strategy mode)` populate it.
 
 Save to `runs/<run-id>/brief.md`.
 
@@ -132,7 +132,7 @@ Save to `runs/<run-id>/brief.md`.
 
 **Artefact:** `runs/<run-id>/outline.md`
 
-Hand off `runs/<run-id>/brief.md` to `tgg-content-strategist`. Request a markdown outline.
+Hand off `runs/<run-id>/brief.md` to `tgg-seo (strategy mode)`. Request a markdown outline.
 
 Numeric constraints (enforce here, not in the called skill):
 
@@ -155,13 +155,13 @@ State the H2 count and confirm it meets the target before proceeding.
 
 **Artefact:** `runs/<run-id>/draft.md`
 
-Hand off the following to `tgg-content-strategist` for the body:
+Hand off the following to `tgg-seo (strategy mode)` for the body:
 - `runs/<run-id>/brief.md`
 - `runs/<run-id>/outline.md`
 - `runs/<run-id>/seo-data.md` (for keyword placement)
 - `runs/<run-id>/competitive-extract.md` (for differentiation)
 
-For short-form blocks (FAQ section, PLP intro if present, metadata fields), hand off to `tgg-copywriting`.
+For short-form blocks (FAQ section, PLP intro if present, metadata fields), hand off to `tgg-seo (production mode)`.
 
 Word count targets (from `references/numeric-constraints.md`):
 - buying-guide: 1,800–2,500
@@ -169,7 +169,7 @@ Word count targets (from `references/numeric-constraints.md`):
 - comparison: 1,200–2,000
 - eav-explainer: 1,000–1,800
 
-Instruct `tgg-content-strategist` to reference `runs/<run-id>/existing-content.md` for internal-link anchor opportunities. Do not insert final Contentful entry IDs at this stage — use placeholder text `[LINK: <slug>]` instead.
+Instruct `tgg-seo (strategy mode)` to reference `runs/<run-id>/existing-content.md` for internal-link anchor opportunities. Do not insert final Contentful entry IDs at this stage — use placeholder text `[LINK: <slug>]` instead.
 
 Save to `runs/<run-id>/draft.md`.
 
@@ -181,7 +181,7 @@ Save to `runs/<run-id>/draft.md`.
 
 Run `verification-gate-protocol --type <content_type>` on `runs/<run-id>/draft.md`. Load the constraint file from `.claude/skills/verification-gate-protocol/constraints/<content_type>.yaml`.
 
-Also hand off to `tgg-seo-specialist` for:
+Also hand off to `tgg-seo (technical mode)` for:
 - On-page keyword placement check (H1, first paragraph, subheadings, image alt text)
 - Internal-link count check (target: 8–12 for buying-guide, see constraints file for others)
 - Claim-evidence pairing check (every factual claim must have a source or linked reference)
@@ -213,7 +213,7 @@ If `tgg-humanizer` flags any patterns that required rewriting, note them in a br
 
 **Internal links:** Hand off to `tgg-contentful-linker` with the list of `[LINK: <slug>]` placeholders from the draft. Request Contentful entry IDs for each. Replace all placeholders. Save resolved link map to `runs/<run-id>/internal-links.md`.
 
-**Metadata:** Hand off the article to `tgg-copywriting` to produce: meta title (≤60 chars), meta description (≤155 chars), slug (confirm or update), OG title. Save to `runs/<run-id>/metadata.md`.
+**Metadata:** Hand off the article to `tgg-seo (production mode)` to produce: meta title (≤60 chars), meta description (≤155 chars), slug (confirm or update), OG title. Save to `runs/<run-id>/metadata.md`.
 
 **FAQ JSON:** Extract the FAQ block and write schema-ready JSON-LD to `runs/<run-id>/faq.json`. Format:
 ```json
@@ -256,10 +256,10 @@ status: ready-for-review
 | Task | Call this skill | Never do this inline |
 |---|---|---|
 | Analytics and keyword data | `tgg-marketing-analyst` | GSC queries, GA4 queries, Semrush calls |
-| Competitor page analysis | `tgg-seo-specialist` | Scraping, parsing, SEO judgements |
+| Competitor page analysis | `tgg-seo (technical mode)` | Scraping, parsing, SEO judgements |
 | Contentful URL resolution | `tgg-contentful-linker` | CMS lookups |
-| Strategy, brief, outline, draft | `tgg-content-strategist` | Strategy reasoning, structural editing |
-| PLP intro, FAQ, metadata copy | `tgg-copywriting` | Short-form copy schemas |
+| Strategy, brief, outline, draft | `tgg-seo (strategy mode)` | Strategy reasoning, structural editing |
+| PLP intro, FAQ, metadata copy | `tgg-seo (production mode)` | Short-form copy schemas |
 | Template scaffolds | `tgg-template-generator` | Template generation |
 | Multi-constraint validation | `verification-gate-protocol` | Constraint checking |
 | AI-pattern removal | `tgg-humanizer` | The 29 banned patterns |
@@ -277,7 +277,7 @@ status: ready-for-review
 ## What this skill does NOT do
 
 - Does not know TGG brand voice rules — defers to `tgg-humanizer` and `simon-voice`
-- Does not know TGG SEO strategy — defers to `tgg-seo-specialist`
+- Does not know TGG SEO strategy — defers to `tgg-seo (technical mode)`
 - Does not know Contentful entry structure — defers to `tgg-contentful-linker`
-- Does not generate PLP intros or FAQ copy directly — defers to `tgg-copywriting`
+- Does not generate PLP intros or FAQ copy directly — defers to `tgg-seo (production mode)`
 - Does not pre-process prompts — `tgg-prompt-architect` handles that upstream

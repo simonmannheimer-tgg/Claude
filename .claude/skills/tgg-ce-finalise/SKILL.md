@@ -1,6 +1,6 @@
 ---
 name: tgg-ce-finalise
-description: Content engineering pipeline stage — finalise. Assembles the production-ready package from humanised-draft.md: resolves internal link placeholders via tgg-contentful-linker, generates metadata via tgg-copywriting, writes JSON-LD FAQPage schema, and optionally runs simon-voice if byline is simon. Returns final.md, metadata.md, faq.json, and internal-links.md. Use only within the content pipeline.
+description: Content engineering pipeline stage — finalise. Assembles the production-ready package from humanised-draft.md: resolves internal link placeholders via tgg-contentful-linker, generates metadata via tgg-seo (production mode), writes JSON-LD FAQPage schema, and optionally runs simon-voice if byline is simon. Returns final.md, metadata.md, faq.json, and internal-links.md. Use only within the content pipeline.
 ---
 
 # CE Finalise — Stage 9
@@ -47,7 +47,7 @@ Run: <run-id>
 
 ## Step 3: Generate metadata
 
-Hand the finalised article body (first 300 words) plus the intake keyword and slug to `tgg-copywriting` with this request:
+Hand the finalised article body (first 300 words) plus the intake keyword and slug to `tgg-seo (production mode)` with this request:
 
 > Write metadata for this article:
 > - Meta title: ≤60 characters, includes primary keyword, no clickbait
@@ -125,4 +125,4 @@ Wait for explicit confirmation before calling `tgg-repo-manager`.
 - Does not humanise the draft — that is Stage 8 (`tgg-humanizer`)
 - Does not validate constraints — that is Stage 7 (`tgg-ce-qa`)
 - Does not apply voice rules directly — delegates to `simon-voice` only if `byline: simon`
-- Does not write the metadata copy itself — `tgg-copywriting` does
+- Does not write the metadata copy itself — `tgg-seo (production mode)` does

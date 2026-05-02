@@ -1,11 +1,11 @@
 ---
 name: tgg-ce-outline
-description: Content engineering pipeline stage — outline. Generates and validates the article outline from brief.md. Delegates structure creation to tgg-content-strategist, then validates H2 count against the numeric target for the content type. Blocks progression if H2 count is outside target. Use only within the content pipeline.
+description: Content engineering pipeline stage — outline. Generates and validates the article outline from brief.md. Delegates structure creation to tgg-seo (strategy mode), then validates H2 count against the numeric target for the content type. Blocks progression if H2 count is outside target. Use only within the content pipeline.
 ---
 
 # CE Outline — Stage 5
 
-Produces `runs/<run-id>/outline.md`. Owns the numeric H2 validation. Does not own structural editing reasoning — that lives in `tgg-content-strategist`.
+Produces `runs/<run-id>/outline.md`. Owns the numeric H2 validation. Does not own structural editing reasoning — that lives in `tgg-seo (strategy mode)`.
 
 ## Inputs required
 
@@ -13,7 +13,7 @@ Produces `runs/<run-id>/outline.md`. Owns the numeric H2 validation. Does not ow
 
 ## Step 1: Generate outline
 
-Hand `brief.md` to `tgg-content-strategist` with this exact request:
+Hand `brief.md` to `tgg-seo (strategy mode)` with this exact request:
 
 > Produce a markdown outline for this article brief. Each H2 must have:
 > - A heading (the exact text to use in the article)
@@ -43,7 +43,7 @@ Also check:
 - eav-explainer: an EAV attributes H2 or similar is present
 - how-to: H2 steps are numbered or clearly sequential
 
-If the outline fails any of these checks: return it to `tgg-content-strategist` with specific revision instructions. Do not pass to Stage 6 with a failing outline. Maximum 2 revision cycles before escalating to human.
+If the outline fails any of these checks: return it to `tgg-seo (strategy mode)` with specific revision instructions. Do not pass to Stage 6 with a failing outline. Maximum 2 revision cycles before escalating to human.
 
 ## Step 3: Word budget check
 
@@ -54,7 +54,7 @@ Sum all section word budgets. Compare to the content type word count range from 
 - comparison: 1,200–2,000
 - eav-explainer: 1,000–1,800
 
-If the sum is outside the range, ask `tgg-content-strategist` to adjust section budgets. The sum does not need to match exactly — within ±10% of the range is acceptable.
+If the sum is outside the range, ask `tgg-seo (strategy mode)` to adjust section budgets. The sum does not need to match exactly — within ±10% of the range is acceptable.
 
 ## Step 4: Save
 
@@ -72,6 +72,6 @@ Save to `runs/<run-id>/outline.md`.
 
 ## What this skill does NOT do
 
-- Does not write the outline — `tgg-content-strategist` does
+- Does not write the outline — `tgg-seo (strategy mode)` does
 - Does not validate copy constraints (char counts, banned phrases) — that is Stage 7
 - Does not select or verify internal links — that is Stage 9

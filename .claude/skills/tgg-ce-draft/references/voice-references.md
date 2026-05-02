@@ -9,7 +9,7 @@ These are reference pointers — not authoritative style rules. Voice rules live
 
 ## How to use this file
 
-When Stage 6 hands off to `tgg-content-strategist`, include this note:
+When Stage 6 hands off to `tgg-seo (strategy mode)`, include this note:
 
 > Before drafting, review the voice reference pages below to calibrate tone. TGG content is direct and practical. It tells customers what to look for and why — not what the brand thinks about its own products. Sentences are short to medium length. No fluff.
 
