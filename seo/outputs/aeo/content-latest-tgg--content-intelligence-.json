@@ -114,8 +114,8 @@
         },
         {
           "file": "washing-machines.html",
-          "total_words": 2882,
-          "main_words": 2568,
+          "total_words": 2886,
+          "main_words": 2572,
           "main_ratio_pct": 89,
           "boilerplate_ratio_pct": 10,
           "score": 20,
@@ -329,7 +329,7 @@
           "avg_paragraph_words": 34,
           "good_chunk_pct": 14,
           "long_paragraphs": 0,
-          "approx_total_tokens": 3747,
+          "approx_total_tokens": 3752,
           "score": 0,
           "maxScore": 25,
           "issue": "Only 14% of paragraphs in the ideal 50-400 word range"
@@ -452,7 +452,7 @@
           "avg_paragraph_words": 34,
           "good_chunk_pct": 14,
           "long_paragraphs": 0,
-          "approx_total_tokens": 3747,
+          "approx_total_tokens": 3752,
           "score": 0,
           "maxScore": 25,
           "issue": "Only 14% of paragraphs in the ideal 50-400 word range"
@@ -475,18 +475,18 @@
           "category_entities": 8,
           "spec_entities": 4,
           "heading_entities": [
-            "energy rating",
             "capacity",
             "air conditioner",
-            "reverse cycle",
-            "price"
+            "energy rating",
+            "installation",
+            "reverse cycle"
           ],
           "intro_entities": [
-            "fujitsu",
-            "samsung",
-            "hisense",
             "panasonic",
-            "air conditioner"
+            "samsung",
+            "air conditioner",
+            "hisense",
+            "reverse cycle"
           ],
           "top_entities": [
             {
@@ -514,11 +514,11 @@
               "count": 9
             },
             {
-              "entity": "fujitsu",
+              "entity": "hisense",
               "count": 8
             },
             {
-              "entity": "hisense",
+              "entity": "fujitsu",
               "count": 8
             }
           ],
@@ -536,19 +536,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "coffee machine",
-            "fridge",
+            "dishwasher",
+            "tv",
+            "soundbar",
             "dryer",
-            "smart home",
-            "tv"
+            "washing machine"
           ],
           "top_entities": [
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
@@ -556,23 +556,23 @@
               "count": 2
             },
             {
-              "entity": "coffee machine",
+              "entity": "sale",
               "count": 1
             },
             {
-              "entity": "fridge",
+              "entity": "dishwasher",
+              "count": 1
+            },
+            {
+              "entity": "tv",
+              "count": 1
+            },
+            {
+              "entity": "soundbar",
               "count": 1
             },
             {
               "entity": "dryer",
-              "count": 1
-            },
-            {
-              "entity": "smart home",
-              "count": 1
-            },
-            {
-              "entity": "sale",
               "count": 1
             }
           ],
@@ -590,19 +590,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "coffee machine",
-            "fridge",
+            "dishwasher",
+            "tv",
+            "soundbar",
             "dryer",
-            "smart home",
-            "tv"
+            "washing machine"
           ],
           "top_entities": [
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
@@ -610,23 +610,23 @@
               "count": 2
             },
             {
-              "entity": "coffee machine",
+              "entity": "sale",
               "count": 1
             },
             {
-              "entity": "fridge",
+              "entity": "dishwasher",
+              "count": 1
+            },
+            {
+              "entity": "tv",
+              "count": 1
+            },
+            {
+              "entity": "soundbar",
               "count": 1
             },
             {
               "entity": "dryer",
-              "count": 1
-            },
-            {
-              "entity": "smart home",
-              "count": 1
-            },
-            {
-              "entity": "sale",
               "count": 1
             }
           ],
@@ -644,19 +644,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "coffee machine",
-            "fridge",
+            "dishwasher",
+            "tv",
+            "soundbar",
             "dryer",
-            "smart home",
-            "tv"
+            "washing machine"
           ],
           "top_entities": [
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
@@ -664,23 +664,23 @@
               "count": 2
             },
             {
-              "entity": "coffee machine",
+              "entity": "sale",
               "count": 1
             },
             {
-              "entity": "fridge",
+              "entity": "dishwasher",
+              "count": 1
+            },
+            {
+              "entity": "tv",
+              "count": 1
+            },
+            {
+              "entity": "soundbar",
               "count": 1
             },
             {
               "entity": "dryer",
-              "count": 1
-            },
-            {
-              "entity": "smart home",
-              "count": 1
-            },
-            {
-              "entity": "sale",
               "count": 1
             }
           ],
@@ -697,18 +697,18 @@
           "category_entities": 23,
           "spec_entities": 9,
           "heading_entities": [
-            "philips",
-            "acer",
-            "samsung",
-            "dryer",
-            "sharp"
+            "led",
+            "bosch",
+            "apple",
+            "sharp",
+            "samsung"
           ],
           "intro_entities": [
-            "coffee machine",
-            "fridge",
+            "led",
+            "bosch",
             "samsung",
-            "dryer",
-            "smart home"
+            "mini led",
+            "air conditioner"
           ],
           "top_entities": [
             {
@@ -740,7 +740,7 @@
               "count": 6
             },
             {
-              "entity": "4k",
+              "entity": "price",
               "count": 6
             }
           ],
@@ -758,19 +758,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "coffee machine",
-            "fridge",
+            "dishwasher",
+            "tv",
+            "soundbar",
             "dryer",
-            "smart home",
-            "tv"
+            "washing machine"
           ],
           "top_entities": [
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
@@ -778,23 +778,23 @@
               "count": 2
             },
             {
-              "entity": "coffee machine",
+              "entity": "sale",
               "count": 1
             },
             {
-              "entity": "fridge",
+              "entity": "dishwasher",
+              "count": 1
+            },
+            {
+              "entity": "tv",
+              "count": 1
+            },
+            {
+              "entity": "soundbar",
               "count": 1
             },
             {
               "entity": "dryer",
-              "count": 1
-            },
-            {
-              "entity": "smart home",
-              "count": 1
-            },
-            {
-              "entity": "sale",
               "count": 1
             }
           ],
@@ -811,18 +811,18 @@
           "category_entities": 25,
           "spec_entities": 12,
           "heading_entities": [
-            "coffee machine",
-            "philips",
-            "shark",
-            "samsung",
-            "dryer"
+            "5g",
+            "tcl",
+            "apple",
+            "ninja",
+            "sunbeam"
           ],
           "intro_entities": [
-            "coffee machine",
-            "philips",
-            "fridge",
-            "dryer",
-            "smart home"
+            "tcl",
+            "air conditioner",
+            "dishwasher",
+            "tv",
+            "philips"
           ],
           "top_entities": [
             {
@@ -834,11 +834,11 @@
               "count": 54
             },
             {
-              "entity": "delivery",
+              "entity": "tv",
               "count": 17
             },
             {
-              "entity": "tv",
+              "entity": "delivery",
               "count": 17
             },
             {
@@ -850,11 +850,11 @@
               "count": 13
             },
             {
-              "entity": "fisher & paykel",
+              "entity": "refrigerator",
               "count": 10
             },
             {
-              "entity": "refrigerator",
+              "entity": "fisher & paykel",
               "count": 10
             }
           ],
@@ -872,19 +872,19 @@
           "spec_entities": 1,
           "heading_entities": [],
           "intro_entities": [
-            "coffee machine",
-            "fridge",
+            "dishwasher",
+            "tv",
+            "soundbar",
             "dryer",
-            "smart home",
-            "tv"
+            "washing machine"
           ],
           "top_entities": [
             {
-              "entity": "discount",
+              "entity": "price",
               "count": 3
             },
             {
-              "entity": "price",
+              "entity": "discount",
               "count": 3
             },
             {
@@ -892,23 +892,23 @@
               "count": 2
             },
             {
-              "entity": "coffee machine",
+              "entity": "sale",
               "count": 1
             },
             {
-              "entity": "fridge",
+              "entity": "dishwasher",
+              "count": 1
+            },
+            {
+              "entity": "tv",
+              "count": 1
+            },
+            {
+              "entity": "soundbar",
               "count": 1
             },
             {
               "entity": "dryer",
-              "count": 1
-            },
-            {
-              "entity": "smart home",
-              "count": 1
-            },
-            {
-              "entity": "sale",
               "count": 1
             }
           ],
@@ -925,18 +925,18 @@
           "category_entities": 5,
           "spec_entities": 13,
           "heading_entities": [
-            "hdr",
-            "energy rating",
-            "tv",
             "television",
-            "lg"
+            "tv",
+            "lg",
+            "energy rating",
+            "hdr"
           ],
           "intro_entities": [
+            "led",
             "samsung",
-            "qled",
-            "hisense",
+            "television",
             "tv",
-            "soundbar"
+            "hisense"
           ],
           "top_entities": [
             {
@@ -960,11 +960,11 @@
               "count": 20
             },
             {
-              "entity": "samsung",
+              "entity": "led",
               "count": 19
             },
             {
-              "entity": "led",
+              "entity": "samsung",
               "count": 19
             },
             {
@@ -985,18 +985,18 @@
           "category_entities": 5,
           "spec_entities": 13,
           "heading_entities": [
-            "hdr",
-            "energy rating",
-            "tv",
             "television",
-            "lg"
+            "tv",
+            "lg",
+            "energy rating",
+            "hdr"
           ],
           "intro_entities": [
+            "led",
             "samsung",
-            "qled",
-            "hisense",
+            "television",
             "tv",
-            "soundbar"
+            "hisense"
           ],
           "top_entities": [
             {
@@ -1020,11 +1020,11 @@
               "count": 20
             },
             {
-              "entity": "samsung",
+              "entity": "led",
               "count": 19
             },
             {
-              "entity": "led",
+              "entity": "samsung",
               "count": 19
             },
             {
@@ -1039,24 +1039,24 @@
         {
           "file": "washing-machines.html",
           "entity_count": 33,
-          "total_mentions": 251,
+          "total_mentions": 252,
           "entity_density_pct": 8.7,
           "brand_entities": 10,
           "category_entities": 4,
           "spec_entities": 10,
           "heading_entities": [
-            "dryer",
-            "energy rating",
             "capacity",
+            "energy rating",
+            "dryer",
             "washing machine",
             "washer"
           ],
           "intro_entities": [
+            "bosch",
             "samsung",
-            "dryer",
-            "fisher & paykel",
             "sale",
-            "haier"
+            "lg",
+            "dryer"
           ],
           "top_entities": [
             {
@@ -1077,7 +1077,7 @@
             },
             {
               "entity": "deal",
-              "count": 19
+              "count": 20
             },
             {
               "entity": "dryer",
@@ -1126,6 +1126,10 @@
               "count": 4
             },
             {
+              "entity": "dishwasher",
+              "count": 3
+            },
+            {
               "entity": "oven",
               "count": 3
             },
@@ -1135,10 +1139,6 @@
             },
             {
               "entity": "discount",
-              "count": 3
-            },
-            {
-              "entity": "dishwasher",
               "count": 3
             }
           ],
@@ -1966,8 +1966,8 @@
         },
         {
           "file": "washing-machines.html",
-          "total_internal_links": 186,
-          "specific_anchors": 154,
+          "total_internal_links": 185,
+          "specific_anchors": 153,
           "generic_anchors": 7,
           "empty_anchors": 25,
           "specific_ratio_pct": 83,
@@ -2124,8 +2124,8 @@
           "file": "washing-machines.html",
           "full_page_similarity": 0.691,
           "avg_top3_similarity": 0.644,
-          "best_passage_similarity": 0.824,
-          "best_passage_preview": "Budget Considerations Entry-level top loaders start lower in price compared to front loaders, making them suitable for households with minimal washing",
+          "best_passage_similarity": 0.795,
+          "best_passage_preview": "submersion. Price Ranges and Budget Considerations Entry-level top loaders start lower in price compared to front loaders, making them suitable for ho",
           "best_reference_match": "Front-load washing machines are more energy and water efficient than top-loaders and typically achie",
           "score": 25,
           "maxScore": 25,
@@ -2144,10 +2144,10 @@
         }
       ],
       "errors": [],
-      "avg_similarity": 0.637,
+      "avg_similarity": 0.634,
       "similarity_method": "BGE-M3",
-      "qdrant_corpus_used": false,
-      "summary": "12/12 pages have strong AI-citable content (avg: 0.637, method: BGE-M3)"
+      "qdrant_corpus_used": true,
+      "summary": "12/12 pages have strong AI-citable content (avg: 0.634, method: BGE-M3)"
     },
     "entity_gap": {
       "score": 66,
@@ -2158,10 +2158,10 @@
       "pages": [
         {
           "file": "air-conditioners.html",
-          "tgg_entity_count": 81,
+          "tgg_entity_count": 82,
           "competitor_entity_count": 0,
           "shared_count": 0,
-          "tgg_only_count": 81,
+          "tgg_only_count": 82,
           "competitor_only_count": 0,
           "coverage_pct": 50,
           "tgg_only_sample": [
