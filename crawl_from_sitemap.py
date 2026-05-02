@@ -161,8 +161,8 @@ def main():
                         help="Domain to crawl (e.g. thegoodguys.com.au)")
     parser.add_argument("--sample", type=int, default=5,
                         help="URLs to sample per page type (default: 5)")
-    parser.add_argument("--types", type=str, default="home,category,guide",
-                        help="Comma-separated page types to include (default: home,category,guide)")
+    parser.add_argument("--types", type=str, default="home,category,product,guide,editorial",
+                        help="Comma-separated page types to include (default: home,category,product,guide,editorial)")
     parser.add_argument("--out", type=str, default="",
                         help="Output directory (default: site-snapshots/<domain>/)")
     parser.add_argument("--list-only", action="store_true",
