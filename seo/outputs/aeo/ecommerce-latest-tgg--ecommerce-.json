@@ -1758,7 +1758,7 @@
         },
         {
           "file": "washing-machines.html",
-          "total_words": 2882,
+          "total_words": 2886,
           "hidden_words": 158,
           "hidden_pct": 5,
           "details_collapsed_words": 0,
@@ -2124,19 +2124,19 @@
           "has_article": true,
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
-          "external_scripts": 24,
-          "dom_elements": 764,
+          "external_scripts": 25,
+          "dom_elements": 765,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (764 elements)",
+            "lean DOM (765 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
           "maxScore": 25,
-          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (25 scripts)"
         },
         {
           "file": "buying-guide--best-tvs.html",
@@ -2225,7 +2225,7 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 5659,
+          "dom_elements": 5661,
           "aria_labels": 430,
           "signals": [
             "<main>",
@@ -2282,8 +2282,8 @@
           "has_article": true,
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
-          "external_scripts": 23,
-          "dom_elements": 3083,
+          "external_scripts": 24,
+          "dom_elements": 3084,
           "aria_labels": 150,
           "signals": [
             "<main>",
@@ -2293,7 +2293,7 @@
           ],
           "score": 20,
           "maxScore": 25,
-          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (23 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
         },
         {
           "file": "washing-machines.html",
@@ -2301,18 +2301,18 @@
           "has_article": true,
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
-          "external_scripts": 24,
-          "dom_elements": 3115,
-          "aria_labels": 163,
+          "external_scripts": 23,
+          "dom_elements": 3077,
+          "aria_labels": 161,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "good ARIA (163 labels)"
+            "good ARIA (161 labels)"
           ],
           "score": 20,
           "maxScore": 25,
-          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (23 scripts)"
         },
         {
           "file": "whats-new.html",
@@ -2361,19 +2361,19 @@
           "has_article": true,
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
-          "external_scripts": 24,
-          "dom_elements": 764,
+          "external_scripts": 25,
+          "dom_elements": 765,
           "aria_labels": 49,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "lean DOM (764 elements)",
+            "lean DOM (765 elements)",
             "good ARIA (49 labels)"
           ],
           "score": 25,
           "maxScore": 25,
-          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (25 scripts)"
         },
         {
           "file": "buying-guide--best-tvs.html",
@@ -2462,7 +2462,7 @@
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
           "external_scripts": 24,
-          "dom_elements": 5659,
+          "dom_elements": 5661,
           "aria_labels": 430,
           "signals": [
             "<main>",
@@ -2519,8 +2519,8 @@
           "has_article": true,
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
-          "external_scripts": 23,
-          "dom_elements": 3083,
+          "external_scripts": 24,
+          "dom_elements": 3084,
           "aria_labels": 150,
           "signals": [
             "<main>",
@@ -2530,7 +2530,7 @@
           ],
           "score": 20,
           "maxScore": 25,
-          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (23 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
         },
         {
           "file": "washing-machines.html",
@@ -2538,18 +2538,18 @@
           "has_article": true,
           "landmark_count": 5,
           "heading_hierarchy_ok": false,
-          "external_scripts": 24,
-          "dom_elements": 3115,
-          "aria_labels": 163,
+          "external_scripts": 23,
+          "dom_elements": 3077,
+          "aria_labels": 161,
           "signals": [
             "<main>",
             "<article>",
             "5 semantic landmarks",
-            "good ARIA (163 labels)"
+            "good ARIA (161 labels)"
           ],
           "score": 20,
           "maxScore": 25,
-          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (24 scripts)"
+          "issue": "heading level skipped (e.g. H1\u2192H3) \u2014 breaks AI doc outline; high external JS (23 scripts)"
         },
         {
           "file": "whats-new.html",
