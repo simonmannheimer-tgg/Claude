@@ -1,13 +1,166 @@
 [
   {
-    "url": "https://www.thegoodguys.com.au/sharp-trim-kit-stainless-steel-for-r321cafst-and-r395est-ebr39st",
+    "url": "https://www.thegoodguys.com.au/wahl-aqua-trim-waterproof-trimmer-1065-0470",
     "label": "TGG \u00b7 Category",
     "domain": "thegoodguys.com.au",
     "page_type": "category",
     "scope": "page",
-    "score": 95,
+    "score": 98,
     "max_score": 140,
-    "percentage": 68,
+    "percentage": 70,
+    "grade": "B",
+    "checks": {
+      "robots_ai": {
+        "score": 18,
+        "max": 30,
+        "percentage": 60,
+        "bots": {
+          "GPTBot": {
+            "status": "not-mentioned",
+            "mentioned": false,
+            "pts": 3
+          },
+          "ClaudeBot": {
+            "status": "not-mentioned",
+            "mentioned": false,
+            "pts": 3
+          },
+          "PerplexityBot": {
+            "status": "not-mentioned",
+            "mentioned": false,
+            "pts": 3
+          },
+          "Google-Extended": {
+            "status": "not-mentioned",
+            "mentioned": false,
+            "pts": 3
+          },
+          "Amazonbot": {
+            "status": "not-mentioned",
+            "mentioned": false,
+            "pts": 3
+          },
+          "Bingbot": {
+            "status": "not-mentioned",
+            "mentioned": false,
+            "pts": 3
+          }
+        },
+        "tier1_blocked": [],
+        "http_status": 200,
+        "issue": null
+      },
+      "llms_txt": {
+        "score": 0,
+        "max": 20,
+        "exists": false,
+        "http_status": 404
+      },
+      "http_access": {
+        "score": 10,
+        "max": 10,
+        "percentage": 100,
+        "statuses": {
+          "browser": 200,
+          "GPTBot": 200
+        },
+        "issue": null
+      },
+      "meta_tags": {
+        "score": 20,
+        "max": 20,
+        "percentage": 100,
+        "details": {
+          "title": {
+            "text": "Wahl Aqua Trim Waterproof Trimmer Matte Black 1065-0470",
+            "length": 55
+          },
+          "description": {
+            "length": 148
+          },
+          "og_type": "website",
+          "canonical": "https://www.thegoodguys.com.au/wahl-aqua-trim-waterproof-trimmer-1065-0470"
+        },
+        "issues": [],
+        "issue": null
+      },
+      "headings": {
+        "score": 20,
+        "max": 20,
+        "percentage": 100,
+        "h1_count": 1,
+        "h1_text": "Wahl Aqua Trim Waterproof Trimmer",
+        "h2_count": 7,
+        "h3_count": 17,
+        "issues": [],
+        "issue": null
+      },
+      "schema_type": {
+        "score": 15,
+        "max": 20,
+        "percentage": 75,
+        "found_types": [
+          "WebPage",
+          "Product",
+          "FAQPage",
+          "BreadcrumbList"
+        ],
+        "expected_types": [
+          "ItemList",
+          "BreadcrumbList"
+        ],
+        "missing_types": [
+          "ItemList"
+        ],
+        "issues": [
+          "Missing expected schema: ItemList"
+        ],
+        "issue": "Missing expected schema: ItemList"
+      },
+      "content": {
+        "score": 15,
+        "max": 20,
+        "percentage": 75,
+        "word_count": 1491,
+        "has_faq": false,
+        "has_specs": true,
+        "num_density": 71.8,
+        "list_count": 7,
+        "issues": [
+          "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
+        ],
+        "issue": "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
+      },
+      "js_depend": {
+        "score": null,
+        "max": 20,
+        "raw_words": 1491,
+        "rendered_words": null,
+        "pct_accessible": null,
+        "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
+      }
+    },
+    "issues": [
+      {
+        "check": "schema_type",
+        "issue": "Missing expected schema: ItemList"
+      },
+      {
+        "check": "content",
+        "issue": "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
+      }
+    ],
+    "cf_blocked": false
+  },
+  {
+    "url": "https://www.thegoodguys.com.au/sharp-trim-kit-stainless-steel-for-r321cafst-and-r395est-ebr39st",
+    "label": "TGG \u00b7 Product",
+    "domain": "thegoodguys.com.au",
+    "page_type": "product",
+    "scope": "page",
+    "score": 100,
+    "max_score": 140,
+    "percentage": 71,
     "grade": "B",
     "checks": {
       "robots_ai": {
@@ -98,9 +251,9 @@
         "issue": null
       },
       "schema_type": {
-        "score": 15,
+        "score": 20,
         "max": 20,
-        "percentage": 75,
+        "percentage": 100,
         "found_types": [
           "WebPage",
           "Product",
@@ -108,16 +261,17 @@
           "BreadcrumbList"
         ],
         "expected_types": [
-          "ItemList",
+          "Product",
+          "Offer",
           "BreadcrumbList"
         ],
         "missing_types": [
-          "ItemList"
+          "Offer"
         ],
         "issues": [
-          "Missing expected schema: ItemList"
+          "Missing expected schema: Offer"
         ],
-        "issue": "Missing expected schema: ItemList"
+        "issue": "Missing expected schema: Offer"
       },
       "content": {
         "score": 15,
@@ -146,166 +300,6 @@
       {
         "check": "meta_tags",
         "issue": "Description length 167 \u2014 target 100-160 chars"
-      },
-      {
-        "check": "schema_type",
-        "issue": "Missing expected schema: ItemList"
-      },
-      {
-        "check": "content",
-        "issue": "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
-      }
-    ],
-    "cf_blocked": false
-  },
-  {
-    "url": "https://www.thegoodguys.com.au/sedko-pty-ltd-melody-tv-cabinet-1600mm-oak-24-melody-1600-oak",
-    "label": "TGG \u00b7 Product",
-    "domain": "thegoodguys.com.au",
-    "page_type": "product",
-    "scope": "page",
-    "score": 100,
-    "max_score": 140,
-    "percentage": 71,
-    "grade": "B",
-    "checks": {
-      "robots_ai": {
-        "score": 18,
-        "max": 30,
-        "percentage": 60,
-        "bots": {
-          "GPTBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "ClaudeBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "PerplexityBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Google-Extended": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Amazonbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Bingbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          }
-        },
-        "tier1_blocked": [],
-        "http_status": 200,
-        "issue": null
-      },
-      "llms_txt": {
-        "score": 0,
-        "max": 20,
-        "exists": false,
-        "http_status": 404
-      },
-      "http_access": {
-        "score": 10,
-        "max": 10,
-        "percentage": 100,
-        "statuses": {
-          "browser": 200,
-          "GPTBot": 200
-        },
-        "issue": null
-      },
-      "meta_tags": {
-        "score": 17,
-        "max": 20,
-        "percentage": 85,
-        "details": {
-          "title": {
-            "text": "Sedko Pty Ltd Melody TV Cabinet 1600mm 24 Oak (Beige) MELODY 1600 - OAK",
-            "length": 71
-          },
-          "description": {
-            "length": 168
-          },
-          "og_type": "website",
-          "canonical": "https://www.thegoodguys.com.au/sedko-pty-ltd-melody-tv-cabinet-1600mm-oak-24-mel"
-        },
-        "issues": [
-          "Description length 168 \u2014 target 100-160 chars"
-        ],
-        "issue": "Description length 168 \u2014 target 100-160 chars"
-      },
-      "headings": {
-        "score": 20,
-        "max": 20,
-        "percentage": 100,
-        "h1_count": 1,
-        "h1_text": "Sedko Pty Ltd Melody TV Cabinet 1600mm Oak 24",
-        "h2_count": 7,
-        "h3_count": 12,
-        "issues": [],
-        "issue": null
-      },
-      "schema_type": {
-        "score": 20,
-        "max": 20,
-        "percentage": 100,
-        "found_types": [
-          "WebPage",
-          "Product",
-          "FAQPage",
-          "BreadcrumbList"
-        ],
-        "expected_types": [
-          "Product",
-          "Offer",
-          "BreadcrumbList"
-        ],
-        "missing_types": [
-          "Offer"
-        ],
-        "issues": [
-          "Missing expected schema: Offer"
-        ],
-        "issue": "Missing expected schema: Offer"
-      },
-      "content": {
-        "score": 15,
-        "max": 20,
-        "percentage": 75,
-        "word_count": 1194,
-        "has_faq": false,
-        "has_specs": true,
-        "num_density": 59.5,
-        "list_count": 7,
-        "issues": [
-          "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
-        ],
-        "issue": "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
-      },
-      "js_depend": {
-        "score": null,
-        "max": 20,
-        "raw_words": 1194,
-        "rendered_words": null,
-        "pct_accessible": null,
-        "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
-      }
-    },
-    "issues": [
-      {
-        "check": "meta_tags",
-        "issue": "Description length 168 \u2014 target 100-160 chars"
       },
       {
         "check": "schema_type",
