@@ -65,39 +65,109 @@ def _find_snapshot(url: str, snapshot_dir) -> "Path | None":
     candidate = snapshot_dir / fname
     return candidate if candidate.exists() else None
 
-# ── Default URL set ────────────────────────────────────────────────────────────
-# TGG_URLS — 5 core page types. These always run.
-TGG_URLS = [
-    {"url": "https://www.thegoodguys.com.au",                                                                            "label": "TGG · Home",         "scope": "domain+page"},
-    {"url": "https://www.thegoodguys.com.au/televisions",                                                                "label": "TGG · Category",     "scope": "page"},
-    {"url": "https://www.thegoodguys.com.au/samsung-65-inches-qn85f-neo-qled-4k-mini-led-smart-ai-tv-2025-qa65qn85fawxxy", "label": "TGG · Product",     "scope": "page"},
-    {"url": "https://www.thegoodguys.com.au/buying-guide/television-buying-guide",                                       "label": "TGG · Buying Guide", "scope": "page"},
-    {"url": "https://www.thegoodguys.com.au/whats-new/unboxing-the-lg-tv-range-2025",                                    "label": "TGG · Blog Article", "scope": "page"},
+# ── Target domain + competitor defaults ───────────────────────────────────────
+TARGET_DOMAIN   = "thegoodguys.com.au"
+TARGET_LABEL    = "TGG"
+COMPETITOR_DOMAINS = [
+    ("jbhifi.com.au",          "JB Hi-Fi"),
+    ("harveynorman.com.au",    "Harvey Norman"),
+    ("appliancesonline.com.au","Appliances Online"),
 ]
 
-# COMPETITOR_URLS — included by default, excluded with --no-competitors
-COMPETITOR_URLS = [
-    # ── JB Hi-Fi ────────────────────────────────────────────────────────────────
-    {"url": "https://www.jbhifi.com.au",                                                     "label": "JB Hi-Fi · Home",         "scope": "domain+page"},
-    {"url": "https://www.jbhifi.com.au/collections/tvs",                                     "label": "JB Hi-Fi · Category",     "scope": "page"},
-    {"url": "https://www.jbhifi.com.au/products/samsung-65-qn90d-neo-qled-4k-smart-tv-2024", "label": "JB Hi-Fi · Product",      "scope": "page"},
-    {"url": "https://www.jbhifi.com.au/pages/samsung",                                       "label": "JB Hi-Fi · Brand Hub",    "scope": "page"},
-    {"url": "https://www.jbhifi.com.au/pages/tv-buying-guide",                               "label": "JB Hi-Fi · Buying Guide", "scope": "page"},
-    # ── Harvey Norman ───────────────────────────────────────────────────────────
-    {"url": "https://www.harveynorman.com.au",                                                               "label": "Harvey Norman · Home",         "scope": "domain+page"},
-    {"url": "https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-screen-size/all-tvs",            "label": "Harvey Norman · Category",     "scope": "page"},
-    {"url": "https://www.harveynorman.com.au/hisense-65-inch-q6nau-4k-qled-smart-tv.html",                   "label": "Harvey Norman · Product",      "scope": "page"},
-    {"url": "https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-brand/samsung-tvs",              "label": "Harvey Norman · Brand Page",   "scope": "page"},
-    {"url": "https://www.harveynorman.com.au/buying-guides/television-buying-guide",                         "label": "Harvey Norman · Buying Guide", "scope": "page"},
-    # ── Appliances Online ───────────────────────────────────────────────────────
-    {"url": "https://www.appliancesonline.com.au",                                                                              "label": "Appliances Online · Home",      "scope": "domain+page"},
-    {"url": "https://www.appliancesonline.com.au/category/refrigeration/fridges/",                                              "label": "Appliances Online · Category",  "scope": "page"},
-    {"url": "https://www.appliancesonline.com.au/product/westinghouse-easycare-9kg-front-load-washing-machine-wwf9024m5sa/",    "label": "Appliances Online · Product",   "scope": "page"},
-    {"url": "https://www.appliancesonline.com.au/brand/samsung/",                                                               "label": "Appliances Online · Brand Hub", "scope": "page"},
-    {"url": "https://www.appliancesonline.com.au/article/refrigerator-size-guide/",                                             "label": "Appliances Online · Guide",     "scope": "page"},
-]
+# ── Sitemap-driven URL discovery ───────────────────────────────────────────────
 
-DEFAULT_URLS = TGG_URLS + COMPETITOR_URLS
+def _sitemap_fetch_xml(url: str) -> str | None:
+    try:
+        resp = httpx.get(url, timeout=20, follow_redirects=True,
+                         headers={"User-Agent": BROWSER_UA})
+        return resp.text if resp.status_code == 200 else None
+    except Exception:
+        return None
+
+
+def _sitemap_fetch_index(domain: str) -> list[str]:
+    base = f"https://www.{domain}"
+    for path in ["/sitemap_index.xml", "/sitemap.xml", "/sitemap-index.xml"]:
+        content = _sitemap_fetch_xml(f"{base}{path}")
+        if not content:
+            continue
+        if "<sitemapindex" in content:
+            return [l.strip() for l in re.findall(r'<loc>([^<]+)</loc>', content)]
+        if "<urlset" in content:
+            return [f"{base}{path}"]
+    return []
+
+
+def _sitemap_fetch_urls(sitemap_url: str) -> list[str]:
+    content = _sitemap_fetch_xml(sitemap_url)
+    if not content:
+        return []
+    return [l.strip() for l in re.findall(r'<loc>([^<]+)</loc>', content)]
+
+
+_SITEMAP_PRODUCT_RE = re.compile(r'(?:/p/|-\d{6,}|/products?/|/sku/)', re.IGNORECASE)
+_SITEMAP_GUIDE_RE   = re.compile(r'/(?:buying-guide|guide|advice|how-to|reviews?)/', re.IGNORECASE)
+_SITEMAP_BLOG_RE    = re.compile(r'/(?:blog|news|whats-new|editorial|magazine|stories?)(?:/|$)', re.IGNORECASE)
+
+
+def _classify_url(url: str) -> str:
+    from urllib.parse import urlparse as _up
+    path = _up(url).path.rstrip("/")
+    if not path or path == "/":          return "home"
+    if _SITEMAP_GUIDE_RE.search(path):   return "guide"
+    if _SITEMAP_BLOG_RE.search(path):    return "blog"
+    if _SITEMAP_PRODUCT_RE.search(path): return "product"
+    segments = [s for s in path.split("/") if s]
+    if 1 <= len(segments) <= 2:          return "category"
+    return "other"
+
+
+def _build_entries_from_sitemap(
+    domain: str,
+    label_prefix: str,
+    types: list[str],
+    n: int = 1,
+    max_sitemaps: int = 8,
+) -> list[dict]:
+    """Fetch sitemap, classify URLs, sample n per type, return audit entries."""
+    print(f"  Fetching sitemap for {domain}...")
+    child_sitemaps = _sitemap_fetch_index(domain)
+    if not child_sitemaps:
+        print(f"  ✗ No sitemap found for {domain}")
+        return []
+
+    all_urls: list[str] = []
+    for sm in child_sitemaps[:max_sitemaps]:
+        all_urls.extend(_sitemap_fetch_urls(sm))
+
+    # Deduplicate
+    seen: set[str] = set()
+    unique = [u for u in all_urls if not (u in seen or seen.add(u))]
+    print(f"  {domain}: {len(unique)} sitemap URLs → sampling {n} per type from {types}")
+
+    buckets: dict[str, list[str]] = {t: [] for t in types}
+    for url in unique:
+        t = _classify_url(url)
+        if t in buckets and len(buckets[t]) < n:
+            buckets[t].append(url)
+
+    entries = []
+    type_labels = {"home": "Home", "category": "Category", "product": "Product",
+                   "guide": "Buying Guide", "blog": "Blog", "other": "Other"}
+    for t in types:
+        first = True
+        for url in buckets[t]:
+            scope = "domain+page" if t == "home" else "page"
+            entries.append({
+                "url":   url,
+                "label": f"{label_prefix} · {type_labels.get(t, t.title())}",
+                "scope": scope,
+            })
+            first = False
+        if first:
+            print(f"  ✗ No {t} URL found in {domain} sitemap")
+
+    return entries
 
 # ── AI bots to check in robots.txt ────────────────────────────────────────────
 AI_BOTS = [
@@ -768,16 +838,43 @@ def main() -> None:
 
     urls_raw = os.getenv("AEO_URLS", "").strip()
     no_competitors = args.no_competitors or os.getenv("AEO_NO_COMPETITORS", "").lower() in ("1", "true", "yes")
+
+    # Page types to sample — driven by AEO_TYPES env var (comma-separated)
+    types_raw = os.getenv("AEO_TYPES", "home,category,product,guide,blog").strip()
+    selected_types = [t.strip() for t in types_raw.split(",") if t.strip()]
+
+    # Competitor domains — driven by AEO_COMPETITOR_DOMAINS env var
+    comp_domains_raw = os.getenv("AEO_COMPETITOR_DOMAINS", "").strip()
+    if comp_domains_raw:
+        # Format: "domain:Label,domain:Label" or just "domain,domain" (uses default label)
+        comp_list = []
+        for entry in comp_domains_raw.split(","):
+            entry = entry.strip()
+            if ":" in entry:
+                d, lbl = entry.split(":", 1)
+                comp_list.append((d.strip(), lbl.strip()))
+            else:
+                # Look up default label from COMPETITOR_DOMAINS
+                default_lbl = next((lbl for d, lbl in COMPETITOR_DOMAINS if d == entry), entry)
+                comp_list.append((entry, default_lbl))
+    else:
+        comp_list = COMPETITOR_DOMAINS
+
     if urls_raw:
+        # Custom URL override — use as-is
         try:
             raw = json.loads(urls_raw)
             entries = [{"url": u, "label": u, "scope": "page"} if isinstance(u, str) else u for u in raw]
         except json.JSONDecodeError:
             entries = [{"url": u.strip(), "label": u.strip(), "scope": "page"} for u in urls_raw.splitlines() if u.strip()]
-    elif no_competitors:
-        entries = TGG_URLS
     else:
-        entries = DEFAULT_URLS
+        # Sitemap-driven discovery — sample 1 URL per selected type per domain
+        print(f"Discovering URLs from sitemaps — types: {selected_types}")
+        entries = _build_entries_from_sitemap(TARGET_DOMAIN, TARGET_LABEL, selected_types, n=1)
+
+        if not no_competitors:
+            for domain, label_prefix in comp_list:
+                entries += _build_entries_from_sitemap(domain, label_prefix, selected_types, n=1)
 
     label = os.getenv("AEO_LABEL", args.label)
     print(f"AEO Crawl: {len(entries)} URL(s) | label={label}")

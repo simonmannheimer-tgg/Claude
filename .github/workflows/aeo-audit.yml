@@ -90,9 +90,8 @@ on:
 
       snapshot_urls:
         description: |
-          Custom Playwright snapshot URLs (optional — leave blank for defaults).
-          JSON array of TGG URLs. Defaults: home, 3× category, sub-category,
-          product, 3× buying guide, news, sale.
+          Custom Playwright snapshot URLs (optional — overrides sitemap selection).
+          JSON array of TGG URLs. Leave blank to use sitemap + page type checkboxes below.
         required: false
         default: ''
 
@@ -104,29 +103,65 @@ on:
         required: false
         default: ''
 
-      # ── Sitemap crawl (optional) ─────────────────────────────────────────────
-      run_sitemap_crawl:
-        description: |
-          ☐ Sitemap crawl mode (optional) — crawl via sitemap instead of fixed URLs.
-          Fetches sitemap_index.xml, classifies URLs by type, samples N per type.
-          Set sitemap_domain and sitemap_sample to configure.
-        type: boolean
-        default: false
-
+      # ── Page types to include (1 URL per type sampled from sitemap) ────────────
       sitemap_domain:
-        description: 'Domain to crawl in sitemap mode (default: thegoodguys.com.au)'
+        description: 'Domain to sample from sitemap (default: thegoodguys.com.au)'
         required: false
         default: 'thegoodguys.com.au'
 
+      type_home:
+        description: '☑ Include: Home page'
+        type: boolean
+        default: true
+
+      type_category:
+        description: '☑ Include: Category pages (e.g. /televisions)'
+        type: boolean
+        default: true
+
+      type_product:
+        description: '☑ Include: Product pages (e.g. /samsung-65-4k-qled-...)'
+        type: boolean
+        default: true
+
+      type_guide:
+        description: '☑ Include: Buying guides (e.g. /buying-guide/best-tvs)'
+        type: boolean
+        default: true
+
+      type_blog:
+        description: '☑ Include: Blog / news pages (e.g. /whats-new)'
+        type: boolean
+        default: true
+
+      # ── Competitors to include in AEO crawl ─────────────────────────────────
+      comp_jbhifi:
+        description: '☑ Competitor: JB Hi-Fi (jbhifi.com.au)'
+        type: boolean
+        default: true
+
+      comp_harveynorman:
+        description: '☑ Competitor: Harvey Norman (harveynorman.com.au)'
+        type: boolean
+        default: true
+
+      comp_appliancesonline:
+        description: '☑ Competitor: Appliances Online (appliancesonline.com.au)'
+        type: boolean
+        default: true
+
+      # ── Deep sitemap crawl (optional) ────────────────────────────────────────
+      run_deep_crawl:
+        description: |
+          ☐ Deep sitemap crawl — sample N pages per selected type (slow, for batch analysis).
+          Uses the same type checkboxes above. Default snapshot run samples only 1 per type.
+        type: boolean
+        default: false
+
       sitemap_sample:
-        description: 'URLs to sample per page type in sitemap mode (default: 5)'
+        description: 'URLs per type for deep crawl (default: 5)'
         required: false
         default: '5'
-
-      sitemap_types:
-        description: 'Page types to crawl in sitemap mode (default: home,category,product,guide,blog)'
-        required: false
-        default: 'home,category,product,guide,blog'
 
       # ── Optional extras ──────────────────────────────────────────────────────
       gmc_feed_url:
@@ -212,7 +247,22 @@ jobs:
           AEO_URLS: ${{ inputs.crawl_mode == 'Custom URLs' && inputs.crawl_urls || '' }}
           AEO_NO_COMPETITORS: ${{ inputs.crawl_mode == 'List mode — TGG only' && 'true' || 'false' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python run_aeo_crawl.py 2>&1
+        run: |
+          # Build types string from page-type checkboxes
+          TYPES=""
+          [[ "${{ inputs.type_home }}"     == "true" ]] && TYPES="${TYPES:+$TYPES,}home"
+          [[ "${{ inputs.type_category }}" == "true" ]] && TYPES="${TYPES:+$TYPES,}category"
+          [[ "${{ inputs.type_product }}"  == "true" ]] && TYPES="${TYPES:+$TYPES,}product"
+          [[ "${{ inputs.type_guide }}"    == "true" ]] && TYPES="${TYPES:+$TYPES,}guide"
+          [[ "${{ inputs.type_blog }}"     == "true" ]] && TYPES="${TYPES:+$TYPES,}blog"
+
+          # Build competitor domains string from checkboxes
+          COMPS=""
+          [[ "${{ inputs.comp_jbhifi }}"          == "true" ]] && COMPS="${COMPS:+$COMPS,}jbhifi.com.au:JB Hi-Fi"
+          [[ "${{ inputs.comp_harveynorman }}"     == "true" ]] && COMPS="${COMPS:+$COMPS,}harveynorman.com.au:Harvey Norman"
+          [[ "${{ inputs.comp_appliancesonline }}" == "true" ]] && COMPS="${COMPS:+$COMPS,}appliancesonline.com.au:Appliances Online"
+
+          AEO_TYPES="$TYPES" AEO_COMPETITOR_DOMAINS="$COMPS" python run_aeo_crawl.py 2>&1
 
       - name: "AEO Crawl — Results"
         if: inputs.run_crawl && always()
@@ -252,34 +302,44 @@ jobs:
         env:
           CRAWL_URLS: ${{ inputs.snapshot_urls }}
         run: |
+          # Build types string from page-type checkboxes
+          TYPES=""
+          [[ "${{ inputs.type_home }}"     == "true" ]] && TYPES="${TYPES:+$TYPES,}home"
+          [[ "${{ inputs.type_category }}" == "true" ]] && TYPES="${TYPES:+$TYPES,}category"
+          [[ "${{ inputs.type_product }}"  == "true" ]] && TYPES="${TYPES:+$TYPES,}product"
+          [[ "${{ inputs.type_guide }}"    == "true" ]] && TYPES="${TYPES:+$TYPES,}guide"
+          [[ "${{ inputs.type_blog }}"     == "true" ]] && TYPES="${TYPES:+$TYPES,}blog"
+          echo "Page types selected: ${TYPES:-none}"
+
           if [ -n "$CRAWL_URLS" ]; then
+            # Custom URLs override
             python crawl_site_snapshot.py --urls "$CRAWL_URLS" 2>&1
+          elif [ -n "$TYPES" ]; then
+            # Sitemap-driven: 1 URL per selected type
+            python crawl_from_sitemap.py \
+              --domain "${{ inputs.sitemap_domain }}" \
+              --sample 1 \
+              --types "$TYPES" 2>&1
           else
-            python crawl_site_snapshot.py --urls '[
-              "https://www.thegoodguys.com.au",
-              "https://www.thegoodguys.com.au/televisions",
-              "https://www.thegoodguys.com.au/air-conditioners",
-              "https://www.thegoodguys.com.au/washing-machines",
-              "https://www.thegoodguys.com.au/televisions/all-tvs/smart-tvs",
-              "https://www.thegoodguys.com.au/laptops-computers",
-              "https://www.thegoodguys.com.au/samsung-65-4k-qled-smart-tv-qa65qn90dauxsa",
-              "https://www.thegoodguys.com.au/buying-guide/best-tvs",
-              "https://www.thegoodguys.com.au/buying-guide/best-air-conditioners",
-              "https://www.thegoodguys.com.au/buying-guide/best-washing-machines",
-              "https://www.thegoodguys.com.au/whats-new",
-              "https://www.thegoodguys.com.au/sale"
-            ]' 2>&1
+            echo "No page types selected and no custom URLs — skipping snapshots"
           fi
 
-      # ── Sitemap crawl (optional) ─────────────────────────────────────────────
-      - name: "Sitemap crawl (optional)"
-        if: inputs.run_sitemap_crawl
+      # ── Deep sitemap crawl (optional) ────────────────────────────────────────
+      - name: "Deep sitemap crawl — sample N per type (optional)"
+        if: inputs.run_deep_crawl
         continue-on-error: true
         run: |
+          TYPES=""
+          [[ "${{ inputs.type_home }}"     == "true" ]] && TYPES="${TYPES:+$TYPES,}home"
+          [[ "${{ inputs.type_category }}" == "true" ]] && TYPES="${TYPES:+$TYPES,}category"
+          [[ "${{ inputs.type_product }}"  == "true" ]] && TYPES="${TYPES:+$TYPES,}product"
+          [[ "${{ inputs.type_guide }}"    == "true" ]] && TYPES="${TYPES:+$TYPES,}guide"
+          [[ "${{ inputs.type_blog }}"     == "true" ]] && TYPES="${TYPES:+$TYPES,}blog"
+          echo "Deep crawl: ${TYPES:-none}, sample=${{ inputs.sitemap_sample }} per type"
           python crawl_from_sitemap.py \
             --domain "${{ inputs.sitemap_domain }}" \
             --sample "${{ inputs.sitemap_sample }}" \
-            --types "${{ inputs.sitemap_types }}" 2>&1
+            --types "$TYPES" 2>&1
 
       # ── Auto-build competitor corpus if Qdrant is empty ──────────────────────
       - name: "Phase 4 prep — Build competitor corpus if missing or forced"
