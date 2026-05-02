@@ -288,10 +288,10 @@
         "score": 15,
         "max": 20,
         "percentage": 75,
-        "word_count": 2968,
+        "word_count": 2976,
         "has_faq": false,
         "has_specs": true,
-        "num_density": 88.3,
+        "num_density": 88.0,
         "list_count": 17,
         "issues": [
           "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
@@ -301,7 +301,7 @@
       "js_depend": {
         "score": null,
         "max": 20,
-        "raw_words": 2968,
+        "raw_words": 2976,
         "rendered_words": null,
         "pct_accessible": null,
         "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
@@ -447,10 +447,10 @@
         "score": 15,
         "max": 20,
         "percentage": 75,
-        "word_count": 2968,
+        "word_count": 2976,
         "has_faq": false,
         "has_specs": true,
-        "num_density": 88.3,
+        "num_density": 88.0,
         "list_count": 17,
         "issues": [
           "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
@@ -460,7 +460,7 @@
       "js_depend": {
         "score": null,
         "max": 20,
-        "raw_words": 2968,
+        "raw_words": 2976,
         "rendered_words": null,
         "pct_accessible": null,
         "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
@@ -1441,9 +1441,9 @@
     "domain": "jbhifi.com.au",
     "page_type": "product",
     "scope": "page",
-    "score": 57,
+    "score": 60,
     "max_score": 140,
-    "percentage": 41,
+    "percentage": 43,
     "grade": "D",
     "checks": {
       "robots_ai": {
@@ -1507,13 +1507,13 @@
         "issue": "GPTBot receives non-200 response"
       },
       "meta_tags": {
-        "score": 9,
+        "score": 12,
         "max": 20,
-        "percentage": 45,
+        "percentage": 60,
         "details": {
           "title": {
-            "text": "404 Not Found",
-            "length": 13
+            "text": "404 Not Found - JB Hi-Fi",
+            "length": 24
           },
           "description": {
             "length": 0
@@ -1522,11 +1522,10 @@
           "canonical": "https://www.jbhifi.com.au/404"
         },
         "issues": [
-          "Title length 13 \u2014 target 30-70 chars",
           "Missing meta description",
           "Canonical points to different URL"
         ],
-        "issue": "Title length 13 \u2014 target 30-70 chars"
+        "issue": "Missing meta description"
       },
       "headings": {
         "score": 10,
@@ -1584,7 +1583,7 @@
       },
       {
         "check": "meta_tags",
-        "issue": "Title length 13 \u2014 target 30-70 chars"
+        "issue": "Missing meta description"
       },
       {
         "check": "headings",
