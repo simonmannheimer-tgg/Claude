@@ -105,18 +105,66 @@ def _sitemap_fetch_urls(sitemap_url: str) -> list[str]:
     return [l.strip() for l in re.findall(r'<loc>([^<]+)</loc>', content)]
 
 
-_SITEMAP_PRODUCT_RE = re.compile(r'(?:/p/|-\d{6,}|/products?/|/sku/)', re.IGNORECASE)
-_SITEMAP_GUIDE_RE   = re.compile(r'/(?:buying-guide|guide|advice|how-to|reviews?)/', re.IGNORECASE)
-_SITEMAP_BLOG_RE    = re.compile(r'/(?:blog|news|whats-new|editorial|magazine|stories?)(?:/|$)', re.IGNORECASE)
+# ── Generic TGG-style URL patterns ───────────────────────────────────────────
+_GENERIC_PRODUCT_RE = re.compile(r'(?:/p/|-\d{6,}|/products?/|/sku/)', re.IGNORECASE)
+_GENERIC_GUIDE_RE   = re.compile(r'/(?:buying-guide|guide|advice|how-to|reviews?)/', re.IGNORECASE)
+_GENERIC_BLOG_RE    = re.compile(r'/(?:blog|news|whats-new|editorial|magazine|stories?)(?:/|$)', re.IGNORECASE)
+# TGG product slug: alphanumeric, contains both letters and digits, 6-20 chars, last segment
+_TGG_MODEL_RE       = re.compile(r'-([a-z]+[0-9][a-z0-9]{4,})$', re.IGNORECASE)
+
+# ── Per-domain URL pattern maps ───────────────────────────────────────────────
+# Each entry: ordered list of (page_type, compiled_regex_matching_path)
+# First match wins. Domain key matches re.sub(r'^www\.', '', hostname).
+_DOMAIN_PATTERNS: dict[str, list[tuple[str, re.Pattern]]] = {
+    "jbhifi.com.au": [
+        ("product",  re.compile(r'^/products/')),
+        ("blog",     re.compile(r'^/blogs/')),
+        ("guide",    re.compile(r'^/pages/.*(?:guide|advice|help)', re.I)),
+        ("category", re.compile(r'^/collections/')),
+    ],
+    "harveynorman.com.au": [
+        ("product",  re.compile(r'\.html$')),
+        ("guide",    re.compile(r'^/buying-guides/')),
+        ("brand",    re.compile(r'^/brands/')),
+        # categories: 2+ segments, no .html — matched below as fallback
+    ],
+    "appliancesonline.com.au": [
+        ("product",  re.compile(r'^/p/')),
+        ("category", re.compile(r'^/(?:category|filter)/')),
+        ("brand",    re.compile(r'^/brand/')),
+        ("guide",    re.compile(r'^/article/')),   # covers both articles and blog
+        ("blog",     re.compile(r'^/article/')),
+    ],
+}
 
 
 def _classify_url(url: str) -> str:
     from urllib.parse import urlparse as _up
-    path = _up(url).path.rstrip("/")
-    if not path or path == "/":          return "home"
-    if _SITEMAP_GUIDE_RE.search(path):   return "guide"
-    if _SITEMAP_BLOG_RE.search(path):    return "blog"
-    if _SITEMAP_PRODUCT_RE.search(path): return "product"
+    parsed = _up(url)
+    path   = parsed.path.rstrip("/")
+    domain = re.sub(r'^www\.', '', parsed.hostname or '')
+
+    if not path or path == "/":
+        return "home"
+
+    # Domain-specific patterns take priority
+    domain_rules = _DOMAIN_PATTERNS.get(domain)
+    if domain_rules:
+        for page_type, pattern in domain_rules:
+            if pattern.search(path):
+                return page_type
+        # Harvey Norman fallback: 2+ segments without .html → category
+        if domain == "harveynorman.com.au":
+            segments = [s for s in path.split("/") if s]
+            if len(segments) >= 2:
+                return "category"
+        return "other"
+
+    # Generic patterns (TGG and unknown domains)
+    if _GENERIC_GUIDE_RE.search(path):   return "guide"
+    if _GENERIC_BLOG_RE.search(path):    return "blog"
+    if _GENERIC_PRODUCT_RE.search(path): return "product"
+    if _TGG_MODEL_RE.search(path):       return "product"
     segments = [s for s in path.split("/") if s]
     if 1 <= len(segments) <= 2:          return "category"
     return "other"
