@@ -261,7 +261,7 @@ jobs:
               "https://www.thegoodguys.com.au/televisions",
               "https://www.thegoodguys.com.au/air-conditioners",
               "https://www.thegoodguys.com.au/washing-machines",
-              "https://www.thegoodguys.com.au/televisions/smart-tvs",
+              "https://www.thegoodguys.com.au/televisions/all-tvs/smart-tvs",
               "https://www.thegoodguys.com.au/laptops-computers",
               "https://www.thegoodguys.com.au/samsung-65-4k-qled-smart-tv-qa65qn90dauxsa",
               "https://www.thegoodguys.com.au/buying-guide/best-tvs",
@@ -309,7 +309,7 @@ jobs:
             ${{ inputs.live_urls != '' && inputs.live_urls ||
               '["https://www.thegoodguys.com.au",
                 "https://www.thegoodguys.com.au/televisions",
-                "https://www.thegoodguys.com.au/televisions/smart-tvs",
+                "https://www.thegoodguys.com.au/televisions/all-tvs/smart-tvs",
                 "https://www.thegoodguys.com.au/buying-guide/best-tvs"]' }}
           GMC_FEED_URL: ${{ inputs.gmc_feed_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

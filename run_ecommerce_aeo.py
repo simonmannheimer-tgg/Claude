@@ -170,6 +170,13 @@ def infer_page_type(filename: str) -> str:
     # and should NOT be classified as products.
     if any(k in name for k in ("product", "sku")) or re.search(r"\bp\b", name):
         return "product"
+    # TGG product detail pages use model-number slugs ending in an alphanumeric
+    # code (e.g. samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html).
+    # Pattern: filename ends with a 6-20 char code containing both letters and digits.
+    stem = name.removesuffix(".html")
+    last_segment = stem.rsplit("-", 1)[-1] if "-" in stem else stem
+    if re.match(r'^(?=.*[a-z])(?=.*\d)[a-z0-9]{6,20}$', last_segment):
+        return "product"
     return "category"
 
 

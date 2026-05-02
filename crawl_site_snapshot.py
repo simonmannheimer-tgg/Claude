@@ -35,7 +35,7 @@ DEFAULT_URLS = [
     "https://www.thegoodguys.com.au/washing-machines",
     "https://www.thegoodguys.com.au/refrigerators",
     # Sub-category
-    "https://www.thegoodguys.com.au/televisions/smart-tvs",
+    "https://www.thegoodguys.com.au/televisions/all-tvs/smart-tvs",
     # Buying guides (protected paths — crawler uses longer wait)
     "https://www.thegoodguys.com.au/buying-guide/best-tvs",
     "https://www.thegoodguys.com.au/buying-guide/best-air-conditioners",
@@ -124,6 +124,37 @@ async def fetch_page(page, url: str, retries: int = 3) -> tuple[str | None, str 
     return None, "Max retries exceeded"
 
 
+def _detect_cf_uniform_blocks(results: list[dict]) -> None:
+    """
+    Post-crawl uniformity check: if 3+ saved pages have word counts within
+    ±50 words of each other AND that count is <15000, they are likely all
+    serving the same CF custom challenge template (not detected by marker strings).
+    Marks affected results with suspected_block=True and logs a warning.
+    """
+    saved = [r for r in results if "word_count" in r and not r.get("suspected_block")]
+    if len(saved) < 3:
+        return
+
+    from collections import Counter
+    # Bucket word counts to nearest 100
+    buckets: dict[int, list[dict]] = {}
+    for r in saved:
+        bucket = round(r["word_count"] / 100) * 100
+        buckets.setdefault(bucket, []).append(r)
+
+    for bucket, group in buckets.items():
+        if len(group) >= 3 and bucket < 15_000:
+            urls_affected = [r["url"] for r in group]
+            print(
+                f"  ⚠ CF UNIFORM BLOCK DETECTED: {len(group)} pages all returned "
+                f"~{bucket} words — likely same CF challenge template.",
+                file=sys.stderr,
+            )
+            for r in group:
+                r["suspected_block"] = True
+                print(f"    flagged: {r['url']}", file=sys.stderr)
+
+
 async def crawl(urls: list[str], out_dir: Path, delay: float = 1.5) -> list[dict]:
     out_dir.mkdir(parents=True, exist_ok=True)
     results = []
@@ -162,9 +193,10 @@ async def crawl(urls: list[str], out_dir: Path, delay: float = 1.5) -> list[dict
                 word_count = len(html.split())
                 if word_count < 600:
                     print(f"  ⚠ {filename} ({size_kb:.0f} KB, {word_count} words — may be blocked)", file=sys.stderr)
+                    results.append({"url": url, "file": str(filepath), "size_bytes": len(html), "word_count": word_count, "suspected_block": True})
                 else:
                     print(f"  ✓ {filename} ({size_kb:.0f} KB, {word_count} words)")
-                results.append({"url": url, "file": str(filepath), "size_bytes": len(html), "word_count": word_count, "suspected_block": word_count < 600})
+                    results.append({"url": url, "file": str(filepath), "size_bytes": len(html), "word_count": word_count, "suspected_block": False})
 
             if i < len(urls) - 1:
                 # Slow down for CF-protected domains (helps avoid re-triggering challenge)
@@ -173,6 +205,9 @@ async def crawl(urls: list[str], out_dir: Path, delay: float = 1.5) -> list[dict
                 await asyncio.sleep(effective_delay)
 
         await browser.close()
+
+    # Post-crawl: flag uniform word counts as likely CF blocks
+    _detect_cf_uniform_blocks(results)
 
     return results
 
