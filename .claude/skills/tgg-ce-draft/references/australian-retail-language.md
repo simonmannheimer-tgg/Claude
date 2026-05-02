@@ -1,6 +1,6 @@
 # Australian Retail Language
 
-Phrases and context notes for TGG long-form content. These augment the base content from `tgg-content-strategist` — they are not a replacement for natural writing. Use where they fit naturally; do not force them.
+Phrases and context notes for TGG long-form content. These augment the base content from `tgg-seo (strategy mode)` — they are not a replacement for natural writing. Use where they fit naturally; do not force them.
 
 ---
 

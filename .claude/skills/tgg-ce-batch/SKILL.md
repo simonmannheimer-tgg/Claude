@@ -32,10 +32,10 @@ For `plp-intro` and `faq-block`, the micro-pipeline runs (see Pipeline path sele
 | how-to | Full 9-stage | 1–9 |
 | comparison | Full 9-stage | 1–9 |
 | eav-explainer | Full 9-stage | 1–9 |
-| plp-intro | Micro 3-stage | Intake → Draft (tgg-copywriting only) → QA+Humanise |
-| faq-block | Micro 3-stage | Intake → Draft (tgg-copywriting only) → QA+Humanise |
+| plp-intro | Micro 3-stage | Intake → Draft (tgg-seo (production mode) only) → QA+Humanise |
+| faq-block | Micro 3-stage | Intake → Draft (tgg-seo (production mode) only) → QA+Humanise |
 
-The micro-pipeline skips research, competitor extract, brief, and outline. It feeds `keyword`, `slug`, and `angle` directly into `tgg-copywriting` then validates with `verification-gate-protocol --type <type>` and humanises with `tgg-humanizer`.
+The micro-pipeline skips research, competitor extract, brief, and outline. It feeds `keyword`, `slug`, and `angle` directly into `tgg-seo (production mode)` then validates with `verification-gate-protocol --type <type>` and humanises with `tgg-humanizer`.
 
 ## Idempotency
 

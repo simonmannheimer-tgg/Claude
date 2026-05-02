@@ -1,11 +1,11 @@
 ---
 name: tgg-ce-qa
-description: Content engineering pipeline stage — QA. Validates draft.md against the typed constraint set for the current content type. Routes to verification-gate-protocol with the correct --type flag, then calls tgg-seo-specialist for on-page SEO checks. Returns qa-report.md with PASS/FAIL per constraint. Blocks Stage 8 if any block_delivery constraint fails. Use only within the content pipeline.
+description: Content engineering pipeline stage — QA. Validates draft.md against the typed constraint set for the current content type. Routes to verification-gate-protocol with the correct --type flag, then calls tgg-seo (technical mode) for on-page SEO checks. Returns qa-report.md with PASS/FAIL per constraint. Blocks Stage 8 if any block_delivery constraint fails. Use only within the content pipeline.
 ---
 
 # CE QA — Stage 7
 
-Produces `runs/<run-id>/qa-report.md`. Owns constraint routing and report format. Does not own constraint logic — that lives in `verification-gate-protocol`. Does not own SEO judgement — that lives in `tgg-seo-specialist`.
+Produces `runs/<run-id>/qa-report.md`. Owns constraint routing and report format. Does not own constraint logic — that lives in `verification-gate-protocol`. Does not own SEO judgement — that lives in `tgg-seo (technical mode)`.
 
 ## Inputs required
 
@@ -29,7 +29,7 @@ Invoke `verification-gate-protocol --type <content_type>` on `draft.md`. Pass th
 
 ## Step 3: SEO on-page check
 
-Hand `draft.md` and `seo-data.md` to `tgg-seo-specialist` with this request:
+Hand `draft.md` and `seo-data.md` to `tgg-seo (technical mode)` with this request:
 
 > Check the following for the draft at `runs/<run-id>/draft.md`:
 > 1. Primary keyword present in: H1, first 100 words, at least one H2, at least one image alt text placeholder
@@ -83,5 +83,5 @@ If Block delivery: NO (all failures are non-blocking) → proceed to Stage 8, no
 
 - Does not check constraints itself — `verification-gate-protocol` does
 - Does not fix the draft — it reports failures for the human or the orchestrator to act on
-- Does not apply SEO recommendations — `tgg-seo-specialist` provides the checks, not fixes
+- Does not apply SEO recommendations — `tgg-seo (technical mode)` provides the checks, not fixes
 - Does not validate metadata (title, description) — that is produced at Stage 9

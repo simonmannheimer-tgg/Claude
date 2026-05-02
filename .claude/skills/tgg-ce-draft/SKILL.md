@@ -1,6 +1,6 @@
 ---
 name: tgg-ce-draft
-description: Content engineering pipeline stage — draft. Produces the full article draft by delegating body copy to tgg-content-strategist and short-form blocks (FAQ, metadata) to tgg-copywriting. Provides TGG-specific Australian retail language and voice reference augmentations. Uses content-type templates from references/content-type-templates/ as additive guidance only — canonical templates live in tgg-template-generator. Use only within the content pipeline.
+description: Content engineering pipeline stage — draft. Produces the full article draft by delegating body copy to tgg-seo (strategy mode) and short-form blocks (FAQ, metadata) to tgg-seo (production mode). Provides TGG-specific Australian retail language and voice reference augmentations. Uses content-type templates from references/content-type-templates/ as additive guidance only — canonical templates live in tgg-template-generator. Use only within the content pipeline.
 ---
 
 # CE Draft — Stage 6
@@ -16,16 +16,16 @@ Produces `runs/<run-id>/draft.md`. Delegates all writing to existing skills. Own
 
 ## Step 1: Load augmentation references
 
-Before delegating to `tgg-content-strategist`, read the following files and include their content as additional guidance in the delegation request:
+Before delegating to `tgg-seo (strategy mode)`, read the following files and include their content as additional guidance in the delegation request:
 
 - `references/australian-retail-language.md` — must-use phrases and AU retail context
 - `references/content-type-templates/<content_type>.md` — TGG-specific augmentations for this content type (not the base template — that came from `tgg-template-generator` at Stage 4)
 
 Do NOT read `references/voice-references.md` here — voice is handled at Stage 8 by `tgg-humanizer` and optionally Stage 9 by `simon-voice`.
 
-## Step 2: Delegate body draft to tgg-content-strategist
+## Step 2: Delegate body draft to tgg-seo (strategy mode)
 
-Pass `brief.md`, `outline.md`, `seo-data.md`, and `competitive-extract.md` plus the augmentation content to `tgg-content-strategist` with this request:
+Pass `brief.md`, `outline.md`, `seo-data.md`, and `competitive-extract.md` plus the augmentation content to `tgg-seo (strategy mode)` with this request:
 
 > Write the full article body following the outline exactly. Section by section, match the heading text and word budget from the outline.
 >
@@ -40,9 +40,9 @@ Pass `brief.md`, `outline.md`, `seo-data.md`, and `competitive-extract.md` plus 
 >
 > Return the body copy only (introduction through last H2 before FAQ). No FAQ. No metadata.
 
-## Step 3: Delegate FAQ block to tgg-copywriting
+## Step 3: Delegate FAQ block to tgg-seo (production mode)
 
-Pass `brief.md` and `seo-data.md` related queries to `tgg-copywriting` with this request:
+Pass `brief.md` and `seo-data.md` related queries to `tgg-seo (production mode)` with this request:
 
 > Write a FAQ block for this article. Rules:
 > - 5–8 questions
@@ -89,5 +89,5 @@ Save to `runs/<run-id>/draft.md`.
 - Does not apply voice rules — `tgg-humanizer` (Stage 8) and `simon-voice` (Stage 9) handle that
 - Does not validate constraints — that is Stage 7
 - Does not resolve `[LINK: /slug]` placeholders to Contentful IDs — that is Stage 9
-- Does not produce metadata (title, description, slug) — `tgg-copywriting` at Stage 9 handles that
+- Does not produce metadata (title, description, slug) — `tgg-seo (production mode)` at Stage 9 handles that
 - Does not duplicate base templates from `tgg-template-generator` — augmentations only
