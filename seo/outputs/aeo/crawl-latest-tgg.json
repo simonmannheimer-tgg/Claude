@@ -291,7 +291,7 @@
         "word_count": 2970,
         "has_faq": false,
         "has_specs": true,
-        "num_density": 88.2,
+        "num_density": 87.9,
         "list_count": 17,
         "issues": [
           "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
@@ -639,7 +639,7 @@
     "url": "https://www.thegoodguys.com.au/whats-new/unboxing-the-lg-tv-range-2025",
     "label": "TGG \u00b7 Blog Article",
     "domain": "thegoodguys.com.au",
-    "page_type": "editorial",
+    "page_type": "blog",
     "scope": "page",
     "score": 98,
     "max_score": 140,
