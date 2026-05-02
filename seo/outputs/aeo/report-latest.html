@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AEO Audit Report — The Good Guys — 2026-05-01 23:56 UTC</title>
+<title>AEO Audit Report — The Good Guys — 2026-05-02 01:09 UTC</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; }
@@ -55,13 +55,13 @@ code { font-family: 'SF Mono', 'Fira Code', monospace; background: #f1f5f9; padd
 
   <div class="report-header">
     <h1>AEO Audit Report — The Good Guys</h1>
-    <div class="meta">Run #17 &nbsp;·&nbsp; Branch: main &nbsp;·&nbsp; Generated: 2026-05-01 23:56 UTC</div>
+    <div class="meta">Run #18 &nbsp;·&nbsp; Branch: main &nbsp;·&nbsp; Generated: 2026-05-02 01:09 UTC</div>
   </div>
 
   <div class="hero-cards">
         <div class="hero-card" style="border-top:4px solid #eab308;background:#fef9c3">
             <div class="hero-grade" style="color:#eab308">C</div>
-            <div class="hero-pct" style="color:#eab308">55%</div>
+            <div class="hero-pct" style="color:#eab308">64%</div>
             <div class="hero-title">AEO Crawl · TGG</div>
             <div class="hero-sub">robots, llms.txt, schema, JS, meta</div>
         </div>
@@ -73,7 +73,7 @@ code { font-family: 'SF Mono', 'Fira Code', monospace; background: #f1f5f9; padd
         </div>
         <div class="hero-card" style="border-top:4px solid #f97316;background:#fff7ed">
             <div class="hero-grade" style="color:#f97316">D</div>
-            <div class="hero-pct" style="color:#f97316">50%</div>
+            <div class="hero-pct" style="color:#f97316">51%</div>
             <div class="hero-title">Content Intelligence</div>
             <div class="hero-sub">entities, chunking, semantics</div>
         </div>
@@ -92,7 +92,7 @@ code { font-family: 'SF Mono', 'Fira Code', monospace; background: #f1f5f9; padd
   </div>
 
   <div class="section">
-    <h2>AEO Crawl — Per-URL Signal Audit <span style="display:inline-block;padding:4px 14px;border-radius:20px;background:#fef9c3;color:#eab308;font-weight:700;font-size:1.1em;border:2px solid #eab308">C · 55%</span></h2>
+    <h2>AEO Crawl — Per-URL Signal Audit <span style="display:inline-block;padding:4px 14px;border-radius:20px;background:#fef9c3;color:#eab308;font-weight:700;font-size:1.1em;border:2px solid #eab308">C · 64%</span></h2>
     
     <h3>Domain Comparison</h3>
     <table class="data-table" style="margin-bottom:24px">
@@ -101,7 +101,7 @@ code { font-family: 'SF Mono', 'Fira Code', monospace; background: #f1f5f9; padd
             <td><strong>appliancesonline.com.au</strong></td>
             <td><span style="color:#eab308;font-weight:700">C</span></td>
             <td><div class="pct-bar"><div style="width:59%;background:#eab308"></div></div><span>59%</span></td>
-            <td style="color:#64748b">4 pages</td>
+            <td style="color:#64748b">5 pages</td>
         </tr><tr style="">
             <td><strong>harveynorman.com.au</strong></td>
             <td><span style="color:#ef4444;font-weight:700">F</span></td>
@@ -110,135 +110,206 @@ code { font-family: 'SF Mono', 'Fira Code', monospace; background: #f1f5f9; padd
         </tr><tr style="">
             <td><strong>jbhifi.com.au</strong></td>
             <td><span style="color:#eab308;font-weight:700">C</span></td>
-            <td><div class="pct-bar"><div style="width:61%;background:#eab308"></div></div><span>61%</span></td>
+            <td><div class="pct-bar"><div style="width:59%;background:#eab308"></div></div><span>59%</span></td>
             <td style="color:#64748b">5 pages</td>
         </tr><tr style="background:#f0fdf4">
-            <td><strong>⭐ thegoodguys.com.au</strong></td>
+            <td><strong><span style="background:#166534;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.75em;margin-right:4px">TGG</span>thegoodguys.com.au</strong></td>
             <td><span style="color:#eab308;font-weight:700">C</span></td>
-            <td><div class="pct-bar"><div style="width:55%;background:#eab308"></div></div><span>55%</span></td>
+            <td><div class="pct-bar"><div style="width:64%;background:#eab308"></div></div><span>64%</span></td>
             <td style="color:#64748b">7 pages</td>
         </tr></tbody>
     </table>
     <h3>Per-URL Check Results</h3>
-    <p style="font-size:0.82em;color:#64748b;margin-top:-8px">✅ ≥80% &nbsp; ⚠️ 50–79% &nbsp; ❌ &lt;50% &nbsp; – Not scored (no snapshot)</p>
+    <p style="font-size:0.82em;color:#64748b;margin-top:-8px"><strong>PASS</strong> = 80%+ &nbsp; <strong>WARN</strong> = 50–79% &nbsp; <strong>FAIL</strong> = below 50% &nbsp; — = no snapshot data. Hover column headers for check descriptions.</p>
     <div style="overflow-x:auto">
     <table class="data-table">
         <thead><tr>
             <th>Page</th><th>Grade</th><th>%</th>
-            <th title="Robots (AI bots) (max 30 pts)">Robots (AI bots)<br><small>/30</small></th><th title="llms.txt (max 20 pts)">llms.txt<br><small>/20</small></th><th title="HTTP Access (max 10 pts)">HTTP Access<br><small>/10</small></th><th title="Meta Tags (max 20 pts)">Meta Tags<br><small>/20</small></th><th title="Headings (max 20 pts)">Headings<br><small>/20</small></th><th title="Schema / JSON-LD (max 20 pts)">Schema<br><small>/20</small></th><th title="Content Signals (max 20 pts)">Content Signals<br><small>/20</small></th><th title="JS Dependency (max 20 pts)">JS Dependency<br><small>/20</small></th>
+            <th title="Which AI bots are explicitly allowed in robots.txt — GPTBot, ClaudeBot, PerplexityBot, Google-Extended, Amazonbot, Bingbot scored 5 pts each. (max 30 pts)">Robots (AI bots)<br><small>/30pts</small></th><th title="/llms.txt exists (10 pts) + has structured sections (5 pts) + contains at least 100 words of content (5 pts). (max 20 pts)">llms.txt<br><small>/20pts</small></th><th title="Page returns HTTP 200 for a standard browser UA (5 pts) and for the GPTBot user-agent string (5 pts). Failures mean AI crawlers are blocked. (max 10 pts)">HTTP Access<br><small>/10pts</small></th><th title="Title 30–70 chars (5), meta description 100–160 chars (5), og:type present (5), canonical tag self-referential (5). (max 20 pts)">Meta Tags<br><small>/20pts</small></th><th title="H1 present (5), only one H1 on the page (5), at least one H2 (5), no H3 used without a preceding H2 (5). (max 20 pts)">Headings<br><small>/20pts</small></th><th title="JSON-LD block exists (5), correct schema type for this page type — Product/ItemList/Article/WebSite (10), multiple schema types present (5). (max 20 pts)">Schema<br><small>/20pts</small></th><th title="Body has at least 300 words (5), FAQ or Q&A patterns present (5), specification or list signals (5), number/spec density in text (5). (max 20 pts)">Content Signals<br><small>/20pts</small></th><th title="How much content is accessible without JavaScript — what AI crawlers (httpx) see vs Playwright render. 80%+ = 20 pts, 50–79% = 10 pts, under 50% = 0. (max 20 pts)">JS Dependency<br><small>/20pts</small></th>
         </tr></thead>
         <tbody><tr style="background:#f0fdf4">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">TGG</small><br><a href="https://www.thegoodguys.com.au" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">Home</a></td>
+            <td>
+                <small style="color:#94a3b8">TGG</small> <strong>Home</strong><br>
+                <a href="https://www.thegoodguys.com.au" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/</a>
+            </td>
             <td style="text-align:center"><span style="color:#f97316;font-weight:700">D</span></td>
             <td style="text-align:center">45%</td>
-            <td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>✅</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>–</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
         </tr><tr style="background:#f0fdf4">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">TGG</small><br><a href="https://www.thegoodguys.com.au/televisions" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">Category</a></td>
+            <td>
+                <small style="color:#94a3b8">TGG</small> <strong>Category</strong><br>
+                <a href="https://www.thegoodguys.com.au/televisions" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/televisions</a>
+            </td>
             <td style="text-align:center"><span style="color:#4ade80;font-weight:700">B</span></td>
             <td style="text-align:center">66%</td>
-            <td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>✅</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>✅</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>–</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
         </tr><tr style="background:#f0fdf4">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">TGG</small><br><a href="https://www.thegoodguys.com.au/televisions/smart-tvs" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">Sub-category</a></td>
+            <td>
+                <small style="color:#94a3b8">TGG</small> <strong>Sub-category</strong><br>
+                <a href="https://www.thegoodguys.com.au/televisions/smart-tvs" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/televisions/smart-tvs</a>
+            </td>
             <td style="text-align:center"><span style="color:#eab308;font-weight:700">C</span></td>
             <td style="text-align:center">64%</td>
-            <td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>✅</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>✅</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>–</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
         </tr><tr style="background:#f0fdf4">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">TGG</small><br><a href="https://www.thegoodguys.com.au/lg-12kg-8kg-combo-washer-dryer-wvc9-1412w" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">Product</a></td>
-            <td style="text-align:center"><span style="color:#ef4444;font-weight:700">F</span></td>
-            <td style="text-align:center">21%</td>
-            <td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>❌</td><td style='text-align:center'>❌</td><td style='text-align:center'>❌</td><td style='text-align:center'>❌</td><td style='text-align:center'>❌</td><td style='text-align:center'>–</td>
+            <td>
+                <small style="color:#94a3b8">TGG</small> <strong>Product</strong><br>
+                <a href="https://www.thegoodguys.com.au/samsung-65-inches-qn85f-neo-qled-4k-mini-led-smart-ai-tv-2025-qa65qn85fawxxy" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/samsung-65-inches-qn85f-neo-qled-4k-mini-led-smart-ai-…</a>
+            </td>
+            <td style="text-align:center"><span style="color:#4ade80;font-weight:700">B</span></td>
+            <td style="text-align:center">71%</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
         </tr><tr style="background:#f0fdf4">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">TGG</small><br><a href="https://www.thegoodguys.com.au/buying-guide/television-buying-guide" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">Buying Guide</a></td>
+            <td>
+                <small style="color:#94a3b8">TGG</small> <strong>Buying Guide</strong><br>
+                <a href="https://www.thegoodguys.com.au/buying-guide/television-buying-guide" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/buying-guide/television-buying-guide</a>
+            </td>
             <td style="text-align:center"><span style="color:#4ade80;font-weight:700">B</span></td>
             <td style="text-align:center">74%</td>
-            <td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>✅</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>–</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
         </tr><tr style="background:#f0fdf4">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">TGG</small><br><a href="https://www.thegoodguys.com.au/samsung" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">Brand Hub</a></td>
+            <td>
+                <small style="color:#94a3b8">TGG</small> <strong>Brand Hub</strong><br>
+                <a href="https://www.thegoodguys.com.au/samsung" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/samsung</a>
+            </td>
             <td style="text-align:center"><span style="color:#eab308;font-weight:700">C</span></td>
             <td style="text-align:center">64%</td>
-            <td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>✅</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>✅</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>–</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
         </tr><tr style="background:#f0fdf4">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">TGG</small><br><a href="https://www.thegoodguys.com.au/whats-new" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">News Hub</a></td>
-            <td style="text-align:center"><span style="color:#eab308;font-weight:700">C</span></td>
-            <td style="text-align:center">52%</td>
-            <td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>✅</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>–</td>
+            <td>
+                <small style="color:#94a3b8">TGG</small> <strong>Blog Article</strong><br>
+                <a href="https://www.thegoodguys.com.au/whats-new/unboxing-the-lg-tv-range-2025" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/whats-new/unboxing-the-lg-tv-range-2025</a>
+            </td>
+            <td style="text-align:center"><span style="color:#4ade80;font-weight:700">B</span></td>
+            <td style="text-align:center">66%</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
         </tr><tr style="">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">JB</small><br><a href="https://www.jbhifi.com.au" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">Home</a></td>
+            <td>
+                <small style="color:#94a3b8">JB</small> <strong>Home</strong><br>
+                <a href="https://www.jbhifi.com.au" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/</a>
+            </td>
             <td style="text-align:center"><span style="color:#eab308;font-weight:700">C</span></td>
             <td style="text-align:center">57%</td>
-            <td style='text-align:center'>⚠️</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>❌</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>–</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
         </tr><tr style="">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">JB</small><br><a href="https://www.jbhifi.com.au/collections/tvs" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">Category</a></td>
+            <td>
+                <small style="color:#94a3b8">JB</small> <strong>Category</strong><br>
+                <a href="https://www.jbhifi.com.au/collections/tvs" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/collections/tvs</a>
+            </td>
             <td style="text-align:center"><span style="color:#4ade80;font-weight:700">B</span></td>
             <td style="text-align:center">77%</td>
-            <td style='text-align:center'>⚠️</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>–</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
         </tr><tr style="">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">JB</small><br><a href="https://www.jbhifi.com.au/pages/samsung" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">Brand Hub</a></td>
+            <td>
+                <small style="color:#94a3b8">JB</small> <strong>Product</strong><br>
+                <a href="https://www.jbhifi.com.au/products/samsung-65-qn90d-neo-qled-4k-smart-tv-2024" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/products/samsung-65-qn90d-neo-qled-4k-smart-tv-2024</a>
+            </td>
+            <td style="text-align:center"><span style="color:#f97316;font-weight:700">D</span></td>
+            <td style="text-align:center">41%</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
+        </tr><tr style="">
+            <td>
+                <small style="color:#94a3b8">JB</small> <strong>Brand Hub</strong><br>
+                <a href="https://www.jbhifi.com.au/pages/samsung" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/pages/samsung</a>
+            </td>
             <td style="text-align:center"><span style="color:#4ade80;font-weight:700">B</span></td>
             <td style="text-align:center">70%</td>
-            <td style='text-align:center'>⚠️</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>❌</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>–</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
         </tr><tr style="">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">JB</small><br><a href="https://www.jbhifi.com.au/pages/tv-buying-guide" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">Buying Guide</a></td>
+            <td>
+                <small style="color:#94a3b8">JB</small> <strong>Buying Guide</strong><br>
+                <a href="https://www.jbhifi.com.au/pages/tv-buying-guide" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/pages/tv-buying-guide</a>
+            </td>
             <td style="text-align:center"><span style="color:#eab308;font-weight:700">C</span></td>
             <td style="text-align:center">50%</td>
-            <td style='text-align:center'>⚠️</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>❌</td><td style='text-align:center'>❌</td><td style='text-align:center'>❌</td><td style='text-align:center'>–</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
         </tr><tr style="">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">JB</small><br><a href="https://www.jbhifi.com.au/blogs/guides-tips" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">Editorial Hub</a></td>
-            <td style="text-align:center"><span style="color:#eab308;font-weight:700">C</span></td>
-            <td style="text-align:center">52%</td>
-            <td style='text-align:center'>⚠️</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>❌</td><td style='text-align:center'>❌</td><td style='text-align:center'>❌</td><td style='text-align:center'>–</td>
-        </tr><tr style="">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">HN</small><br><a href="https://www.harveynorman.com.au" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">Home</a></td>
+            <td>
+                <small style="color:#94a3b8">HN</small> <strong>Home</strong><br>
+                <a href="https://www.harveynorman.com.au" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/</a>
+            </td>
             <td style="text-align:center"><span style="color:#ef4444;font-weight:700">F</span></td>
             <td style="text-align:center">31%</td>
-            <td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>✅</td><td style='text-align:center'>❌</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>❌</td><td style='text-align:center'>–</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
         </tr><tr style="">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">HN</small><br><a href="https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-screen-size/all-tvs" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">Category</a></td>
+            <td>
+                <small style="color:#94a3b8">HN</small> <strong>Category</strong><br>
+                <a href="https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-screen-size/all-tvs" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/tv-blu-ray-home-theatre/tvs-by-screen-size/all-tvs</a>
+            </td>
             <td style="text-align:center"><span style="color:#ef4444;font-weight:700">F</span></td>
             <td style="text-align:center">31%</td>
-            <td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>✅</td><td style='text-align:center'>❌</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>❌</td><td style='text-align:center'>–</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
         </tr><tr style="">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">HN</small><br><a href="https://www.harveynorman.com.au/hisense-65-inch-q6nau-4k-qled-smart-tv.html" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">Product</a></td>
+            <td>
+                <small style="color:#94a3b8">HN</small> <strong>Product</strong><br>
+                <a href="https://www.harveynorman.com.au/hisense-65-inch-q6nau-4k-qled-smart-tv.html" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/hisense-65-inch-q6nau-4k-qled-smart-tv.html</a>
+            </td>
             <td style="text-align:center"><span style="color:#ef4444;font-weight:700">F</span></td>
             <td style="text-align:center">31%</td>
-            <td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>✅</td><td style='text-align:center'>❌</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>❌</td><td style='text-align:center'>–</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
         </tr><tr style="">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">HN</small><br><a href="https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-brand/samsung-tvs" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">Brand Page</a></td>
+            <td>
+                <small style="color:#94a3b8">HN</small> <strong>Brand Page</strong><br>
+                <a href="https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-brand/samsung-tvs" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/tv-blu-ray-home-theatre/tvs-by-brand/samsung-tvs</a>
+            </td>
             <td style="text-align:center"><span style="color:#ef4444;font-weight:700">F</span></td>
             <td style="text-align:center">31%</td>
-            <td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>✅</td><td style='text-align:center'>❌</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>❌</td><td style='text-align:center'>–</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
         </tr><tr style="">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">HN</small><br><a href="https://www.harveynorman.com.au/buying-guides/television-buying-guide" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">Buying Guide</a></td>
+            <td>
+                <small style="color:#94a3b8">HN</small> <strong>Buying Guide</strong><br>
+                <a href="https://www.harveynorman.com.au/buying-guides/television-buying-guide" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/buying-guides/television-buying-guide</a>
+            </td>
             <td style="text-align:center"><span style="color:#ef4444;font-weight:700">F</span></td>
             <td style="text-align:center">31%</td>
-            <td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>✅</td><td style='text-align:center'>❌</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>❌</td><td style='text-align:center'>–</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
         </tr><tr style="">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">AO</small><br><a href="https://www.appliancesonline.com.au" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">Home</a></td>
-            <td style="text-align:center"><span style="color:#eab308;font-weight:700">C</span></td>
-            <td style="text-align:center">59%</td>
-            <td style='text-align:center'>⚠️</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>❌</td><td style='text-align:center'>–</td>
-        </tr><tr style="">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">AO</small><br><a href="https://www.appliancesonline.com.au/category/refrigeration/fridges/" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">Category</a></td>
-            <td style="text-align:center"><span style="color:#eab308;font-weight:700">C</span></td>
-            <td style="text-align:center">59%</td>
-            <td style='text-align:center'>⚠️</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>❌</td><td style='text-align:center'>–</td>
-        </tr><tr style="">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">AO</small><br><a href="https://www.appliancesonline.com.au/brand/samsung/" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">Brand Hub</a></td>
-            <td style="text-align:center"><span style="color:#eab308;font-weight:700">C</span></td>
-            <td style="text-align:center">59%</td>
-            <td style='text-align:center'>⚠️</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>❌</td><td style='text-align:center'>–</td>
-        </tr><tr style="">
-            <td style="white-space:nowrap"><small style="color:#94a3b8">AO</small><br><a href="https://www.appliancesonline.com.au/article/refrigerator-size-guide/" target="_blank" style="color:#1d4ed8;text-decoration:none;font-size:0.9em">Guide</a></td>
+            <td>
+                <small style="color:#94a3b8">AO</small> <strong>Home</strong><br>
+                <a href="https://www.appliancesonline.com.au" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/</a>
+            </td>
             <td style="text-align:center"><span style="color:#eab308;font-weight:700">C</span></td>
             <td style="text-align:center">59%</td>
-            <td style='text-align:center'>⚠️</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>✅</td><td style='text-align:center'>⚠️</td><td style='text-align:center'>❌</td><td style='text-align:center'>❌</td><td style='text-align:center'>–</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
+        </tr><tr style="">
+            <td>
+                <small style="color:#94a3b8">AO</small> <strong>Category</strong><br>
+                <a href="https://www.appliancesonline.com.au/category/refrigeration/fridges/" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/category/refrigeration/fridges/</a>
+            </td>
+            <td style="text-align:center"><span style="color:#eab308;font-weight:700">C</span></td>
+            <td style="text-align:center">59%</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
+        </tr><tr style="">
+            <td>
+                <small style="color:#94a3b8">AO</small> <strong>Product</strong><br>
+                <a href="https://www.appliancesonline.com.au/product/westinghouse-easycare-9kg-front-load-washing-machine-wwf9024m5sa/" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/product/westinghouse-easycare-9kg-front-load-washing-m…</a>
+            </td>
+            <td style="text-align:center"><span style="color:#eab308;font-weight:700">C</span></td>
+            <td style="text-align:center">59%</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
+        </tr><tr style="">
+            <td>
+                <small style="color:#94a3b8">AO</small> <strong>Brand Hub</strong><br>
+                <a href="https://www.appliancesonline.com.au/brand/samsung/" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/brand/samsung/</a>
+            </td>
+            <td style="text-align:center"><span style="color:#eab308;font-weight:700">C</span></td>
+            <td style="text-align:center">59%</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
+        </tr><tr style="">
+            <td>
+                <small style="color:#94a3b8">AO</small> <strong>Guide</strong><br>
+                <a href="https://www.appliancesonline.com.au/article/refrigerator-size-guide/" target="_blank" style="color:#64748b;text-decoration:none;font-size:0.78em;font-family:monospace">/article/refrigerator-size-guide/</a>
+            </td>
+            <td style="text-align:center"><span style="color:#eab308;font-weight:700">C</span></td>
+            <td style="text-align:center">59%</td>
+            <td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#166534;background:#dcfce7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>PASS</span></td><td style='text-align:center'><span style='color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>WARN</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#991b1b;background:#fee2e2;padding:1px 5px;border-radius:3px;font-size:0.75em;font-weight:700'>FAIL</span></td><td style='text-align:center'><span style='color:#94a3b8'>—</span></td>
         </tr></tbody>
     </table>
     </div>
         <h3>TGG Issues</h3>
         <table class="issues-table">
             <thead><tr><th>Page</th><th>Check</th><th>Issue</th></tr></thead>
-            <tbody><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Home</td><td><code>meta_tags</code></td><td>Missing og:type</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Home</td><td><code>headings</code></td><td>No H1 found</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Home</td><td><code>schema_type</code></td><td>Missing expected schema: WebSite</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Home</td><td><code>content</code></td><td>No FAQ/Q&A patterns — add question-based headings or an FAQ section</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Category</td><td><code>meta_tags</code></td><td>Missing og:type</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Category</td><td><code>schema_type</code></td><td>Missing expected schema: ItemList</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Category</td><td><code>content</code></td><td>No FAQ/Q&A patterns — add question-based headings or an FAQ section</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Sub-category</td><td><code>meta_tags</code></td><td>Missing og:type</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Sub-category</td><td><code>schema_type</code></td><td>Missing expected schema: ItemList</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Sub-category</td><td><code>content</code></td><td>No FAQ/Q&A patterns — add question-based headings or an FAQ section</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Product</td><td><code>http_access</code></td><td>GPTBot receives non-200 response</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Product</td><td><code>meta_tags</code></td><td>Description length 29 — target 100-160 chars</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Product</td><td><code>headings</code></td><td>No H1 found</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Product</td><td><code>schema_type</code></td><td>No JSON-LD found in raw HTML — schema may be JS-injected (invisible to AI bots)</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Product</td><td><code>content</code></td><td>Low word count (3) — AI needs content to cite</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Buying Guide</td><td><code>meta_tags</code></td><td>Missing og:type</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Buying Guide</td><td><code>schema_type</code></td><td>Missing expected schema: Article</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Brand Hub</td><td><code>meta_tags</code></td><td>Description length 169 — target 100-160 chars</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Brand Hub</td><td><code>schema_type</code></td><td>Missing expected schema: ItemList</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Brand Hub</td><td><code>content</code></td><td>No FAQ/Q&A patterns — add question-based headings or an FAQ section</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · News Hub</td><td><code>meta_tags</code></td><td>Missing og:type</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · News Hub</td><td><code>headings</code></td><td>No H2 found</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · News Hub</td><td><code>schema_type</code></td><td>Expected schema for hub: CollectionPage, ItemList — none found in raw HTML</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · News Hub</td><td><code>content</code></td><td>No FAQ/Q&A patterns — add question-based headings or an FAQ section</td></tr></tbody>
+            <tbody><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Home</td><td><code>meta_tags</code></td><td>Missing og:type</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Home</td><td><code>headings</code></td><td>No H1 found</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Home</td><td><code>schema_type</code></td><td>Missing expected schema: WebSite</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Home</td><td><code>content</code></td><td>No FAQ/Q&A patterns — add question-based headings or an FAQ section</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Category</td><td><code>meta_tags</code></td><td>Missing og:type</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Category</td><td><code>schema_type</code></td><td>Missing expected schema: ItemList</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Category</td><td><code>content</code></td><td>No FAQ/Q&A patterns — add question-based headings or an FAQ section</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Sub-category</td><td><code>meta_tags</code></td><td>Missing og:type</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Sub-category</td><td><code>schema_type</code></td><td>Missing expected schema: ItemList</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Sub-category</td><td><code>content</code></td><td>No FAQ/Q&A patterns — add question-based headings or an FAQ section</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Product</td><td><code>meta_tags</code></td><td>Description length 175 — target 100-160 chars</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Product</td><td><code>schema_type</code></td><td>Missing expected schema: Offer</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Product</td><td><code>content</code></td><td>No FAQ/Q&A patterns — add question-based headings or an FAQ section</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Buying Guide</td><td><code>meta_tags</code></td><td>Missing og:type</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Buying Guide</td><td><code>schema_type</code></td><td>Missing expected schema: Article</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Brand Hub</td><td><code>meta_tags</code></td><td>Description length 169 — target 100-160 chars</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Brand Hub</td><td><code>schema_type</code></td><td>Missing expected schema: ItemList</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Brand Hub</td><td><code>content</code></td><td>No FAQ/Q&A patterns — add question-based headings or an FAQ section</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Blog Article</td><td><code>meta_tags</code></td><td>Missing og:type</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Blog Article</td><td><code>schema_type</code></td><td>Missing expected schema: ItemList</td></tr><tr><td style="white-space:nowrap;font-size:0.85em">TGG · Blog Article</td><td><code>content</code></td><td>No FAQ/Q&A patterns — add question-based headings or an FAQ section</td></tr></tbody>
         </table>
   </div>
 
@@ -246,83 +317,83 @@ code { font-family: 'SF Mono', 'Fira Code', monospace; background: #f1f5f9; padd
     <h2>Phase 3 — Ecommerce AEO <span style="display:inline-block;padding:4px 14px;border-radius:20px;background:#fef9c3;color:#eab308;font-weight:700;font-size:1.1em;border:2px solid #eab308">C · 65%</span></h2>
     
     <table class="data-table">
-        <thead><tr><th>Check</th><th>Progress</th><th>Score</th><th>%</th></tr></thead>
+        <thead><tr><th>Check</th><th>Description</th><th>Progress</th><th>Score</th></tr></thead>
         <tbody><tr>
-            <td>Schema / Structured Data</td>
+            <td><strong>Schema / Structured Data</strong></td>
+            <td style="font-size:0.8em;color:#64748b">JSON-LD structured data coverage across all pages. Category pages need ItemList, products need Product+Offer+AggregateRating, guides need Article.</td>
             <td><div class="pct-bar"><div style="width:35%;background:#f97316"></div></div></td>
-            <td style="color:#f97316;font-weight:600">135/390</td>
-            <td>35%</td>
+            <td style="color:#f97316;font-weight:600;text-align:right">35/100</td>
         </tr><tr>
-            <td>Schema Validity</td>
+            <td><strong>Schema Validity</strong></td>
+            <td style="font-size:0.8em;color:#64748b">Required fields present in each schema type — Offer.price, Offer.availability, AggregateRating.ratingValue, Product.brand, ItemList elements.</td>
             <td><div class="pct-bar"><div style="width:58%;background:#eab308"></div></div></td>
-            <td style="color:#eab308;font-weight:600">105/180</td>
-            <td>58%</td>
+            <td style="color:#eab308;font-weight:600;text-align:right">58/100</td>
         </tr><tr>
-            <td>Render Diff</td>
+            <td><strong>Render Diff</strong></td>
+            <td style="font-size:0.8em;color:#64748b">Server-side rendering completeness — percentage of content available without JavaScript. AI bots use httpx, not a full browser.</td>
             <td><div class="pct-bar"><div style="width:100%;background:#22c55e"></div></div></td>
-            <td style="color:#22c55e;font-weight:600">80/80</td>
-            <td>100%</td>
+            <td style="color:#22c55e;font-weight:600;text-align:right">100/100</td>
         </tr><tr>
-            <td>User Agent Behaviour</td>
+            <td><strong>User Agent Behaviour</strong></td>
+            <td style="font-size:0.8em;color:#64748b">Whether tier-1 AI bots (GPTBot, ClaudeBot, PerplexityBot) can access pages using their real user-agent strings via robots.txt rules.</td>
             <td><div class="pct-bar"><div style="width:75%;background:#22c55e"></div></div></td>
-            <td style="color:#22c55e;font-weight:600">60/80</td>
-            <td>75%</td>
+            <td style="color:#22c55e;font-weight:600;text-align:right">75/100</td>
         </tr><tr>
-            <td>Hidden Content</td>
+            <td><strong>Hidden Content</strong></td>
+            <td style="font-size:0.8em;color:#64748b">Percentage of page content hidden from HTML (display:none, visibility:hidden). High hidden ratios reduce what AI can read.</td>
             <td><div class="pct-bar"><div style="width:100%;background:#22c55e"></div></div></td>
-            <td style="color:#22c55e;font-weight:600">240/240</td>
-            <td>100%</td>
+            <td style="color:#22c55e;font-weight:600;text-align:right">100/100</td>
         </tr><tr>
-            <td>AI Content Signals</td>
+            <td><strong>AI Content Signals</strong></td>
+            <td style="font-size:0.8em;color:#64748b">AI-legible content signals — FAQ schema, structured headings, entity mentions, specification tables, Q&A patterns.</td>
             <td><div class="pct-bar"><div style="width:64%;background:#eab308"></div></div></td>
-            <td style="color:#eab308;font-weight:600">192/300</td>
-            <td>64%</td>
+            <td style="color:#eab308;font-weight:600;text-align:right">64/100</td>
         </tr><tr>
-            <td>DOM Structure</td>
+            <td><strong>DOM Structure</strong></td>
+            <td style="font-size:0.8em;color:#64748b">HTML structure quality — semantic elements (nav, main, article, section), correct heading hierarchy, proper list usage.</td>
             <td><div class="pct-bar"><div style="width:92%;background:#22c55e"></div></div></td>
-            <td style="color:#22c55e;font-weight:600">275/300</td>
-            <td>92%</td>
+            <td style="color:#22c55e;font-weight:600;text-align:right">92/100</td>
         </tr><tr>
-            <td>Robots.txt & llms.txt</td>
+            <td><strong>Robots.txt & llms.txt</strong></td>
+            <td style="font-size:0.8em;color:#64748b">robots.txt rules for all 18 tracked AI bots and presence of /llms.txt with correctly formatted sections and sufficient content.</td>
             <td><div class="pct-bar"><div style="width:48%;background:#f97316"></div></div></td>
-            <td style="color:#f97316;font-weight:600">24/50</td>
-            <td>48%</td>
+            <td style="color:#f97316;font-weight:600;text-align:right">48/100</td>
         </tr><tr>
-            <td>Sitemap Coverage</td>
+            <td><strong>Sitemap Coverage</strong></td>
+            <td style="font-size:0.8em;color:#64748b">Whether all key content types (category, product, buying guide, brand) appear in the XML sitemap so AI crawlers can discover them.</td>
             <td><div class="pct-bar"><div style="width:25%;background:#f97316"></div></div></td>
-            <td style="color:#f97316;font-weight:600">10/40</td>
-            <td>25%</td>
+            <td style="color:#f97316;font-weight:600;text-align:right">25/100</td>
         </tr><tr>
-            <td>Competitor Schema Comparison</td>
+            <td><strong>Competitor Schema Comparison</strong></td>
+            <td style="font-size:0.8em;color:#64748b">Schema types used by TGG vs top competitors — measures the schema completeness gap against JB Hi-Fi and Harvey Norman.</td>
             <td><div class="pct-bar"><div style="width:89%;background:#22c55e"></div></div></td>
-            <td style="color:#22c55e;font-weight:600">40/45</td>
-            <td>89%</td>
+            <td style="color:#22c55e;font-weight:600;text-align:right">89/100</td>
         </tr><tr>
-            <td>AU Content Signals</td>
+            <td><strong>AU Content Signals</strong></td>
+            <td style="font-size:0.8em;color:#64748b">Australian-specific signals — lang=en-AU on html tag, AUD currency present, Australian spelling, ACCC pricing compliance (Was/Save patterns).</td>
             <td><div class="pct-bar"><div style="width:54%;background:#eab308"></div></div></td>
-            <td style="color:#eab308;font-weight:600">130/240</td>
-            <td>54%</td>
+            <td style="color:#eab308;font-weight:600;text-align:right">54/100</td>
         </tr><tr>
-            <td>Agentic Commerce Readiness</td>
+            <td><strong>Agentic Commerce Readiness</strong></td>
+            <td style="font-size:0.8em;color:#64748b">Shopify Agentic Storefronts readiness — MCP endpoint, ACP feed, UCP endpoint, agent-endpoint link tag in HTML head.</td>
             <td><div class="pct-bar"><div style="width:0%;background:#ef4444"></div></div></td>
-            <td style="color:#ef4444;font-weight:600">0/30</td>
-            <td>0%</td>
+            <td style="color:#ef4444;font-weight:600;text-align:right">0/100</td>
         </tr><tr>
-            <td>GTIN Coverage</td>
+            <td><strong>GTIN Coverage</strong></td>
+            <td style="font-size:0.8em;color:#64748b">Percentage of product pages with valid GTIN (barcode) in structured data — required for Google Shopping AI and agentic purchase flows.</td>
             <td><div class="pct-bar"><div style="width:0%;background:#ef4444"></div></div></td>
-            <td style="color:#ef4444;font-weight:600">0/20</td>
-            <td>0%</td>
-        </tr><tr><td>GMC Feed Completeness</td><td colspan="3" style="color:#94a3b8;font-style:italic">⏭ Skipped — set GMC_FEED_URL env var to enable</td></tr></tbody>
+            <td style="color:#ef4444;font-weight:600;text-align:right">0/100</td>
+        </tr><tr><td>GMC Feed Completeness</td><td style="font-size:0.8em;color:#64748b">Google Merchant Centre feed completeness — required fields (id, title, price, gtin, brand) and optional fields per GMC spec.</td><td colspan="2" style="color:#94a3b8;font-style:italic">Skipped — set GMC_FEED_URL env var to enable</td></tr></tbody>
     </table>
         <h3>Ecommerce Issues</h3>
         <table class="issues-table">
             <thead><tr><th>Check</th><th>Page / URL</th><th>Issue</th></tr></thead>
-            <tbody><tr><td class="sev-error">Schema Validity</td><td><code>buying-guide--best-air-conditioners.html</code></td><td>No JSON-LD found</td></tr><tr><td class="sev-error">Schema Validity</td><td><code>buying-guide--best-tvs.html</code></td><td>No JSON-LD found</td></tr><tr><td class="sev-error">Schema Validity</td><td><code>buying-guide--best-washing-machines.html</code></td><td>No JSON-LD found</td></tr><tr><td class="sev-error">Schema Validity</td><td><code>laptops-computers.html</code></td><td>No JSON-LD found</td></tr><tr><td class="sev-error">Schema Validity</td><td><code>samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html</code></td><td>No JSON-LD found</td></tr><tr><td class="sev-error">User Agent Behaviour</td><td><code>https://www.thegoodguys.com.au/buying-guide/best-tvs</code></td><td>Tier-1 bots blocked: GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-User, Claude-SearchBot, PerplexityBot, Google-Extended</td></tr><tr><td class="sev-error">AI Content Signals</td><td><code>index.html</code></td><td>Low AI content signals — few patterns AI models cite</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>air-conditioners.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (24 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>buying-guide--best-air-conditioners.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (25 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>buying-guide--best-tvs.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (25 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>buying-guide--best-washing-machines.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (25 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>index.html</code></td><td>high external JS (25 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>laptops-computers.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (24 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>sale.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (23 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (24 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>televisions--smart-tvs.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (24 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>televisions.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (24 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>washing-machines.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (24 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>whats-new.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (25 scripts)</td></tr><tr><td class="sev-error">Robots.txt & llms.txt</td><td><code></code></td><td>No llms.txt — AI agents cannot get a structured site overview</td></tr><tr><td class="sev-error">Sitemap Coverage</td><td><code></code></td><td>category_pages not found in sitemap</td></tr><tr><td class="sev-error">Sitemap Coverage</td><td><code></code></td><td>buying_guides not found in sitemap</td></tr><tr><td class="sev-error">Sitemap Coverage</td><td><code></code></td><td>content_pages not found in sitemap</td></tr><tr><td class="sev-error">Competitor Schema Comparison</td><td><code></code></td><td>Competitors have WebSite schema — TGG doesn't</td></tr><tr><td class="sev-error">AU Content Signals</td><td><code>air-conditioners.html</code></td><td>lang attr is "en" — should be en-AU for AU markets</td></tr></tbody>
+            <tbody><tr><td class="sev-error">Schema Validity</td><td><code>buying-guide--best-air-conditioners.html</code></td><td>No JSON-LD found</td></tr><tr><td class="sev-error">Schema Validity</td><td><code>buying-guide--best-tvs.html</code></td><td>No JSON-LD found</td></tr><tr><td class="sev-error">Schema Validity</td><td><code>buying-guide--best-washing-machines.html</code></td><td>No JSON-LD found</td></tr><tr><td class="sev-error">Schema Validity</td><td><code>laptops-computers.html</code></td><td>No JSON-LD found</td></tr><tr><td class="sev-error">Schema Validity</td><td><code>samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html</code></td><td>No JSON-LD found</td></tr><tr><td class="sev-error">User Agent Behaviour</td><td><code>https://www.thegoodguys.com.au/buying-guide/best-tvs</code></td><td>Tier-1 bots blocked: GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-User, Claude-SearchBot, PerplexityBot, Google-Extended</td></tr><tr><td class="sev-error">AI Content Signals</td><td><code>index.html</code></td><td>Low AI content signals — few patterns AI models cite</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>air-conditioners.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (24 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>buying-guide--best-air-conditioners.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (24 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>buying-guide--best-tvs.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (25 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>buying-guide--best-washing-machines.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (25 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>index.html</code></td><td>high external JS (25 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>laptops-computers.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (24 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>sale.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (24 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (24 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>televisions--smart-tvs.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (24 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>televisions.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (23 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>washing-machines.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (24 scripts)</td></tr><tr><td class="sev-error">DOM Structure</td><td><code>whats-new.html</code></td><td>heading level skipped (e.g. H1→H3) — breaks AI doc outline; high external JS (25 scripts)</td></tr><tr><td class="sev-error">Robots.txt & llms.txt</td><td><code></code></td><td>No llms.txt — AI agents cannot get a structured site overview</td></tr><tr><td class="sev-error">Sitemap Coverage</td><td><code></code></td><td>category_pages not found in sitemap</td></tr><tr><td class="sev-error">Sitemap Coverage</td><td><code></code></td><td>buying_guides not found in sitemap</td></tr><tr><td class="sev-error">Sitemap Coverage</td><td><code></code></td><td>content_pages not found in sitemap</td></tr><tr><td class="sev-error">Competitor Schema Comparison</td><td><code></code></td><td>Competitors have WebSite schema — TGG doesn't</td></tr><tr><td class="sev-error">AU Content Signals</td><td><code>air-conditioners.html</code></td><td>lang attr is "en" — should be en-AU for AU markets</td></tr></tbody>
         </table>
             <h3>Render Diff — Pre JS vs Post JS</h3>
             <p style="font-size:0.85em;color:#64748b;margin-top:-8px">
-              🟡 No JS = what AI bots (httpx) see &nbsp;|&nbsp; 🔵 With JS = Playwright render &nbsp;|&nbsp;
-              % = content accessible without JS &nbsp;|&nbsp; Schema: JSON-LD blocks &nbsp;|&nbsp; Price elements
+              <strong>No JS</strong> = what AI bots (httpx) see &nbsp;|&nbsp; <strong>With JS</strong> = Playwright render &nbsp;|&nbsp;
+              % = content accessible without JS &nbsp;|&nbsp; Schema: <strong>SSR</strong> = server-rendered / <strong>CSR</strong> = injected by JS &nbsp;|&nbsp; Price: <strong>OK</strong> / <strong>MISS</strong>
             </p>
             <table class="data-table">
                 <thead><tr><th>Page</th><th>Word counts</th><th>% accessible</th><th>Schema blocks</th><th>Price els</th></tr></thead>
@@ -342,10 +413,10 @@ code { font-family: 'SF Mono', 'Fira Code', monospace; background: #f1f5f9; padd
                 </td>
                 <td style="text-align:center;color:#22c55e;font-weight:600">100%</td>
                 <td style="text-align:center;font-size:0.85em">
-                  🟢 1 raw / 1 rendered
+                  <span style="color:#166534;font-weight:700">SSR</span> 1 raw / 1 rendered
                 </td>
                 <td style="text-align:center;font-size:0.85em">
-                  🟢 48 raw / 24 rendered
+                  <span style="color:#166534;font-weight:700">OK</span> 48 raw / 24 rendered
                 </td>
             </tr><tr>
                 <td style="font-size:0.85em"><code>/televisions</code></td>
@@ -363,10 +434,10 @@ code { font-family: 'SF Mono', 'Fira Code', monospace; background: #f1f5f9; padd
                 </td>
                 <td style="text-align:center;color:#22c55e;font-weight:600">100%</td>
                 <td style="text-align:center;font-size:0.85em">
-                  🟢 3 raw / 3 rendered
+                  <span style="color:#166534;font-weight:700">SSR</span> 3 raw / 3 rendered
                 </td>
                 <td style="text-align:center;font-size:0.85em">
-                  🟢 29 raw / 29 rendered
+                  <span style="color:#166534;font-weight:700">OK</span> 29 raw / 29 rendered
                 </td>
             </tr><tr>
                 <td style="font-size:0.85em"><code>/televisions/smart-tvs</code></td>
@@ -384,10 +455,10 @@ code { font-family: 'SF Mono', 'Fira Code', monospace; background: #f1f5f9; padd
                 </td>
                 <td style="text-align:center;color:#22c55e;font-weight:600">100%</td>
                 <td style="text-align:center;font-size:0.85em">
-                  🟢 3 raw / 3 rendered
+                  <span style="color:#166534;font-weight:700">SSR</span> 3 raw / 3 rendered
                 </td>
                 <td style="text-align:center;font-size:0.85em">
-                  🟢 29 raw / 29 rendered
+                  <span style="color:#166534;font-weight:700">OK</span> 29 raw / 29 rendered
                 </td>
             </tr><tr>
                 <td style="font-size:0.85em"><code>/buying-guide/best-tvs</code></td>
@@ -405,10 +476,10 @@ code { font-family: 'SF Mono', 'Fira Code', monospace; background: #f1f5f9; padd
                 </td>
                 <td style="text-align:center;color:#22c55e;font-weight:600">100%</td>
                 <td style="text-align:center;font-size:0.85em">
-                  🟢 0 raw / 0 rendered
+                  <span style="color:#166534;font-weight:700">SSR</span> 0 raw / 0 rendered
                 </td>
                 <td style="text-align:center;font-size:0.85em">
-                  🟢 0 raw / 0 rendered
+                  <span style="color:#166534;font-weight:700">OK</span> 0 raw / 0 rendered
                 </td>
             </tr></tbody>
             </table>
@@ -504,56 +575,51 @@ code { font-family: 'SF Mono', 'Fira Code', monospace; background: #f1f5f9; padd
   </div>
 
   <div class="section">
-    <h2>Phase 4 — Content Intelligence <span style="display:inline-block;padding:4px 14px;border-radius:20px;background:#fff7ed;color:#f97316;font-weight:700;font-size:1.1em;border:2px solid #f97316">D · 50%</span></h2>
+    <h2>Phase 4 — Content Intelligence <span style="display:inline-block;padding:4px 14px;border-radius:20px;background:#fff7ed;color:#f97316;font-weight:700;font-size:1.1em;border:2px solid #f97316">D · 51%</span></h2>
     
     <table class="data-table">
-        <thead><tr><th>Check</th><th>Progress</th><th>Score</th><th>%</th></tr></thead>
+        <thead><tr><th>Check</th><th>Description</th><th>Progress</th><th>Score</th></tr></thead>
         <tbody><tr>
-            <td>Boilerplate Ratio</td>
+            <td><strong>Boilerplate Ratio</strong></td>
+            <td style="font-size:0.8em;color:#64748b">Ratio of unique content vs boilerplate (nav, footer, sidebar). Lower boilerplate = more AI-citable unique content per page.</td>
             <td><div class="pct-bar"><div style="width:58%;background:#eab308"></div></div></td>
-            <td style="color:#eab308;font-weight:600">140/240</td>
-            <td>58%</td>
+            <td style="color:#eab308;font-weight:600;text-align:right">58/100</td>
         </tr><tr>
-            <td>Content Chunking</td>
+            <td><strong>Content Chunking</strong></td>
+            <td style="font-size:0.8em;color:#64748b">Content broken into H2/H3 sections with short paragraphs and numbered lists — structure that lets AI extract and cite specific answers.</td>
             <td><div class="pct-bar"><div style="width:15%;background:#ef4444"></div></div></td>
-            <td style="color:#ef4444;font-weight:600">46/300</td>
-            <td>15%</td>
+            <td style="color:#ef4444;font-weight:600;text-align:right">15/100</td>
         </tr><tr>
-            <td>Entity Signals</td>
+            <td><strong>Entity Signals</strong></td>
+            <td style="font-size:0.8em;color:#64748b">Named entities present — brands, product models, specs, features, locations. AI systems extract and cite entities when answering queries.</td>
             <td><div class="pct-bar"><div style="width:77%;background:#22c55e"></div></div></td>
-            <td style="color:#22c55e;font-weight:600">231/300</td>
-            <td>77%</td>
+            <td style="color:#22c55e;font-weight:600;text-align:right">77/100</td>
         </tr><tr>
-            <td>Knowledge Graph</td>
+            <td><strong>Knowledge Graph</strong></td>
+            <td style="font-size:0.8em;color:#64748b">Signals linking content to the knowledge graph — schema sameAs URLs, Wikidata links, authoritative entity references.</td>
             <td><div class="pct-bar"><div style="width:10%;background:#ef4444"></div></div></td>
-            <td style="color:#ef4444;font-weight:600">25/240</td>
-            <td>10%</td>
+            <td style="color:#ef4444;font-weight:600;text-align:right">10/100</td>
         </tr><tr>
-            <td>Semantic Structure</td>
+            <td><strong>Semantic Structure</strong></td>
+            <td style="font-size:0.8em;color:#64748b">Semantic HTML quality — correct use of article, section, aside, figure elements that help AI parsers identify content boundaries.</td>
             <td><div class="pct-bar"><div style="width:49%;background:#f97316"></div></div></td>
-            <td style="color:#f97316;font-weight:600">175/360</td>
-            <td>49%</td>
+            <td style="color:#f97316;font-weight:600;text-align:right">49/100</td>
         </tr><tr>
-            <td>Anchor Text Quality</td>
+            <td><strong>Anchor Text Quality</strong></td>
+            <td style="font-size:0.8em;color:#64748b">Descriptive vs generic anchor text. Specific anchors (brand names, product types) score higher than 'click here' or 'read more'.</td>
             <td><div class="pct-bar"><div style="width:88%;background:#22c55e"></div></div></td>
-            <td style="color:#22c55e;font-weight:600">210/240</td>
-            <td>88%</td>
+            <td style="color:#22c55e;font-weight:600;text-align:right">88/100</td>
         </tr><tr>
-            <td>Content Similarity</td>
+            <td><strong>Content Similarity</strong></td>
+            <td style="font-size:0.8em;color:#64748b">Cosine similarity of page content to competitor corpus using BGE-M3 embeddings — how well TGG covers the same topics competitors cover.</td>
             <td><div class="pct-bar"><div style="width:65%;background:#eab308"></div></div></td>
-            <td style="color:#eab308;font-weight:600">196/300</td>
-            <td>65%</td>
+            <td style="color:#eab308;font-weight:600;text-align:right">65/100</td>
         </tr><tr>
-            <td>Entity Gap vs Competitors</td>
+            <td><strong>Entity Gap vs Competitors</strong></td>
+            <td style="font-size:0.8em;color:#64748b">Entities found in competitor pages but absent from equivalent TGG pages — brands, features, specs TGG should mention to close the gap.</td>
             <td><div class="pct-bar"><div style="width:44%;background:#f97316"></div></div></td>
-            <td style="color:#f97316;font-weight:600">66/150</td>
-            <td>44%</td>
-        </tr><tr>
-            <td>LLM Quality Judge</td>
-            <td><div class="pct-bar"><div style="width:45%;background:#f97316"></div></div></td>
-            <td style="color:#f97316;font-weight:600">112/250</td>
-            <td>45%</td>
-        </tr></tbody>
+            <td style="color:#f97316;font-weight:600;text-align:right">44/100</td>
+        </tr><tr><td><strong>LLM Quality Judge</strong></td><td style="font-size:0.8em;color:#64748b">LLM-judge scoring via Phi-4/Ollama — rates clarity, specificity, structured-data alignment, query answerability. Self-hosted runner only.</td><td colspan="2" style="color:#94a3b8;font-style:italic">Skipped — self-hosted runner required</td></tr></tbody>
     </table>
         <h3>Content Intelligence Issues</h3>
         <table class="issues-table">
@@ -567,41 +633,41 @@ code { font-family: 'SF Mono', 'Fira Code', monospace; background: #f1f5f9; padd
                 <td><code>air-conditioners.html</code></td>
                 <td style="color:#22c55e;font-weight:600">26 entities</td>
                 <td style="font-size:0.82em;color:#475569">reverse cycle, air conditioner, split system, compare, deal</td>
-                <td style="font-size:0.82em;color:#6366f1">price, reverse cycle, air conditioner</td>
+                <td style="font-size:0.82em;color:#6366f1">energy rating, capacity, air conditioner</td>
             </tr><tr>
                 <td><code>buying-guide--best-air-conditioners.html</code></td>
                 <td style="color:#eab308;font-weight:600">16 entities</td>
-                <td style="font-size:0.82em;color:#475569">price, discount, delivery, washing machine, tv</td>
+                <td style="font-size:0.82em;color:#475569">discount, price, delivery, coffee machine, fridge</td>
                 <td style="font-size:0.82em;color:#6366f1">—</td>
             </tr><tr>
                 <td><code>buying-guide--best-tvs.html</code></td>
                 <td style="color:#eab308;font-weight:600">16 entities</td>
-                <td style="font-size:0.82em;color:#475569">price, discount, delivery, washing machine, tv</td>
+                <td style="font-size:0.82em;color:#475569">discount, price, delivery, coffee machine, fridge</td>
                 <td style="font-size:0.82em;color:#6366f1">—</td>
             </tr><tr>
                 <td><code>buying-guide--best-washing-machines.html</code></td>
                 <td style="color:#eab308;font-weight:600">16 entities</td>
-                <td style="font-size:0.82em;color:#475569">price, discount, delivery, washing machine, tv</td>
+                <td style="font-size:0.82em;color:#475569">discount, price, delivery, coffee machine, fridge</td>
                 <td style="font-size:0.82em;color:#6366f1">—</td>
             </tr><tr>
                 <td><code>index.html</code></td>
                 <td style="color:#22c55e;font-weight:600">60 entities</td>
                 <td style="font-size:0.82em;color:#475569">compare, deal, tv, samsung, lg</td>
-                <td style="font-size:0.82em;color:#6366f1">hisense, philips, qled</td>
+                <td style="font-size:0.82em;color:#6366f1">philips, acer, samsung</td>
             </tr><tr>
                 <td><code>laptops-computers.html</code></td>
                 <td style="color:#eab308;font-weight:600">16 entities</td>
-                <td style="font-size:0.82em;color:#475569">price, discount, delivery, washing machine, tv</td>
+                <td style="font-size:0.82em;color:#475569">discount, price, delivery, coffee machine, fridge</td>
                 <td style="font-size:0.82em;color:#6366f1">—</td>
             </tr><tr>
                 <td><code>sale.html</code></td>
                 <td style="color:#22c55e;font-weight:600">69 entities</td>
-                <td style="font-size:0.82em;color:#475569">compare, deal, tv, delivery, hisense</td>
-                <td style="font-size:0.82em;color:#6366f1">hisense, philips, television</td>
+                <td style="font-size:0.82em;color:#475569">compare, deal, delivery, tv, hisense</td>
+                <td style="font-size:0.82em;color:#6366f1">coffee machine, philips, shark</td>
             </tr><tr>
                 <td><code>samsung-65-4k-qled-smart-tv-qa65qn90dauxsa.html</code></td>
                 <td style="color:#eab308;font-weight:600">16 entities</td>
-                <td style="font-size:0.82em;color:#475569">price, discount, delivery, washing machine, tv</td>
+                <td style="font-size:0.82em;color:#475569">discount, price, delivery, coffee machine, fridge</td>
                 <td style="font-size:0.82em;color:#6366f1">—</td>
             </tr></tbody>
         </table>
@@ -1096,7 +1162,7 @@ Store services: in-store demo, price match, installation, extended warranty
   </div>
 
   <div class="footer">
-    AEO Audit · The Good Guys · thegoodguys.com.au · 2026-05-01 23:56 UTC
+    AEO Audit · The Good Guys · thegoodguys.com.au · 2026-05-02 01:09 UTC
   </div>
 
 </div>
@@ -1109,8 +1175,8 @@ new Chart(document.getElementById('chartCrawlDomains'), {
         labels: ["thegoodguys.com.au", "jbhifi.com.au", "harveynorman.com.au", "appliancesonline.com.au"],
         datasets: [{
             label: 'Avg AEO Score %',
-            data: [55, 61, 31, 59],
-            backgroundColor: [55, 61, 31, 59].map(v => v >= 75 ? '#22c55e' : v >= 50 ? '#eab308' : v >= 25 ? '#f97316' : '#ef4444'),
+            data: [64, 59, 31, 59],
+            backgroundColor: [64, 59, 31, 59].map(v => v >= 75 ? '#22c55e' : v >= 50 ? '#eab308' : v >= 25 ? '#f97316' : '#ef4444'),
             borderRadius: 6,
         }]
     },
@@ -1132,7 +1198,7 @@ new Chart(document.getElementById('chartCrawlChecks'), {
         labels: ["Robots (AI bots)", "llms.txt", "HTTP Access", "Meta Tags", "Headings", "Schema / JSON-LD", "Content Signals", "JS Dependency"],
         datasets: [{
             label: 'TGG AEO Crawl',
-            data: [60, 0, 86, 65, 68, 57, 64, 0],
+            data: [60, 0, 100, 72, 86, 79, 75, 0],
             backgroundColor: 'rgba(99,102,241,0.2)',
             borderColor: '#6366f1',
             pointBackgroundColor: '#6366f1',
@@ -1174,7 +1240,7 @@ new Chart(document.getElementById('chartP4'), {
         labels: ["Boilerplate Ratio", "Content Chunking", "Entity Signals", "Knowledge Graph", "Semantic Structure", "Anchor Text Quality", "Content Similarity", "Entity Gap vs Competitors", "LLM Quality Judge"],
         datasets: [{
             label: 'TGG Content Intelligence',
-            data: [58, 15, 77, 10, 49, 88, 65, 44, 45],
+            data: [58, 15, 77, 10, 49, 88, 65, 44, 0],
             backgroundColor: 'rgba(249,115,22,0.2)',
             borderColor: '#f97316',
             pointBackgroundColor: '#f97316',
