@@ -124,9 +124,9 @@ on:
         default: '5'
 
       sitemap_types:
-        description: 'Page types to crawl in sitemap mode (default: home,category,guide)'
+        description: 'Page types to crawl in sitemap mode (default: home,category,product,guide,editorial)'
         required: false
-        default: 'home,category,guide'
+        default: 'home,category,product,guide,editorial'
 
       # ── Optional extras ──────────────────────────────────────────────────────
       gmc_feed_url:
