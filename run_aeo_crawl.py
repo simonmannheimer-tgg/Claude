@@ -110,7 +110,7 @@ _GENERIC_PRODUCT_RE = re.compile(r'(?:/p/|-\d{6,}|/products?/|/sku/)', re.IGNORE
 _GENERIC_GUIDE_RE   = re.compile(r'/(?:buying-guide|guide|advice|how-to|reviews?)/', re.IGNORECASE)
 _GENERIC_BLOG_RE    = re.compile(r'/(?:blog|news|whats-new|editorial|magazine|stories?)(?:/|$)', re.IGNORECASE)
 # TGG product slug: alphanumeric, contains both letters and digits, 6-20 chars, last segment
-_TGG_MODEL_RE       = re.compile(r'-([a-z]+[0-9][a-z0-9]{4,})$', re.IGNORECASE)
+_TGG_MODEL_RE       = re.compile(r'(?:/|-)(?=[^-/]*[a-z])(?=[^-/]*\d[^-/]*\d[^-/]*\d[^-/]*\d)[a-z0-9]+(?:-|$|/)', re.IGNORECASE)
 
 # ── Per-domain URL pattern maps ───────────────────────────────────────────────
 # Each entry: ordered list of (page_type, compiled_regex_matching_path)
