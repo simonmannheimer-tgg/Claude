@@ -693,6 +693,108 @@ def section_phase3(phase3: dict) -> str:
             <tbody>{cf_rows}</tbody>
         </table>"""
 
+    # ── AU signals detail ────────────────────────────────────────────────────
+    au_data = checks.get("au_signals", {})
+    if au_data and "pages" in au_data:
+        au_rows = ""
+        for p in au_data["pages"]:
+            page_pct = round(p.get("score", 0) / p.get("maxScore", 1) * 100) if p.get("maxScore") else 0
+            bar_c = pct_bar_color(page_pct)
+            signals = ", ".join(p.get("signals", [])) or "—"
+            issue = p.get("issue") or ""
+            lang = p.get("lang", "—")
+            au_sp = p.get("au_spelling_count", 0)
+            us_sp = p.get("us_spelling_count", 0)
+            spell_badge = (
+                f'<span style="color:#22c55e">AU {au_sp}</span>'
+                if us_sp == 0 or au_sp >= us_sp else
+                f'<span style="color:#ef4444">US drift {us_sp}>{au_sp}</span>'
+            )
+            au_rows += f"""<tr>
+                <td><code>{p.get("file","")}</code></td>
+                <td style="color:{bar_c};font-weight:600">{page_pct}/100</td>
+                <td style="font-size:0.82em;color:#64748b"><code>{lang}</code></td>
+                <td style="font-size:0.82em">{spell_badge}</td>
+                <td style="font-size:0.82em;color:#22c55e">{signals}</td>
+                <td style="font-size:0.82em;color:#ef4444">{issue}</td>
+            </tr>"""
+        html += f"""
+        <h3>Australian Content Signals by Page</h3>
+        <table class="data-table">
+            <thead><tr><th>Page</th><th>Score</th><th>lang=</th><th>Spelling</th><th>Signals</th><th>Issues</th></tr></thead>
+            <tbody>{au_rows}</tbody>
+        </table>"""
+
+    # ── Agentic commerce endpoint probe ─────────────────────────────────────
+    ag_data = checks.get("agentic_commerce", {})
+    if ag_data and "checks" in ag_data:
+        endpoint_rows = ""
+        for key, detail in ag_data["checks"].items():
+            reachable = detail.get("reachable", False)
+            status = detail.get("status", "—")
+            url = detail.get("url", key)
+            note = detail.get("note") or detail.get("error") or ""
+            badge = (
+                '<span style="background:#22c55e;color:#fff;font-size:0.75em;padding:1px 6px;border-radius:3px">FOUND</span>'
+                if reachable else
+                '<span style="background:#ef4444;color:#fff;font-size:0.75em;padding:1px 6px;border-radius:3px">MISSING</span>'
+            )
+            endpoint_rows += f"""<tr>
+                <td style="font-size:0.85em"><code>{key}</code></td>
+                <td>{badge}</td>
+                <td style="font-size:0.82em;color:#64748b"><code>{url.replace("https://www.thegoodguys.com.au","")}</code></td>
+                <td style="text-align:center">{status}</td>
+                <td style="font-size:0.82em;color:#94a3b8">{note}</td>
+            </tr>"""
+        signals_html = (
+            "<p style='color:#22c55e;font-size:0.85em'>" + " &nbsp;|&nbsp; ".join(ag_data.get("signals", [])) + "</p>"
+            if ag_data.get("signals") else
+            "<p style='color:#94a3b8;font-size:0.85em;font-style:italic'>No agentic endpoints detected — expected for most retailers in 2025.</p>"
+        )
+        html += f"""
+        <h3>Agentic Commerce Readiness</h3>
+        {signals_html}
+        <table class="data-table">
+            <thead><tr><th>Endpoint</th><th>Status</th><th>Path</th><th>HTTP</th><th>Note</th></tr></thead>
+            <tbody>{endpoint_rows}</tbody>
+        </table>"""
+
+    # ── GTIN coverage ────────────────────────────────────────────────────────
+    gtin_data = checks.get("gtin_coverage", {})
+    if gtin_data and gtin_data.get("total_product_pages", 0) > 0:
+        by_cat = gtin_data.get("by_category", {})
+        gtin_rows = ""
+        for cat, stats in by_cat.items():
+            total = stats.get("total", 0)
+            wg = stats.get("with_gtin", 0)
+            vg = stats.get("valid_gtin", 0)
+            cat_pct = round(wg / total * 100) if total else 0
+            bar_c = pct_bar_color(cat_pct)
+            gtin_rows += f"""<tr>
+                <td><code>{cat}</code></td>
+                <td style="text-align:center">{total}</td>
+                <td style="text-align:center;color:{bar_c};font-weight:600">{wg}</td>
+                <td style="text-align:center;color:#22c55e">{vg}</td>
+                <td style="text-align:center;color:{bar_c};font-weight:600">{cat_pct}%</td>
+            </tr>"""
+        total_pp = gtin_data.get("total_product_pages", 0)
+        with_g = gtin_data.get("with_gtin", 0)
+        valid_g = gtin_data.get("valid_gtin", 0)
+        overall_pct = round(with_g / total_pp * 100) if total_pp else 0
+        html += f"""
+        <h3>GTIN Coverage by Category</h3>
+        <p style="font-size:0.85em;color:#64748b;margin-top:-8px">
+            {with_g}/{total_pp} product pages have GTIN &nbsp;|&nbsp;
+            {valid_g} pass Luhn check digit validation &nbsp;|&nbsp;
+            Overall coverage: <strong style="color:{pct_bar_color(overall_pct)}">{overall_pct}%</strong>
+        </p>
+        <table class="data-table">
+            <thead><tr><th>Category</th><th>Products</th><th>Has GTIN</th><th>Valid GTIN</th><th>Coverage</th></tr></thead>
+            <tbody>{gtin_rows}</tbody>
+        </table>"""
+    elif gtin_data:
+        html += "<p style='color:#94a3b8;font-size:0.85em;font-style:italic'>GTIN Coverage: No product pages found in snapshot — check infer_page_type classification.</p>"
+
     return html
 
 
