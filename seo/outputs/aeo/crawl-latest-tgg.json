@@ -1,179 +1,13 @@
 [
   {
-    "url": "https://www.thegoodguys.com.au",
-    "label": "TGG \u00b7 Home",
-    "domain": "thegoodguys.com.au",
-    "page_type": "home",
-    "scope": "domain+page",
-    "score": 63,
-    "max_score": 140,
-    "percentage": 45,
-    "grade": "D",
-    "checks": {
-      "robots_ai": {
-        "score": 18,
-        "max": 30,
-        "percentage": 60,
-        "bots": {
-          "GPTBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "ClaudeBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "PerplexityBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Google-Extended": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Amazonbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Bingbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          }
-        },
-        "tier1_blocked": [],
-        "http_status": 200,
-        "issue": null
-      },
-      "llms_txt": {
-        "score": 0,
-        "max": 20,
-        "exists": false,
-        "http_status": 404
-      },
-      "http_access": {
-        "score": 10,
-        "max": 10,
-        "percentage": 100,
-        "statuses": {
-          "browser": 200,
-          "GPTBot": 200
-        },
-        "issue": null
-      },
-      "meta_tags": {
-        "score": 15,
-        "max": 20,
-        "percentage": 75,
-        "details": {
-          "title": {
-            "text": "The Good Guys - Leading Appliance & Entertainment Retailer",
-            "length": 58
-          },
-          "description": {
-            "length": 129
-          },
-          "og_type": "",
-          "canonical": "https://www.thegoodguys.com.au"
-        },
-        "issues": [
-          "Missing og:type"
-        ],
-        "issue": "Missing og:type"
-      },
-      "headings": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "h1_count": 0,
-        "h1_text": null,
-        "h2_count": 0,
-        "h3_count": 54,
-        "issues": [
-          "No H1 found",
-          "No H2 found",
-          "H3 present but no H2 \u2014 heading hierarchy skip"
-        ],
-        "issue": "No H1 found"
-      },
-      "schema_type": {
-        "score": 10,
-        "max": 20,
-        "percentage": 50,
-        "found_types": [
-          "Organization"
-        ],
-        "expected_types": [
-          "WebSite",
-          "Organization",
-          "SiteLinksSearchBox"
-        ],
-        "missing_types": [
-          "WebSite"
-        ],
-        "issues": [
-          "Missing expected schema: WebSite"
-        ],
-        "issue": "Missing expected schema: WebSite"
-      },
-      "content": {
-        "score": 10,
-        "max": 20,
-        "percentage": 50,
-        "word_count": 1654,
-        "has_faq": false,
-        "has_specs": false,
-        "num_density": 24.2,
-        "list_count": 0,
-        "issues": [
-          "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section",
-          "No spec/list signals \u2014 add product specifications or feature lists"
-        ],
-        "issue": "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
-      },
-      "js_depend": {
-        "score": null,
-        "max": 20,
-        "raw_words": 1654,
-        "rendered_words": null,
-        "pct_accessible": null,
-        "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
-      }
-    },
-    "issues": [
-      {
-        "check": "meta_tags",
-        "issue": "Missing og:type"
-      },
-      {
-        "check": "headings",
-        "issue": "No H1 found"
-      },
-      {
-        "check": "schema_type",
-        "issue": "Missing expected schema: WebSite"
-      },
-      {
-        "check": "content",
-        "issue": "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
-      }
-    ],
-    "cf_blocked": false
-  },
-  {
-    "url": "https://www.thegoodguys.com.au/televisions",
+    "url": "https://www.thegoodguys.com.au/sharp-trim-kit-stainless-steel-for-r321cafst-and-r395est-ebr39st",
     "label": "TGG \u00b7 Category",
     "domain": "thegoodguys.com.au",
     "page_type": "category",
     "scope": "page",
-    "score": 93,
+    "score": 95,
     "max_score": 140,
-    "percentage": 66,
+    "percentage": 68,
     "grade": "B",
     "checks": {
       "robots_ai": {
@@ -233,33 +67,33 @@
         "issue": null
       },
       "meta_tags": {
-        "score": 15,
+        "score": 17,
         "max": 20,
-        "percentage": 75,
+        "percentage": 85,
         "details": {
           "title": {
-            "text": "Buy TV's Online | Television Deal",
-            "length": 33
+            "text": "Sharp Trim Kit Stainless Steel for R321CAFST & R395EST Silver EBR39ST",
+            "length": 69
           },
           "description": {
-            "length": 138
+            "length": 167
           },
-          "og_type": "",
-          "canonical": "https://www.thegoodguys.com.au/televisions"
+          "og_type": "website",
+          "canonical": "https://www.thegoodguys.com.au/sharp-trim-kit-stainless-steel-for-r321cafst-and-"
         },
         "issues": [
-          "Missing og:type"
+          "Description length 167 \u2014 target 100-160 chars"
         ],
-        "issue": "Missing og:type"
+        "issue": "Description length 167 \u2014 target 100-160 chars"
       },
       "headings": {
         "score": 20,
         "max": 20,
         "percentage": 100,
         "h1_count": 1,
-        "h1_text": "Televisions",
+        "h1_text": "Sharp Trim Kit Stainless Steel for R321CAFST & R395EST",
         "h2_count": 7,
-        "h3_count": 15,
+        "h3_count": 9,
         "issues": [],
         "issue": null
       },
@@ -268,7 +102,8 @@
         "max": 20,
         "percentage": 75,
         "found_types": [
-          "CollectionPage",
+          "WebPage",
+          "Product",
           "FAQPage",
           "BreadcrumbList"
         ],
@@ -288,11 +123,11 @@
         "score": 15,
         "max": 20,
         "percentage": 75,
-        "word_count": 2970,
+        "word_count": 1073,
         "has_faq": false,
         "has_specs": true,
-        "num_density": 87.5,
-        "list_count": 17,
+        "num_density": 59.6,
+        "list_count": 7,
         "issues": [
           "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
         ],
@@ -301,7 +136,7 @@
       "js_depend": {
         "score": null,
         "max": 20,
-        "raw_words": 2970,
+        "raw_words": 1073,
         "rendered_words": null,
         "pct_accessible": null,
         "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
@@ -310,7 +145,7 @@
     "issues": [
       {
         "check": "meta_tags",
-        "issue": "Missing og:type"
+        "issue": "Description length 167 \u2014 target 100-160 chars"
       },
       {
         "check": "schema_type",
@@ -324,7 +159,7 @@
     "cf_blocked": false
   },
   {
-    "url": "https://www.thegoodguys.com.au/samsung-65-inches-qn85f-neo-qled-4k-mini-led-smart-ai-tv-2025-qa65qn85fawxxy",
+    "url": "https://www.thegoodguys.com.au/sedko-pty-ltd-melody-tv-cabinet-1600mm-oak-24-melody-1600-oak",
     "label": "TGG \u00b7 Product",
     "domain": "thegoodguys.com.au",
     "page_type": "product",
@@ -396,28 +231,28 @@
         "percentage": 85,
         "details": {
           "title": {
-            "text": "Samsung 65\" QN85F NEO QLED 4K Mini LED Smart AI TV 2025 QA65QN85FAWXXY",
-            "length": 70
+            "text": "Sedko Pty Ltd Melody TV Cabinet 1600mm 24 Oak (Beige) MELODY 1600 - OAK",
+            "length": 71
           },
           "description": {
-            "length": 175
+            "length": 168
           },
           "og_type": "website",
-          "canonical": "https://www.thegoodguys.com.au/samsung-65-inches-qn85f-neo-qled-4k-mini-led-smar"
+          "canonical": "https://www.thegoodguys.com.au/sedko-pty-ltd-melody-tv-cabinet-1600mm-oak-24-mel"
         },
         "issues": [
-          "Description length 175 \u2014 target 100-160 chars"
+          "Description length 168 \u2014 target 100-160 chars"
         ],
-        "issue": "Description length 175 \u2014 target 100-160 chars"
+        "issue": "Description length 168 \u2014 target 100-160 chars"
       },
       "headings": {
         "score": 20,
         "max": 20,
         "percentage": 100,
         "h1_count": 1,
-        "h1_text": "Samsung 65\" QN85F NEO QLED 4K Mini LED Smart AI TV 2025",
+        "h1_text": "Sedko Pty Ltd Melody TV Cabinet 1600mm Oak 24",
         "h2_count": 7,
-        "h3_count": 27,
+        "h3_count": 12,
         "issues": [],
         "issue": null
       },
@@ -448,10 +283,10 @@
         "score": 15,
         "max": 20,
         "percentage": 75,
-        "word_count": 2110,
+        "word_count": 1194,
         "has_faq": false,
         "has_specs": true,
-        "num_density": 82.5,
+        "num_density": 59.5,
         "list_count": 7,
         "issues": [
           "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
@@ -461,7 +296,7 @@
       "js_depend": {
         "score": null,
         "max": 20,
-        "raw_words": 2110,
+        "raw_words": 1194,
         "rendered_words": null,
         "pct_accessible": null,
         "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
@@ -470,7 +305,7 @@
     "issues": [
       {
         "check": "meta_tags",
-        "issue": "Description length 175 \u2014 target 100-160 chars"
+        "issue": "Description length 168 \u2014 target 100-160 chars"
       },
       {
         "check": "schema_type",
@@ -484,162 +319,10 @@
     "cf_blocked": false
   },
   {
-    "url": "https://www.thegoodguys.com.au/buying-guide/television-buying-guide",
+    "url": "https://www.thegoodguys.com.au/buying-guide/hisense-tv-range-buying-guide",
     "label": "TGG \u00b7 Buying Guide",
     "domain": "thegoodguys.com.au",
     "page_type": "guide",
-    "scope": "page",
-    "score": 103,
-    "max_score": 140,
-    "percentage": 74,
-    "grade": "B",
-    "checks": {
-      "robots_ai": {
-        "score": 18,
-        "max": 30,
-        "percentage": 60,
-        "bots": {
-          "GPTBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "ClaudeBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "PerplexityBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Google-Extended": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Amazonbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Bingbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          }
-        },
-        "tier1_blocked": [],
-        "http_status": 200,
-        "issue": null
-      },
-      "llms_txt": {
-        "score": 0,
-        "max": 20,
-        "exists": false,
-        "http_status": 404
-      },
-      "http_access": {
-        "score": 10,
-        "max": 10,
-        "percentage": 100,
-        "statuses": {
-          "browser": 200,
-          "GPTBot": 200
-        },
-        "issue": null
-      },
-      "meta_tags": {
-        "score": 15,
-        "max": 20,
-        "percentage": 75,
-        "details": {
-          "title": {
-            "text": "Which Television is right for you? | TV buying guide",
-            "length": 52
-          },
-          "description": {
-            "length": 143
-          },
-          "og_type": "",
-          "canonical": "https://www.thegoodguys.com.au/buying-guide/television-buying-guide"
-        },
-        "issues": [
-          "Missing og:type"
-        ],
-        "issue": "Missing og:type"
-      },
-      "headings": {
-        "score": 20,
-        "max": 20,
-        "percentage": 100,
-        "h1_count": 1,
-        "h1_text": "Television buying guide",
-        "h2_count": 15,
-        "h3_count": 47,
-        "issues": [],
-        "issue": null
-      },
-      "schema_type": {
-        "score": 20,
-        "max": 20,
-        "percentage": 100,
-        "found_types": [
-          "BreadcrumbList",
-          "FAQPage"
-        ],
-        "expected_types": [
-          "Article",
-          "FAQPage",
-          "BreadcrumbList"
-        ],
-        "missing_types": [
-          "Article"
-        ],
-        "issues": [
-          "Missing expected schema: Article"
-        ],
-        "issue": "Missing expected schema: Article"
-      },
-      "content": {
-        "score": 20,
-        "max": 20,
-        "percentage": 100,
-        "word_count": 8087,
-        "has_faq": true,
-        "has_specs": true,
-        "num_density": 21.1,
-        "list_count": 5,
-        "issues": [],
-        "issue": null
-      },
-      "js_depend": {
-        "score": null,
-        "max": 20,
-        "raw_words": 8087,
-        "rendered_words": null,
-        "pct_accessible": null,
-        "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
-      }
-    },
-    "issues": [
-      {
-        "check": "meta_tags",
-        "issue": "Missing og:type"
-      },
-      {
-        "check": "schema_type",
-        "issue": "Missing expected schema: Article"
-      }
-    ],
-    "cf_blocked": false
-  },
-  {
-    "url": "https://www.thegoodguys.com.au/whats-new/unboxing-the-lg-tv-range-2025",
-    "label": "TGG \u00b7 Blog Article",
-    "domain": "thegoodguys.com.au",
-    "page_type": "blog",
     "scope": "page",
     "score": 98,
     "max_score": 140,
@@ -708,14 +391,14 @@
         "percentage": 75,
         "details": {
           "title": {
-            "text": "Unboxing LG\u2019s 2025 TV Range: The Must-Have Tech And Why You Want It",
-            "length": 67
+            "text": "Hisense TV Range Buying Guide",
+            "length": 29
           },
           "description": {
-            "length": 157
+            "length": 127
           },
           "og_type": "",
-          "canonical": "https://www.thegoodguys.com.au/whats-new/unboxing-the-lg-tv-range-2025"
+          "canonical": "https://www.thegoodguys.com.au/buying-guide/hisense-tv-range-buying-guide"
         },
         "issues": [
           "Missing og:type"
@@ -727,9 +410,9 @@
         "max": 20,
         "percentage": 100,
         "h1_count": 1,
-        "h1_text": "Unboxing LG\u2019s 2025 TV range: the must-have tech",
-        "h2_count": 6,
-        "h3_count": 3,
+        "h1_text": "Hisense TV buying guide",
+        "h2_count": 1,
+        "h3_count": 8,
         "issues": [],
         "issue": null
       },
@@ -738,26 +421,31 @@
         "max": 20,
         "percentage": 100,
         "found_types": [
-          "Article",
-          "BreadcrumbList"
+          "BreadcrumbList",
+          "FAQPage"
         ],
         "expected_types": [
           "Article",
+          "FAQPage",
           "BreadcrumbList"
         ],
-        "missing_types": [],
-        "issues": [],
-        "issue": null
+        "missing_types": [
+          "Article"
+        ],
+        "issues": [
+          "Missing expected schema: Article"
+        ],
+        "issue": "Missing expected schema: Article"
       },
       "content": {
         "score": 15,
         "max": 20,
         "percentage": 75,
-        "word_count": 1443,
+        "word_count": 1619,
         "has_faq": false,
         "has_specs": true,
-        "num_density": 26.3,
-        "list_count": 6,
+        "num_density": 30.9,
+        "list_count": 0,
         "issues": [
           "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
         ],
@@ -766,7 +454,7 @@
       "js_depend": {
         "score": null,
         "max": 20,
-        "raw_words": 1443,
+        "raw_words": 1619,
         "rendered_words": null,
         "pct_accessible": null,
         "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
@@ -778,6 +466,10 @@
         "issue": "Missing og:type"
       },
       {
+        "check": "schema_type",
+        "issue": "Missing expected schema: Article"
+      },
+      {
         "check": "content",
         "issue": "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
       }
@@ -785,14 +477,177 @@
     "cf_blocked": false
   },
   {
-    "url": "https://www.jbhifi.com.au",
+    "url": "https://www.thegoodguys.com.au/whats-new",
+    "label": "TGG \u00b7 Blog",
+    "domain": "thegoodguys.com.au",
+    "page_type": "blog",
+    "scope": "page",
+    "score": 78,
+    "max_score": 140,
+    "percentage": 56,
+    "grade": "C",
+    "checks": {
+      "robots_ai": {
+        "score": 18,
+        "max": 30,
+        "percentage": 60,
+        "bots": {
+          "GPTBot": {
+            "status": "not-mentioned",
+            "mentioned": false,
+            "pts": 3
+          },
+          "ClaudeBot": {
+            "status": "not-mentioned",
+            "mentioned": false,
+            "pts": 3
+          },
+          "PerplexityBot": {
+            "status": "not-mentioned",
+            "mentioned": false,
+            "pts": 3
+          },
+          "Google-Extended": {
+            "status": "not-mentioned",
+            "mentioned": false,
+            "pts": 3
+          },
+          "Amazonbot": {
+            "status": "not-mentioned",
+            "mentioned": false,
+            "pts": 3
+          },
+          "Bingbot": {
+            "status": "not-mentioned",
+            "mentioned": false,
+            "pts": 3
+          }
+        },
+        "tier1_blocked": [],
+        "http_status": 200,
+        "issue": null
+      },
+      "llms_txt": {
+        "score": 0,
+        "max": 20,
+        "exists": false,
+        "http_status": 404
+      },
+      "http_access": {
+        "score": 10,
+        "max": 10,
+        "percentage": 100,
+        "statuses": {
+          "browser": 200,
+          "GPTBot": 200
+        },
+        "issue": null
+      },
+      "meta_tags": {
+        "score": 15,
+        "max": 20,
+        "percentage": 75,
+        "details": {
+          "title": {
+            "text": "What's New at The Good Guys | Latest Tech & Appliance Arrivals",
+            "length": 62
+          },
+          "description": {
+            "length": 104
+          },
+          "og_type": "",
+          "canonical": "https://www.thegoodguys.com.au/whats-new"
+        },
+        "issues": [
+          "Missing og:type"
+        ],
+        "issue": "Missing og:type"
+      },
+      "headings": {
+        "score": 10,
+        "max": 20,
+        "percentage": 50,
+        "h1_count": 1,
+        "h1_text": "What's New",
+        "h2_count": 0,
+        "h3_count": 6,
+        "issues": [
+          "No H2 found",
+          "H3 present but no H2 \u2014 heading hierarchy skip"
+        ],
+        "issue": "No H2 found"
+      },
+      "schema_type": {
+        "score": 10,
+        "max": 20,
+        "percentage": 50,
+        "found_types": [
+          "BreadcrumbList"
+        ],
+        "expected_types": [
+          "Article",
+          "BreadcrumbList"
+        ],
+        "missing_types": [
+          "Article"
+        ],
+        "issues": [
+          "Missing expected schema: Article"
+        ],
+        "issue": "Missing expected schema: Article"
+      },
+      "content": {
+        "score": 15,
+        "max": 20,
+        "percentage": 75,
+        "word_count": 2114,
+        "has_faq": false,
+        "has_specs": true,
+        "num_density": 18.9,
+        "list_count": 0,
+        "issues": [
+          "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
+        ],
+        "issue": "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
+      },
+      "js_depend": {
+        "score": null,
+        "max": 20,
+        "raw_words": 2114,
+        "rendered_words": null,
+        "pct_accessible": null,
+        "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
+      }
+    },
+    "issues": [
+      {
+        "check": "meta_tags",
+        "issue": "Missing og:type"
+      },
+      {
+        "check": "headings",
+        "issue": "No H2 found"
+      },
+      {
+        "check": "schema_type",
+        "issue": "Missing expected schema: Article"
+      },
+      {
+        "check": "content",
+        "issue": "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
+      }
+    ],
+    "cf_blocked": false
+  },
+  {
+    "url": "https://www.jbhifi.com.au/",
     "label": "JB Hi-Fi \u00b7 Home",
     "domain": "jbhifi.com.au",
     "page_type": "home",
     "scope": "domain+page",
-    "score": 80,
+    "score": 83,
     "max_score": 140,
-    "percentage": 57,
+    "percentage": 59,
     "grade": "C",
     "checks": {
       "robots_ai": {
@@ -856,9 +711,9 @@
         "issue": null
       },
       "meta_tags": {
-        "score": 17,
+        "score": 20,
         "max": 20,
-        "percentage": 85,
+        "percentage": 100,
         "details": {
           "title": {
             "text": "JB Hi-Fi - Australia's Largest Home Entertainment Retailer",
@@ -870,10 +725,8 @@
           "og_type": "website",
           "canonical": "https://www.jbhifi.com.au/"
         },
-        "issues": [
-          "Canonical points to different URL"
-        ],
-        "issue": "Canonical points to different URL"
+        "issues": [],
+        "issue": null
       },
       "headings": {
         "score": 5,
@@ -937,10 +790,6 @@
     },
     "issues": [
       {
-        "check": "meta_tags",
-        "issue": "Canonical points to different URL"
-      },
-      {
         "check": "headings",
         "issue": "No H1 found"
       },
@@ -956,335 +805,14 @@
     "cf_blocked": false
   },
   {
-    "url": "https://www.jbhifi.com.au/collections/tvs",
-    "label": "JB Hi-Fi \u00b7 Category",
-    "domain": "jbhifi.com.au",
-    "page_type": "category",
-    "scope": "page",
-    "score": 108,
-    "max_score": 140,
-    "percentage": 77,
-    "grade": "B",
-    "checks": {
-      "robots_ai": {
-        "score": 18,
-        "max": 30,
-        "percentage": 60,
-        "bots": {
-          "GPTBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "ClaudeBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "PerplexityBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Google-Extended": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Amazonbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Bingbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          }
-        },
-        "tier1_blocked": [],
-        "http_status": 200,
-        "issue": null
-      },
-      "llms_txt": {
-        "score": 20,
-        "max": 20,
-        "percentage": 100,
-        "exists": true,
-        "word_count": 566,
-        "sections": 19,
-        "has_products": true,
-        "issue": null
-      },
-      "http_access": {
-        "score": 10,
-        "max": 10,
-        "percentage": 100,
-        "statuses": {
-          "browser": 200,
-          "GPTBot": 200
-        },
-        "issue": null
-      },
-      "meta_tags": {
-        "score": 20,
-        "max": 20,
-        "percentage": 100,
-        "details": {
-          "title": {
-            "text": "TVs - Shop OLED, QLED, QD-OLED, Gaming, 4K Smart TVs & More - JB Hi-Fi",
-            "length": 70
-          },
-          "description": {
-            "length": 150
-          },
-          "og_type": "website",
-          "canonical": "https://www.jbhifi.com.au/collections/tvs"
-        },
-        "issues": [],
-        "issue": null
-      },
-      "headings": {
-        "score": 20,
-        "max": 20,
-        "percentage": 100,
-        "h1_count": 1,
-        "h1_text": "TVs & Home Theatre",
-        "h2_count": 7,
-        "h3_count": 0,
-        "issues": [],
-        "issue": null
-      },
-      "schema_type": {
-        "score": 10,
-        "max": 20,
-        "percentage": 50,
-        "found_types": [
-          "BreadcrumbList"
-        ],
-        "expected_types": [
-          "ItemList",
-          "BreadcrumbList"
-        ],
-        "missing_types": [
-          "ItemList"
-        ],
-        "issues": [
-          "Missing expected schema: ItemList"
-        ],
-        "issue": "Missing expected schema: ItemList"
-      },
-      "content": {
-        "score": 10,
-        "max": 20,
-        "percentage": 50,
-        "word_count": 1004,
-        "has_faq": false,
-        "has_specs": false,
-        "num_density": 6.0,
-        "list_count": 5,
-        "issues": [
-          "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section",
-          "Low spec density (6/1000 words) \u2014 add prices, measurements, specs"
-        ],
-        "issue": "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
-      },
-      "js_depend": {
-        "score": null,
-        "max": 20,
-        "raw_words": 1004,
-        "rendered_words": null,
-        "pct_accessible": null,
-        "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
-      }
-    },
-    "issues": [
-      {
-        "check": "schema_type",
-        "issue": "Missing expected schema: ItemList"
-      },
-      {
-        "check": "content",
-        "issue": "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
-      }
-    ],
-    "cf_blocked": false
-  },
-  {
-    "url": "https://www.jbhifi.com.au/products/samsung-65-qn90d-neo-qled-4k-smart-tv-2024",
+    "url": "https://www.jbhifi.com.au/products/life-of-the-party-2018-dvd",
     "label": "JB Hi-Fi \u00b7 Product",
     "domain": "jbhifi.com.au",
     "page_type": "product",
     "scope": "page",
-    "score": 57,
+    "score": 93,
     "max_score": 140,
-    "percentage": 41,
-    "grade": "D",
-    "checks": {
-      "robots_ai": {
-        "score": 18,
-        "max": 30,
-        "percentage": 60,
-        "bots": {
-          "GPTBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "ClaudeBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "PerplexityBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Google-Extended": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Amazonbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Bingbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          }
-        },
-        "tier1_blocked": [],
-        "http_status": 200,
-        "issue": null
-      },
-      "llms_txt": {
-        "score": 20,
-        "max": 20,
-        "percentage": 100,
-        "exists": true,
-        "word_count": 566,
-        "sections": 19,
-        "has_products": true,
-        "issue": null
-      },
-      "http_access": {
-        "score": 0,
-        "max": 10,
-        "percentage": 0,
-        "statuses": {
-          "browser": 404,
-          "GPTBot": 404
-        },
-        "issue": "GPTBot receives non-200 response"
-      },
-      "meta_tags": {
-        "score": 9,
-        "max": 20,
-        "percentage": 45,
-        "details": {
-          "title": {
-            "text": "404 Not Found",
-            "length": 13
-          },
-          "description": {
-            "length": 0
-          },
-          "og_type": "website",
-          "canonical": "https://www.jbhifi.com.au/404"
-        },
-        "issues": [
-          "Title length 13 \u2014 target 30-70 chars",
-          "Missing meta description",
-          "Canonical points to different URL"
-        ],
-        "issue": "Title length 13 \u2014 target 30-70 chars"
-      },
-      "headings": {
-        "score": 10,
-        "max": 20,
-        "percentage": 50,
-        "h1_count": 0,
-        "h1_text": null,
-        "h2_count": 1,
-        "h3_count": 1,
-        "issues": [
-          "No H1 found"
-        ],
-        "issue": "No H1 found"
-      },
-      "schema_type": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "found_types": [],
-        "issues": [
-          "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-        ],
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      "content": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "word_count": 47,
-        "has_faq": false,
-        "has_specs": false,
-        "num_density": 0.0,
-        "list_count": 0,
-        "issues": [
-          "Low word count (47) \u2014 AI needs content to cite",
-          "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section",
-          "No spec/list signals \u2014 add product specifications or feature lists",
-          "Low spec density (0/1000 words) \u2014 add prices, measurements, specs"
-        ],
-        "issue": "Low word count (47) \u2014 AI needs content to cite"
-      },
-      "js_depend": {
-        "score": null,
-        "max": 20,
-        "raw_words": 47,
-        "rendered_words": null,
-        "pct_accessible": null,
-        "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
-      }
-    },
-    "issues": [
-      {
-        "check": "http_access",
-        "issue": "GPTBot receives non-200 response"
-      },
-      {
-        "check": "meta_tags",
-        "issue": "Title length 13 \u2014 target 30-70 chars"
-      },
-      {
-        "check": "headings",
-        "issue": "No H1 found"
-      },
-      {
-        "check": "schema_type",
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      {
-        "check": "content",
-        "issue": "Low word count (47) \u2014 AI needs content to cite"
-      }
-    ],
-    "cf_blocked": false
-  },
-  {
-    "url": "https://www.jbhifi.com.au/pages/samsung",
-    "label": "JB Hi-Fi \u00b7 Brand Hub",
-    "domain": "jbhifi.com.au",
-    "page_type": "brand",
-    "scope": "page",
-    "score": 98,
-    "max_score": 140,
-    "percentage": 70,
+    "percentage": 66,
     "grade": "B",
     "checks": {
       "robots_ai": {
@@ -1353,165 +881,17 @@
         "percentage": 100,
         "details": {
           "title": {
-            "text": "Samsung - Galaxy S26, S25 Ultra, Tab S10, Watch8 & More - JB Hi-Fi",
-            "length": 66
+            "text": "Life Of The Party - JB Hi-Fi",
+            "length": 28
           },
           "description": {
-            "length": 151
+            "length": 160
           },
-          "og_type": "website",
-          "canonical": "https://www.jbhifi.com.au/pages/samsung"
+          "og_type": "product",
+          "canonical": "https://www.jbhifi.com.au/products/life-of-the-party-2018-dvd"
         },
         "issues": [],
         "issue": null
-      },
-      "headings": {
-        "score": 20,
-        "max": 20,
-        "percentage": 100,
-        "h1_count": 1,
-        "h1_text": "Samsung",
-        "h2_count": 11,
-        "h3_count": 22,
-        "issues": [],
-        "issue": null
-      },
-      "schema_type": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "found_types": [],
-        "issues": [
-          "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-        ],
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      "content": {
-        "score": 10,
-        "max": 20,
-        "percentage": 50,
-        "word_count": 1917,
-        "has_faq": false,
-        "has_specs": false,
-        "num_density": 17.2,
-        "list_count": 1,
-        "issues": [
-          "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section",
-          "No spec/list signals \u2014 add product specifications or feature lists"
-        ],
-        "issue": "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
-      },
-      "js_depend": {
-        "score": null,
-        "max": 20,
-        "raw_words": 1917,
-        "rendered_words": null,
-        "pct_accessible": null,
-        "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
-      }
-    },
-    "issues": [
-      {
-        "check": "schema_type",
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      {
-        "check": "content",
-        "issue": "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section"
-      }
-    ],
-    "cf_blocked": false
-  },
-  {
-    "url": "https://www.jbhifi.com.au/pages/tv-buying-guide",
-    "label": "JB Hi-Fi \u00b7 Buying Guide",
-    "domain": "jbhifi.com.au",
-    "page_type": "guide",
-    "scope": "page",
-    "score": 70,
-    "max_score": 140,
-    "percentage": 50,
-    "grade": "C",
-    "checks": {
-      "robots_ai": {
-        "score": 18,
-        "max": 30,
-        "percentage": 60,
-        "bots": {
-          "GPTBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "ClaudeBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "PerplexityBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Google-Extended": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Amazonbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Bingbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          }
-        },
-        "tier1_blocked": [],
-        "http_status": 200,
-        "issue": null
-      },
-      "llms_txt": {
-        "score": 20,
-        "max": 20,
-        "percentage": 100,
-        "exists": true,
-        "word_count": 566,
-        "sections": 19,
-        "has_products": true,
-        "issue": null
-      },
-      "http_access": {
-        "score": 10,
-        "max": 10,
-        "percentage": 100,
-        "statuses": {
-          "browser": 200,
-          "GPTBot": 200
-        },
-        "issue": null
-      },
-      "meta_tags": {
-        "score": 17,
-        "max": 20,
-        "percentage": 85,
-        "details": {
-          "title": {
-            "text": "Guides & Tips - Buying Guides At JB Hi-Fi",
-            "length": 41
-          },
-          "description": {
-            "length": 144
-          },
-          "og_type": "website",
-          "canonical": "https://www.jbhifi.com.au/blogs/guides-tips"
-        },
-        "issues": [
-          "Canonical points to different URL"
-        ],
-        "issue": "Canonical points to different URL"
       },
       "headings": {
         "score": 5,
@@ -1528,14 +908,25 @@
         "issue": "No H1 found"
       },
       "schema_type": {
-        "score": 0,
+        "score": 20,
         "max": 20,
-        "percentage": 0,
-        "found_types": [],
-        "issues": [
-          "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
+        "percentage": 100,
+        "found_types": [
+          "BreadcrumbList",
+          "Product"
         ],
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
+        "expected_types": [
+          "Product",
+          "Offer",
+          "BreadcrumbList"
+        ],
+        "missing_types": [
+          "Offer"
+        ],
+        "issues": [
+          "Missing expected schema: Offer"
+        ],
+        "issue": "Missing expected schema: Offer"
       },
       "content": {
         "score": 0,
@@ -1545,7 +936,7 @@
         "has_faq": false,
         "has_specs": false,
         "num_density": 0.0,
-        "list_count": 0,
+        "list_count": 1,
         "issues": [
           "Low word count (0) \u2014 AI needs content to cite",
           "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section",
@@ -1564,1612 +955,13 @@
       }
     },
     "issues": [
-      {
-        "check": "meta_tags",
-        "issue": "Canonical points to different URL"
-      },
       {
         "check": "headings",
         "issue": "No H1 found"
       },
       {
         "check": "schema_type",
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      {
-        "check": "content",
-        "issue": "Low word count (0) \u2014 AI needs content to cite"
-      }
-    ],
-    "cf_blocked": false
-  },
-  {
-    "url": "https://www.harveynorman.com.au",
-    "label": "Harvey Norman \u00b7 Home",
-    "domain": "harveynorman.com.au",
-    "page_type": "home",
-    "scope": "domain+page",
-    "score": 43,
-    "max_score": 140,
-    "percentage": 31,
-    "grade": "F",
-    "checks": {
-      "robots_ai": {
-        "score": 18,
-        "max": 30,
-        "percentage": 60,
-        "bots": {
-          "GPTBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "ClaudeBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "PerplexityBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Google-Extended": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Amazonbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Bingbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          }
-        },
-        "tier1_blocked": [],
-        "http_status": 200,
-        "issue": null
-      },
-      "llms_txt": {
-        "score": 0,
-        "max": 20,
-        "exists": false,
-        "http_status": 404
-      },
-      "http_access": {
-        "score": 10,
-        "max": 10,
-        "percentage": 100,
-        "statuses": {
-          "browser": 200,
-          "GPTBot": 200
-        },
-        "issue": null
-      },
-      "meta_tags": {
-        "score": 5,
-        "max": 20,
-        "percentage": 25,
-        "details": {
-          "title": {
-            "text": "Pardon Our Interruption",
-            "length": 23
-          },
-          "description": {
-            "length": 0
-          },
-          "og_type": "",
-          "canonical": null
-        },
-        "issues": [
-          "Missing meta description",
-          "Missing og:type",
-          "Missing canonical"
-        ],
-        "issue": "Missing meta description"
-      },
-      "headings": {
-        "score": 10,
-        "max": 20,
-        "percentage": 50,
-        "h1_count": 1,
-        "h1_text": "Pardon Our Interruption",
-        "h2_count": 0,
-        "h3_count": 1,
-        "issues": [
-          "No H2 found",
-          "H3 present but no H2 \u2014 heading hierarchy skip"
-        ],
-        "issue": "No H2 found"
-      },
-      "schema_type": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "found_types": [],
-        "issues": [
-          "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-        ],
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      "content": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "word_count": 111,
-        "has_faq": false,
-        "has_specs": false,
-        "num_density": 0.0,
-        "list_count": 1,
-        "issues": [
-          "Low word count (111) \u2014 AI needs content to cite",
-          "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section",
-          "No spec/list signals \u2014 add product specifications or feature lists",
-          "Low spec density (0/1000 words) \u2014 add prices, measurements, specs"
-        ],
-        "issue": "Low word count (111) \u2014 AI needs content to cite"
-      },
-      "js_depend": {
-        "score": null,
-        "max": 20,
-        "raw_words": 111,
-        "rendered_words": null,
-        "pct_accessible": null,
-        "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
-      }
-    },
-    "issues": [
-      {
-        "check": "meta_tags",
-        "issue": "Missing meta description"
-      },
-      {
-        "check": "headings",
-        "issue": "No H2 found"
-      },
-      {
-        "check": "schema_type",
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      {
-        "check": "content",
-        "issue": "Low word count (111) \u2014 AI needs content to cite"
-      }
-    ],
-    "cf_blocked": false
-  },
-  {
-    "url": "https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-screen-size/all-tvs",
-    "label": "Harvey Norman \u00b7 Category",
-    "domain": "harveynorman.com.au",
-    "page_type": "category",
-    "scope": "page",
-    "score": 43,
-    "max_score": 140,
-    "percentage": 31,
-    "grade": "F",
-    "checks": {
-      "robots_ai": {
-        "score": 18,
-        "max": 30,
-        "percentage": 60,
-        "bots": {
-          "GPTBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "ClaudeBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "PerplexityBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Google-Extended": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Amazonbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Bingbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          }
-        },
-        "tier1_blocked": [],
-        "http_status": 200,
-        "issue": null
-      },
-      "llms_txt": {
-        "score": 0,
-        "max": 20,
-        "exists": false,
-        "http_status": 404
-      },
-      "http_access": {
-        "score": 10,
-        "max": 10,
-        "percentage": 100,
-        "statuses": {
-          "browser": 200,
-          "GPTBot": 200
-        },
-        "issue": null
-      },
-      "meta_tags": {
-        "score": 5,
-        "max": 20,
-        "percentage": 25,
-        "details": {
-          "title": {
-            "text": "Pardon Our Interruption",
-            "length": 23
-          },
-          "description": {
-            "length": 0
-          },
-          "og_type": "",
-          "canonical": null
-        },
-        "issues": [
-          "Missing meta description",
-          "Missing og:type",
-          "Missing canonical"
-        ],
-        "issue": "Missing meta description"
-      },
-      "headings": {
-        "score": 10,
-        "max": 20,
-        "percentage": 50,
-        "h1_count": 1,
-        "h1_text": "Pardon Our Interruption",
-        "h2_count": 0,
-        "h3_count": 1,
-        "issues": [
-          "No H2 found",
-          "H3 present but no H2 \u2014 heading hierarchy skip"
-        ],
-        "issue": "No H2 found"
-      },
-      "schema_type": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "found_types": [],
-        "issues": [
-          "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-        ],
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      "content": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "word_count": 111,
-        "has_faq": false,
-        "has_specs": false,
-        "num_density": 0.0,
-        "list_count": 1,
-        "issues": [
-          "Low word count (111) \u2014 AI needs content to cite",
-          "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section",
-          "No spec/list signals \u2014 add product specifications or feature lists",
-          "Low spec density (0/1000 words) \u2014 add prices, measurements, specs"
-        ],
-        "issue": "Low word count (111) \u2014 AI needs content to cite"
-      },
-      "js_depend": {
-        "score": null,
-        "max": 20,
-        "raw_words": 111,
-        "rendered_words": null,
-        "pct_accessible": null,
-        "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
-      }
-    },
-    "issues": [
-      {
-        "check": "meta_tags",
-        "issue": "Missing meta description"
-      },
-      {
-        "check": "headings",
-        "issue": "No H2 found"
-      },
-      {
-        "check": "schema_type",
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      {
-        "check": "content",
-        "issue": "Low word count (111) \u2014 AI needs content to cite"
-      }
-    ],
-    "cf_blocked": false
-  },
-  {
-    "url": "https://www.harveynorman.com.au/hisense-65-inch-q6nau-4k-qled-smart-tv.html",
-    "label": "Harvey Norman \u00b7 Product",
-    "domain": "harveynorman.com.au",
-    "page_type": "product",
-    "scope": "page",
-    "score": 43,
-    "max_score": 140,
-    "percentage": 31,
-    "grade": "F",
-    "checks": {
-      "robots_ai": {
-        "score": 18,
-        "max": 30,
-        "percentage": 60,
-        "bots": {
-          "GPTBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "ClaudeBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "PerplexityBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Google-Extended": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Amazonbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Bingbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          }
-        },
-        "tier1_blocked": [],
-        "http_status": 200,
-        "issue": null
-      },
-      "llms_txt": {
-        "score": 0,
-        "max": 20,
-        "exists": false,
-        "http_status": 404
-      },
-      "http_access": {
-        "score": 10,
-        "max": 10,
-        "percentage": 100,
-        "statuses": {
-          "browser": 200,
-          "GPTBot": 200
-        },
-        "issue": null
-      },
-      "meta_tags": {
-        "score": 5,
-        "max": 20,
-        "percentage": 25,
-        "details": {
-          "title": {
-            "text": "Pardon Our Interruption",
-            "length": 23
-          },
-          "description": {
-            "length": 0
-          },
-          "og_type": "",
-          "canonical": null
-        },
-        "issues": [
-          "Missing meta description",
-          "Missing og:type",
-          "Missing canonical"
-        ],
-        "issue": "Missing meta description"
-      },
-      "headings": {
-        "score": 10,
-        "max": 20,
-        "percentage": 50,
-        "h1_count": 1,
-        "h1_text": "Pardon Our Interruption",
-        "h2_count": 0,
-        "h3_count": 1,
-        "issues": [
-          "No H2 found",
-          "H3 present but no H2 \u2014 heading hierarchy skip"
-        ],
-        "issue": "No H2 found"
-      },
-      "schema_type": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "found_types": [],
-        "issues": [
-          "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-        ],
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      "content": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "word_count": 111,
-        "has_faq": false,
-        "has_specs": false,
-        "num_density": 0.0,
-        "list_count": 1,
-        "issues": [
-          "Low word count (111) \u2014 AI needs content to cite",
-          "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section",
-          "No spec/list signals \u2014 add product specifications or feature lists",
-          "Low spec density (0/1000 words) \u2014 add prices, measurements, specs"
-        ],
-        "issue": "Low word count (111) \u2014 AI needs content to cite"
-      },
-      "js_depend": {
-        "score": null,
-        "max": 20,
-        "raw_words": 111,
-        "rendered_words": null,
-        "pct_accessible": null,
-        "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
-      }
-    },
-    "issues": [
-      {
-        "check": "meta_tags",
-        "issue": "Missing meta description"
-      },
-      {
-        "check": "headings",
-        "issue": "No H2 found"
-      },
-      {
-        "check": "schema_type",
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      {
-        "check": "content",
-        "issue": "Low word count (111) \u2014 AI needs content to cite"
-      }
-    ],
-    "cf_blocked": false
-  },
-  {
-    "url": "https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-brand/samsung-tvs",
-    "label": "Harvey Norman \u00b7 Brand Page",
-    "domain": "harveynorman.com.au",
-    "page_type": "brand",
-    "scope": "page",
-    "score": 43,
-    "max_score": 140,
-    "percentage": 31,
-    "grade": "F",
-    "checks": {
-      "robots_ai": {
-        "score": 18,
-        "max": 30,
-        "percentage": 60,
-        "bots": {
-          "GPTBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "ClaudeBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "PerplexityBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Google-Extended": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Amazonbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Bingbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          }
-        },
-        "tier1_blocked": [],
-        "http_status": 200,
-        "issue": null
-      },
-      "llms_txt": {
-        "score": 0,
-        "max": 20,
-        "exists": false,
-        "http_status": 404
-      },
-      "http_access": {
-        "score": 10,
-        "max": 10,
-        "percentage": 100,
-        "statuses": {
-          "browser": 200,
-          "GPTBot": 200
-        },
-        "issue": null
-      },
-      "meta_tags": {
-        "score": 5,
-        "max": 20,
-        "percentage": 25,
-        "details": {
-          "title": {
-            "text": "Pardon Our Interruption",
-            "length": 23
-          },
-          "description": {
-            "length": 0
-          },
-          "og_type": "",
-          "canonical": null
-        },
-        "issues": [
-          "Missing meta description",
-          "Missing og:type",
-          "Missing canonical"
-        ],
-        "issue": "Missing meta description"
-      },
-      "headings": {
-        "score": 10,
-        "max": 20,
-        "percentage": 50,
-        "h1_count": 1,
-        "h1_text": "Pardon Our Interruption",
-        "h2_count": 0,
-        "h3_count": 1,
-        "issues": [
-          "No H2 found",
-          "H3 present but no H2 \u2014 heading hierarchy skip"
-        ],
-        "issue": "No H2 found"
-      },
-      "schema_type": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "found_types": [],
-        "issues": [
-          "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-        ],
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      "content": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "word_count": 111,
-        "has_faq": false,
-        "has_specs": false,
-        "num_density": 0.0,
-        "list_count": 1,
-        "issues": [
-          "Low word count (111) \u2014 AI needs content to cite",
-          "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section",
-          "No spec/list signals \u2014 add product specifications or feature lists",
-          "Low spec density (0/1000 words) \u2014 add prices, measurements, specs"
-        ],
-        "issue": "Low word count (111) \u2014 AI needs content to cite"
-      },
-      "js_depend": {
-        "score": null,
-        "max": 20,
-        "raw_words": 111,
-        "rendered_words": null,
-        "pct_accessible": null,
-        "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
-      }
-    },
-    "issues": [
-      {
-        "check": "meta_tags",
-        "issue": "Missing meta description"
-      },
-      {
-        "check": "headings",
-        "issue": "No H2 found"
-      },
-      {
-        "check": "schema_type",
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      {
-        "check": "content",
-        "issue": "Low word count (111) \u2014 AI needs content to cite"
-      }
-    ],
-    "cf_blocked": false
-  },
-  {
-    "url": "https://www.harveynorman.com.au/buying-guides/television-buying-guide",
-    "label": "Harvey Norman \u00b7 Buying Guide",
-    "domain": "harveynorman.com.au",
-    "page_type": "guide",
-    "scope": "page",
-    "score": 43,
-    "max_score": 140,
-    "percentage": 31,
-    "grade": "F",
-    "checks": {
-      "robots_ai": {
-        "score": 18,
-        "max": 30,
-        "percentage": 60,
-        "bots": {
-          "GPTBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "ClaudeBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "PerplexityBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Google-Extended": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Amazonbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Bingbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          }
-        },
-        "tier1_blocked": [],
-        "http_status": 200,
-        "issue": null
-      },
-      "llms_txt": {
-        "score": 0,
-        "max": 20,
-        "exists": false,
-        "http_status": 404
-      },
-      "http_access": {
-        "score": 10,
-        "max": 10,
-        "percentage": 100,
-        "statuses": {
-          "browser": 200,
-          "GPTBot": 200
-        },
-        "issue": null
-      },
-      "meta_tags": {
-        "score": 5,
-        "max": 20,
-        "percentage": 25,
-        "details": {
-          "title": {
-            "text": "Pardon Our Interruption",
-            "length": 23
-          },
-          "description": {
-            "length": 0
-          },
-          "og_type": "",
-          "canonical": null
-        },
-        "issues": [
-          "Missing meta description",
-          "Missing og:type",
-          "Missing canonical"
-        ],
-        "issue": "Missing meta description"
-      },
-      "headings": {
-        "score": 10,
-        "max": 20,
-        "percentage": 50,
-        "h1_count": 1,
-        "h1_text": "Pardon Our Interruption",
-        "h2_count": 0,
-        "h3_count": 1,
-        "issues": [
-          "No H2 found",
-          "H3 present but no H2 \u2014 heading hierarchy skip"
-        ],
-        "issue": "No H2 found"
-      },
-      "schema_type": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "found_types": [],
-        "issues": [
-          "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-        ],
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      "content": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "word_count": 111,
-        "has_faq": false,
-        "has_specs": false,
-        "num_density": 0.0,
-        "list_count": 1,
-        "issues": [
-          "Low word count (111) \u2014 AI needs content to cite",
-          "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section",
-          "No spec/list signals \u2014 add product specifications or feature lists",
-          "Low spec density (0/1000 words) \u2014 add prices, measurements, specs"
-        ],
-        "issue": "Low word count (111) \u2014 AI needs content to cite"
-      },
-      "js_depend": {
-        "score": null,
-        "max": 20,
-        "raw_words": 111,
-        "rendered_words": null,
-        "pct_accessible": null,
-        "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
-      }
-    },
-    "issues": [
-      {
-        "check": "meta_tags",
-        "issue": "Missing meta description"
-      },
-      {
-        "check": "headings",
-        "issue": "No H2 found"
-      },
-      {
-        "check": "schema_type",
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      {
-        "check": "content",
-        "issue": "Low word count (111) \u2014 AI needs content to cite"
-      }
-    ],
-    "cf_blocked": false
-  },
-  {
-    "url": "https://www.appliancesonline.com.au",
-    "label": "Appliances Online \u00b7 Home",
-    "domain": "appliancesonline.com.au",
-    "page_type": "home",
-    "scope": "domain+page",
-    "score": 82,
-    "max_score": 140,
-    "percentage": 59,
-    "grade": "C",
-    "checks": {
-      "robots_ai": {
-        "score": 20,
-        "max": 30,
-        "percentage": 67,
-        "bots": {
-          "GPTBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "ClaudeBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "PerplexityBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Google-Extended": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Amazonbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Bingbot": {
-            "status": "allowed",
-            "mentioned": true,
-            "pts": 5
-          }
-        },
-        "tier1_blocked": [],
-        "http_status": 200,
-        "issue": null
-      },
-      "llms_txt": {
-        "score": 20,
-        "max": 20,
-        "percentage": 100,
-        "exists": true,
-        "word_count": 371,
-        "sections": 6,
-        "has_products": true,
-        "issue": null
-      },
-      "http_access": {
-        "score": 10,
-        "max": 10,
-        "percentage": 100,
-        "statuses": {
-          "browser": 200,
-          "GPTBot": 200
-        },
-        "issue": null
-      },
-      "meta_tags": {
-        "score": 17,
-        "max": 20,
-        "percentage": 85,
-        "details": {
-          "title": {
-            "text": "Appliances Online | Buy Online with Free Delivery",
-            "length": 49
-          },
-          "description": {
-            "length": 152
-          },
-          "og_type": "website",
-          "canonical": "https://www.appliancesonline.com.au/"
-        },
-        "issues": [
-          "Canonical points to different URL"
-        ],
-        "issue": "Canonical points to different URL"
-      },
-      "headings": {
-        "score": 15,
-        "max": 20,
-        "percentage": 75,
-        "h1_count": 1,
-        "h1_text": "Hi, it looks like you have scripts disabled!",
-        "h2_count": 0,
-        "h3_count": 0,
-        "issues": [
-          "No H2 found"
-        ],
-        "issue": "No H2 found"
-      },
-      "schema_type": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "found_types": [],
-        "issues": [
-          "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-        ],
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      "content": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "word_count": 0,
-        "has_faq": false,
-        "has_specs": false,
-        "num_density": 0.0,
-        "list_count": 0,
-        "issues": [
-          "Low word count (0) \u2014 AI needs content to cite",
-          "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section",
-          "No spec/list signals \u2014 add product specifications or feature lists",
-          "Low spec density (0/1000 words) \u2014 add prices, measurements, specs"
-        ],
-        "issue": "Low word count (0) \u2014 AI needs content to cite"
-      },
-      "js_depend": {
-        "score": null,
-        "max": 20,
-        "raw_words": 0,
-        "rendered_words": null,
-        "pct_accessible": null,
-        "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
-      }
-    },
-    "issues": [
-      {
-        "check": "meta_tags",
-        "issue": "Canonical points to different URL"
-      },
-      {
-        "check": "headings",
-        "issue": "No H2 found"
-      },
-      {
-        "check": "schema_type",
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      {
-        "check": "content",
-        "issue": "Low word count (0) \u2014 AI needs content to cite"
-      }
-    ],
-    "cf_blocked": false
-  },
-  {
-    "url": "https://www.appliancesonline.com.au/category/refrigeration/fridges/",
-    "label": "Appliances Online \u00b7 Category",
-    "domain": "appliancesonline.com.au",
-    "page_type": "category",
-    "scope": "page",
-    "score": 82,
-    "max_score": 140,
-    "percentage": 59,
-    "grade": "C",
-    "checks": {
-      "robots_ai": {
-        "score": 20,
-        "max": 30,
-        "percentage": 67,
-        "bots": {
-          "GPTBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "ClaudeBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "PerplexityBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Google-Extended": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Amazonbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Bingbot": {
-            "status": "allowed",
-            "mentioned": true,
-            "pts": 5
-          }
-        },
-        "tier1_blocked": [],
-        "http_status": 200,
-        "issue": null
-      },
-      "llms_txt": {
-        "score": 20,
-        "max": 20,
-        "percentage": 100,
-        "exists": true,
-        "word_count": 371,
-        "sections": 6,
-        "has_products": true,
-        "issue": null
-      },
-      "http_access": {
-        "score": 10,
-        "max": 10,
-        "percentage": 100,
-        "statuses": {
-          "browser": 200,
-          "GPTBot": 200
-        },
-        "issue": null
-      },
-      "meta_tags": {
-        "score": 17,
-        "max": 20,
-        "percentage": 85,
-        "details": {
-          "title": {
-            "text": "Appliances Online | Buy Online with Free Delivery",
-            "length": 49
-          },
-          "description": {
-            "length": 152
-          },
-          "og_type": "website",
-          "canonical": "https://www.appliancesonline.com.au/"
-        },
-        "issues": [
-          "Canonical points to different URL"
-        ],
-        "issue": "Canonical points to different URL"
-      },
-      "headings": {
-        "score": 15,
-        "max": 20,
-        "percentage": 75,
-        "h1_count": 1,
-        "h1_text": "Hi, it looks like you have scripts disabled!",
-        "h2_count": 0,
-        "h3_count": 0,
-        "issues": [
-          "No H2 found"
-        ],
-        "issue": "No H2 found"
-      },
-      "schema_type": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "found_types": [],
-        "issues": [
-          "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-        ],
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      "content": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "word_count": 0,
-        "has_faq": false,
-        "has_specs": false,
-        "num_density": 0.0,
-        "list_count": 0,
-        "issues": [
-          "Low word count (0) \u2014 AI needs content to cite",
-          "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section",
-          "No spec/list signals \u2014 add product specifications or feature lists",
-          "Low spec density (0/1000 words) \u2014 add prices, measurements, specs"
-        ],
-        "issue": "Low word count (0) \u2014 AI needs content to cite"
-      },
-      "js_depend": {
-        "score": null,
-        "max": 20,
-        "raw_words": 0,
-        "rendered_words": null,
-        "pct_accessible": null,
-        "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
-      }
-    },
-    "issues": [
-      {
-        "check": "meta_tags",
-        "issue": "Canonical points to different URL"
-      },
-      {
-        "check": "headings",
-        "issue": "No H2 found"
-      },
-      {
-        "check": "schema_type",
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      {
-        "check": "content",
-        "issue": "Low word count (0) \u2014 AI needs content to cite"
-      }
-    ],
-    "cf_blocked": false
-  },
-  {
-    "url": "https://www.appliancesonline.com.au/product/westinghouse-easycare-9kg-front-load-washing-machine-wwf9024m5sa/",
-    "label": "Appliances Online \u00b7 Product",
-    "domain": "appliancesonline.com.au",
-    "page_type": "product",
-    "scope": "page",
-    "score": 82,
-    "max_score": 140,
-    "percentage": 59,
-    "grade": "C",
-    "checks": {
-      "robots_ai": {
-        "score": 20,
-        "max": 30,
-        "percentage": 67,
-        "bots": {
-          "GPTBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "ClaudeBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "PerplexityBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Google-Extended": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Amazonbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Bingbot": {
-            "status": "allowed",
-            "mentioned": true,
-            "pts": 5
-          }
-        },
-        "tier1_blocked": [],
-        "http_status": 200,
-        "issue": null
-      },
-      "llms_txt": {
-        "score": 20,
-        "max": 20,
-        "percentage": 100,
-        "exists": true,
-        "word_count": 371,
-        "sections": 6,
-        "has_products": true,
-        "issue": null
-      },
-      "http_access": {
-        "score": 10,
-        "max": 10,
-        "percentage": 100,
-        "statuses": {
-          "browser": 200,
-          "GPTBot": 200
-        },
-        "issue": null
-      },
-      "meta_tags": {
-        "score": 17,
-        "max": 20,
-        "percentage": 85,
-        "details": {
-          "title": {
-            "text": "Appliances Online | Buy Online with Free Delivery",
-            "length": 49
-          },
-          "description": {
-            "length": 152
-          },
-          "og_type": "website",
-          "canonical": "https://www.appliancesonline.com.au/"
-        },
-        "issues": [
-          "Canonical points to different URL"
-        ],
-        "issue": "Canonical points to different URL"
-      },
-      "headings": {
-        "score": 15,
-        "max": 20,
-        "percentage": 75,
-        "h1_count": 1,
-        "h1_text": "Hi, it looks like you have scripts disabled!",
-        "h2_count": 0,
-        "h3_count": 0,
-        "issues": [
-          "No H2 found"
-        ],
-        "issue": "No H2 found"
-      },
-      "schema_type": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "found_types": [],
-        "issues": [
-          "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-        ],
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      "content": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "word_count": 0,
-        "has_faq": false,
-        "has_specs": false,
-        "num_density": 0.0,
-        "list_count": 0,
-        "issues": [
-          "Low word count (0) \u2014 AI needs content to cite",
-          "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section",
-          "No spec/list signals \u2014 add product specifications or feature lists",
-          "Low spec density (0/1000 words) \u2014 add prices, measurements, specs"
-        ],
-        "issue": "Low word count (0) \u2014 AI needs content to cite"
-      },
-      "js_depend": {
-        "score": null,
-        "max": 20,
-        "raw_words": 0,
-        "rendered_words": null,
-        "pct_accessible": null,
-        "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
-      }
-    },
-    "issues": [
-      {
-        "check": "meta_tags",
-        "issue": "Canonical points to different URL"
-      },
-      {
-        "check": "headings",
-        "issue": "No H2 found"
-      },
-      {
-        "check": "schema_type",
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      {
-        "check": "content",
-        "issue": "Low word count (0) \u2014 AI needs content to cite"
-      }
-    ],
-    "cf_blocked": false
-  },
-  {
-    "url": "https://www.appliancesonline.com.au/brand/samsung/",
-    "label": "Appliances Online \u00b7 Brand Hub",
-    "domain": "appliancesonline.com.au",
-    "page_type": "brand",
-    "scope": "page",
-    "score": 82,
-    "max_score": 140,
-    "percentage": 59,
-    "grade": "C",
-    "checks": {
-      "robots_ai": {
-        "score": 20,
-        "max": 30,
-        "percentage": 67,
-        "bots": {
-          "GPTBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "ClaudeBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "PerplexityBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Google-Extended": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Amazonbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Bingbot": {
-            "status": "allowed",
-            "mentioned": true,
-            "pts": 5
-          }
-        },
-        "tier1_blocked": [],
-        "http_status": 200,
-        "issue": null
-      },
-      "llms_txt": {
-        "score": 20,
-        "max": 20,
-        "percentage": 100,
-        "exists": true,
-        "word_count": 371,
-        "sections": 6,
-        "has_products": true,
-        "issue": null
-      },
-      "http_access": {
-        "score": 10,
-        "max": 10,
-        "percentage": 100,
-        "statuses": {
-          "browser": 200,
-          "GPTBot": 200
-        },
-        "issue": null
-      },
-      "meta_tags": {
-        "score": 17,
-        "max": 20,
-        "percentage": 85,
-        "details": {
-          "title": {
-            "text": "Appliances Online | Buy Online with Free Delivery",
-            "length": 49
-          },
-          "description": {
-            "length": 152
-          },
-          "og_type": "website",
-          "canonical": "https://www.appliancesonline.com.au/"
-        },
-        "issues": [
-          "Canonical points to different URL"
-        ],
-        "issue": "Canonical points to different URL"
-      },
-      "headings": {
-        "score": 15,
-        "max": 20,
-        "percentage": 75,
-        "h1_count": 1,
-        "h1_text": "Hi, it looks like you have scripts disabled!",
-        "h2_count": 0,
-        "h3_count": 0,
-        "issues": [
-          "No H2 found"
-        ],
-        "issue": "No H2 found"
-      },
-      "schema_type": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "found_types": [],
-        "issues": [
-          "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-        ],
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      "content": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "word_count": 0,
-        "has_faq": false,
-        "has_specs": false,
-        "num_density": 0.0,
-        "list_count": 0,
-        "issues": [
-          "Low word count (0) \u2014 AI needs content to cite",
-          "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section",
-          "No spec/list signals \u2014 add product specifications or feature lists",
-          "Low spec density (0/1000 words) \u2014 add prices, measurements, specs"
-        ],
-        "issue": "Low word count (0) \u2014 AI needs content to cite"
-      },
-      "js_depend": {
-        "score": null,
-        "max": 20,
-        "raw_words": 0,
-        "rendered_words": null,
-        "pct_accessible": null,
-        "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
-      }
-    },
-    "issues": [
-      {
-        "check": "meta_tags",
-        "issue": "Canonical points to different URL"
-      },
-      {
-        "check": "headings",
-        "issue": "No H2 found"
-      },
-      {
-        "check": "schema_type",
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      {
-        "check": "content",
-        "issue": "Low word count (0) \u2014 AI needs content to cite"
-      }
-    ],
-    "cf_blocked": false
-  },
-  {
-    "url": "https://www.appliancesonline.com.au/article/refrigerator-size-guide/",
-    "label": "Appliances Online \u00b7 Guide",
-    "domain": "appliancesonline.com.au",
-    "page_type": "guide",
-    "scope": "page",
-    "score": 82,
-    "max_score": 140,
-    "percentage": 59,
-    "grade": "C",
-    "checks": {
-      "robots_ai": {
-        "score": 20,
-        "max": 30,
-        "percentage": 67,
-        "bots": {
-          "GPTBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "ClaudeBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "PerplexityBot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Google-Extended": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Amazonbot": {
-            "status": "not-mentioned",
-            "mentioned": false,
-            "pts": 3
-          },
-          "Bingbot": {
-            "status": "allowed",
-            "mentioned": true,
-            "pts": 5
-          }
-        },
-        "tier1_blocked": [],
-        "http_status": 200,
-        "issue": null
-      },
-      "llms_txt": {
-        "score": 20,
-        "max": 20,
-        "percentage": 100,
-        "exists": true,
-        "word_count": 371,
-        "sections": 6,
-        "has_products": true,
-        "issue": null
-      },
-      "http_access": {
-        "score": 10,
-        "max": 10,
-        "percentage": 100,
-        "statuses": {
-          "browser": 200,
-          "GPTBot": 200
-        },
-        "issue": null
-      },
-      "meta_tags": {
-        "score": 17,
-        "max": 20,
-        "percentage": 85,
-        "details": {
-          "title": {
-            "text": "Appliances Online | Buy Online with Free Delivery",
-            "length": 49
-          },
-          "description": {
-            "length": 152
-          },
-          "og_type": "website",
-          "canonical": "https://www.appliancesonline.com.au/"
-        },
-        "issues": [
-          "Canonical points to different URL"
-        ],
-        "issue": "Canonical points to different URL"
-      },
-      "headings": {
-        "score": 15,
-        "max": 20,
-        "percentage": 75,
-        "h1_count": 1,
-        "h1_text": "Hi, it looks like you have scripts disabled!",
-        "h2_count": 0,
-        "h3_count": 0,
-        "issues": [
-          "No H2 found"
-        ],
-        "issue": "No H2 found"
-      },
-      "schema_type": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "found_types": [],
-        "issues": [
-          "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-        ],
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
-      },
-      "content": {
-        "score": 0,
-        "max": 20,
-        "percentage": 0,
-        "word_count": 0,
-        "has_faq": false,
-        "has_specs": false,
-        "num_density": 0.0,
-        "list_count": 0,
-        "issues": [
-          "Low word count (0) \u2014 AI needs content to cite",
-          "No FAQ/Q&A patterns \u2014 add question-based headings or an FAQ section",
-          "No spec/list signals \u2014 add product specifications or feature lists",
-          "Low spec density (0/1000 words) \u2014 add prices, measurements, specs"
-        ],
-        "issue": "Low word count (0) \u2014 AI needs content to cite"
-      },
-      "js_depend": {
-        "score": null,
-        "max": 20,
-        "raw_words": 0,
-        "rendered_words": null,
-        "pct_accessible": null,
-        "note": "No Playwright snapshot \u2014 run Phase 2 crawl to get JS-rendered comparison"
-      }
-    },
-    "issues": [
-      {
-        "check": "meta_tags",
-        "issue": "Canonical points to different URL"
-      },
-      {
-        "check": "headings",
-        "issue": "No H2 found"
-      },
-      {
-        "check": "schema_type",
-        "issue": "No JSON-LD found in raw HTML \u2014 schema may be JS-injected (invisible to AI bots)"
+        "issue": "Missing expected schema: Offer"
       },
       {
         "check": "content",
