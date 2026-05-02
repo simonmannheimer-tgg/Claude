@@ -31,6 +31,30 @@ GRADE_COLOR = {"A": "#22c55e", "B": "#4ade80", "C": "#eab308", "D": "#f97316", "
 GRADE_BG    = {"A": "#dcfce7", "B": "#dcfce7", "C": "#fef9c3", "D": "#fff7ed", "F": "#fee2e2"}
 GRADE_EMOJI = {"A": "A", "B": "B", "C": "C", "D": "D", "F": "F"}
 
+# Plain-English action advice shown in the Issues tables alongside each warning
+ISSUE_ADVICE = {
+    "robots_ai":        "Add explicit <code>Allow: /</code> directives for each AI bot in robots.txt. Without them some crawlers default to denied.",
+    "llms_txt":         "Create <code>/llms.txt</code> in the site root — plain-text summary of product catalogue and site structure for AI agents.",
+    "http_access":      "The page returned non-200 for the GPTBot user-agent. Check WAF rules and robots.txt — AI crawlers may be silently blocked.",
+    "meta_tags":        "Fix in CMS page settings. Title: 30–70 chars. Description: 100–160 chars. <code>og:type</code> and canonical are template-level changes.",
+    "headings":         "Each page needs exactly one H1 matching the page topic. Multiple or missing H1s are a template fix.",
+    "schema_type":      "JSON-LD must be in the server-rendered HTML. AI bots don't execute JS — schema injected by JavaScript is invisible to them.",
+    "content":          "Add FAQ sections, specification tables, and Q&amp;A patterns. AI agents need citable, structured content to surface in answers.",
+    "js_depend":        "Critical content must be SSR (server-side rendered). AI bots use httpx, not a full browser — JS-only content is invisible.",
+    "schema":           "Add JSON-LD to the page template. Category pages need ItemList; products need Product + Offer + AggregateRating.",
+    "schema_validity":  "Required fields are missing from your schema. Add Offer.price, Offer.availability, AggregateRating.ratingValue at minimum.",
+    "render_diff":      "Content is loaded by JavaScript after page load. Move critical content (prices, headings, schema) to SSR.",
+    "user_agents":      "AI bots receive different responses to browsers. Check WAF, CDN, and robots.txt for per-UA rules.",
+    "hidden_content":   "Content hidden via display:none or aria-hidden is skipped by AI parsers. Expand collapsed sections or move content to visible HTML.",
+    "ai_signals":       "Add FAQ schema blocks, structured comparison tables, and direct-answer headings (e.g. 'What is the best TV under $1000?').",
+    "dom_structure":    "Use semantic HTML: <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;section&gt;</code>. Correct heading hierarchy H1→H2→H3.",
+    "robots_content":   "Add per-bot Allow directives to robots.txt and create /llms.txt with structured sections for AI agents.",
+    "sitemap_coverage": "Ensure all key page types appear in the XML sitemap so AI crawlers can discover them without following links.",
+    "competitor_schema":"Competitors use more complete schema. Add missing types to match or exceed their structured data coverage.",
+    "au_signals":       "Add <code>lang=\"en-AU\"</code> to &lt;html&gt;, ensure AUD currency is visible, and include Was/Save pricing patterns for ACCC compliance.",
+    "agentic_commerce": "No agentic endpoints found. Shopify Agentic Storefronts exposes MCP/ACP endpoints that AI shopping agents use to browse and buy.",
+}
+
 # Human-readable descriptions for every check — shown as tooltips and in description column
 CHECK_DESCRIPTIONS = {
     # AEO Crawl checks
@@ -151,6 +175,56 @@ def _grade(pct: int) -> str:
     return "F"
 
 
+# ── How to read ───────────────────────────────────────────────────────────────
+
+def section_how_to_read() -> str:
+    return """
+<details style="margin-bottom:20px;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden">
+<summary style="padding:14px 20px;background:#f8fafc;cursor:pointer;font-weight:600;font-size:0.95em;color:#374151;display:flex;align-items:center;gap:8px">
+  <span style="background:#1e293b;color:white;padding:2px 8px;border-radius:4px;font-size:0.75em">?</span>
+  How to read this report
+</summary>
+<div style="padding:20px 24px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;font-size:0.88em">
+
+  <div>
+    <strong style="display:block;margin-bottom:8px;color:#1e293b">Grades</strong>
+    <table style="width:100%;border-collapse:collapse">
+      <tr><td style="padding:3px 8px;background:#dcfce7;color:#166534;font-weight:700;border-radius:3px">A</td><td style="padding:3px 8px">80–100% — strong AI visibility</td></tr>
+      <tr><td style="padding:3px 8px;background:#dcfce7;color:#166534;font-weight:700;border-radius:3px;margin-top:3px">B</td><td style="padding:3px 8px">65–79% — good, minor gaps</td></tr>
+      <tr><td style="padding:3px 8px;background:#fef9c3;color:#854d0e;font-weight:700;border-radius:3px">C</td><td style="padding:3px 8px">50–64% — fixable issues</td></tr>
+      <tr><td style="padding:3px 8px;background:#fff7ed;color:#9a3412;font-weight:700;border-radius:3px">D</td><td style="padding:3px 8px">35–49% — significant gaps</td></tr>
+      <tr><td style="padding:3px 8px;background:#fee2e2;color:#991b1b;font-weight:700;border-radius:3px">F</td><td style="padding:3px 8px">0–34% — critical problems</td></tr>
+    </table>
+  </div>
+
+  <div>
+    <strong style="display:block;margin-bottom:8px;color:#1e293b">What each phase measures</strong>
+    <p style="margin:0 0 6px"><strong>AEO Crawl</strong> — Per-URL signal audit using httpx (what AI bots actually see). Checks robots.txt, llms.txt, HTTP access, meta tags, headings, schema, content quality, and JS dependency for every URL.</p>
+    <p style="margin:0 0 6px"><strong>Phase 3 — Ecommerce AEO</strong> — Deep technical audit of Playwright-rendered snapshots: schema validity, render diff (SSR vs CSR), user-agent behaviour, hidden content, structured data completeness.</p>
+    <p style="margin:0"><strong>Phase 4 — Content Intelligence</strong> — Semantic analysis: entity signals, content chunking, semantic HTML structure, anchor quality, competitor similarity.</p>
+  </div>
+
+  <div>
+    <strong style="display:block;margin-bottom:8px;color:#1e293b">Score badges &amp; priority</strong>
+    <p style="margin:0 0 8px">
+      <span style="color:#166534;background:#dcfce7;padding:1px 7px;border-radius:3px;font-size:0.85em;font-weight:700">PASS</span> = 80%+ &nbsp;
+      <span style="color:#92400e;background:#fef3c7;padding:1px 7px;border-radius:3px;font-size:0.85em;font-weight:700">WARN</span> = 50–79% &nbsp;
+      <span style="color:#991b1b;background:#fee2e2;padding:1px 7px;border-radius:3px;font-size:0.85em;font-weight:700">FAIL</span> = &lt;50%
+    </p>
+    <p style="margin:0 0 6px"><strong>Fix in this order:</strong></p>
+    <ol style="margin:0 0 0 16px;padding:0;line-height:1.8">
+      <li>robots.txt AI bot access (domain-level, one change affects all pages)</li>
+      <li>llms.txt missing (highest signal ROI per effort)</li>
+      <li>Schema type on category + product pages</li>
+      <li>JS dependency &gt;20% on TGG pages</li>
+      <li>Meta tags (og:type, canonical)</li>
+    </ol>
+  </div>
+
+</div>
+</details>"""
+
+
 # ── Data Loading ───────────────────────────────────────────────────────────────
 
 def load_all_data(out_dir: str) -> dict:
@@ -242,6 +316,42 @@ def section_crawl(crawl: list) -> str:
     if not crawl:
         return "<p class='empty'>No AEO Crawl data found. Run the workflow with AEO Crawl enabled.</p>"
 
+    # ── Crawl manifest ────────────────────────────────────────────────────────
+    tgg_count  = sum(1 for r in crawl if "thegoodguys" in r.get("domain", ""))
+    comp_count = len(crawl) - tgg_count
+    manifest_rows = ""
+    for i, r in enumerate(crawl, 1):
+        is_tgg = "thegoodguys" in r.get("domain", "")
+        g   = r.get("grade", "?")
+        pct = r.get("percentage", 0)
+        c   = GRADE_COLOR.get(g, "#94a3b8")
+        url_display = r["url"][:75] + "…" if len(r["url"]) > 75 else r["url"]
+        manifest_rows += f"""<tr style="{'background:#f0fdf4' if is_tgg else ''}">
+            <td style="color:#94a3b8;font-size:0.8em;text-align:right">{i}</td>
+            <td><strong>{r['label']}</strong></td>
+            <td><a href="{r['url']}" target="_blank" style="font-family:monospace;font-size:0.78em;color:#64748b;text-decoration:none">{url_display}</a></td>
+            <td style="font-size:0.85em;color:#64748b">{r.get('page_type','')}</td>
+            <td style="color:{c};font-weight:700;text-align:center">{g}</td>
+            <td style="color:{c};text-align:center">{pct}/100</td>
+        </tr>"""
+
+    html = f"""
+    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:10px 16px;margin-bottom:16px;font-size:0.88em">
+        <strong>{len(crawl)} URLs audited</strong> &nbsp;·&nbsp;
+        {tgg_count} TGG (target) &nbsp;·&nbsp;
+        {comp_count} competitor &nbsp;·&nbsp;
+        <span style="color:#64748b">Scores are /100 normalised. Hover column headers for check descriptions.</span>
+    </div>
+    <details style="margin-bottom:20px">
+        <summary style="cursor:pointer;font-weight:600;font-size:0.9em;color:#374151;padding:6px 0">Crawl Manifest — {len(crawl)} URLs checked (click to expand)</summary>
+        <div style="overflow-x:auto;margin-top:10px">
+        <table class="data-table">
+            <thead><tr><th>#</th><th>Label</th><th>URL</th><th>Type</th><th>Grade</th><th>Score</th></tr></thead>
+            <tbody>{manifest_rows}</tbody>
+        </table>
+        </div>
+    </details>"""
+
     # ── Domain-level summary ─────────────────────────────────────────────────
     by_domain: dict[str, list] = {}
     for r in crawl:
@@ -318,13 +428,14 @@ def section_crawl(crawl: list) -> str:
     if all_issues:
         issue_rows = "".join(
             f'<tr><td style="white-space:nowrap;font-size:0.85em">{lbl}</td>'
-            f'<td><code>{chk}</code></td><td>{issue}</td></tr>'
+            f'<td><code>{chk}</code></td><td>{issue}</td>'
+            f'<td style="font-size:0.82em;color:#475569">{ISSUE_ADVICE.get(chk, "")}</td></tr>'
             for lbl, chk, issue in all_issues[:30]
         )
         html += f"""
         <h3>TGG Issues</h3>
         <table class="issues-table">
-            <thead><tr><th>Page</th><th>Check</th><th>Issue</th></tr></thead>
+            <thead><tr><th>Page</th><th>Check</th><th>Issue</th><th>Action</th></tr></thead>
             <tbody>{issue_rows}</tbody>
         </table>"""
 
@@ -405,7 +516,13 @@ def section_phase3(phase3: dict) -> str:
 
     issue_rows = ""
     for check_name, ident, issue in all_issues[:25]:
-        issue_rows += f'<tr><td class="sev-error">{check_name}</td><td><code>{ident}</code></td><td>{issue}</td></tr>'
+        # find check key from name
+        chk_key = next((k for k, n, _ in PHASE3_CATS if n == check_name), "")
+        issue_rows += (
+            f'<tr><td class="sev-error">{check_name}</td><td><code>{ident}</code></td>'
+            f'<td>{issue}</td>'
+            f'<td style="font-size:0.82em;color:#475569">{ISSUE_ADVICE.get(chk_key,"")}</td></tr>'
+        )
 
     html = f"""
     <table class="data-table">
@@ -417,7 +534,7 @@ def section_phase3(phase3: dict) -> str:
         html += f"""
         <h3>Ecommerce Issues</h3>
         <table class="issues-table">
-            <thead><tr><th>Check</th><th>Page / URL</th><th>Issue</th></tr></thead>
+            <thead><tr><th>Check</th><th>Page / URL</th><th>Issue</th><th>Action</th></tr></thead>
             <tbody>{issue_rows}</tbody>
         </table>"""
 
@@ -872,6 +989,8 @@ def build_html(data: dict) -> str:
     <h1>AEO Audit Report — The Good Guys</h1>
     <div class="meta">Run #{run_num} &nbsp;·&nbsp; Branch: {ref} &nbsp;·&nbsp; Generated: {ts}</div>
   </div>
+
+  {section_how_to_read()}
 
   {section_hero(data)}
 
