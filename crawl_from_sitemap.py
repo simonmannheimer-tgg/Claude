@@ -111,7 +111,14 @@ def fetch_all_urls(domain: str, max_sitemaps: int = 10) -> list[str]:
 _GENERIC_PRODUCT_RE = re.compile(r'(?:/p/|-\d{6,}|/products?/|/sku/)', re.IGNORECASE)
 _GENERIC_GUIDE_RE   = re.compile(r'/(?:buying-guide|guide|advice|how-to|reviews?)/', re.IGNORECASE)
 _GENERIC_BLOG_RE    = re.compile(r'/(?:blog|news|whats-new|editorial|magazine|stories?)(?:/|$)', re.IGNORECASE)
-_TGG_MODEL_RE       = re.compile(r'(?:/|-)(?=[^-/]*[a-z])(?=[^-/]*\d[^-/]*\d[^-/]*\d[^-/]*\d)[a-z0-9]+(?:-|$|/)', re.IGNORECASE)
+_TGG_MODEL_RE       = re.compile(r'(?:/|-)(?=[^-/]*[a-z])(?=[^-/]*\d[^-/]*\d[^-/]*\d)[a-z0-9]+(?:-|$|/)', re.IGNORECASE)
+
+
+def _is_tgg_product(path: str) -> bool:
+    if _TGG_MODEL_RE.search(path):
+        return True
+    segs = [s for s in path.split("/") if s]
+    return len(segs) == 1 and len(segs[0].split("-")) >= 5
 
 _DOMAIN_PATTERNS: dict[str, list[tuple[str, re.Pattern]]] = {
     "jbhifi.com.au": [
@@ -159,7 +166,7 @@ def classify_url(url: str) -> str:
     if _GENERIC_GUIDE_RE.search(path):   return "guide"
     if _GENERIC_BLOG_RE.search(path):    return "blog"
     if _GENERIC_PRODUCT_RE.search(path): return "product"
-    if _TGG_MODEL_RE.search(path):       return "product"
+    if _is_tgg_product(path):            return "product"
     segments = [s for s in path.split("/") if s]
     if 1 <= len(segments) <= 2 and not parsed.query:
         return "category"

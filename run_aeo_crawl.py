@@ -109,8 +109,17 @@ def _sitemap_fetch_urls(sitemap_url: str) -> list[str]:
 _GENERIC_PRODUCT_RE = re.compile(r'(?:/p/|-\d{6,}|/products?/|/sku/)', re.IGNORECASE)
 _GENERIC_GUIDE_RE   = re.compile(r'/(?:buying-guide|guide|advice|how-to|reviews?)/', re.IGNORECASE)
 _GENERIC_BLOG_RE    = re.compile(r'/(?:blog|news|whats-new|editorial|magazine|stories?)(?:/|$)', re.IGNORECASE)
-# TGG product slug: alphanumeric, contains both letters and digits, 6-20 chars, last segment
-_TGG_MODEL_RE       = re.compile(r'(?:/|-)(?=[^-/]*[a-z])(?=[^-/]*\d[^-/]*\d[^-/]*\d[^-/]*\d)[a-z0-9]+(?:-|$|/)', re.IGNORECASE)
+# Mixed alphanumeric token with 3+ digits (catches r211db, ehg645be, m681t, qa65qn90dauxsa)
+_TGG_MODEL_RE       = re.compile(r'(?:/|-)(?=[^-/]*[a-z])(?=[^-/]*\d[^-/]*\d[^-/]*\d)[a-z0-9]+(?:-|$|/)', re.IGNORECASE)
+
+
+def _is_tgg_product(path: str) -> bool:
+    """Two-rule TGG product detector for single-segment slugs."""
+    if _TGG_MODEL_RE.search(path):
+        return True
+    # Long descriptive slugs (5+ parts) are always products — catches all-letter model codes
+    segs = [s for s in path.split("/") if s]
+    return len(segs) == 1 and len(segs[0].split("-")) >= 5
 
 # ── Per-domain URL pattern maps ───────────────────────────────────────────────
 # Each entry: ordered list of (page_type, compiled_regex_matching_path)
@@ -164,7 +173,7 @@ def _classify_url(url: str) -> str:
     if _GENERIC_GUIDE_RE.search(path):   return "guide"
     if _GENERIC_BLOG_RE.search(path):    return "blog"
     if _GENERIC_PRODUCT_RE.search(path): return "product"
-    if _TGG_MODEL_RE.search(path):       return "product"
+    if _is_tgg_product(path):            return "product"
     segments = [s for s in path.split("/") if s]
     if 1 <= len(segments) <= 2:          return "category"
     return "other"
