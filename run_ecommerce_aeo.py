@@ -690,10 +690,12 @@ def _validate_gtin(gtin: str) -> bool:
 # ── Check 6: Schema Validity ──────────────────────────────────────────────────
 
 def _validate_schema_block(block: dict) -> tuple[list[str], list[str]]:
-    """Returns (errors, warnings) for a single schema block."""
+    """Returns (errors, warnings) for a single schema block with deep nested checks."""
     t = block.get("@type", "")
     if isinstance(t, list):
         t = t[0] if t else ""
+
+    # Base required field checks
     required = SCHEMA_REQUIRED_FIELDS.get(t, set())
     recommended = SCHEMA_RECOMMENDED_FIELDS.get(t, set())
     errors = [f for f in required if not block.get(f)]
@@ -705,62 +707,207 @@ def _validate_schema_block(block: dict) -> tuple[list[str], list[str]]:
         if val and not _validate_gtin(str(val)):
             errors.append(f"{gtin_field} has invalid check digit: {val}")
 
+    # ── Deep type-specific validation ────────────────────────────────────────────
+
+    if t == "Product":
+        # Nested Offer validation
+        offers = block.get("offers") or block.get("Offers")
+        if offers:
+            if isinstance(offers, list):
+                offers = offers[0]
+            for req in ("price", "priceCurrency", "availability"):
+                if not offers.get(req):
+                    errors.append(f"Offer.{req} missing")
+            if not offers.get("priceValidUntil"):
+                warnings.append("Offer.priceValidUntil absent — price may appear stale to AI")
+            if not offers.get("shippingDetails"):
+                warnings.append("Offer.shippingDetails absent — AI agents cannot confirm delivery terms")
+
+        # Nested AggregateRating validation
+        rating = block.get("aggregateRating")
+        if rating:
+            for req in ("ratingValue", "reviewCount"):
+                if not rating.get(req):
+                    errors.append(f"AggregateRating.{req} missing")
+
+        # Brand validation
+        brand = block.get("brand")
+        if brand:
+            if isinstance(brand, list):
+                brand = brand[0]
+            if brand.get("@type", "") != "Brand":
+                warnings.append(f"brand.@type should be 'Brand', got '{brand.get('@type', '')}'")
+            if not brand.get("name"):
+                errors.append("brand.name missing")
+
+        # MerchantReturnPolicy (warn if absent — important for AI commerce agents)
+        if not block.get("hasMerchantReturnPolicy"):
+            warnings.append("hasMerchantReturnPolicy absent — reduces AI commerce trust signal")
+
+        # sameAs should include ≥1 external URI
+        same_as = block.get("sameAs")
+        if same_as:
+            if isinstance(same_as, str):
+                same_as = [same_as]
+            if not any(str(s).startswith("http") for s in same_as):
+                warnings.append("sameAs should include at least 1 external URI (Wikidata, GS1, manufacturer)")
+
+    elif t == "ItemList":
+        items = block.get("itemListElement", [])
+        if not items:
+            errors.append("itemListElement is empty — AI cannot enumerate category products")
+        else:
+            # Spot-check first 5 items for required sub-fields
+            bad = []
+            for i, item in enumerate(items[:5]):
+                if not item.get("position"):
+                    bad.append(f"item[{i}] missing position")
+                name = item.get("name") or (item.get("item") or {}).get("name")
+                url = item.get("url") or (item.get("item") or {}).get("url")
+                if not name:
+                    bad.append(f"item[{i}] missing name")
+                if not url:
+                    bad.append(f"item[{i}] missing url")
+            if bad:
+                errors.extend(bad[:3])
+
+    elif t == "BreadcrumbList":
+        items = block.get("itemListElement", [])
+        if len(items) < 2:
+            warnings.append(f"BreadcrumbList has {len(items)} item(s) — min 2 expected")
+
+    elif t == "Article":
+        # author.@type must be Person or Organization
+        author = block.get("author")
+        if author:
+            if isinstance(author, list):
+                author = author[0]
+            author_type = author.get("@type", "")
+            if author_type not in ("Person", "Organization"):
+                warnings.append(
+                    f"author.@type should be Person or Organization, got '{author_type}'"
+                )
+        # Date ISO 8601 format checks
+        for date_field in ("datePublished", "dateModified"):
+            val = block.get(date_field)
+            if val and not re.match(r"\d{4}-\d{2}-\d{2}", str(val)):
+                warnings.append(f"{date_field} not in ISO 8601 format: {val}")
+        if not block.get("dateModified"):
+            warnings.append("dateModified absent — content freshness unknown to AI crawlers")
+
+    elif t == "FAQPage":
+        main_entity = block.get("mainEntity", [])
+        if len(main_entity) < 3:
+            warnings.append(
+                f"FAQPage has {len(main_entity)} Q&A pair(s) — min 3 recommended for AI FAQ extraction"
+            )
+
+    return errors, warnings
+
+
+def _validate_page_schema_set(schemas: list[dict], page_type: str) -> tuple[list[str], list[str]]:
+    """Page-level cross-schema checks that depend on page type context."""
+    errors: list[str] = []
+    warnings: list[str] = []
+    all_types = flatten_schema_types(schemas)
+
+    if page_type == "product":
+        if "MerchantReturnPolicy" not in all_types:
+            warnings.append("No MerchantReturnPolicy schema — AI agents cannot verify return terms")
+        if "OfferShippingDetails" not in all_types:
+            warnings.append("No OfferShippingDetails schema — AI agents cannot confirm shipping costs")
+        if "Product" in all_types and "AggregateRating" not in all_types:
+            warnings.append("Product schema present but no AggregateRating — AI may not surface ratings")
+
+    elif page_type == "category":
+        if "BreadcrumbList" not in all_types:
+            warnings.append("No BreadcrumbList on category page — AI cannot determine navigation hierarchy")
+        if "ItemList" not in all_types and "CollectionPage" not in all_types:
+            warnings.append("No ItemList/CollectionPage schema — AI cannot enumerate products in this category")
+
+    elif page_type == "guide":
+        if "FAQPage" not in all_types:
+            warnings.append("No FAQPage schema — missed opportunity for AI FAQ extraction on guide page")
+        if "Article" not in all_types:
+            warnings.append("No Article schema on guide — AI cannot determine authorship or freshness")
+        if "BreadcrumbList" not in all_types:
+            warnings.append("No BreadcrumbList on guide page — navigation hierarchy missing")
+
     return errors, warnings
 
 
 def check_schema_validity(snapshot_dir: Path) -> dict:
-    """Validates required and recommended fields in JSON-LD blocks, including GTIN."""
+    """Validates required and recommended fields in JSON-LD blocks per page type."""
     results = []
     total_score = 0
     max_score = 0
 
     for html_file in sorted(snapshot_dir.glob("*.html")):
+        page_type = infer_page_type(html_file.name)
         soup = parse_html(html_file)
         schemas = extract_jsonld(soup)
         page_max = 15
 
         if not schemas:
             max_score += page_max
-            results.append({"file": html_file.name, "schema_count": 0, "valid": 0,
-                            "invalid": 0, "score": 0, "maxScore": page_max,
-                            "issues": [], "warnings": [], "issue": "No JSON-LD found"})
+            results.append({
+                "file": html_file.name,
+                "page_type": page_type,
+                "schema_count": 0,
+                "valid": 0,
+                "invalid": 0,
+                "score": 0,
+                "maxScore": page_max,
+                "issues": [],
+                "warnings": [],
+                "issue": "No JSON-LD found",
+            })
             continue
 
-        issues = []
-        warn_list = []
+        issues: list[str] = []
+        warn_list: list[str] = []
         valid_count = 0
 
         def _validate(item: dict) -> None:
             nonlocal valid_count
             errs, warns = _validate_schema_block(item)
-            t = item.get("@type", "unknown")
-            if isinstance(t, list): t = t[0]
+            block_type = item.get("@type", "unknown")
+            if isinstance(block_type, list):
+                block_type = block_type[0]
             if errs:
-                issues.append(f"{t}: missing {', '.join(errs)}")
+                issues.append(f"{block_type}: {'; '.join(errs)}")
             else:
                 valid_count += 1
             for w in warns:
-                warn_list.append(f"{t}: recommended field absent — {w}")
+                warn_list.append(f"{block_type}: {w}")
             for sub in item.get("@graph", []):
                 _validate(sub)
 
         for s in schemas:
             _validate(s)
 
+        # Page-level cross-schema checks (e.g. Product page missing MerchantReturnPolicy)
+        page_errs, page_warns = _validate_page_schema_set(schemas, page_type)
+        issues.extend(page_errs)
+        warn_list.extend(page_warns)
+
         total_blocks = len(schemas)
+        # Score: proportion of fully-valid blocks, minus 1pt per page-level error
         page_score = round(valid_count / total_blocks * page_max) if total_blocks else 0
+        page_score = max(0, page_score - len(page_errs))
         total_score += page_score
         max_score += page_max
 
         results.append({
             "file": html_file.name,
+            "page_type": page_type,
             "schema_count": total_blocks,
             "valid": valid_count,
             "invalid": total_blocks - valid_count,
             "score": page_score,
             "maxScore": page_max,
-            "issues": issues[:5],
-            "warnings": warn_list[:5],
+            "issues": issues[:6],
+            "warnings": warn_list[:6],
             "issue": "; ".join(issues[:2]) if issues else None,
         })
 
