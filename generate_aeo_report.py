@@ -615,7 +615,7 @@ def section_phase3(phase3: dict) -> str:
             pt_badge = f'<span style="background:{pt_colour};color:#fff;font-size:0.72em;padding:1px 6px;border-radius:3px;margin-left:4px">{pt}</span>' if pt else ""
             schema_rows += f"""<tr>
                 <td><code>{p.get("file","")}</code>{pt_badge}</td>
-                <td style="color:{bar_c};font-weight:600">{p.get("score",0)}/{p.get("maxScore",0)}</td>
+                <td style="color:{bar_c};font-weight:600">{page_pct}/100</td>
                 <td style="color:#64748b;font-size:0.85em">{found}</td>
                 <td style="color:#ef4444;font-size:0.85em">{missing}</td>
                 <td style="color:#22c55e;font-size:0.85em">{bonus}</td>
@@ -650,7 +650,7 @@ def section_phase3(phase3: dict) -> str:
                 <ul style='margin:2px 0 0 12px;padding:0;font-size:0.8em'>{warn_items}</ul></details>"""
             sv_rows += f"""<tr>
                 <td><code>{p.get("file","")}</code>{pt_badge}</td>
-                <td style="color:{bar_c};font-weight:600">{p.get("score",0)}/{p.get("maxScore",0)}</td>
+                <td style="color:{bar_c};font-weight:600">{page_pct}/100</td>
                 <td style="text-align:center">{p.get("valid",0)}/{p.get("schema_count",0)}</td>
                 <td>{issue_html or '<span style="color:#22c55e">All valid</span>'}</td>
             </tr>"""
