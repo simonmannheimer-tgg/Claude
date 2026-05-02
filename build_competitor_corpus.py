@@ -17,6 +17,7 @@ Requires:
 """
 
 import argparse
+import asyncio
 import json
 import re
 import sys
@@ -55,6 +56,9 @@ DEFAULT_DOMAIN_PATHS = {
 }
 
 DEFAULT_DOMAINS = list(DEFAULT_DOMAIN_PATHS.keys())
+
+# Domains that serve Cloudflare bot challenges — routed through Playwright
+CF_DOMAINS = {"harveynorman.com.au"}
 
 CHUNK_TOKENS = 256
 OVERLAP_TOKENS = 32
@@ -151,6 +155,58 @@ def crawl_domain(domain: str, paths: list[str]) -> list[dict]:
     return results
 
 
+async def _crawl_domain_playwright(domain: str, paths: list[str]) -> list[dict]:
+    """Playwright crawl for CF-protected domains (e.g. Harvey Norman).
+    Visits homepage first to obtain cf_clearance cookie, then crawls subpages slowly."""
+    from playwright.async_api import async_playwright
+    base = f"https://www.{domain}"
+    results = []
+
+    async with async_playwright() as pw:
+        browser = await pw.chromium.launch(headless=True)
+        ctx = await browser.new_context(
+            user_agent=BROWSER_UA,
+            viewport={"width": 1280, "height": 900},
+        )
+        page = await ctx.new_page()
+
+        # Warmup: load homepage to get CF clearance cookie
+        print(f"  [CF warmup] {base}/ — waiting for cookie")
+        try:
+            await page.goto(base + "/", wait_until="networkidle", timeout=45_000)
+            await page.wait_for_timeout(4_500)
+            print(f"  [CF warmup] Done")
+        except Exception as e:
+            print(f"  [CF warmup] Warning: {e}")
+
+        for path in paths:
+            url = base + path
+            try:
+                await page.goto(url, wait_until="domcontentloaded", timeout=40_000)
+                await page.wait_for_timeout(3_500)
+                html = await page.content()
+                text = _extract_text(html)
+                word_count = len(text.split())
+                if word_count < 200:
+                    print(f"  ⚠ {url} — only {word_count} words (may still be blocked)")
+                    continue
+                page_type = _classify_url(url)
+                results.append({"url": url, "text": text, "page_type": page_type, "domain": domain})
+                print(f"  ✓ {url} — {word_count} words [{page_type}]")
+            except Exception as e:
+                print(f"  ✗ {url} — {e}")
+            await asyncio.sleep(3.5)
+
+        await browser.close()
+
+    return results
+
+
+def crawl_domain_cf(domain: str, paths: list[str]) -> list[dict]:
+    """Synchronous wrapper around the async Playwright CF crawl."""
+    return asyncio.run(_crawl_domain_playwright(domain, paths))
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
@@ -168,9 +224,12 @@ def main():
 
     all_pages = []
     for domain in domains:
-        print(f"\nCrawling {domain}...")
+        print(f"\nCrawling {domain}{'  [Playwright/CF mode]' if domain in CF_DOMAINS else ''}...")
         paths = DEFAULT_DOMAIN_PATHS.get(domain, ["/"])
-        pages = crawl_domain(domain, paths)
+        if domain in CF_DOMAINS:
+            pages = crawl_domain_cf(domain, paths)
+        else:
+            pages = crawl_domain(domain, paths)
         all_pages.extend(pages)
 
     if not all_pages:

@@ -70,6 +70,23 @@ CF_CHALLENGE_MARKERS = (
     "Checking if the site connection is secure",
 )
 
+# Domains that serve Cloudflare bot challenges.
+# We pre-warm these by visiting the homepage first so that CF issues a
+# cf_clearance session cookie before we crawl any subpages.
+CF_SESSION_DOMAINS = {"harveynorman.com.au"}
+CF_DOMAIN_DELAY = 3.5  # seconds between requests for CF-protected domains
+
+
+async def _warmup_cf_domain(page, domain: str) -> None:
+    """Visit homepage to establish CF clearance cookie before crawling subpages."""
+    print(f"  [CF warmup] https://www.{domain}/ — establishing session cookie")
+    try:
+        await page.goto(f"https://www.{domain}/", wait_until="networkidle", timeout=45_000)
+        await page.wait_for_timeout(4_500)
+        print(f"  [CF warmup] Done")
+    except Exception as e:
+        print(f"  [CF warmup] Warning: {e}")
+
 
 def _is_protected_path(url: str) -> bool:
     """Buying guides and editorial pages sit behind stricter Cloudflare rules."""
@@ -110,6 +127,7 @@ async def fetch_page(page, url: str, retries: int = 3) -> tuple[str | None, str 
 async def crawl(urls: list[str], out_dir: Path, delay: float = 1.5) -> list[dict]:
     out_dir.mkdir(parents=True, exist_ok=True)
     results = []
+    warmed_domains: set[str] = set()
 
     async with async_playwright() as pw:
         browser = await pw.chromium.launch(headless=True)
@@ -117,6 +135,17 @@ async def crawl(urls: list[str], out_dir: Path, delay: float = 1.5) -> list[dict
         page = await ctx.new_page()
 
         for i, url in enumerate(urls):
+            domain = urlparse(url).netloc.replace("www.", "")
+
+            # Pre-warm CF session for blocked domains before their first subpage.
+            # Skip warmup if this URL IS the homepage (avoid double-visiting).
+            if domain in CF_SESSION_DOMAINS and domain not in warmed_domains:
+                is_homepage = urlparse(url).path.strip("/") == ""
+                if not is_homepage:
+                    await _warmup_cf_domain(page, domain)
+                    await asyncio.sleep(CF_DOMAIN_DELAY)
+                warmed_domains.add(domain)
+
             print(f"[{i+1}/{len(urls)}] {url}")
             html, error = await fetch_page(page, url)
 
@@ -138,7 +167,10 @@ async def crawl(urls: list[str], out_dir: Path, delay: float = 1.5) -> list[dict
                 results.append({"url": url, "file": str(filepath), "size_bytes": len(html), "word_count": word_count, "suspected_block": word_count < 600})
 
             if i < len(urls) - 1:
-                await asyncio.sleep(delay)
+                # Slow down for CF-protected domains (helps avoid re-triggering challenge)
+                next_domain = urlparse(urls[i + 1]).netloc.replace("www.", "")
+                effective_delay = CF_DOMAIN_DELAY if domain in CF_SESSION_DOMAINS or next_domain in CF_SESSION_DOMAINS else delay
+                await asyncio.sleep(effective_delay)
 
         await browser.close()
 

@@ -46,6 +46,25 @@ from urllib.robotparser import RobotFileParser
 import httpx
 from bs4 import BeautifulSoup
 
+CF_CHALLENGE_MARKERS = (
+    "<title>Just a moment...</title>",
+    "cf-browser-verification",
+    "challenge-running",
+    "Checking if the site connection is secure",
+)
+
+def _is_cf_blocked(html: str) -> bool:
+    return any(m in html for m in CF_CHALLENGE_MARKERS)
+
+def _find_snapshot(url: str, snapshot_dir) -> "Path | None":
+    if not snapshot_dir:
+        return None
+    parsed = urlparse(url)
+    path = parsed.path.strip("/")
+    fname = ("index" if not path else re.sub(r"[^a-zA-Z0-9_-]", "-", path.replace("/", "--"))) + ".html"
+    candidate = snapshot_dir / fname
+    return candidate if candidate.exists() else None
+
 # ── Default URL set ────────────────────────────────────────────────────────────
 # Home URLs run both domain-level + page-level checks.
 # All other page types run page-level only (domain results are shared).
@@ -598,12 +617,27 @@ def audit_url(entry: dict, domain_cache: dict, snapshot_dir: Path | None) -> dic
     # Fetch raw HTML once (used by multiple checks)
     raw_html = ""
     raw_soup = None
+    cf_blocked = False
     try:
         resp = httpx.get(url, headers={"User-Agent": BROWSER_UA}, follow_redirects=True, timeout=12)
         raw_html = resp.text
         raw_soup = BeautifulSoup(raw_html, "html.parser")
+        cf_blocked = _is_cf_blocked(raw_html)
     except Exception as e:
         print(f"    ✗ fetch error: {e}")
+
+    # If CF-blocked, fall back to Playwright snapshot for content analysis.
+    # http_access check still uses httpx (correct — reflects real bot experience).
+    analysis_html = raw_html
+    analysis_soup = raw_soup
+    if cf_blocked:
+        snap = _find_snapshot(url, snapshot_dir)
+        if snap:
+            analysis_html = snap.read_text(encoding="utf-8", errors="ignore")
+            analysis_soup = BeautifulSoup(analysis_html, "html.parser")
+            print(f"    CF blocked — using Playwright snapshot for content analysis")
+        else:
+            print(f"    CF blocked — no snapshot available (run crawl_site_snapshot.py first)")
 
     checks = {}
     total_score = 0
@@ -625,13 +659,15 @@ def audit_url(entry: dict, domain_cache: dict, snapshot_dir: Path | None) -> dic
             max_score   += c["max"]
 
     # Page-level checks
-    if raw_soup:
+    # http_access always uses raw httpx (intentional — tests real bot access).
+    # All content checks use analysis_html/soup which falls back to Playwright snapshot if CF-blocked.
+    if raw_soup or analysis_soup:
         for key, fn in [
             ("http_access",  lambda: check_http_access(url)),
-            ("meta_tags",    lambda: check_meta_tags(raw_soup, url, page_type)),
-            ("headings",     lambda: check_headings(raw_soup)),
-            ("schema_type",  lambda: check_schema_type(raw_html, page_type)),
-            ("content",      lambda: check_content(BeautifulSoup(raw_html, "html.parser"))),
+            ("meta_tags",    lambda: check_meta_tags(analysis_soup, url, page_type)),
+            ("headings",     lambda: check_headings(analysis_soup)),
+            ("schema_type",  lambda: check_schema_type(analysis_html, page_type)),
+            ("content",      lambda: check_content(BeautifulSoup(analysis_html, "html.parser"))),
             ("js_depend",    lambda: check_js_dependency(url, raw_html, snapshot_dir)),
         ]:
             result = fn()
@@ -667,6 +703,7 @@ def audit_url(entry: dict, domain_cache: dict, snapshot_dir: Path | None) -> dic
         "grade":      g,
         "checks":     checks,
         "issues":     issues,
+        "cf_blocked": cf_blocked,
     }
 
 
