@@ -66,40 +66,38 @@ def _find_snapshot(url: str, snapshot_dir) -> "Path | None":
     return candidate if candidate.exists() else None
 
 # ── Default URL set ────────────────────────────────────────────────────────────
-# Home URLs run both domain-level + page-level checks.
-# All other page types run page-level only (domain results are shared).
-_PAGE = "content"   # shorthand used in run loop
-
-_PAGE_CHECKS = "content-structure,token-budget,meta-tags"
-
-DEFAULT_URLS = [
-    # ── TGG — one URL per core page type ────────────────────────────────────────
-    {"url": "https://www.thegoodguys.com.au",                                                                          "label": "TGG · Home",         "scope": "domain+page"},
-    {"url": "https://www.thegoodguys.com.au/televisions",                                                              "label": "TGG · Category",     "scope": "page"},
-    {"url": "https://www.thegoodguys.com.au/televisions/smart-tvs",                                                    "label": "TGG · Sub-category", "scope": "page"},
-    {"url": "https://www.thegoodguys.com.au/samsung-65-inches-qn85f-neo-qled-4k-mini-led-smart-ai-tv-2025-qa65qn85fawxxy", "label": "TGG · Product",      "scope": "page"},
-    {"url": "https://www.thegoodguys.com.au/buying-guide/television-buying-guide",                                     "label": "TGG · Buying Guide", "scope": "page"},
-    {"url": "https://www.thegoodguys.com.au/samsung",                                                                  "label": "TGG · Brand Hub",    "scope": "page"},
-    {"url": "https://www.thegoodguys.com.au/whats-new/unboxing-the-lg-tv-range-2025",                                  "label": "TGG · Blog Article", "scope": "page"},
-    # ── JB Hi-Fi ────────────────────────────────────────────────────────────────
-    {"url": "https://www.jbhifi.com.au",                                                    "label": "JB Hi-Fi · Home",          "scope": "domain+page"},
-    {"url": "https://www.jbhifi.com.au/collections/tvs",                                    "label": "JB Hi-Fi · Category",      "scope": "page"},
-    {"url": "https://www.jbhifi.com.au/products/samsung-65-qn90d-neo-qled-4k-smart-tv-2024", "label": "JB Hi-Fi · Product",      "scope": "page"},
-    {"url": "https://www.jbhifi.com.au/pages/samsung",                                      "label": "JB Hi-Fi · Brand Hub",     "scope": "page"},
-    {"url": "https://www.jbhifi.com.au/pages/tv-buying-guide",                              "label": "JB Hi-Fi · Buying Guide",  "scope": "page"},
-    # ── Harvey Norman ───────────────────────────────────────────────────────────
-    {"url": "https://www.harveynorman.com.au",                                                                "label": "Harvey Norman · Home",          "scope": "domain+page"},
-    {"url": "https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-screen-size/all-tvs",             "label": "Harvey Norman · Category",      "scope": "page"},
-    {"url": "https://www.harveynorman.com.au/hisense-65-inch-q6nau-4k-qled-smart-tv.html",                    "label": "Harvey Norman · Product",       "scope": "page"},
-    {"url": "https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-brand/samsung-tvs",               "label": "Harvey Norman · Brand Page",    "scope": "page"},
-    {"url": "https://www.harveynorman.com.au/buying-guides/television-buying-guide",                          "label": "Harvey Norman · Buying Guide",  "scope": "page"},
-    # ── Appliances Online ───────────────────────────────────────────────────────
-    {"url": "https://www.appliancesonline.com.au",                                                                               "label": "Appliances Online · Home",      "scope": "domain+page"},
-    {"url": "https://www.appliancesonline.com.au/category/refrigeration/fridges/",                                                "label": "Appliances Online · Category",  "scope": "page"},
-    {"url": "https://www.appliancesonline.com.au/product/westinghouse-easycare-9kg-front-load-washing-machine-wwf9024m5sa/",     "label": "Appliances Online · Product",   "scope": "page"},
-    {"url": "https://www.appliancesonline.com.au/brand/samsung/",                                                                 "label": "Appliances Online · Brand Hub", "scope": "page"},
-    {"url": "https://www.appliancesonline.com.au/article/refrigerator-size-guide/",                                              "label": "Appliances Online · Guide",     "scope": "page"},
+# TGG_URLS — 5 core page types. These always run.
+TGG_URLS = [
+    {"url": "https://www.thegoodguys.com.au",                                                                            "label": "TGG · Home",         "scope": "domain+page"},
+    {"url": "https://www.thegoodguys.com.au/televisions",                                                                "label": "TGG · Category",     "scope": "page"},
+    {"url": "https://www.thegoodguys.com.au/samsung-65-inches-qn85f-neo-qled-4k-mini-led-smart-ai-tv-2025-qa65qn85fawxxy", "label": "TGG · Product",     "scope": "page"},
+    {"url": "https://www.thegoodguys.com.au/buying-guide/television-buying-guide",                                       "label": "TGG · Buying Guide", "scope": "page"},
+    {"url": "https://www.thegoodguys.com.au/whats-new/unboxing-the-lg-tv-range-2025",                                    "label": "TGG · Blog Article", "scope": "page"},
 ]
+
+# COMPETITOR_URLS — included by default, excluded with --no-competitors
+COMPETITOR_URLS = [
+    # ── JB Hi-Fi ────────────────────────────────────────────────────────────────
+    {"url": "https://www.jbhifi.com.au",                                                     "label": "JB Hi-Fi · Home",         "scope": "domain+page"},
+    {"url": "https://www.jbhifi.com.au/collections/tvs",                                     "label": "JB Hi-Fi · Category",     "scope": "page"},
+    {"url": "https://www.jbhifi.com.au/products/samsung-65-qn90d-neo-qled-4k-smart-tv-2024", "label": "JB Hi-Fi · Product",      "scope": "page"},
+    {"url": "https://www.jbhifi.com.au/pages/samsung",                                       "label": "JB Hi-Fi · Brand Hub",    "scope": "page"},
+    {"url": "https://www.jbhifi.com.au/pages/tv-buying-guide",                               "label": "JB Hi-Fi · Buying Guide", "scope": "page"},
+    # ── Harvey Norman ───────────────────────────────────────────────────────────
+    {"url": "https://www.harveynorman.com.au",                                                               "label": "Harvey Norman · Home",         "scope": "domain+page"},
+    {"url": "https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-screen-size/all-tvs",            "label": "Harvey Norman · Category",     "scope": "page"},
+    {"url": "https://www.harveynorman.com.au/hisense-65-inch-q6nau-4k-qled-smart-tv.html",                   "label": "Harvey Norman · Product",      "scope": "page"},
+    {"url": "https://www.harveynorman.com.au/tv-blu-ray-home-theatre/tvs-by-brand/samsung-tvs",              "label": "Harvey Norman · Brand Page",   "scope": "page"},
+    {"url": "https://www.harveynorman.com.au/buying-guides/television-buying-guide",                         "label": "Harvey Norman · Buying Guide", "scope": "page"},
+    # ── Appliances Online ───────────────────────────────────────────────────────
+    {"url": "https://www.appliancesonline.com.au",                                                                              "label": "Appliances Online · Home",      "scope": "domain+page"},
+    {"url": "https://www.appliancesonline.com.au/category/refrigeration/fridges/",                                              "label": "Appliances Online · Category",  "scope": "page"},
+    {"url": "https://www.appliancesonline.com.au/product/westinghouse-easycare-9kg-front-load-washing-machine-wwf9024m5sa/",    "label": "Appliances Online · Product",   "scope": "page"},
+    {"url": "https://www.appliancesonline.com.au/brand/samsung/",                                                               "label": "Appliances Online · Brand Hub", "scope": "page"},
+    {"url": "https://www.appliancesonline.com.au/article/refrigerator-size-guide/",                                             "label": "Appliances Online · Guide",     "scope": "page"},
+]
+
+DEFAULT_URLS = TGG_URLS + COMPETITOR_URLS
 
 # ── AI bots to check in robots.txt ────────────────────────────────────────────
 AI_BOTS = [
@@ -135,8 +133,9 @@ def infer_page_type(url: str, label: str = "") -> str:
     lbl = label.lower()
     if "product" in lbl:     return "product"
     if "buying guide" in lbl or "guide" in lbl: return "guide"
+    if "blog" in lbl or "article" in lbl or "editorial" in lbl: return "editorial"
     if "brand" in lbl:       return "brand"
-    if "news hub" in lbl or "editorial" in lbl: return "hub"
+    if "news hub" in lbl:    return "hub"
     if "sub-category" in lbl: return "subcategory"
     if "category" in lbl:    return "category"
     if "home" in lbl:        return "home"
@@ -688,8 +687,8 @@ def audit_url(entry: dict, domain_cache: dict, snapshot_dir: Path | None) -> dic
         if v.get("issue")
     ]
 
-    print(f"    {'🟢' if g in 'AB' else '🟡' if g == 'C' else '🟠' if g == 'D' else '🔴'} "
-          f"Grade {g} ({pct}%) — {len(issues)} issue(s)")
+    status = "PASS" if g in "AB" else "WARN" if g == "C" else "FAIL"
+    print(f"    [{status}] Grade {g} ({pct}%) — {len(issues)} issue(s)")
 
     return {
         "url":        url,
@@ -757,6 +756,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="AEO Crawl — Ecommerce AI discoverability audit")
     parser.add_argument("--snapshot-dir", default="", help="Path to Playwright HTML snapshots for JS dependency check")
     parser.add_argument("--label", default="tgg", help="Label for output files")
+    parser.add_argument("--no-competitors", action="store_true", help="Run TGG URLs only — skip competitor pages")
     args = parser.parse_args()
 
     snapshot_dir = Path(args.snapshot_dir) if args.snapshot_dir else None
@@ -767,12 +767,15 @@ def main() -> None:
             snapshot_dir = default
 
     urls_raw = os.getenv("AEO_URLS", "").strip()
+    no_competitors = args.no_competitors or os.getenv("AEO_NO_COMPETITORS", "").lower() in ("1", "true", "yes")
     if urls_raw:
         try:
             raw = json.loads(urls_raw)
             entries = [{"url": u, "label": u, "scope": "page"} if isinstance(u, str) else u for u in raw]
         except json.JSONDecodeError:
             entries = [{"url": u.strip(), "label": u.strip(), "scope": "page"} for u in urls_raw.splitlines() if u.strip()]
+    elif no_competitors:
+        entries = TGG_URLS
     else:
         entries = DEFAULT_URLS
 
@@ -799,8 +802,8 @@ def main() -> None:
     for domain, pages in by_domain.items():
         avg = round(sum(p["percentage"] for p in pages) / len(pages))
         g   = grade(avg)
-        emoji = "🟢" if g in "AB" else "🟡" if g == "C" else "🟠" if g == "D" else "🔴"
-        print(f"  {emoji} {domain:<40} avg {avg}% (Grade {g})  [{len(pages)} pages]")
+        status = "PASS" if g in "AB" else "WARN" if g == "C" else "FAIL"
+        print(f"  [{status}] {domain:<40} avg {avg}/100 (Grade {g})  [{len(pages)} pages]")
 
     out_dir = Path("seo/outputs/aeo")
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -852,22 +855,30 @@ def write_run_log(results: list[dict], label: str, out_dir: Path, snapshot_dir: 
     L = []
 
     # ── Header ───────────────────────────────────────────────────────────────
+    tgg_count  = sum(1 for r in results if "thegoodguys" in r.get("domain", ""))
+    comp_count = len(results) - tgg_count
     L += [
         f"# AEO Crawl Run Log — {label}\n\n",
         f"**Generated:** {ts_str}  \n",
         f"**Run:** #{run_number} (ID: {run_id})  \n",
         f"**Branch:** `{branch}`  \n",
         f"**Repo:** `{repo}`  \n",
-        f"**URLs audited:** {len(results)}  \n",
+        f"**URLs audited:** {len(results)} ({tgg_count} TGG + {comp_count} competitor)  \n",
         f"**Snapshot dir:** `{snapshot_dir or 'none — js_depend unscored'}`  \n\n",
     ]
+
+    # ── Crawl manifest ───────────────────────────────────────────────────────
+    L += ["## Crawl Manifest\n\n", "| # | Label | Type | Domain | URL |\n", "|---|---|---|---|---|\n"]
+    for i, r in enumerate(results, 1):
+        L.append(f"| {i} | {r['label']} | `{r['page_type']}` | `{r['domain']}` | `{r['url']}` |\n")
+    L.append("\n")
 
     # ── Tool config ──────────────────────────────────────────────────────────
     L += [
         "## Tool Config\n\n",
         "| Setting | Value |\n|---|---|\n",
         "| Script | `run_aeo_crawl.py` |\n",
-        "| Max score per URL | 160 pts (A≥80%, B≥65%, C≥50%, D≥35%, F<35%) |\n",
+        "| Scoring | All checks normalised to /100. Grade: A≥80, B≥65, C≥50, D≥35, F<35 |\n",
         "| Domain checks | `robots_ai` 30 pts, `llms_txt` 20 pts — cached once per hostname |\n",
         "| Page checks | `http_access` 10, `meta_tags` 20, `headings` 20, `schema_type` 20, `content` 20, `js_depend` 20 |\n",
         "| AI bots tested | GPTBot, ClaudeBot, PerplexityBot, Google-Extended, Amazonbot, Bingbot |\n",
@@ -893,12 +904,13 @@ def write_run_log(results: list[dict], label: str, out_dir: Path, snapshot_dir: 
         g   = r.get("grade", "?")
         pct = r.get("percentage", 0)
         ch  = r.get("checks", {})
+        cf_note = "  CF-blocked — content analysis from Playwright snapshot" if r.get("cf_blocked") else ""
         L += [
             f"### {r['label']}\n\n",
             f"`{r['url']}`  \n",
-            f"**Grade {g} · {pct}%** &nbsp;·&nbsp; type: `{r['page_type']}` &nbsp;·&nbsp; domain: `{r['domain']}`\n\n",
-            "| Check | Score | Max | % | Status | Issue |\n",
-            "|---|---|---|---|---|---|\n",
+            f"**Grade {g} · {pct}/100** &nbsp;·&nbsp; type: `{r['page_type']}` &nbsp;·&nbsp; domain: `{r['domain']}`{cf_note}\n\n",
+            "| Check | Score | Status | Issue |\n",
+            "|---|---|---|---|\n",
         ]
         for key, mx in check_keys:
             c   = ch.get(key, {})
@@ -906,35 +918,36 @@ def write_run_log(results: list[dict], label: str, out_dir: Path, snapshot_dir: 
             p   = c.get("percentage", round(s / mx * 100) if s is not None and mx else 0)
             iss = (c.get("issue") or "").replace("|", "\\|")[:90]
             if s is None:
-                icon = "–"
-            elif s >= mx * 0.8:
-                icon = "✅"
-            elif s >= mx * 0.5:
-                icon = "⚠️"
+                badge = "—"
+                score_str = "—"
             else:
-                icon = "❌"
-            L.append(f"| `{key}` | {s if s is not None else '–'} | {mx} | {p}% | {icon} | {iss} |\n")
+                badge = "PASS" if p >= 80 else "WARN" if p >= 50 else "FAIL"
+                score_str = f"{p}/100"
+            L.append(f"| `{key}` | {score_str} | {badge} | {iss} |\n")
 
         # Extra detail rows
         sc = ch.get("schema_type", {})
-        if sc.get("found_types"):
-            L.append(f"\n- **Schema found:** `{'`, `'.join(sc['found_types'][:6])}`\n")
-        if sc.get("missing_types"):
-            L.append(f"- **Schema missing:** `{'`, `'.join(sc['missing_types'])}`\n")
+        page_type_key = r.get("page_type", "")
+        expected = EXPECTED_SCHEMA.get(page_type_key, [])
+        if sc or expected:
+            found_str   = ", ".join(f"`{t}`" for t in sc.get("found_types", [])[:6]) or "none"
+            missing_str = ", ".join(f"`{t}`" for t in sc.get("missing_types", [])) or "none"
+            expected_str = ", ".join(f"`{t}`" for t in expected) or "none"
+            L.append(f"\n- **Schema** — Expected: {expected_str} | Found: {found_str} | Missing: {missing_str}\n")
         co = ch.get("content", {})
         if co:
             L.append(
                 f"- **Content:** {co.get('word_count', 0):,} words · "
-                f"FAQ {'✅' if co.get('has_faq') else '❌'} · "
-                f"Specs {'✅' if co.get('has_specs') else '❌'} · "
-                f"num density {co.get('num_density', 0)}/1000\n"
+                f"FAQ: {'PASS' if co.get('has_faq') else 'FAIL'} · "
+                f"Specs: {'PASS' if co.get('has_specs') else 'FAIL'} · "
+                f"density: {co.get('num_density', 0)}/1000\n"
             )
         jd = ch.get("js_depend", {})
         if jd.get("rendered_words"):
             L.append(
-                f"- **JS dependency:** {jd.get('raw_words', 0):,} raw → "
-                f"{jd.get('rendered_words', 0):,} rendered · "
-                f"{jd.get('pct_accessible', 0)}% accessible without JS\n"
+                f"- **JS dependency:** {jd.get('raw_words', 0):,} raw / "
+                f"{jd.get('rendered_words', 0):,} rendered — "
+                f"{jd.get('pct_accessible', 0)}/100 accessible without JS\n"
             )
         L.append("\n")
 
@@ -961,15 +974,16 @@ def write_run_log(results: list[dict], label: str, out_dir: Path, snapshot_dir: 
         rb = r.get("checks", {}).get("robots_ai", {})
         if not rb or "bots" not in rb:
             continue
-        L += [f"### `{dom}` — {rb.get('score', 0)}/{rb.get('max', 30)} pts\n\n",
-              "| Bot | Status | Pts |\n|---|---|---|\n"]
+        score_pct = round(rb.get("score", 0) / rb.get("max", 30) * 100)
+        L += [f"### `{dom}` — {score_pct}/100\n\n",
+              "| Bot | Status | Score |\n|---|---|---|\n"]
         for bot, info in rb.get("bots", {}).items():
             st  = info.get("status", "?")
             pts = info.get("pts", 0)
-            ic  = "✅" if st == "allowed" else "⚠️" if st == "not-mentioned" else "❌"
-            L.append(f"| {bot} | {ic} {st} | {pts} |\n")
+            badge = "PASS" if st == "allowed" else "AMBIGUOUS" if st == "not-mentioned" else "BLOCKED"
+            L.append(f"| {bot} | {badge} — {st} | {pts}/5 |\n")
         if rb.get("tier1_blocked"):
-            L.append(f"\n> ⚠️ **Tier-1 bots blocked:** {', '.join(rb['tier1_blocked'])}\n")
+            L.append(f"\n> CRITICAL — Tier-1 bots blocked: {', '.join(rb['tier1_blocked'])}\n")
         L.append("\n")
 
     # ── Self-review instructions ──────────────────────────────────────────────
@@ -998,24 +1012,23 @@ def write_run_log(results: list[dict], label: str, out_dir: Path, snapshot_dir: 
 
 
 def _write_summary(results: list[dict], path: str, label: str) -> None:
-    g_emoji = {"A": "🟢", "B": "🟢", "C": "🟡", "D": "🟠", "F": "🔴"}
     lines = [f"# AEO Crawl — {label}\n",
-             "| Site / Page | Type | Grade | % | robots_ai | llms_txt | meta | headings | schema | content | JS |\n",
+             "| Site / Page | Type | Grade | Score | robots_ai | llms_txt | meta | headings | schema | content | JS |\n",
              "|---|---|---|---|---|---|---|---|---|---|---|\n"]
 
     def _bar(c: dict | None) -> str:
         if not c or c.get("score") is None:
-            return "–"
+            return "—"
         p = c.get("percentage", 0)
-        icon = "✅" if p >= 80 else "⚠️" if p >= 50 else "❌"
-        return f"{icon} {p}%"
+        badge = "PASS" if p >= 80 else "WARN" if p >= 50 else "FAIL"
+        return f"{badge} {p}/100"
 
     for r in results:
         ch = r.get("checks", {})
         g  = r.get("grade", "?")
         lines.append(
             f"| [{r['label']}]({r['url']}) | {r['page_type']} "
-            f"| {g_emoji.get(g, '?')} {g} | {r['percentage']}% "
+            f"| {g} | {r['percentage']}/100 "
             f"| {_bar(ch.get('robots_ai'))} | {_bar(ch.get('llms_txt'))} "
             f"| {_bar(ch.get('meta_tags'))} | {_bar(ch.get('headings'))} "
             f"| {_bar(ch.get('schema_type'))} | {_bar(ch.get('content'))} "

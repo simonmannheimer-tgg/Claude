@@ -66,12 +66,21 @@ on:
         type: boolean
         default: true
 
+      include_competitors:
+        description: |
+          ☑ Include competitor pages in AEO Crawl
+          When ticked, JB Hi-Fi + Harvey Norman + Appliances Online pages are crawled.
+          Untick for a TGG-only run (faster, ~5 URLs instead of 20).
+          Only applies when crawl_urls is blank (custom URLs always run as-is).
+        type: boolean
+        default: true
+
       # ── Custom URL overrides ─────────────────────────────────────────────────
       crawl_urls:
         description: |
           Custom crawl URLs for AEO Crawl (optional — leave blank for defaults).
-          JSON array of {"url":"...","label":"...","scope":"page|domain+page"} objects.
-          Defaults cover TGG + 3 competitors across all page types.
+          One URL per line (plain text), or a JSON array of {"url":"...","label":"...","scope":"page|domain+page"} objects.
+          Leave blank to use defaults (TGG core pages + competitors if include_competitors is ticked).
         required: false
         default: ''
 
@@ -197,8 +206,8 @@ jobs:
         continue-on-error: true
         env:
           AEO_LABEL: tgg
-          # Custom URL list (optional — defaults to DEFAULT_URLS in run_aeo_crawl.py)
           AEO_URLS: ${{ inputs.crawl_urls }}
+          AEO_NO_COMPETITORS: ${{ inputs.include_competitors == false && 'true' || 'false' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python run_aeo_crawl.py 2>&1
 
